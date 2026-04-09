@@ -1,19 +1,78 @@
-import { Button } from "@workspace/ui/components/button"
+"use client";
 
-export default function Page() {
+// ─────────────────────────────────────────────────────────────────────────────
+// app/page.tsx
+// Landing ESDEC MVP 0 — orquesta todas las secciones
+// ─────────────────────────────────────────────────────────────────────────────
+
+import { useState, useEffect } from "react";
+import Navbar from "@/components/Navbar";
+import HeroSection from "@/sections/HeroSection";
+
+// Las demás secciones se importarán a medida que se construyan:
+// import AboutSection    from "@/sections/AboutSection";
+// import EcosystemSection from "@/sections/EcosystemSection";
+// import EmotionalSection from "@/sections/EmotionalSection";
+// import ProblemSection   from "@/sections/ProblemSection";
+// import FootprintSection from "@/sections/FootprintSection";
+// import Footer           from "@/components/Footer";
+
+export default function LandingPage() {
+  // ── Theme state: light = azul eléctrico (default), dark = navy
+  const [isDark, setIsDark] = useState(false);
+
+  // ── Sync con localStorage para persistir preferencia
+  useEffect(() => {
+    const saved = localStorage.getItem("esdec-theme");
+    if (saved === "dark") {
+      setIsDark(true);
+      document.documentElement.classList.add("dark");
+    }
+  }, []);
+
+  const handleThemeToggle = (dark: boolean) => {
+    setIsDark(dark);
+    if (dark) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("esdec-theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("esdec-theme", "light");
+    }
+  };
+
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
-        </div>
-        <div className="text-muted-foreground font-mono text-xs">
-          (Press <kbd>d</kbd> to toggle dark mode)
-        </div>
+    <main>
+      {/* NAV */}
+      <Navbar isDark={isDark} onThemeToggle={handleThemeToggle} />
+
+      {/* S1 — Hero + Stats bar */}
+      <HeroSection />
+
+      {/* S2 — Quiénes somos (próximo) */}
+      {/* <AboutSection /> */}
+
+      {/* S3 — Deportes + Especialistas (próximo) */}
+      {/* <EcosystemSection /> */}
+
+      {/* S4 — Frases emocionales (próximo) */}
+      {/* <EmotionalSection /> */}
+
+      {/* S5 — Problema + Journey (próximo) */}
+      {/* <ProblemSection /> */}
+
+      {/* S6 — Huella + CTA final (próximo) */}
+      {/* <FootprintSection /> */}
+
+      {/* Footer (próximo) */}
+      {/* <Footer /> */}
+
+      {/* Placeholder temporal mientras se construyen las demás secciones */}
+      <div className="min-h-screen bg-[var(--sec-bg)] flex items-center justify-center">
+        <p className="font-condensed text-2xl uppercase tracking-widest text-[var(--t3)]">
+          Próximas secciones — en construcción
+        </p>
       </div>
-    </div>
-  )
+    </main>
+  );
 }

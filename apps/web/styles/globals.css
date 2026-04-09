@@ -1,0 +1,348 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   styles/globals.css
+   Variables CSS de ESDEC — Modo Claro (azul eléctrico) y Modo Oscuro (navy)
+   Todas las animaciones que no se pueden hacer solo con clases de Tailwind.
+───────────────────────────────────────────────────────────────────────────── */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ══ MODO CLARO — Azul eléctrico (default) ══════════════════════════════════ */
+:root {
+  /* Backgrounds */
+  --bg:        #1556d4;
+  --bg2:       #1245b8;
+  --bg3:       #0e39a0;
+  --sec-bg:    #0f3db5;
+  --sec-bg2:   #1245b8;
+  --card-bg:   rgba(255,255,255,0.08);
+  --card-bg2:  rgba(255,255,255,0.12);
+  --card-bd:   rgba(255,255,255,0.18);
+
+  /* Texto */
+  --t1:  #FFFFFF;
+  --t2:  rgba(255,255,255,0.75);
+  --t3:  rgba(255,255,255,0.45);
+
+  /* Bordes */
+  --bd:  rgba(255,255,255,0.16);
+  --bd2: rgba(255,255,255,0.32);
+
+  /* Acentos */
+  --p1:  #5ac8ff;
+  --p1s: rgba(90,200,255,0.18);
+  --p2:  #7de8a8;
+  --p2s: rgba(125,232,168,0.15);
+
+  /* Logo */
+  --logo-t: #0A0A0A;
+  --logo-l: #1B3FA0;
+
+  /* Fingerprint */
+  --fps: rgba(90,200,255,0.22);
+  --fpg: rgba(90,200,255,0.06);
+
+  /* NAV — siempre claro en ambos modos para legibilidad */
+  --nav-bg:    rgba(255,255,255,0.96);
+  --nav-t:     #0A0A0A;
+  --nav-link:  #555555;
+
+  /* Buttons */
+  --btn-bg: #5ac8ff;
+  --btn-t:  #0c2d7a;
+
+  /* Stats bar */
+  --sbar-bg: rgba(0,0,0,0.25);
+
+  /* Chips/tags */
+  --chip-bd: rgba(255,255,255,0.25);
+
+  /* Footer */
+  --footer-bg: #0a2d8a;
+
+  /* Specs */
+  --spec-bg:   rgba(255,255,255,0.07);
+  --spec-bd:   rgba(255,255,255,0.15);
+
+  /* Scan line */
+  --scan-c: rgba(90,200,255,0.7);
+
+  /* Forms */
+  --wl-bd: rgba(255,255,255,0.3);
+
+  /* Hero overlay */
+  --hero-ov-start: rgba(14,57,160,0.0);
+  --hero-ov-mid:   rgba(18,69,184,0.0);
+}
+
+/* ══ MODO OSCURO — Navy profundo ═════════════════════════════════════════════ */
+.dark {
+  --bg:        #001A33;
+  --bg2:       #012547;
+  --bg3:       #01305c;
+  --sec-bg:    #001A33;
+  --sec-bg2:   #012547;
+  --card-bg:   rgba(1,48,92,0.8);
+  --card-bg2:  rgba(1,64,122,0.6);
+  --card-bd:   rgba(5,128,211,0.22);
+
+  --t1:  #E8F0FC;
+  --t2:  #7A9EC4;
+  --t3:  #3A5C80;
+
+  --bd:  rgba(5,128,211,0.16);
+  --bd2: rgba(5,128,211,0.32);
+
+  --p1:  #0580D3;
+  --p1s: rgba(5,128,211,0.15);
+  --p2:  #0CD25E;
+  --p2s: rgba(12,210,94,0.12);
+
+  --logo-t: #E8F0FC;
+  --logo-l: #0580D3;
+
+  --fps: rgba(5,128,211,0.22);
+  --fpg: rgba(5,128,211,0.05);
+
+  --nav-bg:    rgba(0,26,51,0.92);
+  --nav-t:     #E8F0FC;
+  --nav-link:  #7A9EC4;
+
+  --btn-bg: #0CD25E;
+  --btn-t:  #001A33;
+
+  --sbar-bg: #012547;
+
+  --chip-bd: rgba(5,128,211,0.28);
+
+  --footer-bg: #000e1f;
+
+  --spec-bg:   #012547;
+  --spec-bd:   rgba(5,128,211,0.18);
+
+  --scan-c: rgba(12,210,94,0.6);
+
+  --wl-bd: rgba(5,128,211,0.25);
+
+  --hero-ov-start: rgba(0,26,51,0.0);
+  --hero-ov-mid:   rgba(1,37,71,0.0);
+}
+
+/* ══ BASE STYLES ════════════════════════════════════════════════════════════ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--t1);
+  font-family: var(--font-barlow), sans-serif;
+  overflow-x: hidden;
+  line-height: 1.6;
+  transition: background-color 0.5s ease, color 0.4s ease;
+}
+
+::selection {
+  background: rgba(90, 200, 255, 0.3);
+}
+
+::-webkit-scrollbar {
+  width: 3px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--p1);
+}
+
+/* ══ HERO BACKGROUNDS ═══════════════════════════════════════════════════════ */
+/* Liquid bg — background-size grande para que el movimiento se note */
+.bg-hero-light {
+  background: linear-gradient(135deg, #1a5fe0 0%, #1556d4 30%, #1245b8 60%, #0c3494 100%);
+  background-size: 300% 300%;
+}
+.dark .bg-hero-light,
+.bg-hero-dark {
+  background: linear-gradient(135deg, #001A33 0%, #012547 45%, #0d2f6a 100%);
+  background-size: 300% 300%;
+}
+
+/* ══ HERO ORBS ══════════════════════════════════════════════════════════════ */
+.hero-orb-1 {
+  background: radial-gradient(ellipse, rgba(90,200,255,0.18) 0%, transparent 70%);
+  filter: blur(80px);
+}
+.dark .hero-orb-1 {
+  background: radial-gradient(ellipse, rgba(5,128,211,0.15) 0%, transparent 70%);
+}
+.hero-orb-2 {
+  background: radial-gradient(ellipse, rgba(125,232,168,0.10) 0%, transparent 70%);
+  filter: blur(80px);
+}
+.dark .hero-orb-2 {
+  background: radial-gradient(ellipse, rgba(12,210,94,0.08) 0%, transparent 70%);
+}
+
+/* ══ HERO OVERLAY ═══════════════════════════════════════════════════════════ */
+.bg-hero-overlay {
+  background: linear-gradient(
+    105deg,
+    rgba(14,57,160,0.40) 0%,
+    rgba(18,69,184,0.25) 35%,
+    transparent 65%
+  );
+}
+.dark .bg-hero-overlay {
+  background: linear-gradient(
+    105deg,
+    rgba(0,26,51,0.97) 0%,
+    rgba(0,26,51,0.82) 26%,
+    rgba(1,37,71,0.55) 50%,
+    rgba(1,48,92,0.22) 70%,
+    transparent 100%
+  );
+}
+
+/* ══ LIQUID ANIMATION ═══════════════════════════════════════════════════════ */
+@keyframes liquid-bg {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animate-liquid-bg {
+  animation: liquid-bg 12s ease infinite;
+}
+
+/* ══ STRONG EN BODY TEXT ════════════════════════════════════════════════════ */
+/* El hero body usa dangerouslySetInnerHTML con <strong> */
+#hero p strong,
+[data-section] p strong {
+  color: var(--t1);
+  font-weight: 600;
+}
+
+/* ══ FINGERPRINT PATHS (redefine en contexto de sección) ═══════════════════ */
+/* Las secciones que tienen huella de fondo sobreescriben estas vars */
+.fp-section-faint {
+  --fps: rgba(90,200,255,0.12);
+  --fpg: rgba(90,200,255,0.03);
+}
+.dark .fp-section-faint {
+  --fps: rgba(5,128,211,0.12);
+  --fpg: rgba(5,128,211,0.03);
+}
+
+/* ══ SCAN LINE (sección problemas) ══════════════════════════════════════════ */
+@keyframes scan {
+  0%   { top: -2px; opacity: 0; }
+  5%   { opacity: 1; }
+  95%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+.animate-scan {
+  animation: scan 4s ease-in-out infinite;
+}
+
+/* ══ MARQUEE ════════════════════════════════════════════════════════════════ */
+.marquee-mask {
+  mask-image: linear-gradient(90deg, transparent, black 5%, black 95%, transparent);
+}
+.animate-marquee-paused:hover .animate-marquee {
+  animation-play-state: paused;
+}
+
+/* ══ WIPE MASK (frases) ══════════════════════════════════════════════════════ */
+@keyframes wipe-mask {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0% 0 0); }
+}
+.clip-hidden {
+  clip-path: inset(0 100% 0 0);
+}
+.wipe-reveal {
+  animation: wipe-mask 0.6s cubic-bezier(.22,1,.36,1) forwards;
+}
+
+/* ══ HEARTBEAT ══════════════════════════════════════════════════════════════ */
+@keyframes heartbeat {
+  0%,100% { transform: scale(1); opacity: 0.14; }
+  40%     { transform: scale(1.09); opacity: 0.28; }
+  60%     { transform: scale(0.97); }
+}
+.animate-heartbeat {
+  animation: heartbeat 4s ease-in-out infinite;
+}
+
+/* ══ NAV UNDERLINE HOVER ════════════════════════════════════════════════════ */
+.nav-link-hover::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: var(--p1);
+  transition: width 0.3s ease;
+}
+.nav-link-hover:hover::after {
+  width: 100%;
+}
+
+/* ══ CARD ACCENT LINE (spec cards) ══════════════════════════════════════════ */
+.spec-card-accent::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--p1), var(--p2));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(.22,1,.36,1);
+}
+.spec-card-accent:hover::before {
+  transform: scaleX(1);
+}
+
+/* ══ BTN SHIMMER ════════════════════════════════════════════════════════════ */
+.btn-shimmer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
+}
+.btn-shimmer:hover::before {
+  transform: translateX(100%);
+}
+
+/* ══ ORBIT (satélites) ══════════════════════════════════════════════════════ */
+@keyframes orbit {
+  from { transform: rotate(0deg) translateX(var(--orbit-r, 160px)) rotate(0deg); }
+  to   { transform: rotate(360deg) translateX(var(--orbit-r, 160px)) rotate(-360deg); }
+}
+
+/* ══ RIPPLE MODE ════════════════════════════════════════════════════════════ */
+@keyframes ripple-mode {
+  0%   { transform: scale(0); opacity: 0.5; }
+  100% { transform: scale(90); opacity: 0; }
+}
+.mode-ripple {
+  position: fixed;
+  pointer-events: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  z-index: 9999;
+  background: var(--bg);
+  transform: scale(0);
+  opacity: 0;
+}
+.mode-ripple.go {
+  animation: ripple-mode 0.75s ease-out forwards;
+}
