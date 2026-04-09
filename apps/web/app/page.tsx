@@ -10,7 +10,7 @@ import Navbar from "@/components/Navbar";
 import HeroSection from "@/sections/HeroSection";
 
 import AboutSection    from "@/sections/AboutSection";
-// import EcosystemSection from "@/sections/EcosystemSection";
+import EcosystemSection from "@/sections/EcosystemSection";
 // import EmotionalSection from "@/sections/EmotionalSection";
 // import ProblemSection   from "@/sections/ProblemSection";
 // import FootprintSection from "@/sections/FootprintSection";
@@ -51,8 +51,8 @@ export default function LandingPage() {
       {/* S2 — Quiénes somos */}
       <AboutSection />
 
-      {/* S3 — Deportes + Especialistas (próximo) */}
-      {/* <EcosystemSection /> */}
+      {/* S3 — Deportes + Especialistas */}
+      <EcosystemSection />
 
       {/* S4 — Frases emocionales (próximo) */}
       {/* <EmotionalSection /> */}
