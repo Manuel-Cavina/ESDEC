@@ -7,18 +7,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { NAV, BRAND } from "@/content/landing";
+import BrandLines from "@/components/BrandLines";
 import { cn } from "@/lib/utils";
-
-// ── Las 3 líneas del logo ESDEC
-function LogoLines({ className }: { className?: string }) {
-  return (
-    <div className={cn("flex flex-col gap-[5px]", className)}>
-      <div className="h-[5px] w-[22px] rounded-[2.5px] bg-[var(--logo-l)]" />
-      <div className="h-[5px] w-[16px] rounded-[2.5px] bg-[var(--logo-l)] ml-[3px]" />
-      <div className="h-[5px] w-[11px] rounded-[2.5px] bg-[var(--logo-l)] ml-[6px]" />
-    </div>
-  );
-}
 
 interface NavbarProps {
   onThemeToggle?: (isDark: boolean) => void;
@@ -81,7 +71,7 @@ export default function Navbar({ onThemeToggle, isDark = false }: NavbarProps) {
           className="flex items-center gap-2.5 flex-shrink-0"
           onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
         >
-          <LogoLines />
+          <BrandLines size="md" className="[--bl-color:var(--logo-l)]" />
           <span
             className="font-condensed font-black text-[22px] tracking-[1.5px] leading-none"
             style={{ color: "var(--logo-t)" }}

@@ -3,108 +3,33 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // sections/HeroSection.tsx
 // Hero de ESDEC — MVP 0
-//
-// Animaciones:
-//   · Liquid background (CSS keyframe en globals.css)
-//   · Huella SVG se dibuja al montar (stroke-dashoffset)
-//   · 3 líneas del logo se extienden con lineDraw keyframe
-//   · Headline línea por línea con stamp keyframe
-//   · Athlete card con float + tilt 3D
-//   · Glitch en headline (loop cada 7s)
-//   · Dot grid overlay en hero
-//   · Modo claro: azul eléctrico | Modo oscuro: navy profundo
-//
-// Copy: todo viene de @/content/landing
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { useEffect, useRef, useState } from "react";
-import { HERO, STATS } from "@/content/landing";
+import { HERO } from "@/content/landing";
 import FingerprintSVG from "@/components/FingerprintSVG";
 import AthleteCard from "@/components/AthleteCard";
+import PingDot from "@/components/PingDot";
+import PillarChip from "@/components/PillarChip";
 import { cn } from "@/lib/utils";
-
-// ── Dot ping animado
-function PingDot({ className }: { className?: string }) {
-  return (
-    <span
-      className={cn(
-        "inline-block w-[7px] h-[7px] rounded-full flex-shrink-0",
-        "bg-[var(--p1)] animate-ping-dot",
-        className
-      )}
-    />
-  );
-}
-
-// ── Pillar chip
-function PillarChip({ label }: { label: string }) {
-  return (
-    <div
-      className={cn(
-        "inline-flex items-center gap-1.5",
-        "px-4 py-[7px] rounded-full",
-        "bg-white/12 border border-white/25",
-        "font-condensed font-bold text-sm uppercase tracking-wide",
-        "text-white/90",
-        "transition-all duration-200 cursor-default",
-        "hover:bg-[var(--p1s)] hover:border-[var(--p1)] hover:text-white"
-      )}
-    >
-      <span className="text-[var(--p1)] text-[10px]">•</span>
-      {label}
-    </div>
-  );
-}
-
-// ── Stat item
-function StatItem({ value, label }: { value: string; label: string }) {
-  return (
-    <div className="text-center">
-      <div className="font-display text-[44px] leading-none tracking-wide text-white">
-        {value.replace(/\+|°|\/7|\/|%/, "")}
-        <span className="text-[var(--p1)]">
-          {value.match(/\+|°|\/7/)?.[0] ?? ""}
-        </span>
-      </div>
-      <div className="font-sans text-[11px] font-semibold tracking-[1.5px] uppercase text-white/38 mt-1">
-        {label}
-      </div>
-    </div>
-  );
-}
-
-// ── Stat separator (3 líneas del logo en miniatura)
-function StatSep() {
-  return (
-    <div className="flex flex-col gap-[3px] opacity-20">
-      <div className="h-[3px] w-4 rounded-full bg-white" />
-      <div className="h-[3px] w-3 rounded-full bg-white ml-0.5" />
-      <div className="h-[3px] w-2 rounded-full bg-white ml-1" />
-    </div>
-  );
-}
 
 export default function HeroSection() {
   const [mounted, setMounted] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    // Pequeño delay para que las animaciones iniciales se vean bien
     const t = setTimeout(() => setMounted(true), 50);
     return () => clearTimeout(t);
   }, []);
 
   return (
     <>
-      {/* ────────────────────────────────────────────────────────────────────
-          HERO
-      ──────────────────────────────────────────────────────────────────── */}
+      {/* ── HERO ── */}
       <section
         ref={heroRef}
         id="hero"
         className={cn(
           "relative min-h-screen flex flex-col justify-center overflow-hidden",
-          // Liquid background — el gradiente se define por CSS var según el modo
           "bg-hero-light dark:bg-hero-dark",
           "animate-liquid-bg",
         )}
@@ -125,23 +50,21 @@ export default function HeroSection() {
         {/* Overlay gradiente direccional */}
         <div className="absolute inset-0 bg-hero-overlay pointer-events-none" />
 
-        {/* ── Huella SVG flotante — se dibuja al cargar */}
+        {/* Huella SVG flotante */}
         <div
           className={cn(
             "absolute right-[-2%] top-1/2 -translate-y-1/2",
             "w-[52%] max-w-[660px] pointer-events-none z-[1]",
             "animate-fp-float",
-            // Variables CSS para colorear la huella
             "[--fps:rgba(90,200,255,0.22)] dark:[--fps:rgba(5,128,211,0.22)]",
             "[--fpg:rgba(90,200,255,0.06)] dark:[--fpg:rgba(5,128,211,0.05)]",
-            // Hidden en mobile
             "hidden lg:block"
           )}
         >
           <FingerprintSVG animate={mounted} className="w-full h-full" />
         </div>
 
-        {/* ── Hero content */}
+        {/* Hero content */}
         <div className="relative z-[2] px-16 pt-[130px] pb-20 max-w-[680px]">
 
           {/* Eyebrow */}
@@ -157,7 +80,7 @@ export default function HeroSection() {
             {HERO.eyebrow}
           </div>
 
-          {/* 3 líneas del logo — transición antes del headline */}
+          {/* 3 líneas del logo — animación de entrada */}
           <div className="flex flex-col gap-[5px] mb-[18px]">
             {[
               { w: "72px", ml: "0px",  delay: "500ms" },
@@ -174,35 +97,28 @@ export default function HeroSection() {
                   width: 0,
                   marginLeft: line.ml,
                   animationDelay: line.delay,
-                  // El keyframe lleva width hasta var(--target)
                   ["--target" as string]: line.w,
                 }}
               />
             ))}
           </div>
 
-          {/* Headline — línea por línea con stamp */}
-          <h1 className="font-condensed font-black text-white leading-[1.0] tracking-[-1px] mb-5 animate-glitch"
-              style={{ fontSize: "clamp(44px, 7.5vw, 110px)" }}>
-            {[HERO.headlineLine1, HERO.headlineLine2, HERO.headlineLine3].map(
-              (line, i) => (
-                <span
-                  key={i}
-                  className={cn(
-                    "block",
-                    "opacity-0 animate-stamp [animation-fill-mode:forwards]"
-                  )}
-                  style={{ animationDelay: `${900 + i * 100}ms` }}
-                >
-                  {line}
-                </span>
-              )
-            )}
+          {/* Headline */}
+          <h1
+            className="font-condensed font-black text-white leading-[1.0] tracking-[-1px] mb-5 animate-glitch"
+            style={{ fontSize: "clamp(44px, 7.5vw, 110px)" }}
+          >
+            {[HERO.headlineLine1, HERO.headlineLine2, HERO.headlineLine3].map((line, i) => (
+              <span
+                key={i}
+                className={cn("block", "opacity-0 animate-stamp [animation-fill-mode:forwards]")}
+                style={{ animationDelay: `${900 + i * 100}ms` }}
+              >
+                {line}
+              </span>
+            ))}
             <span
-              className={cn(
-                "block text-[var(--p1)]",
-                "opacity-0 animate-stamp [animation-fill-mode:forwards]"
-              )}
+              className={cn("block text-[var(--p1)]", "opacity-0 animate-stamp [animation-fill-mode:forwards]")}
               style={{ animationDelay: "1200ms" }}
             >
               {HERO.headlineAccent}
@@ -248,7 +164,6 @@ export default function HeroSection() {
                 "transition-all duration-200 ease-out",
                 "hover:brightness-110 hover:px-[42px] hover:-translate-y-0.5",
                 "hover:shadow-[0_8px_28px_rgba(0,0,0,0.25)]",
-                // Shimmer interno
                 "relative overflow-hidden before:absolute before:inset-0",
                 "before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent",
                 "before:-translate-x-full hover:before:translate-x-full before:transition-transform before:duration-400"
@@ -273,7 +188,7 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* ── Athlete card — lado derecho, hidden en <xl */}
+        {/* Athlete card */}
         <div
           className={cn(
             "absolute right-16 top-1/2 -translate-y-1/2",
@@ -284,11 +199,6 @@ export default function HeroSection() {
         >
         </div>
       </section>
-
-      {/* ────────────────────────────────────────────────────────────────────
-          STATS BAR
-      ──────────────────────────────────────────────────────────────────── */}
-      
     </>
   );
 }

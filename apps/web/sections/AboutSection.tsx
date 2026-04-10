@@ -14,18 +14,9 @@
 import { useEffect, useRef } from "react";
 import { ABOUT } from "@/content/landing";
 import ScrollReveal from "@/components/ScrollReveal";
+import BrandLines from "@/components/BrandLines";
+import PingDot from "@/components/PingDot";
 import { cn } from "@/lib/utils";
-
-// ── Líneas del logo en miniatura (ADN visual)
-function LogoMark({ className }: { className?: string }) {
-  return (
-    <div className={cn("flex flex-col gap-[4px]", className)}>
-      <div className="h-[3px] w-[22px] rounded-sm bg-[var(--p1)]" />
-      <div className="h-[3px] w-[16px] rounded-sm bg-[var(--p1)] ml-[3px]" />
-      <div className="h-[3px] w-[11px] rounded-sm bg-[var(--p1)] ml-[6px]" />
-    </div>
-  );
-}
 
 // ── Val-card derecha
 function ValCard({ title, description }: { title: string; description: string }) {
@@ -40,7 +31,7 @@ function ValCard({ title, description }: { title: string; description: string })
         "spec-card-accent"
       )}
     >
-      <LogoMark className="mb-4 opacity-80" />
+      <BrandLines className="mb-4 opacity-80" />
       <h4 className="font-condensed font-bold text-[18px] uppercase tracking-wide text-[var(--t1)] mb-2">
         {title}
       </h4>
@@ -132,7 +123,7 @@ export default function AboutSection() {
           {/* Eyebrow */}
           <ScrollReveal direction="up" delay={0}>
             <div className="inline-flex items-center gap-2 mb-5">
-              <span className="inline-block w-[7px] h-[7px] rounded-full bg-[var(--p1)] animate-ping-dot flex-shrink-0" />
+              <PingDot />
               <span className="font-sans text-[11px] font-semibold tracking-[3px] uppercase text-[var(--p1)]">
                 {ABOUT.eyebrow}
               </span>
