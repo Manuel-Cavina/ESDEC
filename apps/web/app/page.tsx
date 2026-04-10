@@ -9,10 +9,9 @@ import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/sections/HeroSection";
 
-// Las demás secciones se importarán a medida que se construyan:
-// import AboutSection    from "@/sections/AboutSection";
-// import EcosystemSection from "@/sections/EcosystemSection";
-// import EmotionalSection from "@/sections/EmotionalSection";
+import AboutSection    from "@/sections/AboutSection";
+import EcosystemSection from "@/sections/EcosystemSection";
+import EmotionalSection from "@/sections/EmotionalSection";
 // import ProblemSection   from "@/sections/ProblemSection";
 // import FootprintSection from "@/sections/FootprintSection";
 // import Footer           from "@/components/Footer";
@@ -49,14 +48,14 @@ export default function LandingPage() {
       {/* S1 — Hero + Stats bar */}
       <HeroSection />
 
-      {/* S2 — Quiénes somos (próximo) */}
-      {/* <AboutSection /> */}
+      {/* S2 — Quiénes somos */}
+      <AboutSection />
 
-      {/* S3 — Deportes + Especialistas (próximo) */}
-      {/* <EcosystemSection /> */}
+      {/* S3 — Deportes + Especialistas */}
+      <EcosystemSection />
 
-      {/* S4 — Frases emocionales (próximo) */}
-      {/* <EmotionalSection /> */}
+      {/* S4 — Frases emocionales */}
+      <EmotionalSection />
 
       {/* S5 — Problema + Journey (próximo) */}
       {/* <ProblemSection /> */}

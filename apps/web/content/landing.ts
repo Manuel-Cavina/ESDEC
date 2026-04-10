@@ -194,22 +194,31 @@ export const ECOSYSTEM = {
   ],
 } as const;
 
-// ── EMOTIONAL (Frases) ──────────────────────────────────────────────────────
+// ── EMOTIONAL (Narrativa 3 beats) ───────────────────────────────────────────
 export const EMOTIONAL = {
-  // Quote central
-  quoteMain: "La diferencia entre lo posible y lo imposible reside en la",
-  quoteAccent: "estructura",
-  quoteSuffix: "que tenés hoy.",
-  quoteSource: "ESDEC · ELITE SPORTS DEVELOPMENT",
-
-  // Frases satélite (orbitan alrededor de la huella)
-  satellites: [
-    "\"Sin datos, no hay progreso real.\"",
-    "\"Los campeones se construyen en el proceso.\"",
-    "\"El equipo correcto cambia todo.\"",
-    "\"La constancia sin estructura produce mesetas.\"",
-    "\"El cuerpo llega donde la mente ya estuvo.\"",
-    "\"Tu potencial no tiene límite. Tu sistema, sí.\"",
+  beats: [
+    {
+      // Beat 1 — Validación + semilla del problema
+      eyebrow: "El atleta que ya lo da todo",
+      headlinePre: "EL ESFUERZO NO",
+      headlineAccent: "ES EL PROBLEMA.",
+      body: "La dedicación está. El sacrificio está. Pero entre tu esfuerzo y los resultados que merecés existe una brecha — y esa brecha tiene nombre.",
+    },
+    {
+      // Beat 2 — Tensión: el nombre de la brecha
+      eyebrow: "El problema que frena tu crecimiento",
+      headlinePre: "SIN ESTRUCTURA,",
+      headlineAccent: "EL TALENTO SE DISPERSA.",
+      body: "Sin un sistema que coordine entrenamiento, nutrición, mentalidad y evolución, cada esfuerzo vive en una isla. Sin conexión. Sin dirección.",
+    },
+    {
+      // Beat 3 — Resolución ESDEC
+      eyebrow: "La diferencia ESDEC",
+      headlinePre: "ESDEC CONSTRUYE",
+      headlineAccent: "EL SISTEMA.",
+      headlineSub: "EL QUE HACE QUE TU ESFUERZO VALGA.",
+      body: "No más piezas sueltas. Un sistema integrado que conecta cada parte de tu desarrollo y lo dirige hacia resultados reales.",
+    },
   ],
 } as const;
 
