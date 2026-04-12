@@ -11,7 +11,6 @@ import HeroSection from "@/sections/HeroSection";
 
 import AboutSection     from "@/sections/AboutSection";
 import EcosystemSection from "@/sections/EcosystemSection";
-import CommunitySection from "@/sections/CommunitySection";
 import EmotionalSection from "@/sections/EmotionalSection";
 import ProblemSection   from "@/sections/ProblemSection";
 // import FootprintSection from "@/sections/FootprintSection";
@@ -55,10 +54,7 @@ export default function LandingPage() {
       {/* S3 — Deportes + Especialistas */}
       <EcosystemSection />
 
-      {/* S4 — Comunidad: personas reales, prueba social */}
-      <CommunitySection />
-
-      {/* S5 — Narrativa emocional */}
+      {/* S4 — Narrativa emocional */}
       <EmotionalSection />
 
       {/* S5 — Problema + Journey */}

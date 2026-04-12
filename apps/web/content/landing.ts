@@ -368,25 +368,6 @@ export const COMMUNITY = {
   ],
 } as const;
 
-// ── IMAGES ────────────────────────────────────────────────────────────────────
-// Paths a los assets en /public/images/.
-// Actualizar cuando se agreguen más fotos.
-export const BLUR_PH =
-  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==";
-
-export const IMAGES = {
-  athletes: [
-    { src: "/images/athletes/Atleta_1.png", alt: "Deportista en entrenamiento — ESDEC" },
-  ],
-  lifestyle: [
-    { src: "/images/lifestyle/Correr_lluvia_1.jpg", alt: "Atleta corriendo bajo la lluvia — ESDEC" },
-  ],
-  team: [
-    { src: "/images/team/descarga.png", alt: "Equipo de especialistas ESDEC", role: "Especialista" },
-  ],
-  community: [] as { src: string; alt: string; tag?: string }[],
-} as const;
-
 // ── FOOTER ────────────────────────────────────────────────────────────────────
 export const FOOTER = {
   links: [
