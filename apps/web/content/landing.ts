@@ -194,22 +194,28 @@ export const ECOSYSTEM = {
   ],
 } as const;
 
-// ── EMOTIONAL (Frases) ──────────────────────────────────────────────────────
+// ── EMOTIONAL (3 beats narrativos) ──────────────────────────────────────────
 export const EMOTIONAL = {
-  // Quote central
-  quoteMain: "La diferencia entre lo posible y lo imposible reside en la",
-  quoteAccent: "estructura",
-  quoteSuffix: "que tenés hoy.",
-  quoteSource: "ESDEC · ELITE SPORTS DEVELOPMENT",
-
-  // Frases satélite (orbitan alrededor de la huella)
-  satellites: [
-    "\"Sin datos, no hay progreso real.\"",
-    "\"Los campeones se construyen en el proceso.\"",
-    "\"El equipo correcto cambia todo.\"",
-    "\"La constancia sin estructura produce mesetas.\"",
-    "\"El cuerpo llega donde la mente ya estuvo.\"",
-    "\"Tu potencial no tiene límite. Tu sistema, sí.\"",
+  beats: [
+    {
+      eyebrow: "El atleta que ya lo da todo",
+      headlinePre: "EL ESFUERZO NO",
+      headlineAccent: "ES EL PROBLEMA.",
+      body: "La dedicación está. El sacrificio está. Pero entre tu esfuerzo y los resultados que merecés existe una brecha — y esa brecha tiene nombre.",
+    },
+    {
+      eyebrow: "El problema que frena tu crecimiento",
+      headlinePre: "SIN ESTRUCTURA,",
+      headlineAccent: "EL TALENTO SE DISPERSA.",
+      body: "Sin un sistema que coordine entrenamiento, nutrición, mentalidad y evolución, cada esfuerzo vive en una isla. Sin conexión. Sin dirección.",
+    },
+    {
+      eyebrow: "La diferencia ESDEC",
+      headlinePre: "ESDEC CONSTRUYE",
+      headlineAccent: "EL SISTEMA.",
+      headlineSub: "EL QUE HACE QUE TU ESFUERZO VALGA.",
+      body: "No más piezas sueltas. Un sistema integrado que conecta cada parte de tu desarrollo y lo dirige hacia resultados reales.",
+    },
   ],
 } as const;
 
@@ -225,35 +231,40 @@ export const PROBLEM = {
   problems: [
     {
       number: "01",
-      icon: "🔍",
-      title: "Sin orientación",
+      title: "Especialistas dispersos",
       description:
-        "Los especialistas existen pero están dispersos. Sin criterios para encontrarlos, evaluarlos ni conectarlos entre sí.",
+        "Los profesionales existen pero están desconectados. Sin criterio para encontrarlos, evaluarlos ni coordinarlos entre sí.",
     },
     {
       number: "02",
-      icon: "🔀",
-      title: "Sin coordinación",
+      title: "Nadie coordina el plan",
       description:
-        "Nutricionista, coach y kinesiólogo trabajan en paralelo sin comunicarse. El plan se fragmenta.",
+        "Nutricionista, coach y kinesiólogo trabajan en paralelo sin comunicarse. El desarrollo se fragmenta y el deportista pierde el hilo.",
     },
     {
       number: "03",
-      icon: "📊",
-      title: "Sin datos",
+      title: "Decisiones a ciegas",
       description:
-        "Las decisiones se toman por intuición. Sin métricas no se distingue progreso de estancamiento.",
+        "Sin métricas no hay dirección. Cada decisión se toma por intuición — imposible distinguir progreso real de estancamiento.",
     },
     {
       number: "04",
-      icon: "🏟️",
-      title: "Sin estructura",
+      title: "Esfuerzo sin sistema",
       description:
-        "El deportista amateur entrena sin infraestructura que convierta ese esfuerzo en desarrollo real.",
+        "El deportista amateur entrena sin la infraestructura que traduzca ese esfuerzo en desarrollo real y medible.",
     },
   ],
 
+  // Pivot — mensaje rector que separa el diagnóstico de la solución
+  pivotPre:        "No te falta",
+  pivotAccent1:    "esfuerzo.",
+  pivotConnector:  "Te falta",
+  pivotAccent2:    "estructura.",
+
   journeyLabel: "Cómo funciona ESDEC",
+  journeyHeadlinePre: "EL SISTEMA,",
+  journeyHeadlineAccent: "PASO A PASO.",
+
   journey: [
     { step: "1", title: "Perfil",    description: "Objetivos, deporte y punto de partida mapeados." },
     { step: "2", title: "Equipo",    description: "Especialistas validados y coordinados para vos." },
@@ -261,6 +272,10 @@ export const PROBLEM = {
     { step: "4", title: "Evolución", description: "Seguimiento con métricas reales, ajuste continuo." },
     { step: "5", title: "Escala",    description: "Nuevos objetivos, proyección. El ciclo no termina." },
   ],
+
+  // CTA al final del journey — evita que el flujo se corte
+  journeyCta:      "Empezá a construir",
+  journeyCtaHref:  "#footprint",
 } as const;
 
 // ── FOOTPRINT / CTA ──────────────────────────────────────────────────────────
