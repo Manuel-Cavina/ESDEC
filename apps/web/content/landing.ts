@@ -309,14 +309,82 @@ export const FOOTPRINT = {
 } as const;
 
 // ── NAV ───────────────────────────────────────────────────────────────────────
+// Estructura escalable: grupos con items opcionales (dropdown) o link directo.
+// comingSoon: true → se renderiza dimmed, no clickeable (roadmap visual).
 export const NAV = {
-  links: [
-    { label: "Nosotros",      href: "#about"     },
-    { label: "Especialidades", href: "#ecosystem" },
-    { label: "Visión",        href: "#emotional"  },
-    { label: "El sistema",    href: "#problem"    },
+  groups: [
+    {
+      label: "La Plataforma",
+      items: [
+        { label: "Especialistas",  href: "#ecosystem", icon: "🏋️", description: "El equipo coordinado detrás tuyo"          },
+        { label: "El sistema",     href: "#problem",   icon: "⚙️", description: "Cómo funciona ESDEC paso a paso"            },
+        { label: "Mi dashboard",   href: "#footprint", icon: "📊", description: "Tu evolución en tiempo real", comingSoon: true },
+        { label: "Planes",         href: "#footprint", icon: "📋", description: "Plan integral personalizado",  comingSoon: true },
+      ],
+    },
+    {
+      label: "Comunidad",
+      items: [
+        { label: "Deportistas",    href: "#community", icon: "👥", description: "Personas reales, resultados reales"          },
+        { label: "Nuestra visión", href: "#emotional", icon: "🎯", description: "Por qué existe ESDEC"                       },
+        { label: "Eventos",        href: "#footprint", icon: "📅", description: "Actividades y encuentros",     comingSoon: true },
+        { label: "Historias",      href: "#footprint", icon: "⭐", description: "Casos de transformación real", comingSoon: true },
+      ],
+    },
+    {
+      // Grupo sin dropdown — link directo a la sección
+      label: "Nosotros",
+      href: "#about",
+    },
   ],
   cta: "Sumate →",
+  ctaHref: "#footprint",
+} as const;
+
+// ── COMMUNITY ─────────────────────────────────────────────────────────────────
+export const COMMUNITY = {
+  eyebrow: "La comunidad",
+  headline: "PERSONAS REALES.",
+  headlineAccent: "RESULTADOS REALES.",
+  body: "Deportistas de Córdoba que ya empezaron a construir su sistema con ESDEC.",
+
+  stats: [
+    { value: "247+", label: "En el sistema"       },
+    { value: "8+",   label: "Deportes activos"    },
+    { value: "24/7", label: "Acompañamiento real" },
+  ],
+
+  quote: {
+    text: "Antes entrenaba solo. Ahora tengo un equipo coordinado detrás y finalmente veo resultados.",
+    author: "Maxi R.",
+    sport:  "Running · Amateur",
+  },
+
+  // Cards de prueba social — se completan con fotos reales
+  cards: [
+    { name: "Lucas P.",  sport: "Ciclismo",  level: "Amateur",     src: null },
+    { name: "Sofi M.",   sport: "Natación",  level: "Intermedio",  src: null },
+    { name: "Rodrigo V.", sport: "Fútbol",   level: "Amateur",     src: null },
+  ],
+} as const;
+
+// ── IMAGES ────────────────────────────────────────────────────────────────────
+// Paths a los assets en /public/images/.
+// Actualizar cuando se agreguen más fotos.
+export const BLUR_PH =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==";
+
+export const IMAGES = {
+  athletes: [
+    { src: "/images/athletes/Atleta_1.png", alt: "Deportista en entrenamiento — ESDEC" },
+  ],
+  lifestyle: [
+    { src: "/images/lifestyle/Correr_lluvia_1.jpg", alt: "Atleta corriendo bajo la lluvia — ESDEC" },
+  ],
+  team: [
+    { src: "/images/team/descarga.png", alt: "Equipo de especialistas ESDEC", role: "Especialista" },
+  ],
+  community: [] as { src: string; alt: string; tag?: string }[],
 } as const;
 
 // ── FOOTER ────────────────────────────────────────────────────────────────────
