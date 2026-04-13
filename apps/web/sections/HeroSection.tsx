@@ -2,267 +2,350 @@
 
 // ─────────────────────────────────────────────────────────────────────────────
 // sections/HeroSection.tsx
-// Hero de ESDEC — MVP 0
+// Hero split-screen ESDEC — selector de audiencia (Deportista / Profesional)
 //
-// Animaciones:
-//   · Liquid background (CSS keyframe en globals.css)
-//   · Huella SVG se dibuja al montar (stroke-dashoffset)
-//   · 3 líneas del logo se extienden con lineDraw keyframe
-//   · Headline línea por línea con stamp keyframe
-//   · Athlete card con float + tilt 3D
-//   · Glitch en headline (loop cada 7s)
-//   · Dot grid overlay en hero
-//   · Modo claro: azul eléctrico | Modo oscuro: navy profundo
+// Comportamiento:
+//   · Ocupa 100vh en fullscreen como entrada a la landing
+//   · Hover: la mitad activa crece a 68%, la otra se achica a 32%
+//   · Click: particle burst + hero sale por arriba → landing visible
+//   · Mobile (<768px): paneles apilados verticalmente, 50vh cada uno
 //
-// Copy: todo viene de @/content/landing
+// Copy: todo viene de @/content/landing (HERO_SPLIT)
 // ─────────────────────────────────────────────────────────────────────────────
 
-import { useRef } from "react";
-import { HERO, STATS } from "@/content/landing";
+import { useEffect, useRef, useState } from "react";
+import { HERO_SPLIT } from "@/content/landing";
 import FingerprintSVG from "@/components/FingerprintSVG";
-import AthleteCard from "@/components/AthleteCard";
+import BrandLines from "@/components/BrandLines";
 import { cn } from "@/lib/utils";
 
-// ── Dot ping animado
-function PingDot({ className }: { className?: string }) {
-  return (
-    <span
-      className={cn(
-        "inline-block w-[7px] h-[7px] rounded-full flex-shrink-0",
-        "bg-[var(--p1)] animate-ping-dot",
-        className
-      )}
-    />
-  );
+type Audience = "deportista" | "profesional";
+type HoveredSide = "left" | "right" | null;
+
+interface CursorPos { x: number; y: number }
+
+interface HeroSectionProps {
+  onSelect: (audience: Audience) => void;
 }
 
-// ── Pillar chip
-function PillarChip({ label }: { label: string }) {
+export default function HeroSection({ onSelect }: HeroSectionProps) {
+  const [hovered,  setHovered]  = useState<HoveredSide>(null);
+  const [mounted,  setMounted]  = useState(false);
+  const [cursorL,  setCursorL]  = useState<CursorPos | null>(null);
+  const [cursorR,  setCursorR]  = useState<CursorPos | null>(null);
+  const heroRef = useRef<HTMLElement>(null);
+  const particleContainerRef = useRef<HTMLDivElement>(null);
+
+  // Slide-in entrance: trigger after first paint
+  useEffect(() => {
+    const t = setTimeout(() => setMounted(true), 60);
+    return () => clearTimeout(t);
+  }, []);
+
+  // ── Particle burst en el punto exacto del click
+  function spawnParticles(x: number, y: number, color: string) {
+    const container = particleContainerRef.current;
+    if (!container) return;
+    for (let i = 0; i < 22; i++) {
+      const el = document.createElement("div");
+      el.className = "particle";
+      el.style.left = `${x}px`;
+      el.style.top = `${y}px`;
+      el.style.backgroundColor = color;
+      const angle = (i / 22) * Math.PI * 2;
+      const dist = 40 + Math.random() * 90;
+      el.style.setProperty("--px", `${Math.cos(angle) * dist}px`);
+      el.style.setProperty("--py", `${Math.sin(angle) * dist}px`);
+      el.style.animationDelay = `${Math.random() * 80}ms`;
+      container.appendChild(el);
+      setTimeout(() => el.remove(), 900);
+    }
+  }
+
+  // ── Click handler: partículas → salida del hero → notificar parent
+  function handleSelect(audience: Audience, e: React.MouseEvent) {
+    const color = audience === "deportista" ? "#5ac8ff" : "#0CD25E";
+    spawnParticles(e.clientX, e.clientY, color);
+
+    setTimeout(() => {
+      heroRef.current?.classList.add("hero-split-exit");
+    }, 200);
+
+    setTimeout(() => {
+      if (heroRef.current) heroRef.current.style.display = "none";
+      onSelect(audience);
+    }, 1000);
+  }
+
+  // ── Flex values para expansión hover
+  const leftFlex =
+    hovered === "right" ? "0 0 32%" : hovered === "left" ? "0 0 68%" : "0 0 50%";
+  const rightFlex =
+    hovered === "left" ? "0 0 32%" : hovered === "right" ? "0 0 68%" : "0 0 50%";
+
+  // ── Cursor spotlight helpers
+  function handleMouseMoveL(e: React.MouseEvent<HTMLDivElement>) {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setCursorL({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  }
+  function handleMouseMoveR(e: React.MouseEvent<HTMLDivElement>) {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setCursorR({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  }
+
   return (
-    <div
-      className={cn(
-        "inline-flex items-center gap-1.5",
-        "px-4 py-[7px] rounded-full",
-        "bg-white/12 border border-white/25",
-        "font-condensed font-bold text-sm uppercase tracking-wide",
-        "text-white/90",
-        "transition-all duration-200 cursor-default",
-        "hover:bg-[var(--p1s)] hover:border-[var(--p1)] hover:text-white"
-      )}
+    <section
+      ref={heroRef}
+      id="hero-split"
+      className="fixed inset-0 z-50 flex flex-col md:flex-row overflow-hidden"
     >
-      <span className="text-[var(--p1)] text-[10px]">•</span>
-      {label}
-    </div>
-  );
-}
-
-// ── Stat item
-function StatItem({ value, label }: { value: string; label: string }) {
-  return (
-    <div className="text-center">
-      <div className="font-display text-[44px] leading-none tracking-wide text-white">
-        {value.replace(/\+|°|\/7|\/|%/, "")}
-        <span className="text-[var(--p1)]">
-          {value.match(/\+|°|\/7/)?.[0] ?? ""}
+      {/* ── Logo + tagline centrado arriba ─────────────────────────────────── */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center pt-7 gap-[6px] pointer-events-none">
+        <div className="flex items-center gap-2" style={{ "--bl-color": "#5ac8ff" } as React.CSSProperties}>
+          <BrandLines size="sm" />
+          <span className="font-condensed font-black text-sm tracking-[3px] text-white uppercase">
+            ESDEC
+          </span>
+        </div>
+        <span className="font-condensed text-[10px] tracking-[4px] text-white/50 uppercase">
+          {HERO_SPLIT.topTagline}
         </span>
       </div>
-      <div className="font-sans text-[11px] font-semibold tracking-[1.5px] uppercase text-white/38 mt-1">
-        {label}
-      </div>
-    </div>
-  );
-}
 
-// ── Stat separator (3 líneas del logo en miniatura)
-function StatSep() {
-  return (
-    <div className="flex flex-col gap-[3px] opacity-20">
-      <div className="h-[3px] w-4 rounded-full bg-white" />
-      <div className="h-[3px] w-3 rounded-full bg-white ml-0.5" />
-      <div className="h-[3px] w-2 rounded-full bg-white ml-1" />
-    </div>
-  );
-}
-
-export default function HeroSection() {
-  const heroRef = useRef<HTMLElement>(null);
-
-  return (
-    <>
-      {/* ────────────────────────────────────────────────────────────────────
-          HERO
-      ──────────────────────────────────────────────────────────────────── */}
-      <section
-        ref={heroRef}
-        id="hero"
-        className={cn(
-          "relative min-h-screen flex flex-col justify-center overflow-hidden",
-          // Liquid background — el gradiente se define por CSS var según el modo
-          "bg-hero-light dark:bg-hero-dark",
-          "animate-liquid-bg",
-        )}
+      {/* ── Panel izquierdo — Deportista ───────────────────────────────────── */}
+      <div
+        className="relative overflow-hidden cursor-pointer h-[50vh] md:h-full"
+        style={{
+          flex: leftFlex,
+          transition: "flex 0.6s cubic-bezier(.77,0,.175,1), transform 0.9s cubic-bezier(.22,1,.36,1)",
+          transform: mounted ? "translateX(0)" : "translateX(-100%)",
+        }}
+        onMouseEnter={() => setHovered("left")}
+        onMouseLeave={() => { setHovered(null); setCursorL(null); }}
+        onMouseMove={handleMouseMoveL}
+        onClick={(e) => handleSelect("deportista", e)}
       >
-        {/* Dot grid overlay */}
-        <div
-          className="absolute inset-0 pointer-events-none"
+        {/* Imagen de fondo */}
+        <img
+          src={HERO_SPLIT.left.image}
+          alt=""
+          draggable={false}
+          className="absolute inset-0 w-full h-full object-cover object-center select-none pointer-events-none"
           style={{
-            backgroundImage: "radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px)",
-            backgroundSize: "28px 28px",
+            transform: hovered === "left" ? "scale(1.04)" : "scale(1)",
+            transition: "transform 0.6s cubic-bezier(.77,0,.175,1)",
           }}
         />
 
-        {/* Glow orbs */}
-        <div className="absolute top-[-100px] right-[-100px] w-[600px] h-[400px] rounded-full pointer-events-none hero-orb-1" />
-        <div className="absolute bottom-[-80px] left-[100px] w-[400px] h-[400px] rounded-full pointer-events-none hero-orb-2" />
+        {/* Overlay azul semitransparente */}
+        <div className="absolute inset-0 bg-[#1556d4]/65" />
 
-        {/* Overlay gradiente direccional */}
-        <div className="absolute inset-0 bg-hero-overlay pointer-events-none" />
-
-        {/* ── Panel izquierdo: imagen del atleta + huella fusionada */}
+        {/* Dim overlay cuando la otra mitad está hovered */}
         <div
-          className={cn(
-            "absolute left-0 top-0 w-1/2 h-full",
-            "hidden lg:block z-[1]",
-            "opacity-0 animate-fade-up [animation-delay:800ms] [animation-fill-mode:forwards]"
-          )}
-        >
-          <div className="relative w-full h-full">
-            {/* Imagen del atleta */}
-            <img
-              src="/images/athletes/Atleta_1.png"
-              alt=""
-              className="w-full h-full object-cover object-center select-none pointer-events-none opacity-40 brightness-125"
-            />
+          className="absolute inset-0 bg-black"
+          style={{
+            opacity: hovered === "right" ? 0.3 : 0,
+            transition: "opacity 0.6s cubic-bezier(.77,0,.175,1)",
+          }}
+        />
 
+        {/* Cursor spotlight */}
+        {cursorL && (
+          <div
+            className="pointer-events-none absolute inset-0 z-[5]"
+            style={{
+              background: `radial-gradient(400px circle at ${cursorL.x}px ${cursorL.y}px, rgba(90,200,255,0.13) 0%, transparent 70%)`,
+              transition: "background 0.08s ease",
+            }}
+          />
+        )}
 
+        {/* Contenido */}
+        <div className="relative z-10 h-full flex flex-col justify-center px-8 md:px-12 lg:px-16 pt-28 pb-20">
+
+          {/* Logo en esquina superior izquierda */}
+          <div
+            className="absolute top-6 left-6 md:top-8 md:left-8 flex items-center gap-2"
+            style={{ "--bl-color": "#5ac8ff" } as React.CSSProperties}
+          >
+            <BrandLines size="sm" />
           </div>
-        </div>
-
-        {/* ── Hero content — mitad derecha en desktop */}
-        <div className="relative z-[2] px-16 pt-[130px] pb-20 lg:ml-[50%] lg:max-w-[calc(50%-2rem)] max-w-[680px]">
 
           {/* Eyebrow */}
-          <div
-            className={cn(
-              "inline-flex items-center gap-2",
-              "font-sans text-[11px] font-semibold tracking-[3px] uppercase",
-              "text-[var(--p1)] mb-5",
-              "opacity-0 animate-fade-up [animation-delay:200ms] [animation-fill-mode:forwards]"
-            )}
-          >
-            <PingDot />
-            {HERO.eyebrow}
-          </div>
-
-          {/* Huella estática — antes del headline */}
-          <div
-            className={cn(
-              "mb-[18px]",
-              "[--fps:var(--p1)] [--fpg:rgba(90,200,255,0.08)]",
-              "opacity-0 animate-fade-up [animation-delay:500ms] [animation-fill-mode:forwards]"
-            )}
-          >
-            <FingerprintSVG animate={false} className="w-14 h-[68px]" strokeOpacity={0.9} />
-          </div>
-
-          {/* Headline — línea por línea con stamp */}
-          <h1 className="font-condensed font-black text-white leading-[1.0] tracking-[-1px] mb-5 animate-glitch"
-              style={{ fontSize: "clamp(44px, 7.5vw, 110px)" }}>
-            {[HERO.headlineLine1, HERO.headlineLine2, HERO.headlineLine3].map(
-              (line, i) => (
-                <span
-                  key={i}
-                  className={cn(
-                    "block",
-                    "opacity-0 animate-stamp [animation-fill-mode:forwards]"
-                  )}
-                  style={{ animationDelay: `${900 + i * 100}ms` }}
-                >
-                  {line}
-                </span>
-              )
-            )}
-            <span
-              className={cn(
-                "block text-[var(--p1)]",
-                "opacity-0 animate-stamp [animation-fill-mode:forwards]"
-              )}
-              style={{ animationDelay: "1200ms" }}
-            >
-              {HERO.headlineAccent}
+          <div className="flex items-center gap-3 mb-5">
+            <div className="h-px w-7 bg-[#5ac8ff] flex-shrink-0" />
+            <span className="font-condensed font-bold text-[11px] tracking-[3px] uppercase text-[#5ac8ff]">
+              {HERO_SPLIT.left.eyebrow}
             </span>
-          </h1>
-
-          {/* Sub headline */}
-          <p
-            className={cn(
-              "font-sans text-base text-white/75 leading-[1.75]",
-              "max-w-[480px] mb-8",
-              "opacity-0 animate-fade-up [animation-delay:1200ms] [animation-fill-mode:forwards]"
-            )}
-            dangerouslySetInnerHTML={{ __html: HERO.body }}
-          />
-
-          {/* Pillars */}
-          <div
-            className={cn(
-              "flex flex-wrap gap-2 mb-8",
-              "opacity-0 animate-fade-up [animation-delay:1300ms] [animation-fill-mode:forwards]"
-            )}
-          >
-            {HERO.pillars.map((p) => (
-              <PillarChip key={p} label={p} />
-            ))}
           </div>
 
-          {/* CTAs */}
-          <div
+          {/* Headline */}
+          <h2
+            className="font-condensed font-black leading-[1.0] text-white"
+            style={{ fontSize: "clamp(48px, 7vw, 112px)" }}
+          >
+            {HERO_SPLIT.left.headlinePre}
+            <br />
+            <span className="text-[#5ac8ff]">{HERO_SPLIT.left.headlineAccent}</span>
+          </h2>
+
+          {/* Body */}
+          <p className="font-sans text-sm text-white/80 mt-5 max-w-[320px] leading-[1.7]">
+            {HERO_SPLIT.left.body}
+          </p>
+
+          {/* CTA */}
+          <button
+            type="button"
             className={cn(
-              "flex flex-wrap gap-3",
-              "opacity-0 animate-fade-up [animation-delay:1400ms] [animation-fill-mode:forwards]"
+              "mt-8 inline-flex items-center gap-2 w-fit",
+              "font-condensed font-bold text-[13px] uppercase tracking-wide",
+              "px-7 py-[11px] rounded-md",
+              "bg-[#5ac8ff] text-[#0c2d7a]",
+              "transition-all duration-200 hover:brightness-110 hover:-translate-y-px",
+              "relative overflow-hidden",
+              "before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent",
+              "before:-translate-x-full hover:before:translate-x-full before:transition-transform before:duration-400"
             )}
           >
-            <a
-              href="#footprint"
-              className={cn(
-                "inline-flex items-center gap-2 group",
-                "font-condensed font-bold text-[15px] uppercase tracking-wide",
-                "px-[30px] py-[13px] rounded-md",
-                "bg-[var(--btn-bg)] text-[var(--btn-t)]",
-                "transition-all duration-200 ease-out",
-                "hover:brightness-110 hover:px-[42px] hover:-translate-y-0.5",
-                "hover:shadow-[0_8px_28px_rgba(0,0,0,0.25)]",
-                // Shimmer interno
-                "relative overflow-hidden before:absolute before:inset-0",
-                "before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent",
-                "before:-translate-x-full hover:before:translate-x-full before:transition-transform before:duration-400"
-              )}
-            >
-              {HERO.ctaPrimary} →
-            </a>
-            <a
-              href="#about"
-              className={cn(
-                "inline-flex items-center gap-2",
-                "font-sans font-medium text-sm",
-                "px-[26px] py-[12px] rounded-md",
-                "bg-transparent text-white/75",
-                "border border-white/25",
-                "transition-all duration-200",
-                "hover:border-white hover:text-white"
-              )}
-            >
-              {HERO.ctaSecondary}
-            </a>
-          </div>
+            {HERO_SPLIT.left.cta}
+          </button>
         </div>
 
-      </section>
+        {/* Huella SVG — esquina inferior derecha */}
+        <div
+          className="absolute bottom-0 right-0 w-36 h-44 pointer-events-none"
+          style={{
+            opacity: 0.08,
+            ["--fps" as string]: "rgba(255,255,255,0.8)",
+            ["--fpg" as string]: "rgba(255,255,255,0.02)",
+          }}
+        >
+          <FingerprintSVG animate={false} className="w-full h-full" />
+        </div>
+      </div>
 
-      {/* ────────────────────────────────────────────────────────────────────
-          STATS BAR
-      ──────────────────────────────────────────────────────────────────── */}
-      
-    </>
+      {/* ── Línea divisoria ────────────────────────────────────────────────── */}
+      <div className="w-px md:w-px h-px md:h-full bg-white/20 z-10 flex-shrink-0 self-stretch hidden md:block" />
+
+      {/* ── Panel derecho — Profesional ────────────────────────────────────── */}
+      <div
+        className="relative overflow-hidden cursor-pointer h-[50vh] md:h-full"
+        style={{
+          flex: rightFlex,
+          transition: "flex 0.6s cubic-bezier(.77,0,.175,1), transform 0.9s cubic-bezier(.22,1,.36,1)",
+          transform: mounted ? "translateX(0)" : "translateX(100%)",
+        }}
+        onMouseEnter={() => setHovered("right")}
+        onMouseLeave={() => { setHovered(null); setCursorR(null); }}
+        onMouseMove={handleMouseMoveR}
+        onClick={(e) => handleSelect("profesional", e)}
+      >
+        {/* Imagen de fondo */}
+        <img
+          src={HERO_SPLIT.right.image}
+          alt=""
+          draggable={false}
+          className="absolute inset-0 w-full h-full object-cover object-center select-none pointer-events-none"
+          style={{
+            transform: hovered === "right" ? "scale(1.04)" : "scale(1)",
+            transition: "transform 0.6s cubic-bezier(.77,0,.175,1)",
+          }}
+        />
+
+        {/* Overlay navy oscuro */}
+        <div className="absolute inset-0 bg-[#001A33]/82" />
+
+        {/* Dim overlay cuando la otra mitad está hovered */}
+        <div
+          className="absolute inset-0 bg-black"
+          style={{
+            opacity: hovered === "left" ? 0.3 : 0,
+            transition: "opacity 0.6s cubic-bezier(.77,0,.175,1)",
+          }}
+        />
+
+        {/* Cursor spotlight */}
+        {cursorR && (
+          <div
+            className="pointer-events-none absolute inset-0 z-[5]"
+            style={{
+              background: `radial-gradient(400px circle at ${cursorR.x}px ${cursorR.y}px, rgba(12,210,94,0.13) 0%, transparent 70%)`,
+              transition: "background 0.08s ease",
+            }}
+          />
+        )}
+
+        {/* Contenido — alineado a la derecha */}
+        <div className="relative z-10 h-full flex flex-col justify-center items-end text-right px-8 md:px-12 lg:px-16 pt-28 pb-20">
+
+          {/* Eyebrow */}
+          <div className="flex items-center gap-3 mb-5">
+            <span className="font-condensed font-bold text-[11px] tracking-[3px] uppercase text-[#0CD25E]">
+              {HERO_SPLIT.right.eyebrow}
+            </span>
+            <div className="h-px w-7 bg-[#0CD25E] flex-shrink-0" />
+          </div>
+
+          {/* Headline */}
+          <h2
+            className="font-condensed font-black leading-[1.0] text-white"
+            style={{ fontSize: "clamp(48px, 7vw, 112px)" }}
+          >
+            {HERO_SPLIT.right.headlinePre}
+            <br />
+            <span className="text-[#0CD25E]">{HERO_SPLIT.right.headlineAccent}</span>
+          </h2>
+
+          {/* Body */}
+          <p className="font-sans text-sm text-white/80 mt-5 max-w-[320px] leading-[1.7]">
+            {HERO_SPLIT.right.body}
+          </p>
+
+          {/* CTA */}
+          <button
+            type="button"
+            className={cn(
+              "mt-8 inline-flex items-center gap-2 w-fit",
+              "font-condensed font-bold text-[13px] uppercase tracking-wide",
+              "px-7 py-[11px] rounded-md",
+              "bg-[#0CD25E] text-[#001A33]",
+              "transition-all duration-200 hover:brightness-110 hover:-translate-y-px",
+              "relative overflow-hidden",
+              "before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-white/15 before:to-transparent",
+              "before:-translate-x-full hover:before:translate-x-full before:transition-transform before:duration-400"
+            )}
+          >
+            {HERO_SPLIT.right.cta}
+          </button>
+        </div>
+
+        {/* Huella SVG — esquina inferior izquierda */}
+        <div
+          className="absolute bottom-0 left-0 w-36 h-44 pointer-events-none"
+          style={{
+            opacity: 0.07,
+            ["--fps" as string]: "rgba(12,210,94,0.9)",
+            ["--fpg" as string]: "rgba(12,210,94,0.02)",
+          }}
+        >
+          <FingerprintSVG animate={false} className="w-full h-full" />
+        </div>
+      </div>
+
+      {/* ── "ELEGÍ TU CAMINO" + indicador de scroll ────────────────────────── */}
+      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 pointer-events-none">
+        <span className="font-condensed font-bold text-[10px] tracking-[5px] uppercase text-white/35">
+          {HERO_SPLIT.dividerText}
+        </span>
+        <div className="w-px h-7 bg-gradient-to-b from-white/35 to-transparent animate-scroll-down" />
+      </div>
+
+      {/* ── Contenedor de partículas ───────────────────────────────────────── */}
+      <div
+        ref={particleContainerRef}
+        className="fixed inset-0 pointer-events-none z-[9999]"
+      />
+    </section>
   );
 }

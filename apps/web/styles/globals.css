@@ -454,3 +454,66 @@ body {
   pointer-events: none;
   z-index: 10;
 }
+
+/* ══ CLAMP SIZES (reemplaza inline styles en secciones) ═════════════════════ */
+.text-clamp-beat    { font-size: clamp(40px, 6vw, 86px); }
+.text-clamp-beat-lg { font-size: clamp(44px, 7vw, 100px); }
+.text-clamp-pivot   { font-size: clamp(38px, 6.5vw, 88px); }
+.text-clamp-problem { font-size: clamp(46px, 7.5vw, 104px); }
+.text-clamp-journey { font-size: clamp(36px, 5.5vw, 76px); }
+
+/* ══ PROFESSIONAL THEME — mismo fondo claro, acentos en verde ═══════════════ */
+/* Sobreescribe solo p1/p2 para que todos los detalles de acento sean verdes   */
+.professional-theme {
+  --p1:  #0ab84e;
+  --p1s: rgba(10,184,78,0.18);
+  --p2:  #5de68a;
+  --p2s: rgba(93,230,138,0.15);
+  --btn-bg: #0ab84e;
+  --btn-t:  #003a1a;
+  --scan-c: rgba(10,184,78,0.7);
+  --fps: rgba(10,184,78,0.22);
+  --fpg: rgba(10,184,78,0.06);
+}
+
+/* ══ NAVBAR VISIBILITY (controlada desde page.tsx) ══════════════════════════ */
+.nav-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.4s ease;
+}
+.nav-hidden {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+/* ══ HERO SPLIT — SCROLL INDICATOR ══════════════════════════════════════════ */
+@keyframes scroll-down {
+  0%   { transform: translateY(0);    opacity: 0.6; }
+  60%  { transform: translateY(10px); opacity: 0.9; }
+  100% { transform: translateY(0);    opacity: 0.6; }
+}
+.animate-scroll-down { animation: scroll-down 2s ease-in-out infinite; }
+
+/* ══ HERO SPLIT — PARTICLE BURST ════════════════════════════════════════════ */
+@keyframes particle-out {
+  0%   { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--px), var(--py)) scale(0); opacity: 0; }
+}
+.particle {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  animation: particle-out 0.6s ease-out forwards;
+}
+
+/* ══ HERO SPLIT — EXIT ANIMATION ════════════════════════════════════════════ */
+.hero-split-exit {
+  transition: transform 0.8s cubic-bezier(.77,0,.175,1), opacity 0.8s cubic-bezier(.77,0,.175,1) !important;
+  transform: translateY(-100%) !important;
+  opacity: 0 !important;
+}

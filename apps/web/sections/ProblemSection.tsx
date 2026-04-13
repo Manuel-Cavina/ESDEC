@@ -14,8 +14,10 @@
 import ScrollReveal from "@/components/ScrollReveal";
 import BrandLines from "@/components/BrandLines";
 import FingerprintSVG from "@/components/FingerprintSVG";
-import { PROBLEM } from "@/content/landing";
+import { PROBLEM, PROFESSIONAL_PROBLEM } from "@/content/landing";
 import { cn } from "@/lib/utils";
+
+type ProblemData = typeof PROBLEM | typeof PROFESSIONAL_PROBLEM;
 
 // ── Tipos locales ─────────────────────────────────────────────────────────────
 
@@ -83,9 +85,9 @@ function ProblemCard({ problem, index }: { problem: Problem; index: number }) {
 // La frase bisagra entre el diagnóstico y la solución.
 // Huella grande de fondo, texto centrado en display.
 
-function PivotStrip() {
+function PivotStrip({ data }: { data: ProblemData }) {
   return (
-    <div className="relative overflow-hidden  border-[var(--p1)]/12 bg-[var(--bg)] py-24 md:py-36">
+    <div className="relative overflow-hidden border-[var(--p1)]/12 bg-[var(--bg)] py-24 md:py-36">
 
       {/* Huella de fondo — centrada, grande */}
       <div
@@ -106,17 +108,14 @@ function PivotStrip() {
       <div className="relative z-10 mx-auto max-w-landing px-6 text-center">
         <ScrollReveal direction="up">
           <BrandLines animated centered className="mx-auto mb-8" />
-          <div
-            className="font-condensed font-black uppercase leading-[0.88] tracking-tight"
-            style={{ fontSize: "clamp(38px, 6.5vw, 88px)" }}
-          >
-            <span className="block text-[var(--t1)]">{PROBLEM.pivotPre}</span>
-            <span className="block text-[var(--p1)]">{PROBLEM.pivotAccent1}</span>
+          <div className="font-condensed font-black uppercase leading-[0.88] tracking-tight text-clamp-pivot">
+            <span className="block text-[var(--t1)]">{data.pivotPre}</span>
+            <span className="block text-[var(--p1)]">{data.pivotAccent1}</span>
             <span className="mt-2 block text-[var(--t2)] text-[0.55em] font-bold tracking-normal">
               ─
             </span>
-            <span className="block text-[var(--t1)]">{PROBLEM.pivotConnector}</span>
-            <span className="block text-[var(--p2)]">{PROBLEM.pivotAccent2}</span>
+            <span className="block text-[var(--t1)]">{data.pivotConnector}</span>
+            <span className="block text-[var(--p2)]">{data.pivotAccent2}</span>
           </div>
         </ScrollReveal>
       </div>
@@ -167,9 +166,8 @@ function JourneyStepRow({
 }
 
 // ── JourneySection ────────────────────────────────────────────────────────────
-// Split izq/der: huella animada sticky (la meta = la estructura) + pasos verticales.
 
-function JourneySection() {
+function JourneySection({ data }: { data: ProblemData }) {
   return (
     <div className="bg-[var(--bg2)] py-24 md:py-32">
       <div className="mx-auto max-w-landing px-6">
@@ -178,21 +176,18 @@ function JourneySection() {
         <ScrollReveal direction="up" className="mb-16 max-w-xl">
           <BrandLines animated className="mb-5 [--bl-color:var(--p2)]" />
           <p className="mb-4 font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[var(--p2)]">
-            {PROBLEM.journeyLabel}
+            {data.journeyLabel}
           </p>
-          <h2
-            className="font-condensed font-black uppercase leading-[0.92] tracking-tight text-[var(--t1)]"
-            style={{ fontSize: "clamp(36px, 5.5vw, 76px)" }}
-          >
-            {PROBLEM.journeyHeadlinePre}{" "}
-            <span className="text-[var(--p2)]">{PROBLEM.journeyHeadlineAccent}</span>
+          <h2 className="font-condensed font-black uppercase leading-[0.92] tracking-tight text-[var(--t1)] text-clamp-journey">
+            {data.journeyHeadlinePre}{" "}
+            <span className="text-[var(--p2)]">{data.journeyHeadlineAccent}</span>
           </h2>
         </ScrollReveal>
 
         {/* Split: huella + pasos */}
         <div className="grid grid-cols-1 items-start gap-16 lg:grid-cols-2">
 
-          {/* Huella — sticky en desktop, la estructura como destino */}
+          {/* Huella — sticky en desktop */}
           <div className="lg:sticky lg:top-32">
             <div
               className={cn(
@@ -201,37 +196,30 @@ function JourneySection() {
                 "[--fpg:rgba(125,232,168,0.08)] dark:[--fpg:rgba(12,210,94,0.08)]"
               )}
             >
-              {/* Anillos decorativos girando */}
-              
-
-              {/* Huella — se dibuja al montar */}
               <FingerprintSVG
                 animate={true}
                 className="w-full max-w-[340px] drop-shadow-[0_0_48px_rgba(125,232,168,0.18)]"
               />
-
-              {/* Label bajo la huella */}
               <p className="absolute bottom-2 left-1/2 -translate-x-1/2 font-condensed text-[9px] font-bold uppercase tracking-[5px] text-[var(--p2)]/40">
-                Tu estructura ESDEC
+                {data.journeyFingerLabel}
               </p>
             </div>
           </div>
 
           {/* Pasos */}
           <div className="pt-2">
-            {PROBLEM.journey.map((step, i) => (
+            {data.journey.map((step, i) => (
               <JourneyStepRow
                 key={step.step}
                 step={step}
                 index={i}
-                isLast={i === PROBLEM.journey.length - 1}
+                isLast={i === data.journey.length - 1}
               />
             ))}
 
-            {/* CTA */}
-            <ScrollReveal direction="up" delay={PROBLEM.journey.length * 100 + 40}>
+            <ScrollReveal direction="up" delay={data.journey.length * 100 + 40}>
               <a
-                href={PROBLEM.journeyCtaHref}
+                href={data.journeyCtaHref}
                 className={cn(
                   "mt-4 inline-flex items-center gap-3",
                   "bg-[var(--btn-bg)] px-7 py-3.5",
@@ -239,7 +227,7 @@ function JourneySection() {
                   "transition-opacity duration-200 hover:opacity-80"
                 )}
               >
-                {PROBLEM.journeyCta} →
+                {data.journeyCta} →
               </a>
             </ScrollReveal>
           </div>
@@ -252,7 +240,13 @@ function JourneySection() {
 
 // ── Sección principal ─────────────────────────────────────────────────────────
 
-export default function ProblemSection() {
+interface ProblemSectionProps {
+  audience?: "deportista" | "profesional";
+}
+
+export default function ProblemSection({ audience = "deportista" }: ProblemSectionProps) {
+  const data = audience === "profesional" ? PROFESSIONAL_PROBLEM : PROBLEM;
+
   return (
     <section id="problem" className="overflow-hidden">
 
@@ -260,28 +254,22 @@ export default function ProblemSection() {
       <div className="bg-[var(--bg2)] pb-24 pt-24 md:pb-28 md:pt-32">
         <div className="mx-auto max-w-landing px-6">
 
-          {/* Header split: headline izq. / huella ghost der. */}
           <div className="mb-24 grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
 
-            {/* Copy */}
             <ScrollReveal direction="up">
               <p className="mb-4 font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
-                {PROBLEM.eyebrow}
+                {data.eyebrow}
               </p>
-              <h2
-                className="mb-8 font-condensed font-black uppercase leading-[0.92] tracking-tight text-[var(--t1)]"
-                style={{ fontSize: "clamp(46px, 7.5vw, 104px)" }}
-              >
-                {PROBLEM.headline}{" "}
-                <span className="text-[var(--p1)]">{PROBLEM.headlineAccent}</span>
+              <h2 className="mb-8 font-condensed font-black uppercase leading-[0.92] tracking-tight text-[var(--t1)] text-clamp-problem">
+                {data.headline}{" "}
+                <span className="text-[var(--p1)]">{data.headlineAccent}</span>
               </h2>
               <blockquote
                 className="max-w-lg font-sans text-base leading-[1.85] text-[var(--t2)] [&_strong]:font-semibold [&_strong]:text-[var(--t1)]"
-                dangerouslySetInnerHTML={{ __html: PROBLEM.quote }}
+                dangerouslySetInnerHTML={{ __html: data.quote }}
               />
             </ScrollReveal>
 
-            {/* Huella ghost — decorativa, parcialmente cortada a la derecha */}
             <ScrollReveal direction="up" delay={100}>
               <div
                 className={cn(
@@ -291,7 +279,6 @@ export default function ProblemSection() {
                 )}
                 aria-hidden="true"
               >
-                {/* Degradado que corta la huella por la derecha */}
                 <div className="absolute inset-0 z-10 bg-gradient-to-l from-transparent via-transparent to-[var(--bg2)] opacity-0 lg:opacity-100" />
                 <FingerprintSVG animate={false} className="w-full max-w-[320px] translate-x-8 opacity-50 lg:translate-x-16" />
               </div>
@@ -300,7 +287,7 @@ export default function ProblemSection() {
 
           {/* Grid 4 problemas */}
           <div className="grid gap-x-10 sm:grid-cols-2 lg:grid-cols-4">
-            {PROBLEM.problems.map((problem, i) => (
+            {data.problems.map((problem, i) => (
               <ProblemCard key={problem.number} problem={problem} index={i} />
             ))}
           </div>
@@ -308,11 +295,11 @@ export default function ProblemSection() {
         </div>
       </div>
 
-      {/* ── Pivot: bisagra narrativa ── */}
-      <PivotStrip />
+      {/* ── Pivot ── */}
+      <PivotStrip data={data} />
 
-      {/* ── Journey: cómo funciona ESDEC ── */}
-      <JourneySection />
+      {/* ── Journey ── */}
+      <JourneySection data={data} />
 
     </section>
   );

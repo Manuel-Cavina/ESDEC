@@ -125,9 +125,10 @@ function DropdownPanel({
 interface NavbarProps {
   onThemeToggle?: (isDark: boolean) => void;
   isDark?: boolean;
+  onLogoClick?: () => void;
 }
 
-export default function Navbar({ onThemeToggle, isDark = false }: NavbarProps) {
+export default function Navbar({ onThemeToggle, isDark = false, onLogoClick }: NavbarProps) {
   const [scrolled,     setScrolled]     = useState(false);
   const [openGroup,    setOpenGroup]    = useState<string | null>(null);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -296,7 +297,14 @@ export default function Navbar({ onThemeToggle, isDark = false }: NavbarProps) {
         <a
           href="#"
           className="flex shrink-0 items-center gap-2.5 transition-opacity duration-200 hover:opacity-80"
-          onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+          onClick={(e) => {
+            e.preventDefault();
+            if (onLogoClick) {
+              onLogoClick();
+            } else {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+          }}
         >
           <div className="[--fps:var(--logo-l)] [--fpg:transparent]">
             <FingerprintSVG animate={false} className="w-7 h-8" strokeOpacity={1} />
