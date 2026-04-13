@@ -131,29 +131,9 @@ export default function HeroSection() {
             <img
               src="/images/athletes/Atleta_1.png"
               alt=""
-              className="w-full h-full object-cover object-center select-none pointer-events-none"
+              className="w-full h-full object-cover object-center select-none pointer-events-none opacity-40 brightness-125"
             />
 
-            {/* Degradé derecho — fusión hacia el contenido */}
-            <div
-              className="absolute inset-y-0 right-0 w-[45%] pointer-events-none"
-              style={{ background: "linear-gradient(to left, var(--hero-from) 0%, transparent 100%)" }}
-            />
-            {/* Degradé izquierdo */}
-            <div
-              className="absolute inset-y-0 left-0 w-[15%] pointer-events-none"
-              style={{ background: "linear-gradient(to right, var(--hero-from) 0%, transparent 100%)" }}
-            />
-            {/* Degradé superior */}
-            <div
-              className="absolute inset-x-0 top-0 h-[22%] pointer-events-none"
-              style={{ background: "linear-gradient(to bottom, var(--hero-from) 0%, transparent 100%)" }}
-            />
-            {/* Degradé inferior */}
-            <div
-              className="absolute inset-x-0 bottom-0 h-[28%] pointer-events-none"
-              style={{ background: "linear-gradient(to top, var(--hero-from) 0%, transparent 100%)" }}
-            />
 
           </div>
         </div>

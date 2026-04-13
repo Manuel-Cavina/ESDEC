@@ -85,7 +85,7 @@ function ProblemCard({ problem, index }: { problem: Problem; index: number }) {
 
 function PivotStrip() {
   return (
-    <div className="relative overflow-hidden border-y border-[var(--p1)]/12 bg-[var(--bg)] py-24 md:py-36">
+    <div className="relative overflow-hidden  border-[var(--p1)]/12 bg-[var(--bg)] py-24 md:py-36">
 
       {/* Huella de fondo — centrada, grande */}
       <div
@@ -202,8 +202,7 @@ function JourneySection() {
               )}
             >
               {/* Anillos decorativos girando */}
-              <div className="absolute inset-[8%] rounded-full border border-[var(--p2)]/8 [animation:spin_50s_linear_infinite]" />
-              <div className="absolute inset-[18%] rounded-full border border-[var(--p2)]/6 [animation:spin_35s_linear_infinite_reverse]" />
+              
 
               {/* Huella — se dibuja al montar */}
               <FingerprintSVG

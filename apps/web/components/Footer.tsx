@@ -3,25 +3,13 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // components/Footer.tsx
 // Footer de la landing ESDEC.
-// Layout: logo + tagline | grupos de links | social + legal + copyright.
+// Layout: pre-footer CTA band | brand block + link groups | legal bar
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { FOOTER, BRAND } from "@/content/landing";
 import { cn } from "@/lib/utils";
 import FingerprintSVG from "@/components/FingerprintSVG";
 import BrandLines from "@/components/BrandLines";
-
-// ── Logo mark (mismas 3 líneas del Navbar) ────────────────────────────────────
-
-function LogoMark({ className }: { className?: string }) {
-  return (
-    <div className={cn("flex flex-col gap-[5px]", className)} aria-hidden="true">
-      <div className="h-[5px] w-[22px] rounded-[2.5px] bg-[var(--logo-l)]" />
-      <div className="ml-[3px] h-[5px] w-[16px] rounded-[2.5px] bg-[var(--logo-l)]" />
-      <div className="ml-[6px] h-[5px] w-[11px] rounded-[2.5px] bg-[var(--logo-l)]" />
-    </div>
-  );
-}
 
 // ── Icono Instagram ───────────────────────────────────────────────────────────
 
@@ -53,120 +41,130 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative overflow-hidden bg-[var(--bg)] pt-16 pb-8">
+    <>
+      {/* ── Footer principal ──────────────────────────────────────────────────── */}
+      <footer className="relative overflow-hidden bg-[var(--bg)] pt-16 pb-8">
 
-      {/* Huella watermark — esquina inferior derecha */}
-      <div
-        className={cn(
-          "pointer-events-none absolute bottom-0 right-[-8%] opacity-[0.04]",
-          "[--fps:rgba(255,255,255,1)] [--fpg:rgba(255,255,255,0.1)]"
-        )}
-        aria-hidden="true"
-      >
-        <FingerprintSVG animate={false} className="w-[420px]" />
-      </div>
+        {/* Accent line superior */}
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--p1)]/50 to-transparent" />
 
-      <div className="relative z-10 mx-auto max-w-landing px-6">
+        {/* Huella watermark — esquina inferior derecha */}
+        <div
+          className={cn(
+            "pointer-events-none absolute bottom-0 right-[-8%]",
+            "opacity-[0.04] [--fps:rgba(255,255,255,1)] [--fpg:rgba(255,255,255,0.1)]"
+          )}
+          aria-hidden="true"
+        >
+          <FingerprintSVG animate={false} className="w-[420px]" />
+        </div>
 
-        {/* ── Fila principal: brand + grupos de links ── */}
-        <div className="grid grid-cols-1 gap-12 border-b border-white/10 pb-12 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="relative z-10 mx-auto max-w-landing px-6">
 
-          {/* Brand block */}
-          <div className="sm:col-span-2 lg:col-span-2">
-            {/* Logo */}
-            <div className="mb-4 flex items-center gap-2.5">
-              <LogoMark />
-              <span
-                className="font-condensed text-[22px] font-black leading-none tracking-[1.5px]"
-                style={{ color: "var(--logo-t)" }}
-              >
-                {BRAND.name}
-              </span>
+          {/* ── Fila principal ── */}
+          <div className="grid grid-cols-1 gap-12 border-b border-white/10 pb-12 sm:grid-cols-2 lg:grid-cols-4">
+
+            {/* Brand block */}
+            <div className="sm:col-span-2 lg:col-span-2">
+
+              {/* Logo */}
+              <div className="mb-5 flex items-center gap-2.5">
+                <div className="[--fps:var(--logo-l)] [--fpg:transparent]">
+                  <FingerprintSVG animate={false} className="w-7 h-8" strokeOpacity={1} />
+                </div>
+                <span
+                  className="font-condensed text-[24px] font-black leading-none tracking-[1.5px]"
+                  style={{ color: "var(--logo-t)" }}
+                >
+                  {BRAND.name}
+                </span>
+              </div>
+
+              {/* Tagline */}
+              <p className="mb-1 font-condensed text-[11px] font-bold uppercase tracking-[3px] text-[var(--p1)]">
+                {FOOTER.tagline}
+              </p>
+
+              {/* Location */}
+              <p className="mb-6 font-condensed text-[10px] font-bold uppercase tracking-[3px] text-[var(--t2)]/40">
+                {FOOTER.location}
+              </p>
+
+              {/* Social */}
+              <div className="flex items-center gap-3">
+                {FOOTER.social.map((s) => (
+                  <a
+                    key={s.label}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={s.label}
+                    className={cn(
+                      "flex h-10 w-10 items-center justify-center rounded-full",
+                      "border border-white/20 text-[var(--t2)]",
+                      "transition-all duration-200",
+                      "hover:border-[var(--p1)] hover:text-[var(--p1)] hover:bg-[var(--p1)]/8 hover:scale-110"
+                    )}
+                  >
+                    <IconInstagram />
+                  </a>
+                ))}
+              </div>
             </div>
 
-            <BrandLines className="mb-4 [--bl-color:var(--p1)]" />
+            {/* Grupos de links */}
+            {FOOTER.groups.map((group) => (
+              <div key={group.label}>
+                <p className="mb-5 font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
+                  {group.label}
+                </p>
+                <ul className="flex flex-col gap-3">
+                  {group.links.map((link) => (
+                    <li key={link.label}>
+                      <button
+                        onClick={() => scrollTo(link.href)}
+                        className="group flex items-center gap-0 font-sans text-sm text-[var(--t2)] transition-colors duration-200 hover:text-[var(--t1)]"
+                      >
+                        <span className="block h-px w-0 bg-[var(--p1)] transition-[width] duration-300 group-hover:w-3 group-hover:mr-2" />
+                        {link.label}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
 
-            <p className="max-w-xs font-sans text-sm leading-[1.7] text-[var(--t2)]">
-              {FOOTER.tagline}
-            </p>
+          </div>
 
-            {/* Social */}
-            <div className="mt-6 flex items-center gap-3">
-              {FOOTER.social.map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={s.label}
-                  className={cn(
-                    "flex h-9 w-9 items-center justify-center rounded-full",
-                    "border border-white/20 text-[var(--t2)]",
-                    "transition-all duration-200 hover:border-[var(--p1)] hover:text-[var(--p1)]"
+          {/* ── Fila inferior ── */}
+          <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+
+            {/* Legal */}
+            <div className="flex items-center gap-4">
+              {FOOTER.legal.map((item, i) => (
+                <span key={item.label} className="flex items-center gap-4">
+                  <a
+                    href={item.href}
+                    className="font-sans text-xs text-[var(--t2)] transition-colors duration-200 hover:text-[var(--t1)]"
+                  >
+                    {item.label}
+                  </a>
+                  {i < FOOTER.legal.length - 1 && (
+                    <span className="text-[var(--t2)]/30" aria-hidden="true">·</span>
                   )}
-                >
-                  <IconInstagram />
-                </a>
+                </span>
               ))}
             </div>
-          </div>
 
-          {/* Grupos de links */}
-          {FOOTER.groups.map((group) => (
-            <div key={group.label}>
-              <p className="mb-4 font-condensed text-[10px] font-bold uppercase tracking-[3px] text-[var(--p1)]">
-                {group.label}
-              </p>
-              <ul className="flex flex-col gap-3">
-                {group.links.map((link) => (
-                  <li key={link.label}>
-                    <button
-                      onClick={() => scrollTo(link.href)}
-                      className="font-sans text-sm text-[var(--t2)] transition-colors duration-200 hover:text-[var(--t1)]"
-                    >
-                      {link.label}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-
-        </div>
-
-        {/* ── Fila inferior: legal + location + copyright ── */}
-        <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
-
-          {/* Legal */}
-          <div className="flex items-center gap-4">
-            {FOOTER.legal.map((item, i) => (
-              <span key={item.label} className="flex items-center gap-4">
-                <a
-                  href={item.href}
-                  className="font-sans text-xs text-[var(--t2)] transition-colors duration-200 hover:text-[var(--t1)]"
-                >
-                  {item.label}
-                </a>
-                {i < FOOTER.legal.length - 1 && (
-                  <span className="text-[var(--t2)]/30" aria-hidden="true">·</span>
-                )}
-              </span>
-            ))}
-          </div>
-
-          {/* Location + copy */}
-          <div className="flex flex-col items-start gap-1 sm:items-end">
-            <p className="font-condensed text-[10px] font-bold uppercase tracking-[3px] text-[var(--p1)]/60">
-              {FOOTER.location}
-            </p>
-            <p className="font-sans text-xs text-[var(--t2)]/60">
+            {/* Copyright */}
+            <p className="font-sans text-xs text-[var(--t2)]/50">
               {FOOTER.copy}
             </p>
+
           </div>
 
         </div>
-
-      </div>
-    </footer>
+      </footer>
+    </>
   );
 }

@@ -15,19 +15,7 @@ import { NAV, BRAND } from "@/content/landing";
 import { cn } from "@/lib/utils";
 import FingerprintSVG from "@/components/FingerprintSVG";
 
-// ── Logo (3 líneas escalonadas del brand) ────────────────────────────────────
-
-function LogoMark({ className }: { className?: string }) {
-  return (
-    <div className={cn("flex flex-col gap-[5px]", className)} aria-hidden="true">
-      <div className="h-[5px] w-[22px] rounded-[2.5px] bg-[var(--logo-l)]" />
-      <div className="ml-[3px] h-[5px] w-[16px] rounded-[2.5px] bg-[var(--logo-l)]" />
-      <div className="ml-[6px] h-[5px] w-[11px] rounded-[2.5px] bg-[var(--logo-l)]" />
-    </div>
-  );
-}
-
-// ── Tipo item de navbar (acceso seguro sin type predicates) ───────────────────
+// ── Tipos ─────────────────────────────────────────────────────────────────────
 
 interface NavItem {
   label: string;
@@ -37,13 +25,11 @@ interface NavItem {
   comingSoon?: boolean;
 }
 
-// Extrae los items de un grupo (devuelve null si no tiene)
 function getGroupItems(group: (typeof NAV.groups)[number]): readonly NavItem[] | null {
   if ("items" in group) return group.items as unknown as readonly NavItem[];
   return null;
 }
 
-// Extrae el href directo de un grupo (devuelve null si tiene items)
 function getGroupHref(group: (typeof NAV.groups)[number]): string | null {
   if (!("items" in group) && "href" in group) return (group as { href: string }).href;
   return null;
@@ -73,51 +59,63 @@ function DropdownPanel({
       role="menu"
       aria-label={label}
       className={cn(
-        "absolute left-0 top-[calc(100%+10px)] z-[950] min-w-[252px] origin-top",
-        "rounded-[12px] border border-white/15 bg-[var(--nav-bg)] p-2 backdrop-blur-[20px]",
-        "shadow-[0_8px_32px_rgba(0,0,0,0.25)] dark:border-[rgba(5,128,211,0.2)]",
+        "absolute left-0 top-[calc(100%+10px)] z-[950] min-w-[260px] origin-top",
+        "rounded-[14px] border border-white/12 bg-[var(--nav-bg)] backdrop-blur-[24px]",
+        "shadow-[0_12px_40px_rgba(0,0,0,0.3)] dark:border-[rgba(5,128,211,0.18)]",
+        "overflow-hidden",
         "transition-all duration-200",
         open
           ? "pointer-events-auto translate-y-0 scale-100 opacity-100"
           : "pointer-events-none -translate-y-2 scale-95 opacity-0"
       )}
     >
-      {items.map((item) => (
-        <button
-          key={item.label}
-          role="menuitem"
-          onClick={() => !item.comingSoon && go(item.href)}
-          disabled={item.comingSoon}
-          className={cn(
-            "flex w-full items-start gap-3 rounded-[8px] px-3 py-2.5 text-left",
-            "transition-colors duration-150",
-            item.comingSoon
-              ? "cursor-default opacity-40"
-              : "hover:bg-white/8 dark:hover:bg-white/5"
-          )}
-        >
-          {item.icon && (
-            <span className="mt-[1px] shrink-0 text-base leading-none">{item.icon}</span>
-          )}
-          <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-2">
-              <span className="font-condensed text-[13px] font-bold uppercase tracking-wide text-[var(--nav-t)]">
-                {item.label}
-              </span>
-              {item.comingSoon && (
-                <span className="shrink-0 rounded-sm bg-[var(--p1)]/20 px-1.5 py-px font-condensed text-[9px] font-bold uppercase tracking-wider text-[var(--p1)]">
-                  Pronto
+      {/* Header del panel */}
+      <div className="border-b border-white/8 px-4 py-3">
+        <p className="font-condensed text-[9px] font-bold uppercase tracking-[4px] text-[var(--p1)]/70">
+          {label}
+        </p>
+      </div>
+
+      {/* Items */}
+      <div className="p-2">
+        {items.map((item) => (
+          <button
+            key={item.label}
+            role="menuitem"
+            onClick={() => !item.comingSoon && go(item.href)}
+            disabled={item.comingSoon}
+            className={cn(
+              "group flex w-full items-start gap-3 rounded-[8px] px-3 py-2.5 text-left",
+              "border-l-2 border-transparent",
+              "transition-[background,border-color,padding] duration-150",
+              item.comingSoon
+                ? "cursor-default opacity-40"
+                : "hover:border-[var(--p1)] hover:bg-white/6 hover:pl-4 dark:hover:bg-white/4"
+            )}
+          >
+            {item.icon && (
+              <span className="mt-[1px] shrink-0 text-base leading-none">{item.icon}</span>
+            )}
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center gap-2">
+                <span className="font-condensed text-[13px] font-bold uppercase tracking-wide text-[var(--nav-t)]">
+                  {item.label}
                 </span>
+                {item.comingSoon && (
+                  <span className="shrink-0 rounded-sm bg-[var(--p1)]/20 px-1.5 py-px font-condensed text-[9px] font-bold uppercase tracking-wider text-[var(--p1)]">
+                    Pronto
+                  </span>
+                )}
+              </div>
+              {item.description && (
+                <p className="mt-0.5 font-sans text-[11px] leading-snug text-[var(--nav-link)]">
+                  {item.description}
+                </p>
               )}
             </div>
-            {item.description && (
-              <p className="mt-0.5 font-sans text-[11px] leading-snug text-[var(--nav-link)]">
-                {item.description}
-              </p>
-            )}
-          </div>
-        </button>
-      ))}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
@@ -136,14 +134,12 @@ export default function Navbar({ onThemeToggle, isDark = false }: NavbarProps) {
   const navRef    = useRef<HTMLElement>(null);
   const rippleRef = useRef<HTMLDivElement>(null);
 
-  // Scroll detection
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Cerrar dropdown en click exterior
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (!navRef.current?.contains(e.target as Node)) setOpenGroup(null);
@@ -152,14 +148,12 @@ export default function Navbar({ onThemeToggle, isDark = false }: NavbarProps) {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  // Cerrar drawer al pasar a desktop
   useEffect(() => {
     const handler = () => { if (window.innerWidth >= 768) setIsMobileOpen(false); };
     window.addEventListener("resize", handler, { passive: true });
     return () => window.removeEventListener("resize", handler);
   }, []);
 
-  // Bloquear scroll con drawer abierto
   useEffect(() => {
     document.body.style.overflow = isMobileOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
@@ -193,13 +187,30 @@ export default function Navbar({ onThemeToggle, isDark = false }: NavbarProps) {
       <div
         className={cn(
           "nav-drawer fixed inset-x-0 top-0 z-[800] md:hidden",
-          "border-b border-white/10 bg-[var(--nav-bg)] backdrop-blur-[24px]",
-          "dark:border-[rgba(5,128,211,0.15)]",
+          "bg-[var(--nav-bg)] backdrop-blur-[24px]",
+          "border-b border-white/10 dark:border-[rgba(5,128,211,0.15)]",
           isMobileOpen ? "translate-y-0" : "-translate-y-full"
         )}
         aria-hidden={!isMobileOpen}
       >
-        <div className="flex flex-col gap-0 px-6 pb-10 pt-[80px]">
+        <div className="flex flex-col px-6 pb-10 pt-[80px]">
+
+          {/* Logo + tagline en drawer */}
+          <div className="mb-8 flex items-center gap-3 border-b border-white/8 pb-6">
+            <div className="[--fps:var(--logo-l)] [--fpg:transparent]">
+              <FingerprintSVG animate={false} className="w-7 h-8" strokeOpacity={1} />
+            </div>
+            <div>
+              <p className="font-condensed text-[20px] font-black leading-none tracking-[1.5px]" style={{ color: "var(--logo-t)" }}>
+                {BRAND.name}
+              </p>
+              <p className="mt-0.5 font-condensed text-[9px] font-bold uppercase tracking-[3px] text-[var(--p1)]/60">
+                Elite Sports Development
+              </p>
+            </div>
+          </div>
+
+          {/* Grupos */}
           {NAV.groups.map((group) => {
             const items = getGroupItems(group);
             const href  = getGroupHref(group);
@@ -217,11 +228,12 @@ export default function Navbar({ onThemeToggle, isDark = false }: NavbarProps) {
                         onClick={() => !item.comingSoon && scrollTo(item.href)}
                         disabled={item.comingSoon}
                         className={cn(
-                          "flex w-full items-center gap-3 py-3 text-left",
+                          "flex w-full items-center gap-3 border-l-2 border-transparent py-3 pl-3 text-left",
                           "font-condensed text-[20px] font-bold uppercase tracking-wide",
+                          "transition-[border-color,padding] duration-150",
                           item.comingSoon
                             ? "cursor-default opacity-35 text-[var(--t2)]"
-                            : "text-[var(--t1)] active:opacity-70"
+                            : "text-[var(--t1)] hover:border-[var(--p1)] hover:pl-4 active:opacity-70"
                         )}
                       >
                         {item.icon && <span className="text-xl">{item.icon}</span>}
@@ -237,7 +249,12 @@ export default function Navbar({ onThemeToggle, isDark = false }: NavbarProps) {
                 ) : href ? (
                   <button
                     onClick={() => scrollTo(href)}
-                    className="mt-7 flex w-full items-center py-3 font-condensed text-[20px] font-bold uppercase tracking-wide text-[var(--t1)] active:opacity-70"
+                    className={cn(
+                      "mt-7 flex w-full items-center border-l-2 border-transparent py-3 pl-3",
+                      "font-condensed text-[20px] font-bold uppercase tracking-wide text-[var(--t1)]",
+                      "transition-[border-color,padding] duration-150",
+                      "hover:border-[var(--p1)] hover:pl-4 active:opacity-70"
+                    )}
                   >
                     {group.label}
                   </button>
@@ -246,12 +263,18 @@ export default function Navbar({ onThemeToggle, isDark = false }: NavbarProps) {
             );
           })}
 
+          {/* CTA mobile */}
           <button
             onClick={() => scrollTo(NAV.ctaHref)}
-            className="mt-8 w-full bg-[var(--btn-bg)] py-4 font-condensed text-[15px] font-bold uppercase tracking-[3px] text-[var(--btn-t)] transition-opacity active:opacity-80"
+            className={cn(
+              "mt-10 w-full rounded-md py-4",
+              "bg-[var(--btn-bg)] font-condensed text-[15px] font-bold uppercase tracking-[3px] text-[var(--btn-t)]",
+              "transition-opacity active:opacity-80"
+            )}
           >
             {NAV.cta}
           </button>
+
         </div>
       </div>
 
@@ -266,13 +289,13 @@ export default function Navbar({ onThemeToggle, isDark = false }: NavbarProps) {
           "bg-[var(--nav-bg)] backdrop-blur-[20px]",
           "dark:border-[rgba(5,128,211,0.2)]",
           "transition-[background,border-color,box-shadow] duration-300",
-          scrolled && "shadow-[0_4px_32px_rgba(0,0,0,0.2)]"
+          scrolled && "shadow-[0_4px_32px_rgba(0,0,0,0.2)] border-white/20"
         )}
       >
         {/* Logo */}
         <a
           href="#"
-          className="flex shrink-0 items-center gap-2.5"
+          className="flex shrink-0 items-center gap-2.5 transition-opacity duration-200 hover:opacity-80"
           onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
         >
           <div className="[--fps:var(--logo-l)] [--fpg:transparent]">
@@ -350,6 +373,10 @@ export default function Navbar({ onThemeToggle, isDark = false }: NavbarProps) {
 
         {/* Controles derecha */}
         <div className="flex items-center gap-3">
+
+          {/* Separador vertical */}
+          <div className="hidden h-4 w-px bg-white/15 sm:block" aria-hidden="true" />
+
           {/* Label modo */}
           <span className="hidden font-sans text-[12px] font-medium text-[var(--nav-link)] sm:block lg:whitespace-nowrap">
             {isDark ? "Modo oscuro" : "Modo claro"}
@@ -381,10 +408,11 @@ export default function Navbar({ onThemeToggle, isDark = false }: NavbarProps) {
             onClick={() => scrollTo(NAV.ctaHref)}
             className={cn(
               "btn-shimmer relative hidden overflow-hidden rounded-md sm:flex",
-              "items-center gap-1",
+              "items-center gap-1.5",
               "bg-[var(--btn-bg)] px-5 py-2",
               "font-condensed text-[13px] font-bold uppercase tracking-wide text-[var(--btn-t)]",
-              "transition-all duration-200 hover:-translate-y-px hover:brightness-110 hover:px-[26px]"
+              "transition-all duration-200 hover:-translate-y-px hover:brightness-110 hover:px-[26px]",
+              "shadow-[0_2px_12px_rgba(0,0,0,0.15)]"
             )}
           >
             {NAV.cta}
