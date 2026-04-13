@@ -74,6 +74,9 @@
   /* Hero overlay */
   --hero-ov-start: rgba(14,57,160,0.0);
   --hero-ov-mid:   rgba(18,69,184,0.0);
+
+  /* Hero image blend */
+  --hero-from: #1245b8;
 }
 
 /* ══ MODO OSCURO — Navy profundo ═════════════════════════════════════════════ */
@@ -127,6 +130,9 @@
 
   --hero-ov-start: rgba(0,26,51,0.0);
   --hero-ov-mid:   rgba(1,37,71,0.0);
+
+  /* Hero image blend */
+  --hero-from: #001A33;
 }
 
 /* ══ BASE STYLES ════════════════════════════════════════════════════════════ */
@@ -387,4 +393,64 @@ body {
 }
 .nav-ham.open span:nth-child(3) {
   transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ══ COMMUNITY GALLERY ══════════════════════════════════════════════════════ */
+.community-gallery {
+  display: flex;
+  height: 55vh;
+  min-height: 340px;
+  overflow: hidden;
+}
+
+.community-panel {
+  position: relative;
+  flex: 1 1 0%;
+  overflow: hidden;
+  cursor: pointer;
+  transition: flex 500ms cubic-bezier(.32,1,.28,1);
+}
+
+.community-panel:hover {
+  flex: 3 1 0%;
+}
+
+.community-panel:hover .community-img {
+  transform: scale(1.05);
+}
+
+.community-img {
+  object-fit: cover;
+  transition: transform 700ms ease !important;
+}
+
+.community-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.community-panel::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--p1);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 500ms ease;
+}
+
+.community-panel:hover::after {
+  transform: scaleX(1);
+}
+
+.community-sep {
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 1px;
+  background: rgba(255,255,255,0.12);
+  pointer-events: none;
+  z-index: 10;
 }

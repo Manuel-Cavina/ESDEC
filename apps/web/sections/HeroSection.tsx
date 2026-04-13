@@ -17,7 +17,7 @@
 // Copy: todo viene de @/content/landing
 // ─────────────────────────────────────────────────────────────────────────────
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { HERO, STATS } from "@/content/landing";
 import FingerprintSVG from "@/components/FingerprintSVG";
 import AthleteCard from "@/components/AthleteCard";
@@ -85,14 +85,7 @@ function StatSep() {
 }
 
 export default function HeroSection() {
-  const [mounted, setMounted] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    // Pequeño delay para que las animaciones iniciales se vean bien
-    const t = setTimeout(() => setMounted(true), 50);
-    return () => clearTimeout(t);
-  }, []);
 
   return (
     <>
@@ -125,24 +118,48 @@ export default function HeroSection() {
         {/* Overlay gradiente direccional */}
         <div className="absolute inset-0 bg-hero-overlay pointer-events-none" />
 
-        {/* ── Huella SVG flotante — se dibuja al cargar */}
+        {/* ── Panel izquierdo: imagen del atleta + huella fusionada */}
         <div
           className={cn(
-            "absolute right-[-2%] top-1/2 -translate-y-1/2",
-            "w-[52%] max-w-[660px] pointer-events-none z-[1]",
-            "animate-fp-float",
-            // Variables CSS para colorear la huella
-            "[--fps:rgba(90,200,255,0.22)] dark:[--fps:rgba(5,128,211,0.22)]",
-            "[--fpg:rgba(90,200,255,0.06)] dark:[--fpg:rgba(5,128,211,0.05)]",
-            // Hidden en mobile
-            "hidden lg:block"
+            "absolute left-0 top-0 w-1/2 h-full",
+            "hidden lg:block z-[1]",
+            "opacity-0 animate-fade-up [animation-delay:800ms] [animation-fill-mode:forwards]"
           )}
         >
-          <FingerprintSVG animate={mounted} className="w-full h-full" />
+          <div className="relative w-full h-full">
+            {/* Imagen del atleta */}
+            <img
+              src="/images/athletes/Atleta_1.png"
+              alt=""
+              className="w-full h-full object-cover object-center select-none pointer-events-none"
+            />
+
+            {/* Degradé derecho — fusión hacia el contenido */}
+            <div
+              className="absolute inset-y-0 right-0 w-[45%] pointer-events-none"
+              style={{ background: "linear-gradient(to left, var(--hero-from) 0%, transparent 100%)" }}
+            />
+            {/* Degradé izquierdo */}
+            <div
+              className="absolute inset-y-0 left-0 w-[15%] pointer-events-none"
+              style={{ background: "linear-gradient(to right, var(--hero-from) 0%, transparent 100%)" }}
+            />
+            {/* Degradé superior */}
+            <div
+              className="absolute inset-x-0 top-0 h-[22%] pointer-events-none"
+              style={{ background: "linear-gradient(to bottom, var(--hero-from) 0%, transparent 100%)" }}
+            />
+            {/* Degradé inferior */}
+            <div
+              className="absolute inset-x-0 bottom-0 h-[28%] pointer-events-none"
+              style={{ background: "linear-gradient(to top, var(--hero-from) 0%, transparent 100%)" }}
+            />
+
+          </div>
         </div>
 
-        {/* ── Hero content */}
-        <div className="relative z-[2] px-16 pt-[130px] pb-20 max-w-[680px]">
+        {/* ── Hero content — mitad derecha en desktop */}
+        <div className="relative z-[2] px-16 pt-[130px] pb-20 lg:ml-[50%] lg:max-w-[calc(50%-2rem)] max-w-[680px]">
 
           {/* Eyebrow */}
           <div
@@ -157,28 +174,15 @@ export default function HeroSection() {
             {HERO.eyebrow}
           </div>
 
-          {/* 3 líneas del logo — transición antes del headline */}
-          <div className="flex flex-col gap-[5px] mb-[18px]">
-            {[
-              { w: "72px", ml: "0px",  delay: "500ms" },
-              { w: "54px", ml: "7px",  delay: "650ms" },
-              { w: "38px", ml: "14px", delay: "800ms" },
-            ].map((line, i) => (
-              <div
-                key={i}
-                className={cn(
-                  "h-1 rounded-sm bg-[var(--p1)]",
-                  "opacity-0 animate-line-draw [animation-fill-mode:forwards]"
-                )}
-                style={{
-                  width: 0,
-                  marginLeft: line.ml,
-                  animationDelay: line.delay,
-                  // El keyframe lleva width hasta var(--target)
-                  ["--target" as string]: line.w,
-                }}
-              />
-            ))}
+          {/* Huella estática — antes del headline */}
+          <div
+            className={cn(
+              "mb-[18px]",
+              "[--fps:var(--p1)] [--fpg:rgba(90,200,255,0.08)]",
+              "opacity-0 animate-fade-up [animation-delay:500ms] [animation-fill-mode:forwards]"
+            )}
+          >
+            <FingerprintSVG animate={false} className="w-14 h-[68px]" strokeOpacity={0.9} />
           </div>
 
           {/* Headline — línea por línea con stamp */}
@@ -273,16 +277,6 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* ── Athlete card — lado derecho, hidden en <xl */}
-        <div
-          className={cn(
-            "absolute right-16 top-1/2 -translate-y-1/2",
-            "z-[3] w-[380px]",
-            "hidden xl:block",
-            "opacity-0 animate-fade-up [animation-delay:800ms] [animation-fill-mode:forwards]"
-          )}
-        >
-        </div>
       </section>
 
       {/* ────────────────────────────────────────────────────────────────────

@@ -13,8 +13,9 @@ import AboutSection     from "@/sections/AboutSection";
 import EcosystemSection from "@/sections/EcosystemSection";
 import EmotionalSection from "@/sections/EmotionalSection";
 import ProblemSection   from "@/sections/ProblemSection";
+import CommunitySection from "@/sections/CommunitySection";
+import Footer           from "@/components/Footer";
 // import FootprintSection from "@/sections/FootprintSection";
-// import Footer           from "@/components/Footer";
 
 export default function LandingPage() {
   // ── Theme state: light = azul eléctrico (default), dark = navy
@@ -51,27 +52,25 @@ export default function LandingPage() {
       {/* S2 — Quiénes somos */}
       <AboutSection />
 
-      {/* S3 — Deportes + Especialistas */}
+      {/* S3 — Comunidad / galería equipo */}
+      {/*
+      <CommunitySection />
+      */}
+
+      {/* S4 — Deportes + Especialistas */}
       <EcosystemSection />
 
-      {/* S4 — Narrativa emocional */}
+      {/* S5 — Narrativa emocional */}
       <EmotionalSection />
 
-      {/* S5 — Problema + Journey */}
+      {/* S6 — Problema + Journey */}
       <ProblemSection />
 
-      {/* S6 — Huella + CTA final (próximo) */}
+      {/* S7 — Huella + CTA final (próximo) */}
       {/* <FootprintSection /> */}
 
-      {/* Footer (próximo) */}
-      {/* <Footer /> */}
-
-      {/* Placeholder temporal mientras se construyen las demás secciones */}
-      <div className="min-h-screen bg-[var(--sec-bg)] flex items-center justify-center">
-        <p className="font-condensed text-2xl uppercase tracking-widest text-[var(--t3)]">
-          Próximas secciones — en construcción
-        </p>
-      </div>
+      {/* Footer */}
+      <Footer />
     </main>
   );
 }

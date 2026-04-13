@@ -13,6 +13,7 @@
 import { useEffect, useRef, useState } from "react";
 import { NAV, BRAND } from "@/content/landing";
 import { cn } from "@/lib/utils";
+import FingerprintSVG from "@/components/FingerprintSVG";
 
 // ── Logo (3 líneas escalonadas del brand) ────────────────────────────────────
 
@@ -274,7 +275,9 @@ export default function Navbar({ onThemeToggle, isDark = false }: NavbarProps) {
           className="flex shrink-0 items-center gap-2.5"
           onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
         >
-          <LogoMark />
+          <div className="[--fps:var(--logo-l)] [--fpg:transparent]">
+            <FingerprintSVG animate={false} className="w-7 h-8" strokeOpacity={1} />
+          </div>
           <span
             className="font-condensed text-[22px] font-black leading-none tracking-[1.5px]"
             style={{ color: "var(--logo-t)" }}

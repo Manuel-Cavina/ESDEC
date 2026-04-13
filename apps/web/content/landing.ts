@@ -314,27 +314,24 @@ export const FOOTPRINT = {
 export const NAV = {
   groups: [
     {
-      label: "La Plataforma",
+      label: "Nosotros",
       items: [
-        { label: "Especialistas",  href: "#ecosystem", icon: "🏋️", description: "El equipo coordinado detrás tuyo"          },
-        { label: "El sistema",     href: "#problem",   icon: "⚙️", description: "Cómo funciona ESDEC paso a paso"            },
-        { label: "Mi dashboard",   href: "#footprint", icon: "📊", description: "Tu evolución en tiempo real", comingSoon: true },
-        { label: "Planes",         href: "#footprint", icon: "📋", description: "Plan integral personalizado",  comingSoon: true },
+        { label: "Quiénes somos", href: "#about",      icon: "🏢", description: "La visión y misión detrás de ESDEC"    },
+        { label: "El problema",   href: "#problem",    icon: "🔍", description: "Por qué el deporte amateur necesita un sistema" },
+        { label: "Nuestra visión",href: "#emotional",  icon: "🎯", description: "El futuro que construimos juntos"      },
       ],
+    },
+    {
+      label: "Profesionales",
+      href: "#ecosystem",
+    },
+    {
+      label: "Deportista",
+      href: "#footprint",
     },
     {
       label: "Comunidad",
-      items: [
-        { label: "Deportistas",    href: "#community", icon: "👥", description: "Personas reales, resultados reales"          },
-        { label: "Nuestra visión", href: "#emotional", icon: "🎯", description: "Por qué existe ESDEC"                       },
-        { label: "Eventos",        href: "#footprint", icon: "📅", description: "Actividades y encuentros",     comingSoon: true },
-        { label: "Historias",      href: "#footprint", icon: "⭐", description: "Casos de transformación real", comingSoon: true },
-      ],
-    },
-    {
-      // Grupo sin dropdown — link directo a la sección
-      label: "Nosotros",
-      href: "#about",
+      href: "#community",
     },
   ],
   cta: "Sumate →",
@@ -343,10 +340,9 @@ export const NAV = {
 
 // ── COMMUNITY ─────────────────────────────────────────────────────────────────
 export const COMMUNITY = {
-  eyebrow: "La comunidad",
-  headline: "PERSONAS REALES.",
-  headlineAccent: "RESULTADOS REALES.",
-  body: "Deportistas de Córdoba que ya empezaron a construir su sistema con ESDEC.",
+  eyebrow: "Comunidad ESDEC · Córdoba",
+  headline: "ESTA ES",
+  headlineAccent: "NUESTRA COMUNIDAD.",
 
   stats: [
     { value: "247+", label: "En el sistema"       },
@@ -354,28 +350,59 @@ export const COMMUNITY = {
     { value: "24/7", label: "Acompañamiento real" },
   ],
 
-  quote: {
-    text: "Antes entrenaba solo. Ahora tengo un equipo coordinado detrás y finalmente veo resultados.",
-    author: "Maxi R.",
-    sport:  "Running · Amateur",
-  },
-
-  // Cards de prueba social — se completan con fotos reales
-  cards: [
-    { name: "Lucas P.",  sport: "Ciclismo",  level: "Amateur",     src: null },
-    { name: "Sofi M.",   sport: "Natación",  level: "Intermedio",  src: null },
-    { name: "Rodrigo V.", sport: "Fútbol",   level: "Amateur",     src: null },
+  // Fotos del equipo — /public/images/team/
+  photos: [
+    {
+      src: "/images/team/Equipo_Escalinatas.png",
+      alt: "Equipo ESDEC en las escalinatas de Córdoba",
+      label: "El equipo",
+    },
+    {
+      src: "/images/team/Equipo_G7.png",
+      alt: "Equipo ESDEC — grupo de trabajo",
+      label: "ESDEC G7",
+    },
   ],
+
+  quote: {
+    text: "Construimos ESDEC porque sabemos lo que es entrenar sin sistema. Queremos que ningún deportista pase por eso.",
+    author: "El equipo ESDEC",
+    location: "Córdoba, Argentina",
+  },
 } as const;
 
 // ── FOOTER ────────────────────────────────────────────────────────────────────
 export const FOOTER = {
-  links: [
-    { label: "Nosotros",      href: "#about"     },
-    { label: "Especialidades", href: "#ecosystem" },
-    { label: "Visión",        href: "#emotional"  },
-    { label: "El sistema",    href: "#problem"    },
-    { label: "Sumate",        href: "#footprint"  },
+  tagline: "El sistema que construye deportistas.",
+
+  groups: [
+    {
+      label: "La plataforma",
+      links: [
+        { label: "Profesionales",   href: "#ecosystem" },
+        { label: "Cómo funciona",   href: "#problem"   },
+        { label: "Empezá ahora",    href: "#footprint" },
+      ],
+    },
+    {
+      label: "Comunidad",
+      links: [
+        { label: "Nuestro equipo",  href: "#community" },
+        { label: "Nuestra visión",  href: "#emotional"  },
+        { label: "Quiénes somos",   href: "#about"      },
+      ],
+    },
   ],
+
+  legal: [
+    { label: "Privacidad",          href: "#" },
+    { label: "Términos de uso",     href: "#" },
+  ],
+
+  social: [
+    { label: "Instagram", href: "https://instagram.com/esdec.ok", icon: "ig" },
+  ],
+
+  location: "Córdoba · Argentina",
   copy: `© ${new Date().getFullYear()} ESDEC — Elite Sports Development. Todos los derechos reservados.`,
 } as const;
