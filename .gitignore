@@ -34,3 +34,9 @@ npm-debug.log*
 # Misc
 .DS_Store
 *.pem
+
+# TypeScript build cache
+*.tsbuildinfo
+
+# Claude Code local settings
+.claude/settings.local.json
