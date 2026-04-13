@@ -12,9 +12,11 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { useEffect, useRef } from "react";
-import { ABOUT } from "@/content/landing";
+import { ABOUT, PROFESSIONAL_ABOUT } from "@/content/landing";
 import ScrollReveal from "@/components/ScrollReveal";
 import { cn } from "@/lib/utils";
+
+type Audience = "deportista" | "profesional";
 
 // ── Líneas del logo en miniatura (ADN visual)
 function LogoMark({ className }: { className?: string }) {
@@ -88,7 +90,12 @@ function MvvRow({
   );
 }
 
-export default function AboutSection() {
+interface AboutSectionProps {
+  audience?: Audience;
+}
+
+export default function AboutSection({ audience = "deportista" }: AboutSectionProps) {
+  const data = audience === "profesional" ? PROFESSIONAL_ABOUT : ABOUT;
   const mvvRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
@@ -134,7 +141,7 @@ export default function AboutSection() {
             <div className="inline-flex items-center gap-2 mb-5">
               <span className="inline-block w-[7px] h-[7px] rounded-full bg-[var(--p1)] animate-ping-dot flex-shrink-0" />
               <span className="font-sans text-[11px] font-semibold tracking-[3px] uppercase text-[var(--p1)]">
-                {ABOUT.eyebrow}
+                {data.eyebrow}
               </span>
             </div>
           </ScrollReveal>
@@ -145,8 +152,8 @@ export default function AboutSection() {
               className="font-condensed font-black uppercase leading-[0.95] tracking-[-1px] text-[var(--t1)] mb-10"
               style={{ fontSize: "clamp(52px, 7vw, 100px)" }}
             >
-              {ABOUT.headline.map((word, i) =>
-                i === ABOUT.headlineAccentIndex ? (
+              {data.headline.map((word, i) =>
+                i === data.headlineAccentIndex ? (
                   <span
                     key={i}
                     className="block"
@@ -170,7 +177,7 @@ export default function AboutSection() {
 
           {/* MVV Rows — spring slide desde la derecha */}
           <div>
-            {ABOUT.mvv.map((item, i) => (
+            {data.mvv.map((item, i) => (
               <MvvRow
                 key={item.tag}
                 tag={item.tag}
@@ -186,13 +193,13 @@ export default function AboutSection() {
           <ScrollReveal direction="up" delay={160}>
             <div className="inline-flex items-center gap-2 mb-7">
               <span className="font-sans text-[11px] font-semibold tracking-[3px] uppercase text-[var(--t3)]">
-                {ABOUT.valuesEyebrow}
+                {data.valuesEyebrow}
               </span>
             </div>
           </ScrollReveal>
 
           <ScrollReveal cascade cascadeDelay={80} direction="up">
-            {ABOUT.values.map((v) => (
+            {data.values.map((v) => (
               <ValCard key={v.title} title={v.title} description={v.description} />
             ))}
           </ScrollReveal>

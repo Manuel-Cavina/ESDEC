@@ -13,8 +13,11 @@
 import ScrollReveal from "@/components/ScrollReveal";
 import BrandLines from "@/components/BrandLines";
 import FingerprintSVG from "@/components/FingerprintSVG";
-import { EMOTIONAL } from "@/content/landing";
+import { EMOTIONAL, PROFESSIONAL_EMOTIONAL } from "@/content/landing";
 import { cn } from "@/lib/utils";
+
+type Audience = "deportista" | "profesional";
+type BeatsData = typeof EMOTIONAL | typeof PROFESSIONAL_EMOTIONAL;
 
 // ── Contador de beat (01 / 02 / 03) ──────────────────────────────────────────
 function BeatCounter({ n }: { n: string }) {
@@ -25,9 +28,10 @@ function BeatCounter({ n }: { n: string }) {
   );
 }
 
-// ── Beat 1: esfuerzo / identidad ─────────────────────────────────────────────
-function Beat1() {
-  const beat = EMOTIONAL.beats[0];
+type BeatItem = BeatsData["beats"][number];
+
+// ── Beat 1: identidad / punto de partida ─────────────────────────────────────
+function Beat1({ beat }: { beat: BeatItem }) {
   return (
     <div className="bg-[var(--bg)] py-28 md:py-36">
       <div className="mx-auto max-w-landing px-6">
@@ -45,8 +49,7 @@ function Beat1() {
             <ScrollReveal direction="up" delay={80}>
               <BrandLines animated className="mb-6" />
               <h2
-                className="font-condensed font-black uppercase leading-[0.95] tracking-[-1px] text-[var(--t1)]"
-                style={{ fontSize: "clamp(40px, 6vw, 86px)" }}
+                className="font-condensed font-black uppercase leading-[0.95] tracking-[-1px] text-[var(--t1)] text-clamp-beat"
               >
                 <span className="block">{beat.headlinePre}</span>
                 <span className="block text-[var(--p1)]">{beat.headlineAccent}</span>
@@ -81,8 +84,7 @@ function Beat1() {
 }
 
 // ── Beat 2: estructura / tensión ──────────────────────────────────────────────
-function Beat2() {
-  const beat = EMOTIONAL.beats[1];
+function Beat2({ beat }: { beat: BeatItem }) {
   return (
     <div className="bg-[var(--bg2)] py-28 md:py-36">
       <div className="mx-auto max-w-landing px-6">
@@ -115,13 +117,9 @@ function Beat2() {
             </ScrollReveal>
 
             <ScrollReveal direction="up" delay={80}>
-              <BrandLines
-                animated
-                className="mb-6 [--bl-color:var(--p2)]"
-              />
+              <BrandLines animated className="mb-6 [--bl-color:var(--p2)]" />
               <h2
-                className="font-condensed font-black uppercase leading-[0.95] tracking-[-1px] text-[var(--t1)]"
-                style={{ fontSize: "clamp(40px, 6vw, 86px)" }}
+                className="font-condensed font-black uppercase leading-[0.95] tracking-[-1px] text-[var(--t1)] text-clamp-beat"
               >
                 <span className="block">{beat.headlinePre}</span>
                 <span className="block text-[var(--p2)]">{beat.headlineAccent}</span>
@@ -142,14 +140,13 @@ function Beat2() {
 }
 
 // ── Beat 3: resolución / ESDEC ────────────────────────────────────────────────
-function Beat3() {
-  const beat = EMOTIONAL.beats[2];
+function Beat3({ beat, image }: { beat: BeatItem; image: string }) {
   return (
     <div className="relative bg-[var(--bg)]">
 
       {/* Imagen completa — define la altura del contenedor, sin recorte */}
       <img
-        src="/images/lifestyle/Vida1.jpg"
+        src={image}
         alt=""
         className="w-full h-auto block opacity-40 brightness-125"
       />
@@ -166,15 +163,12 @@ function Beat3() {
 
         <ScrollReveal direction="up" delay={80}>
           <BrandLines animated centered className="mx-auto mb-6" />
-          <h2
-            className="font-condensed font-black uppercase leading-[0.95] tracking-[-1px] text-white"
-            style={{ fontSize: "clamp(44px, 7vw, 100px)" }}
-          >
+          <h2 className="font-condensed font-black uppercase leading-[0.95] tracking-[-1px] text-white text-clamp-beat-lg">
             <span className="block">{beat.headlinePre}</span>
             <span className="block text-[var(--p1)]">{beat.headlineAccent}</span>
-            {"headlineSub" in beat && (
+            {beat.headlineSub && (
               <span className="block text-white/70 text-[0.6em] mt-2">
-                {(beat as typeof beat & { headlineSub: string }).headlineSub}
+                {beat.headlineSub}
               </span>
             )}
           </h2>
@@ -193,12 +187,22 @@ function Beat3() {
 
 // ── Sección principal ─────────────────────────────────────────────────────────
 
-export default function EmotionalSection() {
+interface EmotionalSectionProps {
+  audience?: Audience;
+}
+
+export default function EmotionalSection({ audience = "deportista" }: EmotionalSectionProps) {
+  const data = audience === "profesional" ? PROFESSIONAL_EMOTIONAL : EMOTIONAL;
+  const beat3Image =
+    audience === "profesional"
+      ? "/images/lifestyle/Medico1.png"
+      : "/images/lifestyle/Vida1.jpg";
+
   return (
     <section id="emotional" className="overflow-hidden">
-      <Beat1 />
-      <Beat2 />
-      <Beat3 />
+      <Beat1 beat={data.beats[0]} />
+      <Beat2 beat={data.beats[1]} />
+      <Beat3 beat={data.beats[2]} image={beat3Image} />
     </section>
   );
 }

@@ -62,6 +62,30 @@ export const HERO = {
   },
 } as const;
 
+// ── HERO SPLIT (pantalla de selección de audiencia) ──────────────────────────
+export const HERO_SPLIT = {
+  topTagline: "ELITE SPORTS DEVELOPMENT · 2025",
+  dividerText: "ELEGÍ TU CAMINO",
+
+  left: {
+    eyebrow: "PARA EL DEPORTISTA",
+    headlinePre: "SOY",
+    headlineAccent: "DEPORTISTA.",
+    body: "Tengo el esfuerzo. Me falta el sistema que lo convierte en resultados reales.",
+    cta: "SOY DEPORTISTA →",
+    image: "/images/athletes/Atleta_1.png",
+  },
+
+  right: {
+    eyebrow: "PARA EL PROFESIONAL",
+    headlinePre: "SOY",
+    headlineAccent: "PROFESIONAL.",
+    body: "Tengo el conocimiento. ESDEC es donde mi trabajo genera impacto real.",
+    cta: "SOY PROFESIONAL →",
+    image: "/images/lifestyle/Yoga1.jpg",
+  },
+} as const;
+
 // ── STATS BAR ─────────────────────────────────────────────────────────────────
 export const STATS = [
   { value: "8+",   label: "Especialidades"    },
@@ -70,7 +94,7 @@ export const STATS = [
   { value: "24/7", label: "Acompañamiento"    },
 ] as const;
 
-// ── ABOUT (Misión / Visión) ────────────────────────────────────────────────────
+// ── ABOUT — DEPORTISTA ────────────────────────────────────────────────────────
 export const ABOUT = {
   eyebrow: "Quiénes somos",
   headline: ["UN", "SISTEMA.", "UNA META."],
@@ -109,6 +133,135 @@ export const ABOUT = {
         "Modelo replicable y sostenible diseñado para expandirse sin perder la calidad del acompañamiento individual.",
     },
   ],
+} as const;
+
+// ── ABOUT — PROFESIONAL ───────────────────────────────────────────────────────
+export const PROFESSIONAL_ABOUT = {
+  eyebrow: "Tu espacio en ESDEC",
+  headline: ["TU TRABAJO.", "NUESTRO", "SISTEMA."],
+  headlineAccentIndex: 2,
+
+  mvv: [
+    {
+      tag: "Visión",
+      text: "Convertirnos en el <strong>ecosistema deportivo de referencia</strong> donde los profesionales del deporte acceden a estructura, comunidad y herramientas para multiplicar su impacto.",
+    },
+    {
+      tag: "Misión",
+      text: "Conectar a los mejores profesionales dentro de un <strong>sistema coordinado y escalable</strong> que les permita generar impacto real en la vida de los deportistas que acompañan.",
+    },
+    {
+      tag: "Objetivo",
+      text: "Ser la plataforma donde el profesional del deporte encuentra <strong>estructura, clientes y comunidad</strong> — todo lo que necesita para ejercer con propósito y a escala.",
+    },
+  ],
+
+  valuesEyebrow: "Lo que define ESDEC",
+  values: [
+    {
+      title: "Tu expertise, amplificado",
+      description:
+        "ESDEC te da la estructura para que tu conocimiento llegue a más deportistas, con el respaldo de un sistema coordinado.",
+    },
+    {
+      title: "Red de especialistas",
+      description:
+        "Trabajás junto a otros profesionales de primer nivel. Derivaciones, co-coordinación y comunidad real.",
+    },
+    {
+      title: "Crecimiento medible",
+      description:
+        "Métricas reales del impacto que generás. Carteras de atletas, historial y proyección profesional.",
+    },
+  ],
+} as const;
+
+// ── EMOTIONAL — DEPORTISTA ────────────────────────────────────────────────────
+// (ver abajo — EMOTIONAL)
+
+// ── EMOTIONAL — PROFESIONAL ───────────────────────────────────────────────────
+export const PROFESSIONAL_EMOTIONAL = {
+  beats: [
+    {
+      eyebrow: "El profesional que ya sabe",
+      headlinePre: "EL CONOCIMIENTO",
+      headlineAccent: "YA LO TENÉS.",
+      headlineSub: "",
+      body: "Años de formación, experiencia real y resultados comprobados. Pero entre lo que sabés y el impacto que podés generar existe una brecha — y esa brecha tiene nombre.",
+    },
+    {
+      eyebrow: "El problema que limita tu alcance",
+      headlinePre: "SIN SISTEMA,",
+      headlineAccent: "TU IMPACTO SE FRAGMENTA.",
+      headlineSub: "",
+      body: "Trabajás de forma aislada, sin herramientas para coordinar con otros especialistas, sin visibilidad real y sin estructura para escalar lo que hacés.",
+    },
+    {
+      eyebrow: "Tu lugar en ESDEC",
+      headlinePre: "ESDEC TE DA",
+      headlineAccent: "EL SISTEMA.",
+      headlineSub: "EL QUE HACE QUE TU TRABAJO VALGA LO QUE VALE.",
+      body: "Una plataforma donde tu expertise se conecta con deportistas reales, con otros profesionales y con las herramientas para que tu trabajo genere impacto sostenible.",
+    },
+  ],
+} as const;
+
+// ── PROBLEM — PROFESIONAL ─────────────────────────────────────────────────────
+export const PROFESSIONAL_PROBLEM = {
+  eyebrow: "El diagnóstico",
+  headline: "EL PROFESIONAL",
+  headlineAccent: "MERECE MÁS.",
+
+  quote:
+    '"El profesional del deporte tiene el conocimiento. Lo que le falta es un <strong>sistema que conecte ese conocimiento</strong> con quienes más lo necesitan."',
+
+  problems: [
+    {
+      number: "01",
+      title: "Visibilidad fragmentada",
+      description:
+        "Tu trabajo existe, pero no tiene el canal correcto para llegar a los deportistas que necesitan exactamente lo que ofrecés.",
+    },
+    {
+      number: "02",
+      title: "Sin red coordinada",
+      description:
+        "Derivar a otro profesional, co-coordinar un plan o hacer seguimiento conjunto es difícil sin infraestructura compartida.",
+    },
+    {
+      number: "03",
+      title: "Trabajo sin métricas",
+      description:
+        "¿Cuántos deportistas acompañaste este año? ¿Cuál fue el progreso medible? Sin datos, el impacto real queda invisible.",
+    },
+    {
+      number: "04",
+      title: "Escala imposible sin estructura",
+      description:
+        "Crecer como profesional del deporte requiere un sistema. Sin él, cada cliente nuevo suma carga, no escala.",
+    },
+  ],
+
+  pivotPre:       "No te falta",
+  pivotAccent1:   "conocimiento.",
+  pivotConnector: "Te falta",
+  pivotAccent2:   "estructura.",
+
+  journeyLabel:          "Cómo funciona ESDEC para vos",
+  journeyHeadlinePre:    "TU CAMINO,",
+  journeyHeadlineAccent: "PASO A PASO.",
+  journeyFingerLabel:    "Tu plataforma ESDEC",
+
+  journey: [
+    { step: "1", title: "Tu perfil",     description: "Especialidad, experiencia y objetivos profesionales mapeados." },
+    { step: "2", title: "Tu cartera",    description: "Deportistas asignados según tu especialidad y disponibilidad." },
+    { step: "3", title: "Coordinación",  description: "Trabajás junto a otros especialistas en un plan integrado." },
+    { step: "4", title: "Seguimiento",   description: "Métricas reales del progreso de cada atleta que acompañás." },
+    { step: "5", title: "Escala",        description: "Más deportistas, más impacto. El sistema crece con vos." },
+  ],
+
+  journeyCta:     "Sumate como profesional",
+  journeyCtaHref: "#footprint",
 } as const;
 
 // ── ECOSYSTEM (Deportes + Especialistas) ────────────────────────────────────
@@ -201,12 +354,14 @@ export const EMOTIONAL = {
       eyebrow: "El atleta que ya lo da todo",
       headlinePre: "EL ESFUERZO NO",
       headlineAccent: "ES EL PROBLEMA.",
+      headlineSub: "",
       body: "La dedicación está. El sacrificio está. Pero entre tu esfuerzo y los resultados que merecés existe una brecha — y esa brecha tiene nombre.",
     },
     {
       eyebrow: "El problema que frena tu crecimiento",
       headlinePre: "SIN ESTRUCTURA,",
       headlineAccent: "EL TALENTO SE DISPERSA.",
+      headlineSub: "",
       body: "Sin un sistema que coordine entrenamiento, nutrición, mentalidad y evolución, cada esfuerzo vive en una isla. Sin conexión. Sin dirección.",
     },
     {
@@ -272,6 +427,8 @@ export const PROBLEM = {
     { step: "4", title: "Evolución", description: "Seguimiento con métricas reales, ajuste continuo." },
     { step: "5", title: "Escala",    description: "Nuevos objetivos, proyección. El ciclo no termina." },
   ],
+
+  journeyFingerLabel: "Tu estructura ESDEC",
 
   // CTA al final del journey — evita que el flujo se corte
   journeyCta:      "Empezá a construir",
