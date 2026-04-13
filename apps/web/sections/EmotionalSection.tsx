@@ -145,29 +145,21 @@ function Beat2() {
 function Beat3() {
   const beat = EMOTIONAL.beats[2];
   return (
-    <div className="relative overflow-hidden bg-[var(--bg)] py-36 md:py-48">
+    <div className="relative bg-[var(--bg)]">
 
-      {/* Huella de fondo — late */}
-      <div
-        className={cn(
-          "pointer-events-none absolute inset-0 flex items-center justify-center",
-          "[--fps:rgba(90,200,255,0.12)] dark:[--fps:rgba(5,128,211,0.12)]",
-          "[--fpg:rgba(90,200,255,0.03)] dark:[--fpg:rgba(5,128,211,0.03)]"
-        )}
-        aria-hidden="true"
-      >
-        <FingerprintSVG
-          animate={false}
-          className="w-[80vw] max-w-[700px] animate-heartbeat"
-        />
-      </div>
+      {/* Imagen completa — define la altura del contenedor, sin recorte */}
+      <img
+        src="/images/lifestyle/Vida1.jpg"
+        alt=""
+        className="w-full h-auto block opacity-40 brightness-125"
+      />
 
-      {/* Contenido centrado */}
-      <div className="relative z-[1] mx-auto max-w-landing px-6 text-center">
+      {/* Copy centrado sobre la imagen */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
 
         <ScrollReveal direction="up" delay={0}>
           <BeatCounter n="03" />
-          <p className="mt-3 mb-4 font-condensed text-xs font-bold uppercase tracking-[3px] text-[var(--t3)]">
+          <p className="mt-3 mb-4 font-condensed text-xs font-bold uppercase tracking-[3px] text-white/70">
             {beat.eyebrow}
           </p>
         </ScrollReveal>
@@ -175,13 +167,13 @@ function Beat3() {
         <ScrollReveal direction="up" delay={80}>
           <BrandLines animated centered className="mx-auto mb-6" />
           <h2
-            className="font-condensed font-black uppercase leading-[0.95] tracking-[-1px] text-[var(--t1)]"
+            className="font-condensed font-black uppercase leading-[0.95] tracking-[-1px] text-white"
             style={{ fontSize: "clamp(44px, 7vw, 100px)" }}
           >
             <span className="block">{beat.headlinePre}</span>
             <span className="block text-[var(--p1)]">{beat.headlineAccent}</span>
             {"headlineSub" in beat && (
-              <span className="block text-[var(--t2)] text-[0.6em] mt-2">
+              <span className="block text-white/70 text-[0.6em] mt-2">
                 {(beat as typeof beat & { headlineSub: string }).headlineSub}
               </span>
             )}
@@ -189,7 +181,7 @@ function Beat3() {
         </ScrollReveal>
 
         <ScrollReveal direction="up" delay={160}>
-          <p className="mx-auto mt-8 max-w-lg font-sans text-base leading-[1.75] text-[var(--t2)]">
+          <p className="mx-auto mt-8 max-w-lg font-sans text-base leading-[1.75] text-white/80">
             {beat.body}
           </p>
         </ScrollReveal>
