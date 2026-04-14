@@ -9,7 +9,7 @@ interface Section {
 }
 
 interface PageIndexProps {
-  sections: Section[];
+  sections: readonly Section[];
 }
 
 export default function PageIndex({ sections }: PageIndexProps) {

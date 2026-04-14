@@ -124,10 +124,11 @@ function DropdownPanel({
 // ── Navbar principal ──────────────────────────────────────────────────────────
 
 interface NavbarProps {
+  audience?: "deportista" | "profesional" | null;
   onLogoClick?: () => void;
 }
 
-export default function Navbar({ onLogoClick }: NavbarProps) {
+export default function Navbar({ audience, onLogoClick }: NavbarProps) {
   const [scrolled,     setScrolled]     = useState(false);
   const [openGroup,    setOpenGroup]    = useState<string | null>(null);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -164,6 +165,13 @@ export default function Navbar({ onLogoClick }: NavbarProps) {
     const id = href.replace("#", "");
     setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }), 80);
   };
+
+  const ctaLabel =
+    audience === "profesional"
+      ? NAV.audienceCtas.profesional
+      : audience === "deportista"
+        ? NAV.audienceCtas.deportista
+        : NAV.cta;
 
   return (
     <>
@@ -257,7 +265,7 @@ export default function Navbar({ onLogoClick }: NavbarProps) {
               "transition-opacity active:opacity-80"
             )}
           >
-            {NAV.cta}
+            {ctaLabel}
           </button>
 
         </div>
@@ -378,7 +386,7 @@ export default function Navbar({ onLogoClick }: NavbarProps) {
               "shadow-[0_2px_12px_rgba(0,0,0,0.15)]"
             )}
           >
-            {NAV.cta}
+            {ctaLabel}
           </button>
 
           {/* Hamburger — solo mobile */}
