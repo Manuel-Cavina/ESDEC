@@ -1,298 +1,242 @@
-// ─────────────────────────────────────────────────────────────────────────────
 // content/landing.ts
-// Todo el copy de la landing separado de los componentes.
-// Iterá aquí sin tocar ningún Section.
-// ─────────────────────────────────────────────────────────────────────────────
+// Single source of truth for the ESDEC landing copy.
 
-// ── GLOBAL ───────────────────────────────────────────────────────────────────
 export const BRAND = {
   name: "ESDEC",
   fullName: "Elite Sports Development",
   tagline: "Elite Sports Development.",
-  location: "Córdoba · Argentina",
+  location: "Cordoba · Argentina",
   year: "2025",
 } as const;
 
-// ── HERO ─────────────────────────────────────────────────────────────────────
 export const HERO = {
-  eyebrow: "Córdoba · Elite Sports Development · 2025",
-
-  // Headline partido en líneas para controlar el salto tipográfico
+  eyebrow: "Cordoba · Elite Sports Development · 2025",
   headlineLine1: "El futuro del",
   headlineLine2: "deportista no",
   headlineLine3: "se improvisa,",
-
-  // La línea de acento (color p1)
-  headlineAccent: "se Construye.",
-
-  // Subtexto
-  body: "ESDEC es el sistema que te acompaña <strong>día y noche</strong> para que te conviertas en el deportista que siempre quisiste ser. Especialistas coordinados, datos reales y comunidad — todo en un lugar.",
-
-  // Pillars (chips)
-  pillars: [
-    "Bienestar",
-    "Salud",
-    "Tecnología",
-    "Educación",
-    "Eventos",
-  ],
-
-  // CTAs
-  ctaPrimary: "Empezá ahora",
-  ctaSecondary: "Conocer ESDEC",
-
-  // Athlete card (side card)
+  headlineAccent: "se construye.",
+  body: "ESDEC es la estructura que conecta a cada deportista con los profesionales correctos para crecer mejor, con coordinacion, criterio y progreso real.",
+  pillars: ["Bienestar", "Salud", "Coordinacion", "Educacion", "Eventos"],
+  ctaPrimary: "Empeza tu proceso",
+  ctaSecondary: "Ver como funciona",
   card: {
     name: "Maxi R.",
     sport: "Running",
     level: "Nivel 2",
-    location: "Amateur · Parque Sarmiento, Córdoba",
+    location: "Amateur · Parque Sarmiento, Cordoba",
     initials: "M",
     bars: [
       { label: "Rendimiento", value: 62 },
-      { label: "Nutrición",   value: 45 },
-      { label: "Bienestar",   value: 70 },
+      { label: "Nutricion", value: 45 },
+      { label: "Bienestar", value: 70 },
     ],
     specialists: [
-      { name: "Psicólogo",     icon: "🧠", available: true },
-      { name: "Nutricionista", icon: "🥗", available: true },
-      { name: "Kinesiólogo",   icon: "⚕️", available: true },
-      { name: "Coach",         icon: "🏋️", available: true },
+      { name: "Psicologia", icon: "🧠", available: true },
+      { name: "Nutricion", icon: "🥗", available: true },
+      { name: "Kinesiologia", icon: "⚕️", available: true },
+      { name: "Coaching", icon: "🏋️", available: true },
     ],
   },
 } as const;
 
-// ── HERO SPLIT (pantalla de selección de audiencia) ──────────────────────────
 export const HERO_SPLIT = {
   topTagline: "ELITE SPORTS DEVELOPMENT · 2025",
-  dividerText: "ELEGÍ TU CAMINO",
-
+  dividerText: "ELEGI TU RECORRIDO",
+  sharedEyebrow: "Ecosistema coordinado",
+  sharedHeadlinePre: "LA ESTRUCTURA QUE",
+  sharedHeadlineAccent: "CONECTA PROGRESO",
+  sharedHeadlinePost: "Y EXPERTISE REAL.",
+  sharedBody:
+    "ESDEC conecta a deportistas con profesionales del deporte y la salud dentro de un mismo sistema. Elegi el recorrido que mejor te representa y entra con claridad, no a ciegas.",
+  sharedPills: [
+    "Deportistas con estructura",
+    "Profesionales con impacto",
+    "Coordinacion real",
+  ],
   left: {
-    eyebrow: "PARA EL DEPORTISTA",
-    headlinePre: "SOY",
-    headlineAccent: "DEPORTISTA.",
-    body: "Tengo el esfuerzo. Me falta el sistema que lo convierte en resultados reales.",
-    cta: "SOY DEPORTISTA →",
+    eyebrow: "PARA DEPORTISTAS",
+    headlinePre: "QUIERO",
+    headlineAccent: "CRECER MEJOR.",
+    body:
+      "No te falta esfuerzo. Te falta la estructura que ordena tu proceso y conecta a tu equipo alrededor tuyo.",
+    cta: "Entrar como deportista →",
     image: "/images/athletes/Atleta_1.png",
   },
-
   right: {
-    eyebrow: "PARA EL PROFESIONAL",
-    headlinePre: "SOY",
-    headlineAccent: "PROFESIONAL.",
-    body: "Tengo el conocimiento. ESDEC es donde mi trabajo genera impacto real.",
-    cta: "SOY PROFESIONAL →",
+    eyebrow: "PARA PROFESIONALES",
+    headlinePre: "QUIERO",
+    headlineAccent: "SUMAR MI PRACTICA.",
+    body:
+      "Tu conocimiento ya tiene valor. ESDEC le da visibilidad, coordinacion y acceso a deportistas dentro de un sistema serio.",
+    cta: "Entrar como profesional →",
     image: "/images/lifestyle/Medico1.png",
   },
 } as const;
 
-// ── STATS BAR ─────────────────────────────────────────────────────────────────
 export const STATS = [
-  { value: "8+",   label: "Especialidades"    },
-  { value: "247+", label: "En el sistema"     },
-  { value: "1°",   label: "Ecosistema integral" },
-  { value: "24/7", label: "Acompañamiento"    },
+  { value: "8+", label: "Especialidades coordinadas" },
+  { value: "247+", label: "Perfiles en el ecosistema" },
+  { value: "1°", label: "Sistema integral" },
+  { value: "24/7", label: "Seguimiento del proceso" },
 ] as const;
 
-// ── ABOUT — DEPORTISTA ────────────────────────────────────────────────────────
 export const ABOUT = {
-  eyebrow: "Por qué ESDEC existe",
-  manifestoPre:    "NO TE FALTA",
-  manifestoAccent: "VOLUNTAD.",
-  manifestoPost:   "TE FALTA EL SISTEMA.",
-  body: "El deportista amateur entrena solo, decide a ciegas y crece por intuición. ESDEC existe para cambiar eso — un sistema que pone a los mejores profesionales a trabajar en sintonía alrededor tuyo.",
-
+  eyebrow: "Estructura para crecer",
+  thesisLabel: "Tesis ESDEC",
+  thesisBody:
+    "No cambia la identidad del sistema. Cambia el punto de entrada. El objetivo es el mismo: conectar al deportista con los profesionales correctos para crecer mejor.",
+  manifestoPre: "NO TE FALTA",
+  manifestoAccent: "ESFUERZO.",
+  manifestoPost: "TE FALTA SISTEMA.",
+  body:
+    "ESDEC conecta entrenamiento, nutricion, recuperacion y salud mental dentro de una misma estructura para que cada decision tenga direccion y el progreso se vuelva mas claro.",
   benefits: [
     {
       icon: "⚡",
-      label: "Resultados reales",
-      title: "Del esfuerzo aislado al progreso medible",
-      description: "Cada sesión, cada comida, cada recuperación — conectadas en un sistema que muestra tu avance real.",
+      label: "Progreso real",
+      title: "Menos intuicion, mas direccion",
+      description:
+        "Cada paso responde a un plan coordinado y el avance deja de sentirse aislado.",
     },
     {
-      icon: "🎯",
-      label: "Plan coordinado",
-      title: "Un equipo trabajando en sintonía",
-      description: "Tu nutricionista, coach y kinesiólogo se hablan entre sí. Tu plan no tiene fisuras.",
+      icon: "🤝",
+      label: "Equipo correcto",
+      title: "Especialistas en sintonia",
+      description:
+        "Coach, nutricion, psicologia y recovery trabajan alrededor de un mismo objetivo.",
     },
     {
       icon: "📊",
-      label: "Decisiones con datos",
-      title: "Sin más adivinar",
-      description: "Métricas reales que guían cada decisión. El progreso deja de ser una sensación.",
+      label: "Criterio",
+      title: "Decisiones con seguimiento",
+      description:
+        "La informacion del proceso ordena los ajustes con criterio, no con promesas sueltas.",
     },
     {
       icon: "🚀",
       label: "Escala personal",
-      title: "El sistema que crece con vos",
-      description: "A medida que avanzás, el sistema se adapta. No hay techo cuando tenés estructura.",
+      title: "Una estructura que crece con vos",
+      description:
+        "Tu proceso evoluciona sin reiniciarse cada vez que cambia la etapa.",
     },
   ],
-
-  quote: "Construimos ESDEC porque sabemos lo que es entrenar sin sistema — y decidimos que no debería ser así.",
-  quoteAuthor: "El equipo ESDEC · Córdoba",
+  quote: "El talento sin sistema se dispersa.",
+  quoteAuthor: "El equipo ESDEC · Cordoba",
 } as const;
 
-// ── ABOUT — PROFESIONAL ───────────────────────────────────────────────────────
 export const PROFESSIONAL_ABOUT = {
-  eyebrow: "Tu lugar en el sistema",
-  manifestoPre:    "TU CONOCIMIENTO",
-  manifestoAccent: "YA ES SUFICIENTE.",
-  manifestoPost:   "FALTA LA PLATAFORMA.",
-  body: "El profesional del deporte tiene la formación y la experiencia. Lo que le falta es un sistema que conecte ese conocimiento con quienes más lo necesitan — y ESDEC es exactamente eso.",
-
+  eyebrow: "Estructura para ejercer mejor",
+  thesisLabel: "Tesis ESDEC",
+  thesisBody:
+    "No cambia la identidad del sistema. Cambia tu punto de entrada. El objetivo es el mismo: conectar expertise real con procesos donde pueda generar impacto.",
+  manifestoPre: "TU CONOCIMIENTO",
+  manifestoAccent: "YA TIENE VALOR.",
+  manifestoPost: "LE FALTA PLATAFORMA.",
+  body:
+    "ESDEC ordena visibilidad, coordinacion y acceso a deportistas dentro de una estructura compartida para que tu trabajo gane contexto y escala.",
   benefits: [
     {
       icon: "🎯",
-      label: "Impacto amplificado",
-      title: "Tu expertise llega más lejos",
-      description: "ESDEC te conecta con los deportistas que necesitan exactamente lo que ofrecés, sin intermediarios.",
+      label: "Demanda relevante",
+      title: "Visibilidad frente a quien te necesita",
+      description:
+        "Tu practica se conecta con deportistas y procesos donde tu especialidad aporta valor concreto.",
     },
     {
       icon: "🤝",
-      label: "Red coordinada",
-      title: "Trabajás con otros de primer nivel",
-      description: "Derivaciones, co-coordinación y comunidad real con otros profesionales del ecosistema.",
+      label: "Trabajo coordinado",
+      title: "Una red que potencia tu criterio",
+      description:
+        "No trabajas aislado. Entras a un sistema donde otras disciplinas complementan tu trabajo.",
     },
     {
       icon: "📈",
-      label: "Crecimiento medible",
-      title: "Tu impacto en números reales",
-      description: "Carteras de atletas, historial de progreso y métricas que hacen visible el valor que generás.",
+      label: "Impacto visible",
+      title: "Seguimiento que vuelve visible tu aporte",
+      description:
+        "La plataforma ordena recorridos e informacion para que tu valor se vea y pueda sostenerse.",
     },
     {
       icon: "⚙️",
-      label: "Estructura lista",
-      title: "Sin construir desde cero",
-      description: "La infraestructura, los procesos y las herramientas ya están. Vos llegás a ejercer, no a armar.",
+      label: "Infraestructura lista",
+      title: "Menos friccion operativa, mas practica real",
+      description:
+        "ESDEC suma estructura, contexto y continuidad para crecer dentro de un ecosistema serio.",
     },
   ],
-
-  quote: "ESDEC no es solo una plataforma — es la estructura que el profesional del deporte siempre necesitó para ejercer a escala.",
-  quoteAuthor: "El equipo ESDEC · Córdoba",
-} as const;
-
-// ── EMOTIONAL — DEPORTISTA ────────────────────────────────────────────────────
-// (ver abajo — EMOTIONAL)
-
-// ── EMOTIONAL — PROFESIONAL ───────────────────────────────────────────────────
-export const PROFESSIONAL_EMOTIONAL = {
-  beats: [
-    {
-      eyebrow: "El profesional que ya sabe",
-      headlinePre: "EL CONOCIMIENTO",
-      headlineAccent: "YA LO TENÉS.",
-      headlineSub: "",
-      body: "Años de formación, experiencia real y resultados comprobados. Pero entre lo que sabés y el impacto que podés generar existe una brecha — y esa brecha tiene nombre.",
-    },
-    {
-      eyebrow: "El problema que limita tu alcance",
-      headlinePre: "SIN SISTEMA,",
-      headlineAccent: "TU IMPACTO SE FRAGMENTA.",
-      headlineSub: "",
-      body: "Trabajás de forma aislada, sin herramientas para coordinar con otros especialistas, sin visibilidad real y sin estructura para escalar lo que hacés.",
-    },
-    {
-      eyebrow: "Tu lugar en ESDEC",
-      headlinePre: "ESDEC TE DA",
-      headlineAccent: "EL SISTEMA.",
-      headlineSub: "EL QUE HACE QUE TU TRABAJO VALGA LO QUE VALE.",
-      body: "Una plataforma donde tu expertise se conecta con deportistas reales, con otros profesionales y con las herramientas para que tu trabajo genere impacto sostenible.",
-    },
-  ],
-} as const;
-
-// ── PROBLEM — PROFESIONAL ─────────────────────────────────────────────────────
-export const PROFESSIONAL_PROBLEM = {
-  eyebrow: "El diagnóstico",
-  headline: "EL PROFESIONAL",
-  headlineAccent: "MERECE MÁS.",
-
   quote:
-    '"El profesional del deporte tiene el conocimiento. Lo que le falta es un <strong>sistema que conecte ese conocimiento</strong> con quienes más lo necesitan."',
-
-  problems: [
-    {
-      number: "01",
-      title: "Visibilidad fragmentada",
-      description:
-        "Tu trabajo existe, pero no tiene el canal correcto para llegar a los deportistas que necesitan exactamente lo que ofrecés.",
-    },
-    {
-      number: "02",
-      title: "Sin red coordinada",
-      description:
-        "Derivar a otro profesional, co-coordinar un plan o hacer seguimiento conjunto es difícil sin infraestructura compartida.",
-    },
-    {
-      number: "03",
-      title: "Trabajo sin métricas",
-      description:
-        "¿Cuántos deportistas acompañaste este año? ¿Cuál fue el progreso medible? Sin datos, el impacto real queda invisible.",
-    },
-    {
-      number: "04",
-      title: "Escala imposible sin estructura",
-      description:
-        "Crecer como profesional del deporte requiere un sistema. Sin él, cada cliente nuevo suma carga, no escala.",
-    },
-  ],
-
-  pivotPre:       "No te falta",
-  pivotAccent1:   "conocimiento.",
-  pivotConnector: "Te falta",
-  pivotAccent2:   "estructura.",
-
-  journeyLabel:          "Cómo funciona ESDEC para vos",
-  journeyHeadlinePre:    "TU CAMINO,",
-  journeyHeadlineAccent: "PASO A PASO.",
-  journeyFingerLabel:    "Tu plataforma ESDEC",
-
-  journey: [
-    { step: "1", title: "Tu perfil",     description: "Especialidad, experiencia y objetivos profesionales mapeados." },
-    { step: "2", title: "Tu cartera",    description: "Deportistas asignados según tu especialidad y disponibilidad." },
-    { step: "3", title: "Coordinación",  description: "Trabajás junto a otros especialistas en un plan integrado." },
-    { step: "4", title: "Seguimiento",   description: "Métricas reales del progreso de cada atleta que acompañás." },
-    { step: "5", title: "Escala",        description: "Más deportistas, más impacto. El sistema crece con vos." },
-  ],
-
-  journeyCta:     "Sumate como profesional",
-  journeyCtaHref: "#footprint",
+    "Tu expertise no necesita mas discurso. Necesita estructura.",
+  quoteAuthor: "El equipo ESDEC · Cordoba",
 } as const;
 
-// ── ECOSYSTEM (Deportes + Especialistas) ────────────────────────────────────
-export const ECOSYSTEM = {
-  eyebrow: "Cobertura global",
-  headline: "TU DEPORTE.",
-  headlineAccent: "NUESTRO SISTEMA.",
-  body: "Cualquier deporte, el mismo sistema de alto rendimiento. Sin excepciones.",
+export const ENTRY = {
+  deportista: {
+    eyebrow: "PARA DEPORTISTAS",
+    headlinePre: "EL FUTURO DEL",
+    headlineAccent: "DEPORTISTA",
+    headlinePost: "SE CONSTRUYE.",
+    body:
+      "ESDEC no viene a exigirte mas. Viene a ayudarte a crecer mejor, con el equipo correcto y una estructura capaz de sostener lo que hoy todavia parece lejano.",
+    cta: "Ver como funciona",
+    image: "/images/lifestyle/Correr_lluvia_1.jpg",
+  },
+  profesional: {
+    eyebrow: "PARA PROFESIONALES",
+    headlinePre: "EL FUTURO DEL",
+    headlineAccent: "PROFESIONAL",
+    headlinePost: "SE POTENCIA.",
+    body:
+      "ESDEC ordena el contexto alrededor de tu expertise para que tu trabajo gane visibilidad, coordinacion y proyeccion dentro de un ecosistema que lo respalda.",
+    cta: "Ver como funciona",
+    image: "/images/lifestyle/Medico1.png",
+  },
+} as const;
 
+export const ECOSYSTEM = {
+  eyebrow: "Red coordinada",
+  cardSupportLabel: "Coordinacion ESDEC",
+  bridgeLabel: "Lectura del sistema",
+  headline: "LAS PERSONAS",
+  headlineAccent: "QUE HACEN FUNCIONAR EL SISTEMA.",
+  body:
+    "El valor de ESDEC no vive en una promesa abstracta. Vive en una red de especialidades que se entienden entre si y trabajan con un criterio compartido.",
+  audienceBody: {
+    deportista:
+      "Ves al otro lado de la estructura: quienes sostienen tu proceso con criterio, seguimiento y coordinacion real.",
+    profesional:
+      "Ves la red con la que vas a coordinar tu practica, sumar contexto y amplificar el impacto de tu especialidad.",
+  },
+  stripLabel: "Disciplinas activas",
   sports: [
-    "⚽ Fútbol",
+    "⚽ Futbol",
     "🏃 Running",
-    "🏒 Hockey",
+    "🏑 Hockey",
     "🏉 Rugby",
-    "🏀 Básquet",
+    "🏀 Basquet",
     "🎾 Tenis",
-    "🏊 Natación",
+    "🏊 Natacion",
     "🚴 Ciclismo",
     "🥊 Boxeo",
     "🤸 Crossfit",
     "🤼 Artes marciales",
-    "⛷️ Esquí",
+    "⛷️ Esqui",
     "🏄 Surf",
     "🧘 Yoga deportivo",
   ],
-
-  specialistsEyebrow: "El equipo que necesitás",
+  bridge: {
+    deportista:
+      "Cada especialidad suma una capa del sistema que te ayuda a crecer mejor.",
+    profesional:
+      "Cada especialidad suma una capa del sistema con la que podes coordinar y trabajar mejor.",
+  },
   specialists: [
     {
       number: "01",
       icon: "🧠",
       role: "Salud mental",
-      title: "Psicología Deportiva",
+      title: "Psicologia deportiva",
       description:
-        "Mentalidad, gestión del estrés y resiliencia. Pilar central del plan — no un extra opcional.",
+        "Mentalidad, foco y regulacion emocional integrados en el proceso del atleta. No es un extra: es parte de la estructura.",
       tag: "Core",
       image: "/images/lifestyle/Correr_lluvia_1.jpg",
     },
@@ -300,325 +244,495 @@ export const ECOSYSTEM = {
       number: "02",
       icon: "🥗",
       role: "Rendimiento",
-      title: "Nutrición Deportiva",
+      title: "Nutricion deportiva",
       description:
-        "Planes sincronizados con tu entrenamiento real. Ajuste continuo basado en datos.",
+        "Planes conectados al contexto real del entrenamiento, la recuperacion y los objetivos de evolucion.",
       tag: "Core",
       image: "/images/lifestyle/Deportes_1.jpg",
     },
     {
       number: "03",
       icon: "⚕️",
-      role: "Prevención",
-      title: "Kinesiología",
+      role: "Prevencion",
+      title: "Kinesiologia y biomecanica",
       description:
-        "Prevención de lesiones y biomecánica. Tu cuerpo como activo a proteger.",
+        "Prevencion, recuperacion y lectura del cuerpo dentro de un sistema que protege el progreso y evita improvisar.",
       tag: "Core",
       image: "/images/lifestyle/Medico1.png",
     },
     {
       number: "04",
       icon: "🏋️",
-      role: "Técnico",
-      title: "Coaching y Entreno",
+      role: "Entrenamiento",
+      title: "Coaching y planificacion",
       description:
-        "Coaches especializados en tu deporte con metodología basada en datos.",
+        "Direccion tecnica, carga adecuada y seguimiento para que cada decision tenga un porque y una continuidad.",
       tag: "Core",
       image: "/images/athletes/Atleta_1.png",
     },
     {
       number: "05",
       icon: "💆",
-      role: "Recuperación",
-      title: "Masajes y Recovery",
+      role: "Recovery",
+      title: "Recuperacion y descarga",
       description:
-        "Recuperación activa integrada en el plan. Parte del rendimiento, no extra.",
+        "La recuperacion entra al sistema como parte del rendimiento y no como un agregado desconectado del resto.",
       tag: "Plus",
       image: "/images/lifestyle/EstilodeVida.jpg",
     },
     {
       number: "06",
       icon: "🌟",
-      role: "Crecimiento",
-      title: "Marca Personal",
+      role: "Proyeccion",
+      title: "Marca personal y visibilidad",
       description:
-        "Identidad deportiva, presencia digital y proyección hacia oportunidades reales.",
+        "Una capa de posicionamiento para atletas y profesionales que necesitan convertir trabajo serio en presencia y oportunidad.",
       tag: "Plus",
       image: "/images/lifestyle/Deportes_2.jpg",
     },
   ],
 } as const;
 
-// ── EMOTIONAL (3 beats narrativos) ──────────────────────────────────────────
 export const EMOTIONAL = {
-  beats: [
-    {
-      eyebrow: "El atleta que ya lo da todo",
-      headlinePre: "EL ESFUERZO NO",
-      headlineAccent: "ES EL PROBLEMA.",
-      headlineSub: "",
-      body: "La dedicación está. El sacrificio está. Pero entre tu esfuerzo y los resultados que merecés existe una brecha — y esa brecha tiene nombre.",
-    },
-    {
-      eyebrow: "El problema que frena tu crecimiento",
-      headlinePre: "SIN ESTRUCTURA,",
-      headlineAccent: "EL TALENTO SE DISPERSA.",
-      headlineSub: "",
-      body: "Sin un sistema que coordine entrenamiento, nutrición, mentalidad y evolución, cada esfuerzo vive en una isla. Sin conexión. Sin dirección.",
-    },
-    {
-      eyebrow: "La diferencia ESDEC",
-      headlinePre: "ESDEC CONSTRUYE",
-      headlineAccent: "EL SISTEMA.",
-      headlineSub: "EL QUE HACE QUE TU ESFUERZO VALGA.",
-      body: "No más piezas sueltas. Un sistema integrado que conecta cada parte de tu desarrollo y lo dirige hacia resultados reales.",
-    },
+  eyebrow: "Conviccion con estructura",
+  headlinePre: "EL FUTURO DEL",
+  headlineAccent: "DEPORTISTA",
+  headlinePost: "SE CONSTRUYE.",
+  body:
+    "ESDEC no viene a exigirte mas. Viene a ayudarte a crecer mejor, con el equipo correcto y una estructura capaz de sostener lo que hoy todavia parece lejano.",
+  points: [
+    "No te falta esfuerzo. Te falta estructura.",
+    "El talento sin sistema se dispersa.",
+    "Progreso real, no improvisacion.",
   ],
 } as const;
 
-// ── PROBLEM (Diagnóstico + Journey) ────────────────────────────────────────
+export const PROFESSIONAL_EMOTIONAL = {
+  eyebrow: "Impacto con criterio",
+  headlinePre: "EL FUTURO DEL",
+  headlineAccent: "PROFESIONAL",
+  headlinePost: "SE POTENCIA.",
+  body:
+    "ESDEC ordena el contexto alrededor de tu expertise para que tu trabajo gane visibilidad, coordinacion y proyeccion dentro de un ecosistema que lo respalda.",
+  points: [
+    "Tu conocimiento ya tiene valor.",
+    "La coordinacion multiplica el impacto.",
+    "Una red seria cambia la escala.",
+  ],
+} as const;
+
 export const PROBLEM = {
-  eyebrow: "El diagnóstico",
-  headline: "EL PROBLEMA",
-  headlineAccent: "ES CLARO.",
-
+  eyebrow: "Como se traduce en experiencia",
+  journeyStepPrefix: "Paso",
+  headline: "DEL",
+  headlineAccent: "DIAGNOSTICO AL PROCESO.",
   quote:
-    "\"El deportista amateur no carece de <strong>motivación</strong>. Carece de acceso a un <strong>sistema integral</strong> que coordine su desarrollo.\"",
-
+    "\"El deportista amateur no carece de motivacion. Carece de una estructura que coordine su desarrollo y lo ayude a sostener progreso real.\"",
   problems: [
     {
       number: "01",
-      title: "Especialistas dispersos",
+      title: "Especialistas desconectados",
       description:
-        "Los profesionales existen pero están desconectados. Sin criterio para encontrarlos, evaluarlos ni coordinarlos entre sí.",
+        "Los profesionales existen, pero encontrarlos, validarlos y coordinarlos sigue siendo una carga para el deportista.",
     },
     {
       number: "02",
-      title: "Nadie coordina el plan",
+      title: "Decisiones sin contexto",
       description:
-        "Nutricionista, coach y kinesiólogo trabajan en paralelo sin comunicarse. El desarrollo se fragmenta y el deportista pierde el hilo.",
+        "Cuando cada area trabaja por separado, el proceso pierde direccion y el esfuerzo se dispersa.",
     },
     {
       number: "03",
-      title: "Decisiones a ciegas",
+      title: "Progreso dificil de leer",
       description:
-        "Sin métricas no hay dirección. Cada decisión se toma por intuición — imposible distinguir progreso real de estancamiento.",
+        "Sin seguimiento compartido, cuesta saber que funciona, que ajustar y donde esta realmente el avance.",
     },
     {
       number: "04",
-      title: "Esfuerzo sin sistema",
+      title: "Mucho esfuerzo, poca estructura",
       description:
-        "El deportista amateur entrena sin la infraestructura que traduzca ese esfuerzo en desarrollo real y medible.",
+        "El problema no es la voluntad. Es no tener una plataforma que ordene todo alrededor del objetivo.",
     },
   ],
-
-  // Pivot — mensaje rector que separa el diagnóstico de la solución
-  pivotPre:        "No te falta",
-  pivotAccent1:    "esfuerzo.",
-  pivotConnector:  "Te falta",
-  pivotAccent2:    "estructura.",
-
-  journeyLabel: "Cómo funciona ESDEC",
-  journeyHeadlinePre: "EL SISTEMA,",
+  pivotPre: "No te falta",
+  pivotAccent1: "esfuerzo.",
+  pivotConnector: "Te falta",
+  pivotAccent2: "estructura.",
+  journeyLabel: "Como funciona ESDEC para deportistas",
+  journeyHeadlinePre: "TU PROCESO,",
   journeyHeadlineAccent: "PASO A PASO.",
-
-  journey: [
-    { step: "1", title: "Perfil",    description: "Objetivos, deporte y punto de partida mapeados." },
-    { step: "2", title: "Equipo",    description: "Especialistas validados y coordinados para vos." },
-    { step: "3", title: "Plan",      description: "Integral: entreno, nutrición, recuperación y mente." },
-    { step: "4", title: "Evolución", description: "Seguimiento con métricas reales, ajuste continuo." },
-    { step: "5", title: "Escala",    description: "Nuevos objetivos, proyección. El ciclo no termina." },
-  ],
-
   journeyFingerLabel: "Tu estructura ESDEC",
-
-  // CTA al final del journey — evita que el flujo se corte
-  journeyCta:      "Empezá a construir",
-  journeyCtaHref:  "#footprint",
+  journey: [
+    {
+      step: "1",
+      title: "Perfil",
+      description: "Objetivos, deporte y punto de partida mapeados con claridad.",
+    },
+    {
+      step: "2",
+      title: "Equipo",
+      description: "Especialistas correctos y coordinados alrededor de tu proceso.",
+    },
+    {
+      step: "3",
+      title: "Plan",
+      description: "Entrenamiento, nutricion, recovery y mente dentro de una misma lectura.",
+    },
+    {
+      step: "4",
+      title: "Seguimiento",
+      description: "Ajustes y decisiones sostenidas por informacion compartida.",
+    },
+    {
+      step: "5",
+      title: "Escala",
+      description: "El sistema acompana nuevos objetivos sin reiniciar tu progreso.",
+    },
+  ],
+  journeyCta: "Empezar mi proceso",
+  journeyCtaHref: "#footprint",
+  journeySupport:
+    "Cuando avances, te pedimos solo la informacion minima para responderte por WhatsApp y orientarte en menos de 48hs.",
 } as const;
 
-// ── FOOTPRINT / CTA ──────────────────────────────────────────────────────────
-export const FOOTPRINT = {
-  eyebrow: "El primer paso",
-
-  ctaHeadline: ["EMPEZÁ A", "CONSTRUIR."],
-  ctaAccent: "HOY.",
-
-  counter: 247,
-  counterLabel: "Deportistas ya en el sistema",
-
-  body: "Los primeros en sumarse acceden con beneficios exclusivos de fundadores.",
-
-  features: [
-    "Acceso prioritario al lanzamiento",
-    "Precio especial de fundadores",
-    "Especialista asignado en 48hs",
+export const PROFESSIONAL_PROBLEM = {
+  eyebrow: "Como entra tu practica al ecosistema",
+  journeyStepPrefix: "Paso",
+  headline: "DEL",
+  headlineAccent: "VALOR A LA ESCALA.",
+  quote:
+    "\"El profesional del deporte no necesita mas discurso. Necesita una estructura que conecte su expertise con deportistas reales y con una red que lo potencie.\"",
+  problems: [
+    {
+      number: "01",
+      title: "Visibilidad fragmentada",
+      description:
+        "Tu trabajo existe, pero no siempre encuentra el contexto correcto para volverse visible frente a la demanda relevante.",
+    },
+    {
+      number: "02",
+      title: "Coordinacion dificil",
+      description:
+        "Derivar, complementar o sostener procesos compartidos sigue siendo complejo sin infraestructura comun.",
+    },
+    {
+      number: "03",
+      title: "Impacto poco legible",
+      description:
+        "Sin un sistema de seguimiento, el valor que generas queda disperso y cuesta sostenerlo a escala.",
+    },
+    {
+      number: "04",
+      title: "Crecimiento con demasiada friccion",
+      description:
+        "A medida que sumas demanda, crece la carga operativa si no hay una estructura que ordene el recorrido.",
+    },
   ],
+  pivotPre: "No te falta",
+  pivotAccent1: "conocimiento.",
+  pivotConnector: "Te falta",
+  pivotAccent2: "plataforma.",
+  journeyLabel: "Como funciona ESDEC para profesionales",
+  journeyHeadlinePre: "TU INGRESO,",
+  journeyHeadlineAccent: "PASO A PASO.",
+  journeyFingerLabel: "Tu plataforma ESDEC",
+  journey: [
+    {
+      step: "1",
+      title: "Perfil",
+      description: "Especialidad, experiencia y enfoque profesional presentados con claridad.",
+    },
+    {
+      step: "2",
+      title: "Encaje",
+      description: "ESDEC ubica tu aporte dentro de la red y del tipo de proceso donde mas valor generas.",
+    },
+    {
+      step: "3",
+      title: "Coordinacion",
+      description: "Trabajas dentro de una red que te da contexto, derivacion y lectura compartida.",
+    },
+    {
+      step: "4",
+      title: "Seguimiento",
+      description: "El sistema vuelve mas visible tu impacto dentro de cada recorrido.",
+    },
+    {
+      step: "5",
+      title: "Escala",
+      description: "Tu practica suma visibilidad, criterio y proyeccion dentro del ecosistema.",
+    },
+  ],
+  journeyCta: "Postularme como profesional",
+  journeyCtaHref: "#footprint",
+  journeySupport:
+    "Te pedimos solo la informacion necesaria para revisar tu perfil y continuar el contacto por WhatsApp.",
+} as const;
 
-  form: {
-    namePlaceholder: "¿Cómo te llamás?",
-    emailPlaceholder: "tu@email.com",
-    sportLabel: "Tu deporte",
-    sports: ["⚽", "🏃", "🏉", "🏒", "🏀", "🎾"],
-    ctaButton: "Asegurar mi lugar",
-    disclaimer: "Sin spam · Podés darte de baja cuando quieras",
-    successTitle: "¡DENTRO!",
-    successBody: "Te avisamos antes del lanzamiento con acceso prioritario.",
+export const FOOTPRINT = {
+  eyebrow: "Ingreso al ecosistema",
+  panelLabel: "Siguiente paso",
+  variants: {
+    deportista: {
+      headline: ["EMPEZA TU", "PROCESO."],
+      accent: "CON ESTRUCTURA.",
+      body:
+        "Contanos tu deporte y tu objetivo. Te guiamos por WhatsApp con el contexto justo para orientarte dentro del sistema ESDEC.",
+      features: [
+        "Primer contacto simple y guiado",
+        "Respuesta en menos de 48hs",
+        "Recorrido pensado para tu punto de partida",
+      ],
+      cta: "Empezar por WhatsApp →",
+      note:
+        "Te hacemos pocas preguntas y te explicamos el siguiente paso antes de pedirte mas tiempo.",
+    },
+    profesional: {
+      headline: ["SUMATE COMO", "PROFESIONAL."],
+      accent: "CON CRITERIO.",
+      body:
+        "Compartinos tu especialidad y como te contactamos. Revisamos tu perfil y seguimos la conversacion por WhatsApp con claridad sobre el siguiente paso.",
+      features: [
+        "Postulacion inicial liviana",
+        "Revision del perfil con contexto",
+        "Continuidad por WhatsApp en menos de 48hs",
+      ],
+      cta: "Postularme por WhatsApp →",
+      note:
+        "La propuesta inicial es breve: buscamos validar encaje antes de pedirte mas informacion.",
+    },
   },
 } as const;
 
-// ── NAV ───────────────────────────────────────────────────────────────────────
-// Estructura escalable: grupos con items opcionales (dropdown) o link directo.
-// comingSoon: true → se renderiza dimmed, no clickeable (roadmap visual).
 export const NAV = {
   groups: [
     {
-      label: "Nosotros",
+      label: "Recorrido",
       items: [
-        { label: "Quiénes somos", href: "#about",      icon: "🏢", description: "La visión y misión detrás de ESDEC"    },
-        { label: "El problema",   href: "#problem",    icon: "🔍", description: "Por qué el deporte amateur necesita un sistema" },
-        { label: "Nuestra visión",href: "#emotional",  icon: "🎯", description: "El futuro que construimos juntos"      },
+        {
+          label: "Que es ESDEC",
+          href: "#about",
+          icon: "🧭",
+          description: "La estructura y la tesis del ecosistema",
+        },
+        {
+          label: "Red coordinada",
+          href: "#ecosystem",
+          icon: "🤝",
+          description: "Quienes hacen funcionar el sistema",
+        },
+        {
+          label: "Como funciona",
+          href: "#problem",
+          icon: "📍",
+          description: "El paso a paso para entrar y avanzar",
+        },
       ],
     },
     {
-      label: "Profesionales",
-      href: "#ecosystem",
+      label: "Conviccion",
+      href: "#emotional",
     },
     {
-      label: "Deportista",
+      label: "Ingresar",
       href: "#footprint",
     },
-    {
-      label: "Comunidad",
-      href: "#community",
-    },
   ],
-  cta: "Sumate →",
+  audienceCtas: {
+    deportista: "Empezar mi proceso →",
+    profesional: "Postularme →",
+  },
+  cta: "Ver el ingreso →",
   ctaHref: "#footprint",
 } as const;
 
-// ── COMMUNITY ─────────────────────────────────────────────────────────────────
+export const PAGE_INDEX = {
+  deportista: [
+    { id: "entry", label: "Inicio" },
+    { id: "about", label: "Estructura" },
+    { id: "ecosystem", label: "Red" },
+    { id: "problem", label: "Proceso" },
+    { id: "emotional", label: "Conviccion" },
+    { id: "footprint", label: "Ingresar" },
+  ],
+  profesional: [
+    { id: "entry", label: "Inicio" },
+    { id: "about", label: "Plataforma" },
+    { id: "ecosystem", label: "Red" },
+    { id: "problem", label: "Ingreso" },
+    { id: "emotional", label: "Impacto" },
+    { id: "footprint", label: "Postularme" },
+  ],
+} as const;
+
 export const COMMUNITY = {
-  eyebrow: "Comunidad ESDEC · Córdoba",
+  eyebrow: "Comunidad ESDEC · Cordoba",
   headline: "ESTA ES",
   headlineAccent: "NUESTRA COMUNIDAD.",
-
   stats: [
-    { value: "247+", label: "En el sistema"       },
-    { value: "8+",   label: "Deportes activos"    },
-    { value: "24/7", label: "Acompañamiento real" },
+    { value: "247+", label: "En el sistema" },
+    { value: "8+", label: "Deportes activos" },
+    { value: "24/7", label: "Acompanamiento real" },
   ],
-
-  // Fotos del equipo — /public/images/team/
   photos: [
     {
       src: "/images/team/Equipo_Escalinatas.png",
-      alt: "Equipo ESDEC en las escalinatas de Córdoba",
+      alt: "Equipo ESDEC en las escalinatas de Cordoba",
       label: "El equipo",
     },
     {
       src: "/images/team/Equipo_G7.png",
-      alt: "Equipo ESDEC — grupo de trabajo",
+      alt: "Equipo ESDEC · grupo de trabajo",
       label: "ESDEC G7",
     },
   ],
-
   quote: {
-    text: "Construimos ESDEC porque sabemos lo que es entrenar sin sistema. Queremos que ningún deportista pase por eso.",
+    text: "Construimos ESDEC porque sabemos lo que es entrenar sin sistema. Queremos que ningun deportista tenga que crecer asi.",
     author: "El equipo ESDEC",
-    location: "Córdoba, Argentina",
+    location: "Cordoba, Argentina",
   },
 } as const;
 
-// ── FOOTER ────────────────────────────────────────────────────────────────────
 export const FOOTER = {
-  tagline: "El sistema que construye deportistas.",
-
+  tagline: "La estructura que conecta progreso y expertise.",
   groups: [
     {
-      label: "La plataforma",
+      label: "Plataforma",
       links: [
-        { label: "Profesionales",   href: "#ecosystem" },
-        { label: "Cómo funciona",   href: "#problem"   },
-        { label: "Empezá ahora",    href: "#footprint" },
+        { label: "Que es ESDEC", href: "#about" },
+        { label: "Red coordinada", href: "#ecosystem" },
+        { label: "Como funciona", href: "#problem" },
       ],
     },
     {
-      label: "Comunidad",
+      label: "Ingreso",
       links: [
-        { label: "Nuestro equipo",  href: "#community" },
-        { label: "Nuestra visión",  href: "#emotional"  },
-        { label: "Quiénes somos",   href: "#about"      },
+        { label: "Conviccion", href: "#emotional" },
+        { label: "Dar el primer paso", href: "#footprint" },
       ],
     },
   ],
-
   legal: [
-    { label: "Privacidad",          href: "#" },
-    { label: "Términos de uso",     href: "#" },
+    { label: "Privacidad", href: "#" },
+    { label: "Terminos de uso", href: "#" },
   ],
-
   social: [
-    { label: "Instagram", href: "https://instagram.com/esdec.ok",              icon: "ig"  },
-    { label: "TikTok",    href: "https://tiktok.com/@esdec",                   icon: "tt"  },
-    { label: "Twitter/X", href: "https://x.com/esdec",                         icon: "x"   },
-    { label: "WhatsApp",  href: "https://wa.me/5493516000000",                 icon: "wa"  },
+    { label: "Instagram", href: "https://instagram.com/esdec.ok", icon: "ig" },
+    { label: "TikTok", href: "https://tiktok.com/@esdec", icon: "tt" },
+    { label: "Twitter/X", href: "https://x.com/esdec", icon: "x" },
+    { label: "WhatsApp", href: "https://wa.me/5493516000000", icon: "wa" },
   ],
-
   contact: {
-    email:    "contacto@esdec.com.ar",
-    location: "Córdoba · Argentina",
-    phone:    "+54 9 351 600-0000",
+    email: "contacto@esdec.com.ar",
+    location: "Cordoba · Argentina",
+    phone: "+54 9 351 600-0000",
   },
-
-  location: "Córdoba · Argentina",
-  copy: `© ${new Date().getFullYear()} ESDEC — Elite Sports Development. Todos los derechos reservados.`,
+  location: "Cordoba · Argentina",
+  copy: `© ${new Date().getFullYear()} ESDEC · Elite Sports Development. Todos los derechos reservados.`,
 } as const;
 
-// ── FOOTPRINT MODAL — cuestionario de incorporación ──────────────────────────
 export const FOOTPRINT_MODAL = {
-  title:    "EMPEZÁ A CONSTRUIR",
-  subtitle: "Contanos sobre vos para conectarte con el sistema que te corresponde.",
-
-  steps: [
-    {
-      id: "name",
-      question: "¿Cómo te llamás?",
-      type: "text" as const,
-      placeholder: "Tu nombre",
-    },
-    {
-      id: "sport",
-      question: "¿Cuál es tu deporte?",
-      type: "options" as const,
-      options: ["⚽ Fútbol", "🏃 Running", "🏉 Rugby", "🏒 Hockey", "🏀 Básquet", "🎾 Tenis", "🏊 Natación", "🚴 Ciclismo", "🥊 Boxeo", "🤸 Crossfit", "🤼 Artes marciales", "🌟 Otro"],
-    },
-    {
-      id: "challenge",
-      question: "¿Cuál es tu mayor desafío hoy?",
-      type: "options" as const,
-      options: ["📈 Mejorar mi rendimiento", "🥗 Nutrición y alimentación", "🦴 Prevención de lesiones", "🧠 Mentalidad y motivación", "📋 No tengo un plan claro", "⚡ Todo a la vez"],
-    },
-    {
-      id: "experience",
-      question: "¿Cuánto tiempo llevás entrenando?",
-      type: "options" as const,
-      options: ["🌱 Menos de 1 año", "📅 1 a 3 años", "💪 3 a 5 años", "🏆 Más de 5 años"],
-    },
-    {
-      id: "contact",
-      question: "¿Cómo te contactamos?",
-      type: "contact" as const,
-      placeholder: "tu@email.com o número de WhatsApp",
-    },
-  ],
-
-  ctaLabel:    "Enviar mi perfil →",
-  backLabel:   "Volver",
-  successTitle: "¡ESTÁS ADENTRO!",
-  successBody:  "Recibimos tu perfil. En menos de 48hs un especialista ESDEC se va a poner en contacto con vos.",
-
-  // WhatsApp business number (reemplazar con el real)
   whatsappNumber: "5493516000000",
-  whatsappIntro:  "Hola ESDEC, quiero sumarme al sistema.",
+  backLabel: "Volver",
+  variants: {
+    deportista: {
+      title: "EMPEZA TU PROCESO",
+      subtitle:
+        "Tres pasos simples para orientarte dentro del sistema. Te respondemos por WhatsApp en menos de 48hs.",
+      steps: [
+        {
+          id: "name",
+          question: "¿Como te llamas?",
+          type: "text" as const,
+          placeholder: "Tu nombre",
+        },
+        {
+          id: "sport",
+          question: "¿Cual es tu deporte?",
+          type: "options" as const,
+          options: [
+            "⚽ Futbol",
+            "🏃 Running",
+            "🏉 Rugby",
+            "🏑 Hockey",
+            "🏀 Basquet",
+            "🎾 Tenis",
+            "🌟 Otro",
+          ],
+        },
+        {
+          id: "challenge",
+          question: "¿Que queres ordenar primero?",
+          type: "options" as const,
+          options: [
+            "📈 Rendimiento",
+            "🥗 Nutricion",
+            "🦴 Prevencion y recovery",
+            "🧠 Mentalidad",
+            "🗺️ Tener un plan claro",
+          ],
+        },
+        {
+          id: "contact",
+          question: "¿Como te contactamos?",
+          type: "contact" as const,
+          placeholder: "Tu WhatsApp o email",
+        },
+      ],
+      ctaLabel: "Enviar por WhatsApp →",
+      successTitle: "PERFIL ENVIADO",
+      successBody:
+        "Recibimos tu informacion. Un especialista ESDEC te va a responder por WhatsApp en menos de 48hs.",
+      whatsappIntro:
+        "Hola ESDEC, quiero empezar mi proceso como deportista dentro del ecosistema.",
+    },
+    profesional: {
+      title: "SUMARME COMO PROFESIONAL",
+      subtitle:
+        "Compartinos tu especialidad y seguimos por WhatsApp con claridad sobre el siguiente paso dentro del ecosistema.",
+      steps: [
+        {
+          id: "name",
+          question: "¿Como te llamas?",
+          type: "text" as const,
+          placeholder: "Tu nombre",
+        },
+        {
+          id: "specialty",
+          question: "¿Cual es tu especialidad?",
+          type: "options" as const,
+          options: [
+            "🧠 Psicologia deportiva",
+            "🥗 Nutricion deportiva",
+            "⚕️ Kinesiologia",
+            "🏋️ Coaching",
+            "🌟 Otra especialidad",
+          ],
+        },
+        {
+          id: "focus",
+          question: "¿Que buscas en ESDEC?",
+          type: "options" as const,
+          options: [
+            "📍 Mas visibilidad",
+            "🤝 Trabajar en red",
+            "📈 Escalar mi practica",
+            "🧭 Entender el encaje",
+          ],
+        },
+        {
+          id: "contact",
+          question: "¿Como te contactamos?",
+          type: "contact" as const,
+          placeholder: "Tu WhatsApp o email",
+        },
+      ],
+      ctaLabel: "Enviar postulacion →",
+      successTitle: "POSTULACION ENVIADA",
+      successBody:
+        "Recibimos tu perfil. Te vamos a responder por WhatsApp en menos de 48hs para seguir el proceso.",
+      whatsappIntro:
+        "Hola ESDEC, quiero postularme como profesional dentro del ecosistema.",
+    },
+  },
 } as const;
