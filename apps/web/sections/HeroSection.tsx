@@ -3,7 +3,7 @@
 // sections/HeroSection.tsx
 // Hero split-screen ESDEC — two audience entries with shared marketplace framing.
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { HERO_SPLIT } from "@/content/landing";
 import BrandLines from "@/components/BrandLines";
 import FingerprintSVG from "@/components/FingerprintSVG";
@@ -27,8 +27,18 @@ export default function HeroSection({ onSelect }: HeroSectionProps) {
   const [cursorR, setCursorR] = useState<CursorPos | null>(null);
   const heroRef = useRef<HTMLElement>(null);
   const particleContainerRef = useRef<HTMLDivElement>(null);
+  const selectionLockedRef = useRef(false);
+  const selectionTimeoutRef = useRef<number | null>(null);
   const sharedState =
     hovered === "left" ? "is-left" : hovered === "right" ? "is-right" : "";
+
+  useEffect(() => {
+    return () => {
+      if (selectionTimeoutRef.current !== null) {
+        window.clearTimeout(selectionTimeoutRef.current);
+      }
+    };
+  }, []);
 
   function spawnParticles(x: number, y: number, color: string) {
     const container = particleContainerRef.current;
@@ -53,12 +63,15 @@ export default function HeroSection({ onSelect }: HeroSectionProps) {
     }
   }
 
-  function handleSelect(audience: Audience, event: React.MouseEvent) {
+  function triggerSelect(audience: Audience, x: number, y: number) {
+    if (selectionLockedRef.current) return;
+    selectionLockedRef.current = true;
+
     const color =
       audience === "deportista"
         ? "var(--hero-left-accent)"
         : "var(--hero-right-accent)";
-    spawnParticles(event.clientX, event.clientY, color);
+    spawnParticles(x, y, color);
 
     window.setTimeout(() => {
       heroRef.current?.classList.add("hero-split-exit");
@@ -71,6 +84,27 @@ export default function HeroSection({ onSelect }: HeroSectionProps) {
 
       onSelect(audience);
     }, 1000);
+
+    selectionTimeoutRef.current = window.setTimeout(() => {
+      selectionLockedRef.current = false;
+      selectionTimeoutRef.current = null;
+    }, 1200);
+  }
+
+  function handleClickSelect(
+    audience: Audience,
+    event: React.MouseEvent<HTMLElement>
+  ) {
+    triggerSelect(audience, event.clientX, event.clientY);
+  }
+
+  function handlePointerSelect(
+    audience: Audience,
+    event: React.PointerEvent<HTMLElement>
+  ) {
+    if (event.pointerType === "mouse") return;
+    event.preventDefault();
+    triggerSelect(audience, event.clientX, event.clientY);
   }
 
   const leftFlex =
@@ -169,7 +203,7 @@ export default function HeroSection({ onSelect }: HeroSectionProps) {
       </div>
 
       <div
-        className="relative h-full min-w-0 cursor-pointer overflow-hidden"
+        className="relative h-full min-w-0 cursor-pointer touch-manipulation overflow-hidden"
         style={{
           flex: leftFlex,
           transition: "flex 0.6s cubic-bezier(.77,0,.175,1)",
@@ -180,7 +214,8 @@ export default function HeroSection({ onSelect }: HeroSectionProps) {
           setCursorL(null);
         }}
         onMouseMove={handleMouseMoveLeft}
-        onClick={(event) => handleSelect("deportista", event)}
+        onPointerUp={(event) => handlePointerSelect("deportista", event)}
+        onClick={(event) => handleClickSelect("deportista", event)}
       >
         <img
           src={HERO_SPLIT.left.image}
@@ -212,7 +247,7 @@ export default function HeroSection({ onSelect }: HeroSectionProps) {
           />
         )}
 
-        <div className="relative z-10 flex h-full flex-col justify-end px-4 pb-9 pt-40 sm:px-5 sm:pb-11 sm:pt-44 md:px-12 md:pb-20 md:pt-52 lg:px-16">
+        <div className="relative z-10 flex h-full flex-col justify-end px-4 pb-9 pt-40 sm:px-5 sm:pb-11 sm:pt-44 md:px-12 md:pb-20 md:pt-60 lg:px-16 lg:pt-64">
           <div className="mb-4 flex items-center gap-2 sm:mb-5 sm:gap-3">
             <div
               className="h-px w-5 flex-shrink-0 sm:w-7"
@@ -245,12 +280,16 @@ export default function HeroSection({ onSelect }: HeroSectionProps) {
 
           <button
             type="button"
+            onPointerUp={(event) => {
+              event.stopPropagation();
+              handlePointerSelect("deportista", event);
+            }}
             onClick={(event) => {
               event.stopPropagation();
-              handleSelect("deportista", event);
+              handleClickSelect("deportista", event);
             }}
             className={cn(
-              "relative mt-5 inline-flex w-full max-w-[156px] items-center justify-center gap-2 overflow-hidden rounded-md",
+              "relative mt-5 inline-flex w-full max-w-[156px] touch-manipulation items-center justify-center gap-2 overflow-hidden rounded-md",
               "px-2.5 py-2 font-condensed text-[9px] font-bold uppercase leading-none tracking-[1.5px] sm:mt-6 sm:w-auto sm:max-w-full sm:px-4 sm:text-[11px] sm:tracking-[2px] md:mt-8 md:px-7 md:py-[11px] md:text-[13px] md:tracking-wide",
               "transition-all duration-200 hover:-translate-y-px hover:brightness-110",
               "before:absolute before:inset-0 before:-translate-x-full before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent before:transition-transform before:duration-400 hover:before:translate-x-full"
@@ -279,7 +318,7 @@ export default function HeroSection({ onSelect }: HeroSectionProps) {
       <div className="z-10 h-full w-px flex-shrink-0 self-stretch bg-white/14 md:bg-white/20" />
 
       <div
-        className="relative h-full min-w-0 cursor-pointer overflow-hidden"
+        className="relative h-full min-w-0 cursor-pointer touch-manipulation overflow-hidden"
         style={{
           flex: rightFlex,
           transition: "flex 0.6s cubic-bezier(.77,0,.175,1)",
@@ -290,7 +329,8 @@ export default function HeroSection({ onSelect }: HeroSectionProps) {
           setCursorR(null);
         }}
         onMouseMove={handleMouseMoveRight}
-        onClick={(event) => handleSelect("profesional", event)}
+        onPointerUp={(event) => handlePointerSelect("profesional", event)}
+        onClick={(event) => handleClickSelect("profesional", event)}
       >
         <img
           src={HERO_SPLIT.right.image}
@@ -322,7 +362,7 @@ export default function HeroSection({ onSelect }: HeroSectionProps) {
           />
         )}
 
-        <div className="relative z-10 flex h-full flex-col items-end justify-end px-4 pb-9 pt-40 text-right sm:px-5 sm:pb-11 sm:pt-44 md:px-12 md:pb-20 md:pt-52 lg:px-16">
+        <div className="relative z-10 flex h-full flex-col items-end justify-end px-4 pb-9 pt-40 text-right sm:px-5 sm:pb-11 sm:pt-44 md:px-12 md:pb-20 md:pt-60 lg:px-16 lg:pt-64">
           <div className="mb-4 flex items-center gap-2 sm:mb-5 sm:gap-3">
             <span
               className="font-condensed text-[9px] font-bold uppercase tracking-[2px] sm:text-[11px] sm:tracking-[3px]"
@@ -355,12 +395,16 @@ export default function HeroSection({ onSelect }: HeroSectionProps) {
 
           <button
             type="button"
+            onPointerUp={(event) => {
+              event.stopPropagation();
+              handlePointerSelect("profesional", event);
+            }}
             onClick={(event) => {
               event.stopPropagation();
-              handleSelect("profesional", event);
+              handleClickSelect("profesional", event);
             }}
             className={cn(
-              "relative mt-5 inline-flex w-full max-w-[156px] items-center justify-center gap-2 overflow-hidden rounded-md",
+              "relative mt-5 inline-flex w-full max-w-[156px] touch-manipulation items-center justify-center gap-2 overflow-hidden rounded-md",
               "px-2.5 py-2 font-condensed text-[9px] font-bold uppercase leading-none tracking-[1.5px] sm:mt-6 sm:w-auto sm:max-w-full sm:px-4 sm:text-[11px] sm:tracking-[2px] md:mt-8 md:px-7 md:py-[11px] md:text-[13px] md:tracking-wide",
               "transition-all duration-200 hover:-translate-y-px hover:brightness-110",
               "before:absolute before:inset-0 before:-translate-x-full before:bg-gradient-to-r before:from-transparent before:via-white/15 before:to-transparent before:transition-transform before:duration-400 hover:before:translate-x-full"
