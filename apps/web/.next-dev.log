@@ -1,0 +1,15 @@
+
+> esdec-landing@0.1.0 dev C:\Users\cavin\Proyectos\ESDEC\ESDEC\apps\web
+> next dev
+
+  ▲ Next.js 14.2.5
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ✓ Ready in 3s
+ ○ Compiling / ...
+ ✓ Compiled / in 1169ms (487 modules)
+ GET / 200 in 1495ms
+ GET / 200 in 33ms
+ GET / 200 in 45ms
+ ELIFECYCLE  Command failed with exit code 3221225786.

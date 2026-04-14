@@ -6,45 +6,48 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { useState, useEffect } from "react";
-import Navbar from "@/components/Navbar";
-import HeroSection from "@/sections/HeroSection";
-
-import AboutSection     from "@/sections/AboutSection";
-import EcosystemSection from "@/sections/EcosystemSection";
+import Navbar          from "@/components/Navbar";
+import PageIndex       from "@/components/PageIndex";
+import HeroSection     from "@/sections/HeroSection";
 import EmotionalSection from "@/sections/EmotionalSection";
-import ProblemSection   from "@/sections/ProblemSection";
-import Footer           from "@/components/Footer";
-// import FootprintSection from "@/sections/FootprintSection";
+import AboutSection    from "@/sections/AboutSection";
+import EcosystemSection from "@/sections/EcosystemSection";
+import ProblemSection  from "@/sections/ProblemSection";
+import FootprintSection from "@/sections/FootprintSection";
+import Footer          from "@/components/Footer";
+
+// ── Índice de secciones por audiencia ────────────────────────────────────────
+const SECTIONS_DEPORTISTA = [
+  { id: "emotional", label: "Mi historia"  },
+  { id: "about",     label: "ESDEC"        },
+  { id: "ecosystem", label: "Mi equipo"    },
+  { id: "problem",   label: "El sistema"   },
+  { id: "footprint", label: "Unirme"       },
+];
+
+const SECTIONS_PROFESIONAL = [
+  { id: "emotional", label: "Mi perfil"    },
+  { id: "about",     label: "ESDEC"        },
+  { id: "ecosystem", label: "Servicios"    },
+  { id: "problem",   label: "Mi camino"    },
+  { id: "footprint", label: "Sumarme"      },
+];
 
 export default function LandingPage() {
-  // ── Theme state: light = azul eléctrico (default), dark = navy
-  const [isDark, setIsDark] = useState(false);
-
   // ── Audiencia seleccionada desde el hero split (null = aún no eligió)
   const [audienceSelected, setAudienceSelected] = useState<"deportista" | "profesional" | null>(null);
 
   // ── Key para forzar remount del hero al volver desde la navbar
   const [heroKey, setHeroKey] = useState(0);
 
-  // ── Sync con localStorage para persistir preferencia de tema
+  // ── Tema automático según audiencia: profesional → dark, deportista → light
   useEffect(() => {
-    const saved = localStorage.getItem("esdec-theme");
-    if (saved === "dark") {
-      setIsDark(true);
+    if (audienceSelected === "profesional") {
       document.documentElement.classList.add("dark");
-    }
-  }, []);
-
-  const handleThemeToggle = (dark: boolean) => {
-    setIsDark(dark);
-    if (dark) {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("esdec-theme", "dark");
     } else {
       document.documentElement.classList.remove("dark");
-      localStorage.setItem("esdec-theme", "light");
     }
-  };
+  }, [audienceSelected]);
 
   // ── Clic en el logo del navbar: vuelve al hero selector
   const handleLogoClick = () => {
@@ -57,36 +60,46 @@ export default function LandingPage() {
     <main>
       {/* NAV — oculto hasta que se elija audiencia */}
       <div className={audienceSelected ? "nav-visible" : "nav-hidden"}>
-        <Navbar
-          isDark={isDark}
-          onThemeToggle={handleThemeToggle}
-          onLogoClick={handleLogoClick}
-        />
+        <Navbar onLogoClick={handleLogoClick} />
       </div>
+
+      {/* Índice vertical de secciones — solo visible después de elegir */}
+      {audienceSelected && (
+        <PageIndex
+          sections={
+            audienceSelected === "deportista"
+              ? SECTIONS_DEPORTISTA
+              : SECTIONS_PROFESIONAL
+          }
+        />
+      )}
 
       {/* S1 — Hero split screen (selector de audiencia) */}
       <HeroSection key={heroKey} onSelect={setAudienceSelected} />
 
-      {/* Secciones — solo se montan después de elegir audiencia para evitar
-          que se vean detrás del hero semitransparente */}
+      {/* ── DEPORTISTA ──
+          Flujo: Emoción → Identidad → Equipo → Sistema + Journey → Acción
+          El usuario se identifica primero, luego entiende, luego ve el camino */}
       {audienceSelected === "deportista" && (
         <>
-          <AboutSection audience="deportista" />
-          <EcosystemSection />
           <EmotionalSection audience="deportista" />
-          <ProblemSection audience="deportista" />
-          {/* <FootprintSection /> */}
+          <AboutSection     audience="deportista" />
+          <EcosystemSection audience="deportista" />
+          <ProblemSection   audience="deportista" />
+          <FootprintSection />
           <Footer />
         </>
       )}
 
-      {/* Profesional — mismo fondo claro que deportista, detalles en verde */}
+      {/* ── PROFESIONAL ──
+          Flujo: Emoción → Identidad → Red de servicios → Camino → Acción */}
       {audienceSelected === "profesional" && (
         <div className="professional-theme">
-          <AboutSection audience="profesional" />
           <EmotionalSection audience="profesional" />
-          <ProblemSection audience="profesional" />
-          {/* <FootprintSection /> */}
+          <AboutSection     audience="profesional" />
+          <EcosystemSection audience="profesional" />
+          <ProblemSection   audience="profesional" />
+          <FootprintSection />
           <Footer />
         </div>
       )}

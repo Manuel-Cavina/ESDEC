@@ -13,7 +13,7 @@
 // Copy: todo viene de @/content/landing (HERO_SPLIT)
 // ─────────────────────────────────────────────────────────────────────────────
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { HERO_SPLIT } from "@/content/landing";
 import FingerprintSVG from "@/components/FingerprintSVG";
 import BrandLines from "@/components/BrandLines";
@@ -30,17 +30,10 @@ interface HeroSectionProps {
 
 export default function HeroSection({ onSelect }: HeroSectionProps) {
   const [hovered,  setHovered]  = useState<HoveredSide>(null);
-  const [mounted,  setMounted]  = useState(false);
   const [cursorL,  setCursorL]  = useState<CursorPos | null>(null);
   const [cursorR,  setCursorR]  = useState<CursorPos | null>(null);
   const heroRef = useRef<HTMLElement>(null);
   const particleContainerRef = useRef<HTMLDivElement>(null);
-
-  // Slide-in entrance: trigger after first paint
-  useEffect(() => {
-    const t = setTimeout(() => setMounted(true), 60);
-    return () => clearTimeout(t);
-  }, []);
 
   // ── Particle burst en el punto exacto del click
   function spawnParticles(x: number, y: number, color: string) {
@@ -117,8 +110,7 @@ export default function HeroSection({ onSelect }: HeroSectionProps) {
         className="relative overflow-hidden cursor-pointer h-[50vh] md:h-full"
         style={{
           flex: leftFlex,
-          transition: "flex 0.6s cubic-bezier(.77,0,.175,1), transform 0.9s cubic-bezier(.22,1,.36,1)",
-          transform: mounted ? "translateX(0)" : "translateX(-100%)",
+          transition: "flex 0.6s cubic-bezier(.77,0,.175,1)",
         }}
         onMouseEnter={() => setHovered("left")}
         onMouseLeave={() => { setHovered(null); setCursorL(null); }}
@@ -197,6 +189,10 @@ export default function HeroSection({ onSelect }: HeroSectionProps) {
           {/* CTA */}
           <button
             type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleSelect("deportista", e);
+            }}
             className={cn(
               "mt-8 inline-flex items-center gap-2 w-fit",
               "font-condensed font-bold text-[13px] uppercase tracking-wide",
@@ -233,8 +229,7 @@ export default function HeroSection({ onSelect }: HeroSectionProps) {
         className="relative overflow-hidden cursor-pointer h-[50vh] md:h-full"
         style={{
           flex: rightFlex,
-          transition: "flex 0.6s cubic-bezier(.77,0,.175,1), transform 0.9s cubic-bezier(.22,1,.36,1)",
-          transform: mounted ? "translateX(0)" : "translateX(100%)",
+          transition: "flex 0.6s cubic-bezier(.77,0,.175,1)",
         }}
         onMouseEnter={() => setHovered("right")}
         onMouseLeave={() => { setHovered(null); setCursorR(null); }}
@@ -305,6 +300,10 @@ export default function HeroSection({ onSelect }: HeroSectionProps) {
           {/* CTA */}
           <button
             type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleSelect("profesional", e);
+            }}
             className={cn(
               "mt-8 inline-flex items-center gap-2 w-fit",
               "font-condensed font-bold text-[13px] uppercase tracking-wide",
