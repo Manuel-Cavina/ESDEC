@@ -11,6 +11,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { useEffect, useRef, useState } from "react";
+// Theme toggle removed — dark mode is automatic per audience (profesional=dark, deportista=light)
 import { NAV, BRAND } from "@/content/landing";
 import { cn } from "@/lib/utils";
 import FingerprintSVG from "@/components/FingerprintSVG";
@@ -123,17 +124,14 @@ function DropdownPanel({
 // ── Navbar principal ──────────────────────────────────────────────────────────
 
 interface NavbarProps {
-  onThemeToggle?: (isDark: boolean) => void;
-  isDark?: boolean;
   onLogoClick?: () => void;
 }
 
-export default function Navbar({ onThemeToggle, isDark = false, onLogoClick }: NavbarProps) {
+export default function Navbar({ onLogoClick }: NavbarProps) {
   const [scrolled,     setScrolled]     = useState(false);
   const [openGroup,    setOpenGroup]    = useState<string | null>(null);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const navRef    = useRef<HTMLElement>(null);
-  const rippleRef = useRef<HTMLDivElement>(null);
+  const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -167,22 +165,8 @@ export default function Navbar({ onThemeToggle, isDark = false, onLogoClick }: N
     setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }), 80);
   };
 
-  const handleToggle = (e: React.MouseEvent) => {
-    const ripple = rippleRef.current;
-    if (ripple) {
-      ripple.style.left = `${e.clientX}px`;
-      ripple.style.top  = `${e.clientY}px`;
-      ripple.classList.remove("go");
-      void ripple.offsetWidth;
-      ripple.classList.add("go");
-    }
-    setTimeout(() => onThemeToggle?.(!isDark), 60);
-  };
-
   return (
     <>
-      {/* Ripple de cambio de modo */}
-      <div ref={rippleRef} className="mode-ripple" id="ripple" />
 
       {/* ── Drawer mobile ─────────────────────────────────────────────────────── */}
       <div
@@ -381,35 +365,6 @@ export default function Navbar({ onThemeToggle, isDark = false, onLogoClick }: N
 
         {/* Controles derecha */}
         <div className="flex items-center gap-3">
-
-          {/* Separador vertical */}
-          <div className="hidden h-4 w-px bg-white/15 sm:block" aria-hidden="true" />
-
-          {/* Label modo */}
-          <span className="hidden font-sans text-[12px] font-medium text-[var(--nav-link)] sm:block lg:whitespace-nowrap">
-            {isDark ? "Modo oscuro" : "Modo claro"}
-          </span>
-
-          {/* Toggle */}
-          <button
-            onClick={handleToggle}
-            aria-label="Cambiar modo"
-            className={cn(
-              "relative h-[24px] w-[46px] shrink-0 cursor-pointer rounded-full",
-              "border-[1.5px] border-white/30 bg-white/15",
-              "dark:border-[rgba(5,128,211,0.4)] dark:bg-[#01305c]",
-              "transition-colors duration-300"
-            )}
-          >
-            <span
-              className={cn(
-                "absolute left-[2px] top-[2px] h-[16px] w-[16px] rounded-full",
-                "bg-white shadow-[0_2px_8px_rgba(0,0,0,0.2)] dark:bg-[#0580D3]",
-                "transition-transform duration-300 ease-[cubic-bezier(.34,1.56,.64,1)]",
-                isDark && "translate-x-[22px]"
-              )}
-            />
-          </button>
 
           {/* CTA desktop */}
           <button
