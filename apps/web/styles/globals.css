@@ -692,11 +692,11 @@ body {
 }
 
 .hero-shared-shell.is-left {
-  transform: translate3d(-34px, 0, 0);
+  transform: translate3d(-34px, -22px, 0);
 }
 
 .hero-shared-shell.is-right {
-  transform: translate3d(34px, 0, 0);
+  transform: translate3d(34px, -22px, 0);
 }
 
 .hero-shared-copy {
