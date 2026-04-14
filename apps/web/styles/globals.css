@@ -811,6 +811,28 @@ body {
       );
   }
 
+  .hero-center-axis {
+    opacity: 0.5;
+  }
+
+  .hero-center-axis::before {
+    top: 10vh;
+    width: 130px;
+    height: 320px;
+    filter: blur(30px);
+  }
+
+  .hero-center-axis::after {
+    top: 10vh;
+    width: 280px;
+    height: 120px;
+  }
+
+  .hero-center-axis.is-left,
+  .hero-center-axis.is-right {
+    transform: none;
+  }
+
   .hero-shared-shell {
     padding-inline: 0;
   }
