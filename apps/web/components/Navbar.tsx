@@ -15,6 +15,7 @@ import { useEffect, useRef, useState } from "react";
 import { NAV, BRAND } from "@/content/landing";
 import { cn } from "@/lib/utils";
 import FingerprintSVG from "@/components/FingerprintSVG";
+import StickerIcon from "@/components/StickerIcon";
 
 // ── Tipos ─────────────────────────────────────────────────────────────────────
 
@@ -95,7 +96,7 @@ function DropdownPanel({
             )}
           >
             {item.icon && (
-              <span className="mt-[1px] shrink-0 text-base leading-none">{item.icon}</span>
+              <StickerIcon name={item.icon} size="xs" className="mt-[1px]" />
             )}
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2">
@@ -229,7 +230,7 @@ export default function Navbar({ audience, onLogoClick }: NavbarProps) {
                             : "text-[var(--t1)] hover:border-[var(--p1)] hover:pl-4 active:opacity-70"
                         )}
                       >
-                        {item.icon && <span className="text-xl">{item.icon}</span>}
+                        {item.icon && <StickerIcon name={item.icon} size="xs" />}
                         <span className="flex-1">{item.label}</span>
                         {item.comingSoon && (
                           <span className="rounded-sm bg-[var(--p1)]/15 px-2 py-px font-condensed text-[9px] font-bold uppercase tracking-wider text-[var(--p1)]">

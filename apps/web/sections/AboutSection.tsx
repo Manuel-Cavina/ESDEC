@@ -6,6 +6,7 @@
 import { ABOUT, PROFESSIONAL_ABOUT } from "@/content/landing";
 import BrandLines from "@/components/BrandLines";
 import ScrollReveal from "@/components/ScrollReveal";
+import StickerIcon from "@/components/StickerIcon";
 import { cn } from "@/lib/utils";
 
 type Audience = "deportista" | "profesional";
@@ -30,12 +31,7 @@ function BenefitCard({ benefit, index }: BenefitCardProps) {
         )}
       >
         <div className="flex items-center gap-3">
-          <span
-            className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[var(--p1)]/12 text-xl leading-none"
-            aria-hidden="true"
-          >
-            {benefit.icon}
-          </span>
+          <StickerIcon name={benefit.icon} size="sm" />
           <span className="font-condensed text-[10px] font-bold uppercase tracking-[3px] text-[var(--p1)]">
             {benefit.label}
           </span>
@@ -56,6 +52,8 @@ export default function AboutSection({
   audience = "deportista",
 }: AboutSectionProps) {
   const data = audience === "profesional" ? PROFESSIONAL_ABOUT : ABOUT;
+  const manifestoPostAccent =
+    audience === "deportista" ? ABOUT.manifestoPostAccent : null;
   const image =
     audience === "profesional"
       ? "/images/lifestyle/Medico1.png"
@@ -95,7 +93,27 @@ export default function AboutSection({
                 >
                   {data.manifestoAccent}
                 </span>
-                <span className="block">{data.manifestoPost}</span>
+                <span className="block">
+                  {manifestoPostAccent ? (
+                    <>
+                      {data.manifestoPost}{" "}
+                      <span
+                        className="inline-block whitespace-nowrap"
+                        style={{
+                          background:
+                            "linear-gradient(90deg, var(--p1), var(--p2))",
+                          WebkitBackgroundClip: "text",
+                          WebkitTextFillColor: "transparent",
+                          backgroundClip: "text",
+                        }}
+                      >
+                        {manifestoPostAccent}
+                      </span>
+                    </>
+                  ) : (
+                    data.manifestoPost
+                  )}
+                </span>
               </h2>
             </ScrollReveal>
 
