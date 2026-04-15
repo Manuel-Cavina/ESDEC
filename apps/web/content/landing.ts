@@ -186,7 +186,7 @@ export const ENTRY = {
     body:
       "ESDEC no viene a exigirte mas. Viene a ayudarte a crecer mejor, con el equipo correcto y una estructura capaz de sostener lo que hoy todavia parece lejano.",
     cta: "Ver cómo funciona",
-    image: "/images/lifestyle/Correr_lluvia_1.jpg",
+    image: "/images/athletes/maraton_1.jpg",
   },
   profesional: {
     eyebrow: "PARA PROFESIONALES",
@@ -196,7 +196,7 @@ export const ENTRY = {
     body:
       "ESDEC ordena el contexto alrededor de tu expertise para que tu trabajo gane visibilidad, coordinacion y proyeccion dentro de un ecosistema que lo respalda.",
     cta: "Ver cómo funciona",
-    image: "/images/lifestyle/Medico1.png",
+    image: "/images/athletes/medicina2.jpg",
   },
 } as const;
 
@@ -345,7 +345,7 @@ export const ECOSYSTEM = {
       description:
         "Nutricion, salud mental y recuperacion para sostener tu progreso.",
       icon: "bienestar",
-      image: "/images/lifestyle/EstilodeVida.jpg",
+      image: "/images/lifestyle/Yoga1.jpg",
     },
     {
       title: "Clínica",
@@ -353,7 +353,7 @@ export const ECOSYSTEM = {
       description:
         "Prevencion, evaluacion y seguimiento corporal para decidir con criterio.",
       icon: "clinica",
-      image: "/images/lifestyle/Medico1.png",
+      image: "/images/lifestyle/Medico_2.jpg",
     },
     {
       title: "Marca",
@@ -361,7 +361,7 @@ export const ECOSYSTEM = {
       description:
         "Identidad, visibilidad y proyeccion para convertir trabajo serio en presencia.",
       icon: "marca",
-      image: "/images/lifestyle/Deportes_2.jpg",
+      image: "/images/athletes/marketing1.jpg",
     },
     {
       title: "Eventos",
@@ -377,7 +377,7 @@ export const ECOSYSTEM = {
       description:
         "Herramientas y acompanamiento inteligente para ordenar mejor el proceso.",
       icon: "tecnologia",
-      image: "/images/athletes/Atleta_1.png",
+      image: "/images/athletes/metricas1.jpg",
     },
     {
       title: "Educación",
@@ -385,7 +385,7 @@ export const ECOSYSTEM = {
       description:
         "Contenido, guia y formacion para crecer con mas claridad y autonomia.",
       icon: "educacion",
-      image: "/images/lifestyle/Yoga1.jpg",
+      image: "/images/lifestyle/Vida1.jpg",
     },
   ],
 } as const;
