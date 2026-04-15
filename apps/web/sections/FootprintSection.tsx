@@ -8,17 +8,23 @@ import { FOOTPRINT, FOOTPRINT_MODAL } from "@/content/landing";
 import BrandLines from "@/components/BrandLines";
 import FingerprintSVG from "@/components/FingerprintSVG";
 import ScrollReveal from "@/components/ScrollReveal";
+import StickerIcon from "@/components/StickerIcon";
 import { cn } from "@/lib/utils";
 
 type Audience = "deportista" | "profesional";
 type StepType = "text" | "options" | "contact";
+
+interface StepOption {
+  label: string;
+  icon: string;
+}
 
 interface StepConfig {
   id: string;
   question: string;
   type: StepType;
   placeholder?: string;
-  options?: readonly string[];
+  options?: readonly StepOption[];
 }
 
 type Answers = Record<string, string>;
@@ -103,17 +109,18 @@ function ModalStep({
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {step.options?.map((option) => (
             <button
-              key={option}
+              key={option.label}
               type="button"
-              onClick={() => onChange(step.id, option)}
+              onClick={() => onChange(step.id, option.label)}
               className={cn(
-                "rounded-xl border px-4 py-3 text-left font-sans text-sm leading-snug transition-all duration-200",
-                current === option
+                "flex items-center gap-3 rounded-xl border px-4 py-3 text-left font-sans text-sm leading-snug transition-all duration-200",
+                current === option.label
                   ? "border-[var(--p1)] bg-[var(--p1)]/15 text-[var(--t1)]"
                   : "border-white/15 bg-white/5 text-[var(--t2)] hover:border-[var(--p1)]/40 hover:bg-white/8"
               )}
             >
-              {option}
+              <StickerIcon name={option.icon} size="xs" />
+              <span>{option.label}</span>
             </button>
           ))}
         </div>

@@ -7,6 +7,7 @@
 
 import { useRef, useEffect, useState } from "react";
 import { HERO } from "@/content/landing";
+import StickerIcon from "@/components/StickerIcon";
 import { cn } from "@/lib/utils";
 
 interface AthleteCardProps {
@@ -128,7 +129,7 @@ export default function AthleteCard({ className }: AthleteCardProps) {
                 "transition-colors duration-200 hover:bg-[var(--p1s)]"
               )}
             >
-              <span className="text-base leading-none">{spec.icon}</span>
+              <StickerIcon name={spec.icon} size="xs" />
               <div>
                 <div className="text-[12px] font-semibold text-white leading-tight">
                   {spec.name}
