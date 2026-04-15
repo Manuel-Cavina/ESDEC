@@ -7,8 +7,10 @@
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import { FOOTER, BRAND } from "@/content/landing";
+import { cn } from "@/lib/utils";
 import FingerprintSVG from "@/components/FingerprintSVG";
 import BrandLines from "@/components/BrandLines";
+import StickerIcon from "@/components/StickerIcon";
 
 // ── Íconos sociales SVG ───────────────────────────────────────────────────────
 
