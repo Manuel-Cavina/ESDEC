@@ -1,25 +1,26 @@
 "use client";
 
 // sections/EcosystemSection.tsx
-// Shared proof section for the coordinated ESDEC network.
+// Shared proof section for the six ESDEC categories using the original card-based layout.
 
 import { ECOSYSTEM } from "@/content/landing";
 import ScrollReveal from "@/components/ScrollReveal";
+import StickerIcon from "@/components/StickerIcon";
 import { cn } from "@/lib/utils";
 
 type Audience = "deportista" | "profesional";
-type Specialist = (typeof ECOSYSTEM.specialists)[number];
+type Category = (typeof ECOSYSTEM.categories)[number];
 
 interface EcosystemSectionProps {
   audience?: Audience;
 }
 
-interface SpecialistCardProps {
-  specialist: Specialist;
+interface CategoryCardProps {
+  category: Category;
   index: number;
 }
 
-function SpecialistCard({ specialist, index }: SpecialistCardProps) {
+function CategoryCard({ category, index }: CategoryCardProps) {
   return (
     <ScrollReveal direction="up" delay={index * 70}>
       <article
@@ -30,32 +31,28 @@ function SpecialistCard({ specialist, index }: SpecialistCardProps) {
       >
         <div className="relative h-[210px] overflow-hidden">
           <img
-            src={specialist.image}
+            src={category.image}
             alt=""
             className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
           />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,9,19,0.08),rgba(5,9,19,0.58))]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,9,19,0.08),rgba(5,9,19,0.62))]" />
           <div className="absolute bottom-4 left-4 right-4">
-            <p className="font-condensed text-[10px] font-bold uppercase tracking-[3px] text-[var(--p1)]">
-              {specialist.role}
-            </p>
-            <h3 className="mt-2 font-condensed text-[24px] font-black uppercase leading-[0.95] tracking-tight text-white">
-              {specialist.title}
+            <h3 className="font-condensed text-[24px] font-black uppercase leading-[0.95] tracking-tight text-white">
+              {category.title}
             </h3>
           </div>
         </div>
 
         <div className="p-6">
           <div className="mb-4 flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--p1)]/15 text-xl">
-              {specialist.icon}
-            </span>
-            <span className="font-condensed text-[10px] font-bold uppercase tracking-[3px] text-[var(--t2)]">
-              {ECOSYSTEM.cardSupportLabel}
+            <StickerIcon name={category.icon} size="sm" />
+            <span className="font-condensed text-[10px] font-bold uppercase tracking-[3px] text-[var(--p1)]">
+              {category.shortLabel}
             </span>
           </div>
+
           <p className="font-sans text-sm leading-[1.8] text-[var(--t2)]">
-            {specialist.description}
+            {category.description}
           </p>
         </div>
       </article>
@@ -73,6 +70,7 @@ export default function EcosystemSection({
   return (
     <section
       id="ecosystem"
+      data-section="ecosystem"
       className="relative overflow-hidden bg-[var(--bg2)] py-24 md:py-32"
     >
       <div
@@ -105,10 +103,11 @@ export default function EcosystemSection({
           <div className="flex animate-marquee gap-6 px-4 group-hover:[animation-play-state:paused]">
             {sportsLoop.map((sport, index) => (
               <span
-                key={`${sport}-${index}`}
-                className="inline-flex shrink-0 items-center rounded-full border border-[var(--card-bd)] bg-[var(--card-bg)] px-5 py-2.5 font-condensed text-sm font-bold uppercase tracking-widest text-[var(--t2)]"
+                key={`${sport.label}-${index}`}
+                className="inline-flex shrink-0 items-center gap-3 rounded-full border border-[var(--card-bd)] bg-[var(--card-bg)] px-4 py-2.5 font-condensed text-sm font-bold uppercase tracking-widest text-[var(--t2)]"
               >
-                {sport}
+                <StickerIcon name={sport.icon} size="xs" className="rounded-full" />
+                <span>{sport.label}</span>
               </span>
             ))}
           </div>
@@ -131,10 +130,10 @@ export default function EcosystemSection({
         </ScrollReveal>
 
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {ECOSYSTEM.specialists.map((specialist, index) => (
-            <SpecialistCard
-              key={specialist.title}
-              specialist={specialist}
+          {ECOSYSTEM.categories.map((category, index) => (
+            <CategoryCard
+              key={category.title}
+              category={category}
               index={index}
             />
           ))}
