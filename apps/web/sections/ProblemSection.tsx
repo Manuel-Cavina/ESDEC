@@ -183,7 +183,7 @@ export default function ProblemSection({
               <span className="block text-[var(--t1)]">{data.pivotPre}</span>
               <span className="block text-[var(--p1)]">{data.pivotAccent1}</span>
               <span className="mt-2 block text-[0.55em] font-bold tracking-normal text-[var(--t2)]">
-                Â·
+                -
               </span>
               <span className="block text-[var(--t1)]">{data.pivotConnector}</span>
               <span className="block text-[var(--p2)]">{data.pivotAccent2}</span>
