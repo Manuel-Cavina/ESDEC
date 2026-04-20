@@ -1,13 +1,18 @@
 "use client";
 
-// sections/HeroSection.tsx
-// Hero split-screen ESDEC — two audience entries with shared marketplace framing.
+// sections/HeroSectionRouted.tsx
+// Hero split-screen para la home multi-ruta.
+// Idéntico a HeroSection.tsx pero al seleccionar navega a /deportistas o
+// /profesionales con router.push en vez de llamar a onSelect() en estado local.
+// La sección usa position:relative h-screen para que el contenido de marca
+// debajo sea accesible con scroll.
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { HERO_SPLIT } from "@/content/landing";
-import BrandLines from "@/components/BrandLines";
 import FingerprintSVG from "@/components/FingerprintSVG";
+import Logo from "@/components/Logo";
 import { cn } from "@/lib/utils";
 
 type Audience = "deportista" | "profesional";
@@ -18,11 +23,8 @@ interface CursorPos {
   y: number;
 }
 
-interface HeroSectionProps {
-  onSelect: (audience: Audience) => void;
-}
-
-export default function HeroSection({ onSelect }: HeroSectionProps) {
+export default function HeroSectionRouted() {
+  const router = useRouter();
   const [hovered, setHovered] = useState<HoveredSide>(null);
   const [cursorL, setCursorL] = useState<CursorPos | null>(null);
   const [cursorR, setCursorR] = useState<CursorPos | null>(null);
@@ -78,12 +80,9 @@ export default function HeroSection({ onSelect }: HeroSectionProps) {
       heroRef.current?.classList.add("hero-split-exit");
     }, 200);
 
+    // Navegar a la ruta real después de la animación de salida
     window.setTimeout(() => {
-      if (heroRef.current) {
-        heroRef.current.style.display = "none";
-      }
-
-      onSelect(audience);
+      router.push(audience === "deportista" ? "/deportistas" : "/profesionales");
     }, 1000);
 
     selectionTimeoutRef.current = window.setTimeout(() => {
@@ -139,66 +138,39 @@ export default function HeroSection({ onSelect }: HeroSectionProps) {
     <section
       ref={heroRef}
       id="hero-split"
-      className="fixed inset-0 z-50 flex overflow-hidden"
+      // Cambiado de "fixed inset-0 z-50" a "relative h-screen" para que el
+      // contenido de marca debajo sea accesible con scroll.
+      className="relative flex h-screen overflow-hidden"
     >
-      <div
-        className={cn(
-          "pointer-events-none absolute inset-y-0 left-1/2 z-20 hero-center-axis",
-          sharedState
-        )}
-        aria-hidden="true"
-      />
-
       <div
         className="pointer-events-none absolute inset-x-0 top-0 z-20 h-[340px] hero-shared-atmosphere"
         aria-hidden="true"
       />
 
-      <div className="pointer-events-none absolute left-1/2 top-[6vh] z-30 w-full max-w-[920px] -translate-x-1/2 px-4 sm:px-5 md:top-[8vh] md:px-8">
+      <div className="pointer-events-none absolute left-1/2 top-[6vh] z-30 w-full max-w-[820px] -translate-x-1/2 px-4 sm:px-5 md:top-[8vh] md:px-8">
         <div
           className={cn(
-            "hero-shared-shell mx-auto flex max-w-[780px] flex-col items-center text-center",
+            "hero-shared-shell mx-auto flex max-w-[620px] flex-col items-center text-center",
             sharedState
           )}
         >
-          <div className="mb-5 flex items-center gap-2">
-            <div
-              className="flex items-center gap-2"
-              style={{ "--bl-color": "var(--hero-left-accent)" } as React.CSSProperties}
-            >
-              <BrandLines size="sm" />
-              <span className="font-condensed text-sm font-black uppercase tracking-[3px] text-white">
-                ESDEC
-              </span>
-            </div>
+          <div className="mb-4 flex items-center justify-center">
+            <Logo priority className="w-[106px] sm:w-[116px]" />
           </div>
 
           <div className="hero-shared-copy w-full text-center">
-            <p className="font-condensed text-[9px] font-bold uppercase tracking-[3px] text-white/60 sm:text-[10px] sm:tracking-[4px]">
+            <p className="font-condensed text-[9px] font-semibold uppercase tracking-[3px] text-white/48 sm:text-[10px] sm:tracking-[4px]">
               {HERO_SPLIT.sharedEyebrow}
             </p>
-            <h1 className="mt-3 font-condensed text-[clamp(24px,7vw,40px)] font-black uppercase leading-[0.9] tracking-tight text-white sm:mt-4 md:text-[clamp(30px,4vw,60px)]">
-              <span className="block">{HERO_SPLIT.sharedHeadlinePre}</span>
-              <span className="hero-shared-accent block">
+            <h1 className="mt-3 font-condensed text-[clamp(22px,6.5vw,52px)] font-semibold uppercase leading-[0.92] tracking-tight text-white sm:mt-4">
+              <span className="block text-white/86">{HERO_SPLIT.sharedHeadlinePre}</span>
+              <span className="hero-shared-accent block text-[1.06em]">
                 {HERO_SPLIT.sharedHeadlineAccent}
               </span>
-              <span className="block text-white/84">
+              <span className="block text-white/72">
                 {HERO_SPLIT.sharedHeadlinePost}
               </span>
             </h1>
-            <p className="mx-auto mt-4 max-w-2xl font-sans text-[12px] leading-[1.65] text-white/76 sm:mt-5 sm:text-[13px] md:text-[15px] md:leading-[1.8]">
-              {HERO_SPLIT.sharedBody}
-            </p>
-            <div className="mt-5 flex flex-wrap items-center justify-center gap-1.5 sm:mt-6 sm:gap-2 md:gap-3">
-              {HERO_SPLIT.sharedPills.map((pill) => (
-                <span
-                  key={pill}
-                  className="rounded-full border border-white/12 bg-white/4 px-2.5 py-1 font-condensed text-[9px] font-bold uppercase tracking-[2px] text-white/66 sm:px-3.5 sm:py-1.5 sm:text-[10px] sm:tracking-[3px]"
-                >
-                  {pill}
-                </span>
-              ))}
-            </div>
           </div>
         </div>
       </div>
@@ -207,7 +179,7 @@ export default function HeroSection({ onSelect }: HeroSectionProps) {
         className="relative h-full min-w-0 cursor-pointer touch-manipulation overflow-hidden"
         style={{
           flex: leftFlex,
-          transition: "flex 0.6s cubic-bezier(.77,0,.175,1)",
+          transition: "flex 1.35s cubic-bezier(.22,1,.36,1)",
         }}
         onMouseEnter={() => setHovered("left")}
         onMouseLeave={() => {
@@ -228,7 +200,7 @@ export default function HeroSection({ onSelect }: HeroSectionProps) {
           className="hero-panel-image absolute inset-0 h-full w-full select-none object-cover object-center pointer-events-none"
           style={{
             transform: hovered === "left" ? "scale(1.04)" : "scale(1)",
-            transition: "transform 0.6s cubic-bezier(.77,0,.175,1)",
+            transition: "transform 1.15s cubic-bezier(.22,1,.36,1)",
           }}
         />
         <div className="hero-panel-tint hero-panel-tint-left absolute inset-0" />
@@ -237,7 +209,7 @@ export default function HeroSection({ onSelect }: HeroSectionProps) {
           className="absolute inset-0 bg-black"
           style={{
             opacity: hovered === "right" ? 0.18 : 0,
-            transition: "opacity 0.6s cubic-bezier(.77,0,.175,1)",
+            transition: "opacity 1.1s cubic-bezier(.22,1,.36,1)",
           }}
         />
 
@@ -258,7 +230,7 @@ export default function HeroSection({ onSelect }: HeroSectionProps) {
               style={{ backgroundColor: "var(--hero-left-accent)" }}
             />
             <span
-              className="font-condensed text-[9px] font-bold uppercase tracking-[2px] sm:text-[11px] sm:tracking-[3px]"
+              className="font-condensed text-[9px] font-semibold uppercase tracking-[2px] sm:text-[11px] sm:tracking-[3px]"
               style={{ color: "var(--hero-left-accent)" }}
             >
               {HERO_SPLIT.left.eyebrow}
@@ -269,9 +241,9 @@ export default function HeroSection({ onSelect }: HeroSectionProps) {
             className="font-condensed text-white"
             style={{ fontSize: "clamp(22px, 5.6vw, 92px)", lineHeight: "1.0" }}
           >
-            <span className="block font-black">{HERO_SPLIT.left.headlinePre}</span>
+            <span className="block font-semibold">{HERO_SPLIT.left.headlinePre}</span>
             <span
-              className="block font-black"
+              className="block font-bold"
               style={{ color: "var(--hero-left-accent)" }}
             >
               {HERO_SPLIT.left.headlineAccent}
@@ -293,10 +265,9 @@ export default function HeroSection({ onSelect }: HeroSectionProps) {
               handleClickSelect("deportista", event);
             }}
             className={cn(
-              "relative mt-5 inline-flex w-full max-w-[156px] touch-manipulation items-center justify-center gap-2 overflow-hidden rounded-md",
-              "px-2.5 py-2 font-condensed text-[9px] font-bold uppercase leading-none tracking-[1.5px] sm:mt-6 sm:w-auto sm:max-w-full sm:px-4 sm:text-[11px] sm:tracking-[2px] md:mt-8 md:px-7 md:py-[11px] md:text-[13px] md:tracking-wide",
-              "transition-all duration-200 hover:-translate-y-px hover:brightness-110",
-              "before:absolute before:inset-0 before:-translate-x-full before:bg-gradient-to-r before:from-transparent before:via-white/20 before:to-transparent before:transition-transform before:duration-400 hover:before:translate-x-full"
+              "relative mt-5 inline-flex self-start min-w-[176px] touch-manipulation items-center justify-center gap-2 overflow-hidden rounded-xl",
+              "px-5 py-3 font-condensed text-[10px] font-semibold uppercase leading-none tracking-[2px] sm:mt-6 sm:min-w-[188px] sm:px-6 sm:text-[11px] sm:tracking-[2.4px] md:mt-8 md:min-w-[212px] md:px-8 md:py-3.5 md:text-[13px] md:tracking-[3px]",
+              "transition-none"
             )}
             style={{
               backgroundColor: "var(--hero-left-button)",
@@ -319,13 +290,11 @@ export default function HeroSection({ onSelect }: HeroSectionProps) {
         </div>
       </div>
 
-      <div className="z-10 h-full w-px flex-shrink-0 self-stretch bg-white/14 md:bg-white/20" />
-
       <div
         className="relative h-full min-w-0 cursor-pointer touch-manipulation overflow-hidden"
         style={{
           flex: rightFlex,
-          transition: "flex 0.6s cubic-bezier(.77,0,.175,1)",
+          transition: "flex 1.35s cubic-bezier(.22,1,.36,1)",
         }}
         onMouseEnter={() => setHovered("right")}
         onMouseLeave={() => {
@@ -346,7 +315,7 @@ export default function HeroSection({ onSelect }: HeroSectionProps) {
           className="hero-panel-image absolute inset-0 h-full w-full select-none object-cover object-center pointer-events-none"
           style={{
             transform: hovered === "right" ? "scale(1.04)" : "scale(1)",
-            transition: "transform 0.6s cubic-bezier(.77,0,.175,1)",
+            transition: "transform 1.15s cubic-bezier(.22,1,.36,1)",
           }}
         />
         <div className="hero-panel-tint hero-panel-tint-right absolute inset-0" />
@@ -355,7 +324,7 @@ export default function HeroSection({ onSelect }: HeroSectionProps) {
           className="absolute inset-0 bg-black"
           style={{
             opacity: hovered === "left" ? 0.2 : 0,
-            transition: "opacity 0.6s cubic-bezier(.77,0,.175,1)",
+            transition: "opacity 1.1s cubic-bezier(.22,1,.36,1)",
           }}
         />
 
@@ -372,7 +341,7 @@ export default function HeroSection({ onSelect }: HeroSectionProps) {
         <div className="relative z-10 flex h-full flex-col items-end justify-end px-4 pb-9 pt-40 text-right sm:px-5 sm:pb-11 sm:pt-44 md:px-12 md:pb-20 md:pt-60 lg:px-16 lg:pt-64">
           <div className="mb-4 flex items-center gap-2 sm:mb-5 sm:gap-3">
             <span
-              className="font-condensed text-[9px] font-bold uppercase tracking-[2px] sm:text-[11px] sm:tracking-[3px]"
+              className="font-condensed text-[9px] font-semibold uppercase tracking-[2px] sm:text-[11px] sm:tracking-[3px]"
               style={{ color: "var(--hero-right-accent)" }}
             >
               {HERO_SPLIT.right.eyebrow}
@@ -387,9 +356,9 @@ export default function HeroSection({ onSelect }: HeroSectionProps) {
             className="font-condensed text-white"
             style={{ fontSize: "clamp(22px, 5.6vw, 92px)", lineHeight: "1.0" }}
           >
-            <span className="block font-black">{HERO_SPLIT.right.headlinePre}</span>
+            <span className="block font-semibold">{HERO_SPLIT.right.headlinePre}</span>
             <span
-              className="block font-black"
+              className="block font-bold"
               style={{ color: "var(--hero-right-accent)" }}
             >
               {HERO_SPLIT.right.headlineAccent}
@@ -411,10 +380,9 @@ export default function HeroSection({ onSelect }: HeroSectionProps) {
               handleClickSelect("profesional", event);
             }}
             className={cn(
-              "relative mt-5 inline-flex w-full max-w-[156px] touch-manipulation items-center justify-center gap-2 overflow-hidden rounded-md",
-              "px-2.5 py-2 font-condensed text-[9px] font-bold uppercase leading-none tracking-[1.5px] sm:mt-6 sm:w-auto sm:max-w-full sm:px-4 sm:text-[11px] sm:tracking-[2px] md:mt-8 md:px-7 md:py-[11px] md:text-[13px] md:tracking-wide",
-              "transition-all duration-200 hover:-translate-y-px hover:brightness-110",
-              "before:absolute before:inset-0 before:-translate-x-full before:bg-gradient-to-r before:from-transparent before:via-white/15 before:to-transparent before:transition-transform before:duration-400 hover:before:translate-x-full"
+              "relative mt-5 inline-flex min-w-[176px] touch-manipulation items-center justify-center gap-2 overflow-hidden rounded-xl",
+              "px-5 py-3 font-condensed text-[10px] font-semibold uppercase leading-none tracking-[2px] sm:mt-6 sm:min-w-[188px] sm:px-6 sm:text-[11px] sm:tracking-[2.4px] md:mt-8 md:min-w-[212px] md:px-8 md:py-3.5 md:text-[13px] md:tracking-[3px]",
+              "transition-none"
             )}
             style={{
               backgroundColor: "var(--hero-right-button)",

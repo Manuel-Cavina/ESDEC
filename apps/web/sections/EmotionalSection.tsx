@@ -3,6 +3,7 @@
 // sections/EmotionalSection.tsx
 // Compact conviction section placed after the functional explanation.
 
+import Image from "next/image";
 import { EMOTIONAL, PROFESSIONAL_EMOTIONAL } from "@/content/landing";
 import BrandLines from "@/components/BrandLines";
 import FingerprintSVG from "@/components/FingerprintSVG";
@@ -28,9 +29,13 @@ export default function EmotionalSection({
       id="emotional"
       className="relative overflow-hidden bg-[var(--bg)] py-24 md:py-32"
     >
-      <img
+      <Image
         src={image}
         alt=""
+        fill
+        quality={90}
+        sizes="100vw"
+        priority={audience === "profesional"}
         className="absolute inset-0 h-full w-full object-cover object-center opacity-20"
       />
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,9,19,0.58),rgba(5,9,19,0.76))]" />

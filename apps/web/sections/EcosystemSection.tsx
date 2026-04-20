@@ -3,6 +3,7 @@
 // sections/EcosystemSection.tsx
 // Shared proof section for the six ESDEC categories using the original card-based layout.
 
+import Image from "next/image";
 import { ECOSYSTEM } from "@/content/landing";
 import ScrollReveal from "@/components/ScrollReveal";
 import StickerIcon from "@/components/StickerIcon";
@@ -30,14 +31,17 @@ function CategoryCard({ category, index }: CategoryCardProps) {
         )}
       >
         <div className="relative h-[210px] overflow-hidden">
-          <img
+          <Image
             src={category.image}
             alt=""
+            fill
+            quality={88}
+            sizes="(max-width: 767px) 100vw, (max-width: 1279px) 50vw, 33vw"
             className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
           />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,9,19,0.08),rgba(5,9,19,0.62))]" />
           <div className="absolute bottom-4 left-4 right-4">
-            <h3 className="font-condensed text-[24px] font-black uppercase leading-[0.95] tracking-tight text-white">
+            <h3 className="font-condensed text-[22px] font-semibold uppercase leading-[1] tracking-tight text-white">
               {category.title}
             </h3>
           </div>
@@ -46,12 +50,12 @@ function CategoryCard({ category, index }: CategoryCardProps) {
         <div className="p-6">
           <div className="mb-4 flex items-center gap-3">
             <StickerIcon name={category.icon} size="sm" />
-            <span className="font-condensed text-[10px] font-bold uppercase tracking-[3px] text-[var(--p1)]">
+            <span className="font-condensed text-[10px] font-semibold uppercase tracking-[3px] text-[var(--p1)]">
               {category.shortLabel}
             </span>
           </div>
 
-          <p className="font-sans text-sm leading-[1.8] text-[var(--t2)]">
+          <p className="font-sans text-sm leading-[1.9] text-[var(--t2)]">
             {category.description}
           </p>
         </div>

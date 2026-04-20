@@ -50,32 +50,32 @@ export const HERO_SPLIT = {
   topTagline: "ELITE SPORTS DEVELOPMENT · 2025",
   dividerText: "ELEGÍ TU RECORRIDO",
   sharedEyebrow: "Ecosistema coordinado",
-  sharedHeadlinePre: "LA ESTRUCTURA QUE",
-  sharedHeadlineAccent: "CONECTA PROGRESO",
-  sharedHeadlinePost: "Y EXPERTISE REAL.",
+  sharedHeadlinePre: "UN MISMO SISTEMA.",
+  sharedHeadlineAccent: "DOS ENTRADAS CLARAS.",
+  sharedHeadlinePost: "CERO FRICCIÓN.",
   sharedBody:
-    "ESDEC conecta a deportistas con profesionales del deporte y la salud dentro de un mismo sistema. Elegí el recorrido que mejor te representa y entrá con claridad, no a ciegas.",
+    "Elegí tu punto de entrada. ESDEC ordena el encuentro entre deportistas y profesionales dentro de una estructura compartida.",
   sharedPills: [
-    "Deportistas con estructura",
-    "Profesionales con impacto",
-    "Coordinacion real",
+    "Deportistas",
+    "Profesionales",
+    "Ecosistema coordinado",
   ],
   left: {
     eyebrow: "PARA DEPORTISTAS",
     headlinePre: "QUIERO",
-    headlineAccent: "CRECER MEJOR.",
+    headlineAccent: "CRECER.",
     body:
-      "No te falta esfuerzo. Te falta la estructura que ordena tu proceso y conecta a tu equipo alrededor tuyo.",
-    cta: "Entrar como deportista →",
+      "Entrená con estructura, criterio y un equipo mejor conectado.",
+    cta: "Entrar como deportista",
     image: "/images/athletes/Atleta_1.png",
   },
   right: {
     eyebrow: "PARA PROFESIONALES",
     headlinePre: "QUIERO",
-    headlineAccent: "SUMAR MI PRÁCTICA.",
+    headlineAccent: "POTENCIAR MI PRÁCTICA.",
     body:
-      "Tu conocimiento ya tiene valor. ESDEC le da visibilidad, coordinacion y acceso a deportistas dentro de un sistema serio.",
-    cta: "Entrar como profesional →",
+      "Sumá visibilidad, contexto y acceso dentro de una red seria.",
+    cta: "Entrar como profesional",
     image: "/images/lifestyle/Medico1.png",
   },
 } as const;
@@ -604,60 +604,35 @@ export const FOOTPRINT = {
 export const NAV = {
   groups: [
     {
-      label: "Recorrido",
-      items: [
-        {
-          label: "Qué es ESDEC",
-          href: "#about",
-          icon: "estructura",
-          description: "La estructura y la tesis del ecosistema",
-        },
-        {
-          label: "Red coordinada",
-          href: "#ecosystem",
-          icon: "red",
-          description: "Quienes hacen funcionar el sistema",
-        },
-        {
-          label: "Cómo funciona",
-          href: "#problem",
-          icon: "proceso",
-          description: "El paso a paso para entrar y avanzar",
-        },
-      ],
+      label: "Sobre nosotros",
+      href: "/ecosistema-deportivo-cordoba",
     },
     {
-      label: "Conviccion",
-      href: "#emotional",
+      label: "Deportistas",
+      href: "/deportistas",
     },
     {
-      label: "Ingresar",
-      href: "#footprint",
+      label: "Profesionales",
+      href: "/profesionales",
     },
   ],
   audienceCtas: {
     deportista: "Empezar mi proceso →",
     profesional: "Postularme →",
   },
-  cta: "Ver el ingreso →",
+  cta: "Ver el ecosistema →",
   ctaHref: "#footprint",
 } as const;
 
 export const PAGE_INDEX = {
   deportista: [
-    { id: "entry", label: "Inicio" },
-    { id: "about", label: "Estructura" },
-    { id: "ecosystem", label: "Red" },
-    { id: "problem", label: "Proceso" },
-    { id: "emotional", label: "Conviccion" },
+    { id: "entry",     label: "Inicio" },
+    { id: "problem",   label: "Proceso" },
     { id: "footprint", label: "Ingresar" },
   ],
   profesional: [
-    { id: "entry", label: "Inicio" },
-    { id: "about", label: "Plataforma" },
-    { id: "ecosystem", label: "Red" },
-    { id: "problem", label: "Ingreso" },
-    { id: "emotional", label: "Impacto" },
+    { id: "entry",     label: "Inicio" },
+    { id: "problem",   label: "Ingreso" },
     { id: "footprint", label: "Postularme" },
   ],
 } as const;
@@ -696,16 +671,19 @@ export const FOOTER = {
     {
       label: "Plataforma",
       links: [
-        { label: "Qué es ESDEC", href: "#about" },
-        { label: "Red coordinada", href: "#ecosystem" },
-        { label: "Cómo funciona", href: "#problem" },
+        { label: "Qué es ESDEC", href: "/ecosistema-deportivo-cordoba" },
+        { label: "Red coordinada", href: "/ecosistema-deportivo-cordoba#ecosystem" },
+        { label: "Cómo funciona", href: "/ecosistema-deportivo-cordoba#problem" },
+        { label: "Eventos", href: "/eventos-deportivos" },
       ],
     },
     {
-      label: "Ingreso",
+      label: "Recorridos",
       links: [
-        { label: "Conviccion", href: "#emotional" },
-        { label: "Dar el primer paso", href: "#footprint" },
+        { label: "Para deportistas", href: "/deportistas" },
+        { label: "Para profesionales", href: "/profesionales" },
+        { label: "Empezar mi proceso", href: "/deportistas#footprint" },
+        { label: "Postularme como profesional", href: "/profesionales#footprint" },
       ],
     },
   ],
