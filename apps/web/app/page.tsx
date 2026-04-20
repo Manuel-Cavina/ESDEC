@@ -1,70 +1,29 @@
-"use client";
-
 // app/page.tsx
-// Landing ESDEC MVP 0 — orchestration of the unified home.
+// Home ESDEC — portada pura.
+// Navbar + hero split + bridge mínimo.
+// Server Component.
 
-import { useEffect, useState } from "react";
-import Navbar from "@/components/Navbar";
-import PageIndex from "@/components/PageIndex";
-import Footer from "@/components/Footer";
-import { PAGE_INDEX } from "@/content/landing";
-import HeroSection from "@/sections/HeroSection";
-import EntrySection from "@/sections/EntrySection";
-import AboutSection from "@/sections/AboutSection";
-import EcosystemSection from "@/sections/EcosystemSection";
-import ProblemSection from "@/sections/ProblemSection";
-import EmotionalSection from "@/sections/EmotionalSection";
-import FootprintSection from "@/sections/FootprintSection";
+import Link from "next/link";
+import HeroSectionRouted from "@/sections/HeroSectionRouted";
 
-type Audience = "deportista" | "profesional";
-
-export default function LandingPage() {
-  const [audienceSelected, setAudienceSelected] = useState<Audience | null>(
-    null
-  );
-  const [heroKey, setHeroKey] = useState(0);
-
-  useEffect(() => {
-    if (audienceSelected === "profesional") {
-      document.documentElement.classList.add("dark");
-      return;
-    }
-
-    document.documentElement.classList.remove("dark");
-  }, [audienceSelected]);
-
-  const handleLogoClick = () => {
-    setAudienceSelected(null);
-    setHeroKey((current) => current + 1);
-    window.scrollTo({ top: 0, behavior: "instant" });
-  };
-
-  const selectedSections =
-    audienceSelected === "profesional"
-      ? PAGE_INDEX.profesional
-      : PAGE_INDEX.deportista;
-
+export default function HomePage() {
   return (
     <main>
-      <div className={audienceSelected ? "nav-visible" : "nav-hidden"}>
-        <Navbar audience={audienceSelected} onLogoClick={handleLogoClick} />
-      </div>
+      <HeroSectionRouted />
 
-      {audienceSelected && <PageIndex sections={selectedSections} />}
-
-      <HeroSection key={heroKey} onSelect={setAudienceSelected} />
-
-      {audienceSelected && (
-        <>
-          <EntrySection audience={audienceSelected} />
-          <AboutSection audience={audienceSelected} />
-          <EcosystemSection audience={audienceSelected} />
-          <ProblemSection audience={audienceSelected} />
-          <EmotionalSection audience={audienceSelected} />
-          <FootprintSection audience={audienceSelected} />
-          <Footer />
-        </>
-      )}
+      <section className="border-t border-white/10 bg-[linear-gradient(180deg,var(--bg2)_0%,color-mix(in_srgb,var(--bg2)_74%,#09142d)_100%)] px-6 py-7">
+        <div className="mx-auto flex max-w-[920px] flex-col items-center justify-between gap-3 text-center sm:flex-row sm:text-left">
+          <p className="font-sans text-[0.84rem] leading-relaxed text-[var(--t2)]">
+            El futuro del deportista no se improvisa. Se construye.
+          </p>
+          <Link
+            href="/ecosistema-deportivo-cordoba"
+            className="font-condensed text-[11px] font-semibold uppercase tracking-[3px] text-[var(--p1)] transition-colors duration-200 hover:text-white"
+          >
+            Conocer ESDEC →
+          </Link>
+        </div>
+      </section>
     </main>
   );
 }
