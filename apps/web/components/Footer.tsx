@@ -6,11 +6,13 @@
 // Redes: Instagram, TikTok, Twitter/X, WhatsApp â€” SVGs propios
 // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-import { FOOTER, BRAND } from "@/content/landing";
+import Link from "next/link";
+import { FOOTER } from "@/content/landing";
 import { cn } from "@/lib/utils";
 import FingerprintSVG from "@/components/FingerprintSVG";
 import BrandLines from "@/components/BrandLines";
 import StickerIcon from "@/components/StickerIcon";
+import Logo from "@/components/Logo";
 
 // ── Íconos sociales SVG ───────────────────────────────────────────────────────
 
@@ -70,11 +72,6 @@ export default function Footer() {
   const whatsappHref =
     FOOTER.social.find((item) => item.icon === "whatsapp")?.href ?? "#";
 
-  const scrollTo = (href: string) => {
-    const id = href.replace("#", "");
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <>
       {/* â”€â”€ Pre-footer: banda motivacional â”€â”€ */}
@@ -100,13 +97,8 @@ export default function Footer() {
             {/* Brand block â€” 2 cols */}
             <div className="sm:col-span-2">
               {/* Logo */}
-              <div className="mb-5 flex items-center gap-2.5">
-                <div className="[--fps:var(--logo-l)] [--fpg:transparent]">
-                  <FingerprintSVG animate={false} className="h-8 w-7" strokeOpacity={1} />
-                </div>
-                <span className="font-condensed text-[24px] font-black leading-none tracking-[1.5px]" style={{ color: "var(--logo-t)" }}>
-                  {BRAND.name}
-                </span>
+              <div className="mb-5">
+                <Logo className="w-[144px] sm:w-[158px]" />
               </div>
 
               <p className="mb-1 font-condensed text-[11px] font-bold uppercase tracking-[3px] text-[var(--p1)]">
@@ -175,14 +167,13 @@ export default function Footer() {
                 <ul className="flex flex-col gap-3">
                   {group.links.map((link) => (
                     <li key={link.label}>
-                      <button
-                        type="button"
-                        onClick={() => scrollTo(link.href)}
+                      <Link
+                        href={link.href}
                         className="group flex items-center gap-0 font-sans text-sm text-[var(--t2)] transition-colors duration-200 hover:text-[var(--t1)]"
                       >
                         <span className="block h-px w-0 bg-[var(--p1)] transition-[width] duration-300 group-hover:w-3 group-hover:mr-2" />
                         {link.label}
-                      </button>
+                      </Link>
                     </li>
                   ))}
                 </ul>

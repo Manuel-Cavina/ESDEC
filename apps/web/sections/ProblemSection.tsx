@@ -50,7 +50,7 @@ function ProblemCard({ problem, index }: ProblemCardProps) {
           {problem.number}
         </span>
         <div className="mb-5 h-[2px] w-6 bg-[var(--p1)]/40 transition-all duration-300 group-hover:w-14 group-hover:bg-[var(--p1)]" />
-        <h3 className="font-condensed text-[clamp(20px,2.4vw,34px)] font-black uppercase leading-[0.92] tracking-tight text-[var(--t1)]">
+        <h3 className="font-condensed text-[clamp(20px,2.4vw,34px)] font-semibold uppercase leading-[0.98] tracking-[0.02em] text-[var(--t1)] md:tracking-[0.03em]">
           {problem.title}
         </h3>
         <p className="mt-3 font-sans text-sm leading-[1.8] text-[var(--t2)]">
@@ -68,7 +68,7 @@ function JourneyStep({ step, index, prefix }: JourneyStepProps) {
         <span className="font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
           {prefix} {step.step}
         </span>
-        <h3 className="mt-3 font-condensed text-[24px] font-black uppercase leading-[0.95] tracking-tight text-[var(--t1)]">
+        <h3 className="mt-3 font-condensed text-[24px] font-semibold uppercase leading-[1] tracking-[0.02em] text-[var(--t1)] md:tracking-[0.03em]">
           {step.title}
         </h3>
         <p className="mt-3 font-sans text-sm leading-[1.8] text-[var(--t2)]">

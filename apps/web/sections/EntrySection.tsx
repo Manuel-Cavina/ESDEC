@@ -3,6 +3,7 @@
 // sections/EntrySection.tsx
 // Audience-specific opening hero that bridges the split selector with the chosen route.
 
+import Image from "next/image";
 import { ABOUT, ENTRY, PROFESSIONAL_ABOUT } from "@/content/landing";
 import BrandLines from "@/components/BrandLines";
 import FingerprintSVG from "@/components/FingerprintSVG";
@@ -30,9 +31,13 @@ export default function EntrySection({
       data-section="entry"
       className="relative isolate overflow-hidden bg-[var(--bg)]"
     >
-      <img
+      <Image
         src={intro.image}
         alt=""
+        fill
+        priority
+        quality={92}
+        sizes="100vw"
         className="absolute inset-0 h-full w-full object-cover object-center"
       />
 
@@ -88,7 +93,7 @@ export default function EntrySection({
               </p>
 
               <a
-                href="#about"
+                href="#problem"
                 className={cn(
                   "btn-shimmer relative mt-8 inline-flex items-center gap-2 overflow-hidden rounded-xl px-8 py-3.5",
                   "bg-[var(--btn-bg)] font-condensed text-[13px] font-bold uppercase tracking-[3px] text-[var(--btn-t)]",
@@ -108,7 +113,7 @@ export default function EntrySection({
                     {benefit.label}
                   </p>
                   <div className="mt-3 h-px w-10 bg-gradient-to-r from-[var(--p1)]/90 to-transparent" />
-                  <h3 className="mt-4 max-w-[18ch] font-condensed text-[20px] font-black uppercase leading-[1] tracking-tight text-white">
+                  <h3 className="mt-4 max-w-[18ch] font-condensed text-[20px] font-semibold uppercase leading-[1.08] tracking-[0.02em] text-white md:tracking-[0.03em]">
                     {benefit.title}
                   </h3>
                 </article>

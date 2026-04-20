@@ -3,6 +3,7 @@
 // sections/AboutSection.tsx
 // Manifest section for the unified ESDEC thesis.
 
+import Image from "next/image";
 import { ABOUT, PROFESSIONAL_ABOUT } from "@/content/landing";
 import BrandLines from "@/components/BrandLines";
 import ScrollReveal from "@/components/ScrollReveal";
@@ -32,15 +33,15 @@ function BenefitCard({ benefit, index }: BenefitCardProps) {
       >
         <div className="flex items-center gap-3">
           <StickerIcon name={benefit.icon} size="sm" />
-          <span className="font-condensed text-[10px] font-bold uppercase tracking-[3px] text-[var(--p1)]">
+          <span className="font-condensed text-[10px] font-semibold uppercase tracking-[3px] text-[var(--p1)]">
             {benefit.label}
           </span>
         </div>
 
-        <h3 className="mt-5 max-w-[16ch] font-condensed text-[clamp(18px,2vw,20px)] font-black uppercase leading-[0.98] tracking-tight text-[var(--t1)]">
+        <h3 className="mt-5 max-w-[18ch] font-condensed text-[clamp(18px,2vw,20px)] font-semibold uppercase leading-[1.02] tracking-tight text-[var(--t1)]">
           {benefit.title}
         </h3>
-        <p className="mt-3 max-w-[34ch] font-sans text-sm leading-[1.75] text-[var(--t2)]">
+        <p className="mt-3 max-w-[36ch] font-sans text-sm leading-[1.85] text-[var(--t2)]">
           {benefit.description}
         </p>
       </article>
@@ -148,9 +149,12 @@ export default function AboutSection({
           <ScrollReveal direction="up" delay={170}>
             <div className="grid overflow-hidden rounded-[30px] border border-white/10 bg-white/[0.025] md:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)]">
               <div className="relative min-h-[220px] md:min-h-[260px]">
-                <img
+                <Image
                   src={image}
                   alt=""
+                  fill
+                  quality={90}
+                  sizes="(max-width: 767px) 100vw, 40vw"
                   className="h-full w-full object-cover object-center opacity-85 saturate-[0.82] contrast-[0.96]"
                 />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,9,19,0.12),rgba(5,9,19,0.52))]" />
