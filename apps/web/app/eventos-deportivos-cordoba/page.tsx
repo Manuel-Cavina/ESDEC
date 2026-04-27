@@ -1,28 +1,72 @@
 // app/eventos-deportivos-cordoba/page.tsx
-// Temporary SEO landing for the ESDEC events area.
+// Commercial landing page for the ESDEC events vertical.
 
 import type { Metadata } from "next";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import AreaInDevelopmentPage from "@/components/areas/AreaInDevelopmentPage";
-import { AREA_PAGES } from "@/content/areas";
-import { buildAreaJsonLd, buildAreaMetadata } from "@/lib/areas";
+import { EVENTS_PAGE } from "@/content/eventos";
+import { SITE_URL } from "@/lib/constants";
+import EventsLandingPage from "@/sections/events/EventsLandingPage";
 
-const area = AREA_PAGES["eventos-deportivos-cordoba"];
+const pageUrl = `${SITE_URL}/eventos-deportivos-cordoba`;
 
-export function generateMetadata(): Metadata {
-  return buildAreaMetadata(area);
-}
+export const metadata: Metadata = {
+  title: EVENTS_PAGE.seo.title,
+  description: EVENTS_PAGE.seo.description,
+  alternates: {
+    canonical: pageUrl,
+  },
+  openGraph: {
+    type: "website",
+    locale: "es_AR",
+    url: pageUrl,
+    title: EVENTS_PAGE.seo.title,
+    description: EVENTS_PAGE.seo.description,
+    images: [{ url: "/images/og-image.png", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: EVENTS_PAGE.seo.title,
+    description: EVENTS_PAGE.seo.description,
+    images: ["/images/og-image.png"],
+  },
+};
 
 export default function EventosDeportivosCordobaPage() {
-  const jsonLd = buildAreaJsonLd(area);
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: EVENTS_PAGE.seo.title,
+    url: pageUrl,
+    description: EVENTS_PAGE.seo.description,
+    isPartOf: {
+      "@type": "WebSite",
+      name: "ESDEC",
+      url: SITE_URL,
+    },
+    about: {
+      "@type": "SportsEvent",
+      name: EVENTS_PAGE.nextEvent.name,
+      eventStatus: "https://schema.org/EventScheduled",
+      startDate: "2026-05-18T08:30:00-03:00",
+      location: {
+        "@type": "Place",
+        name: EVENTS_PAGE.nextEvent.venue,
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: EVENTS_PAGE.nextEvent.city,
+          addressCountry: "AR",
+        },
+      },
+    },
+  };
 
   return (
     <>
       <div className="nav-visible">
         <Navbar audience={null} />
       </div>
-      <AreaInDevelopmentPage area={area} />
+      <EventsLandingPage />
       <Footer />
       <script
         type="application/ld+json"
