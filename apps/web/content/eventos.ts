@@ -17,6 +17,19 @@ export interface EventDetail {
   value: string;
 }
 
+export interface EventSocialComment {
+  author: string;
+  body: string;
+  icon: string;
+}
+
+export interface EventExperienceTab {
+  id: string;
+  label: string;
+  title: string;
+  body: string;
+}
+
 export interface EventExperience {
   id: string;
   label: string;
@@ -33,6 +46,14 @@ export interface EsdecEvent {
   posterBody?: string;
   posterKicker?: string;
   posterCtaLabel?: string;
+  campaignLabel?: string;
+  campaignTitle?: string;
+  campaignAccent?: string;
+  campaignBody?: string;
+  campaignNote?: string;
+  dateDay?: string;
+  dateMonth?: string;
+  timeLabel?: string;
   status: EventStatus;
   dateLabel: string;
   venue: string;
@@ -40,11 +61,14 @@ export interface EsdecEvent {
   headline: string;
   summary: string;
   image: string;
+  modalImage?: string;
   imageAlt: string;
   details: readonly EventDetail[];
   modalTitle: string;
   modalBody: string;
   modalBullets: readonly string[];
+  socialComments?: readonly EventSocialComment[];
+  experienceTabs?: readonly EventExperienceTab[];
   instagram: {
     label: string;
     href: string;
@@ -110,45 +134,116 @@ export const EVENTS_PAGE = {
   },
   nextEvent: {
     eyebrow: "Proximo evento",
-    name: "Reset Run Clinic",
+    name: "Run + Coffee + Recovery",
     category: "clinica",
-    posterTitle: "Reset Run Clinic",
+    posterTitle: "Run + Coffee",
     posterBody:
-      "Evaluacion, prevencion e intervencion con criterio profesional. El cuerpo como punto de partida.",
-    posterKicker: "Prevencion y seguimiento",
+      "Movimiento, recuperacion y comunidad en una manana unica en Diario Cafe.",
+    posterKicker: "Run + coffee + recovery",
     posterCtaLabel: "Explorar la experiencia",
+    campaignLabel: "Activacion ESDEC",
+    campaignTitle: "Corre.",
+    campaignAccent: "Recupera. Conecta.",
+    campaignBody:
+      "Este 9 de mayo no venis solo a correr. Venis a vivir una experiencia: running, after running, cafe, crioterapia, estiramiento, musica, sorteos y marcas.",
+    campaignNote: "Inscripciones hasta el 4 de mayo - reserva por Tally",
+    dateDay: "9",
+    dateMonth: "Mayo",
+    timeLabel: "8:00 hs",
     status: "open",
-    dateLabel: "Sabado 18 de mayo · 8:30 hs",
-    venue: "Parque Sarmiento",
+    dateLabel: "Viernes 9 de mayo - 8:00 hs",
+    venue: "Diario Cafe",
     city: "Cordoba Capital",
-    headline: "Una experiencia para correr con mas criterio.",
+    headline: "Run + Coffee + Recovery: correr, recuperar y conectar.",
     summary:
-      "Una activacion para runners amateurs que mezcla tecnica, comunidad, recovery y una lectura ESDEC del proceso deportivo.",
-    image: "/images/athletes/medicina2.jpg",
-    imageAlt: "Evaluacion deportiva y movilidad guiada en una clinica ESDEC",
-    slug: "reset-run-clinic",
+      "Una experiencia que reune movimiento, recuperacion, comunidad, cafe, crioterapia, musica, sorteos y marcas en Diario Cafe.",
+    image: "/images/Evento/Image2.png",
+    modalImage: "/images/Evento/image.png",
+    imageAlt: "Runner en movimiento para la experiencia Run Coffee Recovery de ESDEC",
+    slug: "run-coffee-recovery",
     details: [
-      { label: "Formato", value: "Running clinic + comunidad" },
-      { label: "Estado", value: "Cupos abiertos" },
-      { label: "Entrada", value: "Reserva por WhatsApp" },
+      { label: "Formato", value: "Run + Coffee + Recovery" },
+      { label: "Inscripcion", value: "Hasta el 4 de mayo inclusive" },
+      { label: "Reserva", value: "Por formulario Tally" },
     ],
-    modalTitle: "Que se va a vivir en Reset Run Clinic",
+    modalTitle: "Que se va a vivir en Run + Coffee + Recovery",
     modalBody:
-      "El evento esta pensado como una puerta de entrada al sistema ESDEC: una manana de movimiento, tecnica, comunidad y criterios simples para entender mejor como estas corriendo y como podes seguir creciendo.",
+      "Este 9 de mayo no venis solo a correr. Venis a vivir una manana donde el deporte se conecta con bienestar, comunidad y marcas que acompanian una propuesta distinta.",
     modalBullets: [
-      "Entrada en calor y check-in de comunidad.",
-      "Bloque tecnico con correcciones en movimiento.",
-      "Recovery guiado y cierre con proximo paso dentro del ecosistema.",
+      "08:00 hs: presentacion oficial del evento en Diario Cafe.",
+      "09:00 a 09:30 hs: entrada en calor general y largada desde Parque Sarmiento.",
+      "Cierre con estiramiento, crioterapia, combo de cafe, musica, sorteos y after running.",
+    ],
+    socialComments: [
+      {
+        author: "formato",
+        icon: "FMT",
+        body:
+          "No venis solo a sumar kilometros: venis a vivir una manana con running, cafe, recuperacion y comunidad.",
+      },
+      {
+        author: "inscripcion",
+        icon: "OK",
+        body:
+          "Las inscripciones estan abiertas hasta el 4 de mayo. Si queres estar, tu proxima experiencia arranca aca.",
+      },
+      {
+        author: "reserva",
+        icon: "IN",
+        body:
+          "La reserva se hace por Tally: rapido, claro y directo para asegurar tu lugar en Diario Cafe.",
+      },
+      {
+        author: "running",
+        icon: "RUN",
+        body:
+          "Largamos desde Parque Sarmiento con recorridos 3K y 5K para moverte, activar el cuerpo y compartir ruta.",
+      },
+      {
+        author: "coffee",
+        icon: "CAF",
+        body:
+          "El after running baja a Diario Cafe con combo, musica, sorteos, marcas amigas y un espacio para conocerse.",
+      },
+      {
+        author: "recovery",
+        icon: "REC",
+        body:
+          "Crioterapia, estiramiento guiado y beneficios para que la experiencia no termine cuando frenas de correr.",
+      },
+    ],
+    experienceTabs: [
+      {
+        id: "run",
+        label: "Run",
+        title: "Movimiento con energia real",
+        body:
+          "Entrada en calor, largada desde Parque Sarmiento y recorridos 3K / 5K para activar la manana desde el deporte.",
+      },
+      {
+        id: "coffee",
+        label: "Coffee",
+        title: "After running en Diario Cafe",
+        body:
+          "Combo de cafe, musica, sorteos y marcas amigas para que el evento tambien sea encuentro, disfrute y comunidad.",
+      },
+      {
+        id: "recovery",
+        label: "Recovery",
+        title: "Recuperar tambien es parte",
+        body:
+          "Crioterapia y estiramiento guiado para cerrar con bienestar y entender que correr mejor tambien es recuperar mejor.",
+      },
     ],
     instagram: {
       label: "Ver novedades en Instagram",
       href: "https://www.instagram.com/esdec.ar?igsh=N3ZtMHd0a2I2aXVz",
       handle: "@esdec.ar",
-      note: "Seguimos publicando avances, cupos y contenido del evento en Instagram.",
+      note: "Seguimos publicando avances, cupos, marcas que acompanian y contenido de la previa en Instagram.",
     },
     cta: {
-      label: "Reservar mi lugar",
-      href: "https://wa.me/5493515117555?text=Hola%20ESDEC%2C%20quiero%20sumarme%20al%20evento%20Reset%20Run%20Clinic.",
+      label: "Reservar por Tally",
+      href: "https://tally.so/r/VL1BlM",
       trackingLabel: "events_next_event_reserve",
       variant: "primary",
       external: true,
