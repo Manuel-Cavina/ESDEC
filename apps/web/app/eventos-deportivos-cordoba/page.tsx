@@ -48,7 +48,7 @@ export default function EventosDeportivosCordobaPage() {
       "@type": "SportsEvent",
       name: EVENTS_PAGE.nextEvent.name,
       eventStatus: "https://schema.org/EventScheduled",
-      startDate: "2026-05-18T08:30:00-03:00",
+      startDate: "2026-05-09T08:00:00-03:00",
       location: {
         "@type": "Place",
         name: EVENTS_PAGE.nextEvent.venue,
@@ -63,11 +63,13 @@ export default function EventosDeportivosCordobaPage() {
 
   return (
     <>
-      <div className="nav-visible">
-        <Navbar audience={null} />
+      <div className="dark">
+        <div className="nav-visible [--btn-bg:#5ac8ff] [--btn-t:#0c2d7a]">
+          <Navbar audience="deportista" />
+        </div>
+        <EventsLandingPage />
+        <Footer />
       </div>
-      <EventsLandingPage />
-      <Footer />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

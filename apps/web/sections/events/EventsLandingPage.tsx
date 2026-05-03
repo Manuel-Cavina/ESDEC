@@ -1,96 +1,84 @@
 "use client";
 
 // sections/events/EventsLandingPage.tsx
-// Commercial landing page for the ESDEC events vertical.
+// Narrative landing page for the ESDEC events experience.
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState } from "react";
+import EventsIntro, { EVENTS_INTRO_KEY } from "./EventsIntro";
 import BrandLines from "@/components/BrandLines";
 import FingerprintSVG from "@/components/FingerprintSVG";
 import ScrollReveal from "@/components/ScrollReveal";
-import { EVENTS_PAGE, type EsdecEvent } from "@/content/eventos";
+import { EVENTS_PAGE, type EventsCta, type PastEvent } from "@/content/eventos";
 import { trackCTAClick, trackScrollDepth, trackSectionView } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
-function handleTrackedClick(label: string) {
-  trackCTAClick(label);
+interface EventButtonProps {
+  cta: EventsCta;
+  className?: string;
 }
 
-interface TrackedLinkProps {
-  href: string;
-  label: string;
-  trackingLabel: string;
-  className: string;
-  external?: boolean;
-  style?: CSSProperties;
+interface SectionHeadingProps {
+  eyebrow: string;
+  title: string;
+  align?: "left" | "center";
 }
 
-function TrackedLink({
-  href,
-  label,
-  trackingLabel,
-  className,
-  external = false,
-  style,
-}: TrackedLinkProps) {
-  if (external) {
+
+function EventButton({ cta, className }: EventButtonProps) {
+  const baseClass = cn(
+    "group inline-flex min-h-[54px] items-center justify-center overflow-hidden rounded-full px-7 py-4 font-condensed text-[0.78rem] font-black uppercase leading-none tracking-[0.22em] transition-all duration-300 hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--p1)]",
+    cta.variant === "primary"
+      ? "bg-[var(--p1)] text-[#06275f] shadow-[0_22px_54px_-26px_rgba(90,200,255,0.9)]"
+      : "bg-[var(--p2)] text-[#05213d] shadow-[0_22px_54px_-26px_rgba(125,232,168,0.82)] hover:brightness-110",
+    className
+  );
+
+  const content = (
+    <>
+      <span className="relative z-10">{cta.label}</span>
+      <span
+        className="ml-3 h-px w-7 origin-left bg-current transition-transform duration-300 group-hover:scale-x-125"
+        aria-hidden="true"
+      />
+    </>
+  );
+
+  if (cta.external) {
     return (
       <a
-        href={href}
+        href={cta.href}
         target="_blank"
         rel="noopener noreferrer"
-        onClick={() => handleTrackedClick(trackingLabel)}
-        className={className}
-        style={style}
+        onClick={() => trackCTAClick(cta.trackingLabel)}
+        className={baseClass}
       >
-        {label}
+        {content}
       </a>
     );
   }
 
-  if (href.startsWith("#")) {
+  if (cta.href.startsWith("#")) {
     return (
       <a
-        href={href}
-        onClick={() => handleTrackedClick(trackingLabel)}
-        className={className}
-        style={style}
+        href={cta.href}
+        onClick={() => trackCTAClick(cta.trackingLabel)}
+        className={baseClass}
       >
-        {label}
+        {content}
       </a>
     );
   }
 
   return (
-    <Link
-      href={href}
-      onClick={() => handleTrackedClick(trackingLabel)}
-      className={className}
-      style={style}
-    >
-      {label}
+    <Link href={cta.href} onClick={() => trackCTAClick(cta.trackingLabel)} className={baseClass}>
+      {content}
     </Link>
   );
 }
 
-interface SectionTitleProps {
-  eyebrow: string;
-  headlinePre: string;
-  headlineAccent: string;
-  headlinePost: string;
-  body: string;
-  align?: "left" | "center";
-}
-
-function SectionTitle({
-  eyebrow,
-  headlinePre,
-  headlineAccent,
-  headlinePost,
-  body,
-  align = "left",
-}: SectionTitleProps) {
+function SectionHeading({ eyebrow, title, align = "left" }: SectionHeadingProps) {
   return (
     <ScrollReveal
       direction="up"
@@ -98,637 +86,29 @@ function SectionTitle({
     >
       <div className={cn("mb-5 flex items-center gap-3", align === "center" && "justify-center")}>
         <BrandLines size="sm" animated />
-        <p className="font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
+        <p className="font-condensed text-[10px] font-black uppercase tracking-[0.4em] text-[var(--p1)]">
           {eyebrow}
         </p>
       </div>
-      <h2 className="ecos-title-compact">
-        <span className="block">{headlinePre}</span>
-        <span className="ecos-title-accent block">{headlineAccent}</span>
-        <span className="block">{headlinePost}</span>
+      <h2 className="font-condensed text-[clamp(2.75rem,6.4vw,6.2rem)] font-black uppercase leading-[0.82] tracking-tight text-[var(--t1)]">
+        {title}
       </h2>
-      <p className={cn("mt-6 max-w-[58ch] font-sans text-[0.98rem] leading-[1.95] text-[var(--t2)]", align === "center" && "mx-auto")}>
-        {body}
-      </p>
     </ScrollReveal>
   );
 }
 
-function SocialEventModal({
-  event,
-  onClose,
-}: {
-  event: EsdecEvent;
-  onClose: () => void;
-}) {
-  const [liked, setLiked] = useState(false);
-  const [activeExperience, setActiveExperience] = useState(0);
-  const [shareOpen, setShareOpen] = useState(false);
-  const shareUrl =
-    typeof window !== "undefined"
-      ? `${window.location.origin}/eventos-deportivos-cordoba#proximo-evento`
-      : "/eventos-deportivos-cordoba#proximo-evento";
-  const shareTitle = `${event.name} | ESDEC`;
-  const shareText = `Sumate a ${event.name}: ${event.headline}`;
-  const encodedShareUrl = encodeURIComponent(shareUrl);
-  const encodedShareText = encodeURIComponent(`${shareText} ${shareUrl}`);
-  const encodedShareSubject = encodeURIComponent(shareTitle);
-  const encodedShareBody = encodeURIComponent(`${shareText}\n\n${shareUrl}`);
-  const socialComments = event.socialComments ?? [
-    ...event.details.map((detail, index) => ({
-      author: detail.label.toLowerCase(),
-      body: detail.value,
-      icon: ["FMT", "OK", "IN"][index] ?? "ES",
-    })),
-    ...event.modalBullets.map((item, index) => ({
-      author: `momento 0${index + 1}`,
-      body: item,
-      icon: ["RUN", "TEC", "REC"][index] ?? `0${index + 1}`,
-    })),
-  ];
-  const experienceTabs = event.experienceTabs ?? [];
-  const selectedExperience = experienceTabs[activeExperience];
-
-  const handleNativeShare = async () => {
-    if (typeof navigator !== "undefined" && navigator.share) {
-      await navigator.share({
-        title: shareTitle,
-        text: shareText,
-        url: shareUrl,
-      });
-      handleTrackedClick(`share_native_${event.slug}`);
-      return;
-    }
-
-    if (typeof navigator !== "undefined" && navigator.clipboard) {
-      await navigator.clipboard.writeText(shareUrl);
-      handleTrackedClick(`share_copy_${event.slug}`);
-    }
-  };
-
-  return (
-    <div
-      className="fixed inset-0 z-[980] flex items-center justify-center bg-[rgba(0,12,28,0.72)] px-4 py-6 backdrop-blur-[10px]"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="event-modal-title"
-      onMouseDown={onClose}
-    >
-      <div
-        className="relative max-h-[92svh] w-full max-w-[1060px] overflow-hidden rounded-[30px] border border-white/14 bg-[linear-gradient(180deg,#071f4b_0%,#061833_100%)] shadow-[0_28px_90px_-38px_rgba(0,0,0,0.85)]"
-        onMouseDown={(eventClick) => eventClick.stopPropagation()}
-      >
-        <button
-          type="button"
-          onClick={onClose}
-          className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/16 bg-[#061833]/80 font-condensed text-[16px] font-bold text-white backdrop-blur-md transition-colors hover:bg-white/14"
-          aria-label="Cerrar detalle del evento"
-        >
-          X
-        </button>
-
-        <div className="grid max-h-[92svh] overflow-y-auto lg:grid-cols-[minmax(0,1.12fr)_minmax(360px,0.78fr)]">
-          <div className="relative min-h-[520px] overflow-hidden border-b border-white/12 bg-[#f1eadc] lg:min-h-full lg:border-b-0 lg:border-r">
-            <div className="hidden">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[linear-gradient(135deg,var(--p1),var(--p2))] font-condensed text-[0.78rem] font-black uppercase tracking-[0.12em] text-[#06275f]">
-                  ES
-                </div>
-                <div>
-                  <p className="font-condensed text-[0.92rem] font-black uppercase tracking-[0.18em] text-white">
-                    esdec.eventos
-                  </p>
-                  <p className="font-sans text-[0.78rem] font-medium text-white/56">
-                    {event.venue} · {event.city}
-                  </p>
-                </div>
-              </div>
-              <p className="font-condensed text-[10px] font-black uppercase tracking-[3px] text-[var(--p1)]">
-                En vivo
-              </p>
-            </div>
-
-            <div className="group relative min-h-[520px] overflow-hidden lg:h-full lg:min-h-[700px]">
-              <Image
-                src={event.modalImage ?? event.image}
-                alt={event.imageAlt}
-                fill
-                quality={94}
-                sizes="(min-width: 1024px) 52vw, 100vw"
-                className="object-cover object-center opacity-100 saturate-100 contrast-100 transition-transform duration-700 group-hover:scale-[1.01]"
-              />
-              <div className="hidden absolute inset-0 bg-[linear-gradient(90deg,rgba(241,234,220,0.92)_0%,rgba(241,234,220,0.76)_39%,rgba(7,31,75,0.18)_64%,rgba(7,31,75,0.58)_100%)]" />
-              <div className="hidden absolute inset-0 opacity-35 [background-image:radial-gradient(rgba(0,26,51,0.18)_1px,transparent_1px)] [background-size:5px_5px]" />
-              <p className="hidden pointer-events-none absolute -left-10 top-[-2rem] font-condensed text-[23rem] font-black uppercase leading-none tracking-[-0.08em] text-[#001a33]/[0.045]">
-                ES
-              </p>
-              <div className="hidden pointer-events-none absolute right-[-16%] bottom-[8%] w-[360px] opacity-[0.2] [--fps:rgba(90,200,255,0.92)] [--fpg:rgba(90,200,255,0.04)]">
-                <FingerprintSVG animate={false} className="w-full" />
-              </div>
-              <div className="hidden absolute left-6 right-6 top-7 items-start justify-between gap-5 sm:left-10 sm:right-10 sm:top-10">
-                <Image
-                  src="/images/Logo2.png"
-                  alt="ESDEC"
-                  width={190}
-                  height={56}
-                  className="h-auto w-[190px] object-contain opacity-95"
-                />
-                <div className="hidden text-right sm:block">
-                  <p className="font-condensed text-[10px] font-black uppercase tracking-[3px] text-[#0b2b65]/70">
-                    Performance
-                  </p>
-                  <p className="font-condensed text-[10px] font-black uppercase tracking-[3px] text-[#0b2b65]/70">
-                    Recovery
-                  </p>
-                  <p className="font-condensed text-[10px] font-black uppercase tracking-[3px] text-[#0b2b65]/70">
-                    Community
-                  </p>
-                </div>
-              </div>
-              <div className="hidden absolute inset-x-0 bottom-0 p-6 sm:p-10">
-                <p className="mb-5 max-w-[24ch] font-sans text-[clamp(1rem,2vw,1.55rem)] font-semibold uppercase leading-[1.18] tracking-[-0.02em] text-[#0b2b65]">
-                  Este 9 de mayo no venis solo a correr. Venis a vivir una experiencia.
-                </p>
-                <h3
-                  id="event-modal-title"
-                  className="font-condensed text-[clamp(4.5rem,12vw,8.6rem)] font-black uppercase leading-[0.78] tracking-[-0.04em] text-[#08275a]"
-                >
-                  CORRE.
-                </h3>
-                <p className="font-condensed text-[clamp(4.2rem,11vw,8rem)] font-black uppercase leading-[0.78] tracking-[-0.04em] text-[#08275a]">
-                  RECUPERA.
-                </p>
-                <p className="font-condensed text-[clamp(4.2rem,11vw,8rem)] font-black uppercase leading-[0.78] tracking-[-0.04em] text-[#08275a]">
-                  CONECTA.
-                </p>
-                <div className="mt-7 grid gap-4 border-t-4 border-[#f4b31a] pt-4 sm:grid-cols-[1fr_auto] sm:items-end">
-                  <div>
-                    <p className="font-condensed text-[clamp(2.3rem,6vw,4.8rem)] font-black uppercase leading-none tracking-tight text-[#f4b31a]">
-                      {event.dateDay ?? event.dateLabel} de {event.dateMonth ?? ""}
-                    </p>
-                    <p className="mt-2 font-condensed text-[clamp(1.2rem,3vw,2rem)] font-black uppercase tracking-[0.18em] text-[#08275a]">
-                      {event.timeLabel ?? event.dateLabel}
-                    </p>
-                  </div>
-                  <p className="font-condensed text-[1.35rem] font-black uppercase leading-none text-[#08275a]">
-                    {event.venue}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex min-h-[520px] flex-col bg-[#1b1e24]">
-            <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[linear-gradient(135deg,var(--p1),var(--p2))] font-condensed text-[0.78rem] font-black uppercase tracking-[0.12em] text-[#06275f]">
-                  ES
-                </div>
-                <div>
-                  <p className="font-sans text-[0.86rem] font-bold text-white">
-                    <a
-                      href={event.instagram.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => handleTrackedClick(`instagram_profile_${event.slug}`)}
-                      className="transition-colors hover:text-[var(--p1)]"
-                    >
-                      esdec.ar
-                    </a>
-                    <span className="ml-2 font-medium text-[var(--p1)]">Seguir</span>
-                  </p>
-                  <p className="font-sans text-[0.74rem] font-medium text-white/48">
-                    {event.venue} - {event.city}
-                  </p>
-                </div>
-              </div>
-              <span className="font-sans text-[1rem] font-bold text-white">...</span>
-            </div>
-            <div className="hidden border-b border-white/10 px-5 py-4">
-              <div className="flex items-center justify-between">
-                <div className="flex gap-4 text-[1.35rem] text-white">
-                  <span aria-hidden="true">♡</span>
-                  <span aria-hidden="true">◇</span>
-                  <span aria-hidden="true">↗</span>
-                </div>
-                <span className="font-condensed text-[10px] font-black uppercase tracking-[3px] text-[var(--p1)]">
-                  Guardar
-                </span>
-              </div>
-              <p className="mt-4 font-sans text-[0.82rem] font-bold text-white">
-                1094 Me gusta
-              </p>
-            </div>
-
-            <div className="flex-1 space-y-4 overflow-y-auto px-5 py-5">
-              <div className="flex gap-3">
-                <div className="mt-1 hidden h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--p1)] font-condensed text-[0.72rem] font-black text-[#06275f]">
-                  ES
-                </div>
-                <div>
-                  <p className="font-sans text-[0.88rem] leading-[1.55] text-white/88">
-                    <a
-                      href={event.instagram.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => handleTrackedClick(`instagram_caption_${event.slug}`)}
-                      className="font-bold text-white transition-colors hover:text-[var(--p1)]"
-                    >
-                      esdec.ar
-                    </a>{" "}
-                    {event.modalBody}
-                  </p>
-                  <p className="mt-2 font-condensed text-[9px] font-black uppercase tracking-[3px] text-white/38">
-                    Fijado · {event.instagram.handle}
-                  </p>
-                </div>
-              </div>
-
-              {socialComments.map((comment) => (
-                <div key={`${comment.author}-${comment.body}`} className="flex gap-3">
-                  <div className="mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[var(--p1)]/40 bg-[#071f4b] font-condensed text-[0.62rem] font-black uppercase tracking-[0.08em] text-[var(--p1)] shadow-[inset_0_0_0_2px_rgba(255,255,255,0.04)]">
-                    {comment.icon}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="font-sans text-[0.84rem] leading-[1.55] text-white/82">
-                      <span className="font-bold text-white">{comment.author} </span>
-                      {comment.body}
-                    </p>
-                    <p className="mt-1 font-sans text-[0.7rem] text-white/38">
-                      2 sem   Me gusta   Responder
-                    </p>
-                  </div>
-                </div>
-              ))}
-
-              <div className="border-t border-white/10 pt-4">
-                <p className="font-sans text-[0.84rem] font-bold text-white">
-                  Instagram · {event.instagram.handle}
-                </p>
-                <p className="mt-1 font-sans text-[0.84rem] leading-[1.55] text-white/78">
-                  {event.instagram.note}
-                </p>
-                <a
-                  href={event.instagram.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => handleTrackedClick(`instagram_${event.slug}`)}
-                  className="mt-3 inline-flex font-sans text-[0.78rem] font-bold text-[var(--p1)] transition-colors hover:text-white"
-                >
-                  {event.instagram.label} →
-                </a>
-              </div>
-            </div>
-
-            <div className="border-t border-white/10 p-5">
-              <div className="hidden mb-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex gap-4 text-[1.35rem] text-white">
-                    <button
-                      type="button"
-                      onClick={() => setLiked((current) => !current)}
-                      aria-pressed={liked}
-                      aria-label={liked ? "Quitar me gusta" : "Dar me gusta"}
-                      className={cn(
-                        "transition-transform hover:scale-110",
-                        liked ? "text-red-500" : "text-white"
-                      )}
-                    >
-                      {liked ? "♥" : "♡"}
-                    </button>
-                    <span aria-hidden="true">○</span>
-                    <span aria-hidden="true">↗</span>
-                  </div>
-                  <div className="hidden gap-4 text-[1.35rem] text-white">
-                    <span aria-hidden="true">♡</span>
-                    <span aria-hidden="true">○</span>
-                    <span aria-hidden="true">↗</span>
-                  </div>
-                  <span aria-hidden="true" className="text-[1.15rem] text-white">
-                    ▱
-                  </span>
-                </div>
-                <p className="hidden mt-3 font-sans text-[0.82rem] font-bold text-white">
-                  Les gusta a _maximotorres y 35 personas mas
-                </p>
-              </div>
-              <div className="hidden mb-4 items-center gap-3 rounded-full border border-white/10 bg-white/[0.035] px-4 py-3">
-                <span className="h-2 w-2 rounded-full bg-[var(--p2)] shadow-[0_0_18px_rgba(125,232,168,0.8)]" />
-                <p className="font-sans text-[0.82rem] font-medium text-white/48">
-                  Anade un comentario...
-                </p>
-              </div>
-              <div className="hidden mb-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex gap-4 text-[1.35rem] text-white">
-                    <button
-                      type="button"
-                      onClick={() => setLiked((current) => !current)}
-                      aria-pressed={liked}
-                      aria-label={liked ? "Quitar me gusta" : "Dar me gusta"}
-                      className={cn(
-                        "transition-transform hover:scale-110",
-                        liked ? "text-red-500" : "text-white"
-                      )}
-                    >
-                      {liked ? "♥" : "♡"}
-                    </button>
-                    <span aria-hidden="true">○</span>
-                    <button
-                      type="button"
-                      onClick={() => setShareOpen((current) => !current)}
-                      aria-expanded={shareOpen}
-                      className="transition-colors hover:text-[var(--p1)]"
-                    >
-                      ↗
-                    </button>
-                  </div>
-                  <span aria-hidden="true" className="text-[1.15rem] text-white">
-                    ▱
-                  </span>
-                </div>
-
-                {shareOpen && (
-                  <div className="mt-4 grid gap-2 rounded-[18px] border border-white/10 bg-white/[0.045] p-3 sm:grid-cols-2">
-                    <a
-                      href={`https://wa.me/?text=${encodedShareText}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => handleTrackedClick(`share_whatsapp_${event.slug}`)}
-                      className="rounded-[14px] border border-white/10 bg-white/[0.04] px-4 py-3 font-sans text-[0.82rem] font-bold text-white transition-colors hover:bg-white/[0.08]"
-                    >
-                      WhatsApp
-                    </a>
-                    <a
-                      href={`https://mail.google.com/mail/?view=cm&fs=1&su=${encodedShareSubject}&body=${encodedShareBody}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => handleTrackedClick(`share_gmail_${event.slug}`)}
-                      className="rounded-[14px] border border-white/10 bg-white/[0.04] px-4 py-3 font-sans text-[0.82rem] font-bold text-white transition-colors hover:bg-white/[0.08]"
-                    >
-                      Gmail
-                    </a>
-                    <a
-                      href={event.instagram.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => handleTrackedClick(`share_instagram_${event.slug}`)}
-                      className="rounded-[14px] border border-white/10 bg-white/[0.04] px-4 py-3 font-sans text-[0.82rem] font-bold text-white transition-colors hover:bg-white/[0.08]"
-                    >
-                      Instagram
-                    </a>
-                    <button
-                      type="button"
-                      onClick={() => void handleNativeShare()}
-                      className="rounded-[14px] border border-[var(--p1)]/30 bg-[var(--p1)]/[0.12] px-4 py-3 text-left font-sans text-[0.82rem] font-bold text-white transition-colors hover:bg-[var(--p1)]/[0.18]"
-                    >
-                      Mas apps
-                    </button>
-                    <a
-                      href={`https://t.me/share/url?url=${encodedShareUrl}&text=${encodeURIComponent(shareText)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => handleTrackedClick(`share_telegram_${event.slug}`)}
-                      className="rounded-[14px] border border-white/10 bg-white/[0.04] px-4 py-3 font-sans text-[0.82rem] font-bold text-white transition-colors hover:bg-white/[0.08] sm:col-span-2"
-                    >
-                      Telegram
-                    </a>
-                  </div>
-                )}
-              </div>
-              <div className="mb-5">
-                <div className="mb-4 flex items-center justify-between">
-                  <div className="flex gap-4 text-[1.35rem] text-white">
-                    <button
-                      type="button"
-                      onClick={() => setLiked((current) => !current)}
-                      aria-pressed={liked}
-                      aria-label={liked ? "Quitar me gusta" : "Dar me gusta"}
-                      className={cn(
-                        "transition-transform hover:scale-110",
-                        liked ? "text-red-500" : "text-white"
-                      )}
-                    >
-                      {liked ? "♥" : "♡"}
-                    </button>
-                    <span aria-hidden="true">○</span>
-                  </div>
-                  <span aria-hidden="true" className="text-[1.15rem] text-white">
-                    ▱
-                  </span>
-                </div>
-
-                {experienceTabs.length > 0 && selectedExperience && (
-                  <div className="rounded-[20px] border border-white/10 bg-white/[0.04] p-4">
-                    <div className="grid grid-cols-3 gap-2">
-                      {experienceTabs.map((tab, index) => (
-                        <button
-                          key={tab.id}
-                          type="button"
-                          onClick={() => setActiveExperience(index)}
-                          className={cn(
-                            "rounded-full border px-3 py-2 font-condensed text-[10px] font-black uppercase tracking-[0.18em] transition-colors",
-                            activeExperience === index
-                              ? "border-[var(--p1)] bg-[var(--p1)] text-[#06275f]"
-                              : "border-white/10 bg-white/[0.03] text-white/62 hover:bg-white/[0.08]"
-                          )}
-                        >
-                          {tab.label}
-                        </button>
-                      ))}
-                    </div>
-                    <p className="mt-4 font-sans text-[0.84rem] font-bold text-white">
-                      {selectedExperience.title}
-                    </p>
-                    <p className="mt-2 font-sans text-[0.82rem] leading-[1.55] text-white/68">
-                      {selectedExperience.body}
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              <div className="flex flex-col gap-3 sm:flex-row">
-                <TrackedLink
-                  href={event.cta.href}
-                  label={event.cta.label}
-                  trackingLabel={event.cta.trackingLabel}
-                  external={event.cta.external}
-                  className="btn-shimmer inline-flex min-h-[52px] flex-1 items-center justify-center rounded-[18px] bg-[var(--btn-bg)] px-6 py-3 font-condensed text-[0.82rem] font-bold uppercase tracking-[0.24em] text-[var(--btn-t)] transition-all duration-200 hover:-translate-y-px hover:brightness-110"
-                />
-                <button
-                  type="button"
-                  onClick={onClose}
-                  className="inline-flex min-h-[52px] flex-1 items-center justify-center rounded-[18px] border border-white/14 bg-white/[0.03] px-6 py-3 font-condensed text-[0.78rem] font-bold uppercase tracking-[0.24em] text-white transition-colors hover:bg-white/[0.08]"
-                >
-                  Volver
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function EventModal({
-  event,
-  onClose,
-}: {
-  event: EsdecEvent | null;
-  onClose: () => void;
-}) {
-  useEffect(() => {
-    if (!event) return;
-
-    const onKeyDown = (keyboardEvent: KeyboardEvent) => {
-      if (keyboardEvent.key === "Escape") onClose();
-    };
-
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", onKeyDown);
-
-    return () => {
-      document.body.style.overflow = "";
-      window.removeEventListener("keydown", onKeyDown);
-    };
-  }, [event, onClose]);
-
-  if (!event) return null;
-
-  return <SocialEventModal event={event} onClose={onClose} />;
-
-  /*
-  return (
-    <div
-      className="fixed inset-0 z-[980] flex items-center justify-center bg-[rgba(0,12,28,0.72)] px-4 py-6 backdrop-blur-[10px]"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="event-modal-title"
-      onMouseDown={onClose}
-    >
-      <div
-        className="relative max-h-[92svh] w-full max-w-[980px] overflow-y-auto rounded-[30px] border border-white/12 bg-[linear-gradient(180deg,#0f2d67_0%,#092044_100%)] shadow-[0_28px_90px_-38px_rgba(0,0,0,0.8)]"
-        onMouseDown={(eventClick) => eventClick.stopPropagation()}
-      >
-        <button
-          type="button"
-          onClick={onClose}
-          className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-white/12 bg-white/8 font-condensed text-[16px] font-bold text-white transition-colors hover:bg-white/14"
-          aria-label="Cerrar detalle del evento"
-        >
-          X
-        </button>
-
-        <div className="grid lg:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)]">
-          <div className="relative min-h-[280px] lg:min-h-full">
-            <Image
-              src={event.image}
-              alt={event.imageAlt}
-              fill
-              quality={92}
-              sizes="(min-width: 1024px) 38vw, 100vw"
-              className="object-cover opacity-90 saturate-[0.82]"
-            />
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,18,42,0.08)_0%,rgba(2,18,42,0.72)_100%)]" />
-          </div>
-
-          <div className="p-6 md:p-8">
-            <p className="font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
-              {event.eyebrow}
-            </p>
-            <h3
-              id="event-modal-title"
-              className="mt-4 max-w-[14ch] font-condensed text-[clamp(2.4rem,5vw,4.6rem)] font-black uppercase leading-[0.9] tracking-tight text-white"
-            >
-              {event.name}
-            </h3>
-            <p className="mt-5 max-w-[58ch] font-sans text-[0.98rem] leading-[1.9] text-white/76">
-              {event.modalBody}
-            </p>
-
-            <div className="mt-7 grid gap-3 sm:grid-cols-3">
-              {event.details.map((detail) => (
-                <div key={detail.label} className="border-t border-white/12 pt-3">
-                  <p className="font-condensed text-[9px] font-bold uppercase tracking-[3px] text-white/42">
-                    {detail.label}
-                  </p>
-                  <p className="mt-2 font-condensed text-[1rem] font-semibold uppercase leading-[1.05] text-white">
-                    {detail.value}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-7 border-l-2 border-[var(--p1)]/60 pl-5">
-              <p className="font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
-                {event.modalTitle}
-              </p>
-              <div className="mt-4 space-y-3">
-                {event.modalBullets.map((item) => (
-                  <p key={item} className="font-sans text-[0.94rem] leading-[1.75] text-white/80">
-                    {item}
-                  </p>
-                ))}
-              </div>
-            </div>
-
-            <div className="mt-8 rounded-[24px] border border-white/10 bg-white/[0.045] p-5">
-              <p className="font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[var(--p2)]">
-                Instagram · {event.instagram.handle}
-              </p>
-              <p className="mt-3 font-sans text-[0.92rem] leading-[1.75] text-white/74">
-                {event.instagram.note}
-              </p>
-              <a
-                href={event.instagram.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => handleTrackedClick(`instagram_${event.slug}`)}
-                className="mt-4 inline-flex font-condensed text-[11px] font-bold uppercase tracking-[3px] text-[var(--p1)] transition-colors hover:text-white"
-              >
-                {event.instagram.label} →
-              </a>
-            </div>
-
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <TrackedLink
-                href={event.cta.href}
-                label={event.cta.label}
-                trackingLabel={event.cta.trackingLabel}
-                external={event.cta.external}
-                className="btn-shimmer inline-flex min-h-[52px] items-center justify-center rounded-[18px] bg-[var(--btn-bg)] px-6 py-3 font-condensed text-[0.82rem] font-bold uppercase tracking-[0.24em] text-[var(--btn-t)] transition-all duration-200 hover:-translate-y-px hover:brightness-110"
-              />
-              <button
-                type="button"
-                onClick={onClose}
-                className="inline-flex min-h-[52px] items-center justify-center rounded-[18px] border border-white/14 bg-white/[0.03] px-6 py-3 font-condensed text-[0.78rem] font-bold uppercase tracking-[0.24em] text-white transition-colors hover:bg-white/[0.08]"
-              >
-                Volver a eventos
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-  */
-}
-
-export default function EventsLandingPage() {
-  const [selectedEvent, setSelectedEvent] = useState<EsdecEvent | null>(null);
-
+function useEventsAnalytics() {
   useEffect(() => {
     const sections = Array.from(document.querySelectorAll<HTMLElement>("[data-event-section]"));
     const seen = new Set<string>();
+    const firedDepth = new Set<number>();
     const thresholds = [25, 50, 75, 100];
-    const fired = new Set<number>();
 
     const sectionObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
-          const sectionId = entry.target.getAttribute("data-event-section");
+          const sectionId = (entry.target as HTMLElement).dataset.eventSection;
           if (!sectionId || seen.has(sectionId)) return;
           seen.add(sectionId);
           trackSectionView(sectionId);
@@ -740,15 +120,14 @@ export default function EventsLandingPage() {
     sections.forEach((section) => sectionObserver.observe(section));
 
     const onScroll = () => {
-      const scrollTop = window.scrollY;
       const doc = document.documentElement;
       const maxScroll = doc.scrollHeight - window.innerHeight;
       if (maxScroll <= 0) return;
 
-      const progress = Math.round((scrollTop / maxScroll) * 100);
+      const progress = Math.round((window.scrollY / maxScroll) * 100);
       thresholds.forEach((threshold) => {
-        if (progress >= threshold && !fired.has(threshold)) {
-          fired.add(threshold);
+        if (progress >= threshold && !firedDepth.has(threshold)) {
+          firedDepth.add(threshold);
           trackScrollDepth(threshold);
         }
       });
@@ -762,444 +141,948 @@ export default function EventsLandingPage() {
       window.removeEventListener("scroll", onScroll);
     };
   }, []);
+}
 
-  const { hero, nextEvent, evolution, manifesto, pastEvents, finalCta } = EVENTS_PAGE;
+function HeroSection() {
+  const { hero } = EVENTS_PAGE;
 
   return (
-    <main className="overflow-hidden bg-[var(--bg)] text-[var(--t1)]">
-      <section
-        data-event-section="hero"
-        className="relative isolate overflow-hidden border-b border-white/10 bg-[linear-gradient(180deg,#0f295a_0%,#214da6_65%,#2f67c8_100%)]"
+    <section
+      data-event-section="hero"
+      className="relative isolate min-h-[100svh] overflow-hidden bg-[var(--bg)]"
+    >
+      <Image
+        src={hero.image}
+        alt={hero.imageAlt}
+        fill
+        priority
+        quality={92}
+        sizes="100vw"
+        className="object-cover object-center opacity-55 saturate-[0.85] contrast-110"
+      />
+      <div
+        className="absolute inset-0 bg-[linear-gradient(110deg,rgba(0,10,24,0.92)_0%,rgba(0,26,51,0.78)_44%,rgba(0,26,51,0.42)_100%)]"
+        aria-hidden="true"
+      />
+      <div
+        className="absolute inset-0 opacity-35 [background-image:radial-gradient(rgba(255,255,255,0.18)_1px,transparent_1px)] [background-size:18px_18px]"
+        aria-hidden="true"
+      />
+      <div
+        className="absolute -right-24 top-28 hidden w-[42vw] max-w-[560px] opacity-25 [--fpg:rgba(90,200,255,0.06)] [--fps:rgba(90,200,255,0.45)] lg:block"
+        aria-hidden="true"
       >
-        <div className="absolute inset-0" aria-hidden="true">
-          <Image
-            src={hero.image}
-            alt={hero.imageAlt}
-            fill
-            priority
-            quality={92}
-            sizes="100vw"
-            className="object-cover object-center opacity-40 saturate-[0.7] contrast-[0.9]"
-          />
-        </div>
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(90deg, rgba(7,18,42,0.88) 0%, rgba(10,27,61,0.76) 34%, rgba(18,53,121,0.42) 62%, rgba(38,86,184,0.24) 100%)",
-          }}
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(180deg, rgba(6,18,44,0.38) 0%, rgba(11,30,68,0.18) 45%, rgba(41,90,180,0.28) 100%)",
-          }}
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.14]"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px)",
-            backgroundSize: "30px 30px",
-          }}
-          aria-hidden="true"
-        />
-        <div className="hero-orb-1 absolute left-[-8%] top-[10%] h-[380px] w-[380px]" aria-hidden="true" />
-        <div className="hero-orb-2 absolute bottom-[-10%] right-[-5%] h-[320px] w-[320px]" aria-hidden="true" />
-        <div className="pointer-events-none absolute right-[-2%] top-[10%] hidden opacity-[0.18] lg:block [--fps:rgba(90,200,255,0.42)] [--fpg:rgba(90,200,255,0.03)]" aria-hidden="true">
-          <FingerprintSVG animate className="w-[400px] rotate-[4deg]" />
-        </div>
+        <FingerprintSVG animate className="w-full animate-fp-float" strokeOpacity={0.52} />
+      </div>
 
-        <div className="relative z-10 mx-auto max-w-landing px-6 pb-12 pt-28 md:pb-14 md:pt-32">
-          <div className="max-w-4xl">
+      <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-landing flex-col justify-end px-6 pb-0 pt-32 md:pt-40">
+        <div className="grid gap-10 pb-12 lg:pb-16">
+          <div>
             <ScrollReveal direction="up">
-              <div className="mb-7 flex items-center gap-3">
-                <BrandLines size="sm" animated />
-                <p className="font-condensed text-[11px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
+              <div className="mb-6 flex items-center gap-3">
+                <BrandLines size="md" animated />
+                <p className="font-condensed text-[11px] font-black uppercase tracking-[0.44em] text-[var(--p1)]">
                   {hero.eyebrow}
                 </p>
               </div>
             </ScrollReveal>
 
-            <ScrollReveal direction="up" delay={60}>
-              <h1 className="font-condensed text-[clamp(3.2rem,8vw,6.5rem)] font-black uppercase leading-[0.86] tracking-tight text-[var(--t1)]">
-                <span className="block">{hero.headlinePre}</span>
-                <span className="ecos-title-accent block">{hero.headlineAccent}</span>
-                <span className="block">{hero.headlinePost}</span>
+            <ScrollReveal direction="up" delay={80}>
+              <h1 className="max-w-[12ch] font-condensed text-[clamp(4.4rem,10.5vw,9.8rem)] font-black uppercase leading-[0.75] tracking-tight text-white">
+                <span className="block">{hero.headlineLine1}</span>
+                <span className="ecos-title-accent block">{hero.headlineLine2}</span>
               </h1>
             </ScrollReveal>
 
-            <ScrollReveal direction="up" delay={120}>
-              <p className="mt-6 max-w-[56ch] font-sans text-[1rem] leading-[1.95] text-[var(--t1)]">
+            <ScrollReveal direction="up" delay={160}>
+              <p className="mt-7 max-w-[55ch] font-sans text-[1rem] font-medium leading-[1.9] text-white/82 md:text-[1.08rem]">
                 {hero.body}
               </p>
             </ScrollReveal>
 
-            <ScrollReveal direction="up" delay={220}>
-              <div className="mt-9 flex flex-col gap-4 md:max-w-[760px] md:flex-row">
-                <TrackedLink
-                  href={hero.primaryCta.href}
-                  label={hero.primaryCta.label}
-                  trackingLabel={hero.primaryCta.trackingLabel}
-                  external={hero.primaryCta.external}
-                  className="btn-shimmer inline-flex min-h-[54px] w-full items-center justify-center rounded-[20px] px-7 py-4 font-condensed text-[0.84rem] font-bold uppercase tracking-[0.34em] transition-all duration-200 hover:-translate-y-px hover:brightness-110 md:flex-1"
-                  style={{
-                    background: "#77c7f3",
-                    color: "#12367f",
-                  }}
-                />
-                <TrackedLink
-                  href={hero.secondaryCta.href}
-                  label={hero.secondaryCta.label}
-                  trackingLabel={hero.secondaryCta.trackingLabel}
-                  className="inline-flex min-h-[54px] w-full items-center justify-center rounded-[20px] px-7 py-4 font-condensed text-[0.82rem] font-bold uppercase tracking-[0.34em] transition-all duration-200 hover:-translate-y-px hover:brightness-105 md:flex-1"
-                  style={{
-                    background: "#1cde5f",
-                    color: "#05213d",
-                  }}
-                />
+            <ScrollReveal direction="up" delay={240}>
+              <div className="mt-9 flex flex-col gap-4 sm:flex-row">
+                {hero.ctas.map((cta) => (
+                  <EventButton key={cta.trackingLabel} cta={cta} className="sm:min-w-[230px]" />
+                ))}
               </div>
             </ScrollReveal>
           </div>
 
-          <div className="mt-12 grid gap-6 border-t border-white/10 pt-6 md:grid-cols-3 md:gap-8 md:pt-8">
-            {hero.pillars.map((item, index) => (
-              <ScrollReveal key={item.titleAccent} direction="up" delay={index * 80}>
-                <article className="max-w-none">
-                  <p className="font-condensed text-[10px] font-bold uppercase tracking-[3px] text-[var(--p1)]">
-                    {item.eyebrow}
-                  </p>
-                  <div className="mt-3 h-px w-10 bg-gradient-to-r from-[var(--p1)]/90 to-transparent" />
-                  <h3 className="mt-4 max-w-[28ch] font-condensed text-[20px] font-semibold uppercase leading-[1.08] tracking-[0.02em] text-white md:tracking-[0.03em]">
-                    <span className="block">{item.title}</span>
-                    <span className="block">{item.titleAccent}</span>
-                  </h3>
-                </article>
-              </ScrollReveal>
+        </div>
+
+        <div className="relative -mx-6 border-t border-white/12 bg-[#001f3f]/55 px-6 py-7 backdrop-blur-[3px] md:mx-0 md:bg-transparent md:px-0">
+          <div className="grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+            {hero.words.map((word) => (
+              <div key={word.label}>
+                <p className="font-condensed text-[12px] font-black uppercase tracking-[0.36em] text-[var(--p1)]">
+                  {word.label}
+                </p>
+                <p className="mt-6 max-w-[17ch] font-condensed text-[clamp(1.18rem,1.8vw,1.42rem)] font-bold uppercase leading-[1.08] tracking-[0.01em] text-white">
+                  {word.title}
+                </p>
+              </div>
             ))}
           </div>
         </div>
-      </section>
+      </div>
+    </section>
+  );
+}
 
-      <section
-        id="proximo-evento"
-        data-event-section="next-event"
-        className="relative overflow-hidden bg-[linear-gradient(180deg,var(--bg)_0%,var(--bg2)_100%)] py-24 md:py-28"
-      >
-        <div className="pointer-events-none absolute right-[-5%] top-10 hidden opacity-[0.12] lg:block [--fps:rgba(90,200,255,0.34)] [--fpg:rgba(90,200,255,0.02)]">
-          <FingerprintSVG animate={false} className="w-[380px]" />
-        </div>
-        <div
-          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--p1)]/40 to-transparent"
-          aria-hidden="true"
-        />
-        <div className="mx-auto max-w-landing px-6">
-          <ScrollReveal direction="up">
-            <div className="mb-10 flex flex-col justify-between gap-6 md:flex-row md:items-end">
-              <div className="max-w-4xl">
-                <div className="mb-5 flex items-center gap-3">
-                  <BrandLines size="sm" animated />
-                  <p className="font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
-                    {nextEvent.eyebrow}
-                  </p>
-                </div>
-                <h2 className="ecos-title-compact">
-                  <span className="block">PROXIMO</span>
-                  <span className="ecos-title-accent block">EVENTO.</span>
-                </h2>
-              </div>
-            </div>
-          </ScrollReveal>
+function TransitionSection() {
+  const { transition } = EVENTS_PAGE;
 
-          <ScrollReveal direction="up" delay={120}>
-            <article className="relative mx-auto max-w-[1120px] overflow-hidden rounded-[34px] border border-white/12 bg-[linear-gradient(135deg,rgba(1,37,71,0.98),rgba(21,86,212,0.82))] shadow-[0_34px_90px_-48px_rgba(0,0,0,0.86)] md:rounded-[46px]">
-              <Image
-                src={nextEvent.image}
-                alt={nextEvent.imageAlt}
-                fill
-                quality={94}
-                sizes="(min-width: 1024px) 1120px, 100vw"
-                className="pointer-events-none object-cover object-right opacity-82 saturate-[0.92] contrast-[1.04]"
+  return (
+    <section
+      data-event-section="transition"
+      className="relative overflow-hidden bg-[#3269c7] px-6 py-18 md:py-24 [--p1:#5ac8ff] [--p2:#7de8a8] [--t1:#ffffff] [--t2:rgba(255,255,255,0.78)] [--card-bg:rgba(255,255,255,0.08)] [--card-bg2:rgba(255,255,255,0.12)] [--card-bd:rgba(255,255,255,0.18)]"
+    >
+      <div className="mx-auto max-w-landing">
+        <SectionHeading eyebrow={transition.eyebrow} title={transition.title} />
+
+        <ScrollReveal
+          cascade
+          cascadeDelay={100}
+          className="mt-12 grid gap-5 lg:grid-cols-3"
+        >
+          {transition.steps.map((step) => (
+            <article
+              key={step.id}
+              className="group spec-card-accent relative min-h-[220px] overflow-hidden rounded-[24px] border border-[var(--card-bd)] bg-[var(--card-bg)] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--p1)]/60 hover:bg-[var(--card-bg2)]"
+            >
+              <span
+                className="pointer-events-none absolute left-0 top-0 h-px w-full origin-left scale-x-0 bg-[linear-gradient(90deg,rgba(125,232,168,0.9)_0%,rgba(90,200,255,0.92)_100%)] transition-transform duration-500 ease-out group-hover:scale-x-100"
+                aria-hidden="true"
               />
-              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(1,18,48,0.96)_0%,rgba(4,28,70,0.88)_38%,rgba(5,36,88,0.32)_68%,rgba(21,86,212,0.08)_100%)]" />
-              <div className="pointer-events-none absolute inset-0 opacity-14 [background-image:linear-gradient(rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:48px_48px]" />
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-[linear-gradient(180deg,transparent,rgba(21,86,212,0.18))]" />
-              <div className="pointer-events-none absolute -right-24 top-8 hidden w-[360px] opacity-[0.18] md:block [--fps:rgba(90,200,255,0.9)] [--fpg:rgba(90,200,255,0.04)]">
-                <FingerprintSVG animate={false} className="w-full" />
+              <div className="mb-3 flex items-center gap-3">
+                <BrandLines size="sm" />
+                <p className="font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
+                  {step.label}
+                </p>
               </div>
-
-              <div className="relative min-h-[620px] p-6 sm:p-8 lg:p-10">
-                <div className="flex min-h-[560px] flex-col justify-between sm:min-h-[540px] lg:min-h-[560px]">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <p className="font-condensed text-[10px] font-black uppercase tracking-[4px] text-[var(--p2)]">
-                        {nextEvent.campaignLabel ?? nextEvent.eyebrow}
-                      </p>
-                      <p className="mt-3 inline-flex rounded-full border border-[var(--p1)]/35 bg-[var(--p1)]/[0.12] px-4 py-2 font-condensed text-[10px] font-black uppercase tracking-[3px] text-white">
-                        {nextEvent.campaignNote ?? nextEvent.dateLabel}
-                      </p>
-                    </div>
-                    <Image
-                      src="/images/Logo2.png"
-                      alt="ESDEC"
-                      width={112}
-                      height={60}
-                      className="h-auto w-[82px] object-contain opacity-90 sm:w-[110px]"
-                    />
-                  </div>
-
-                  <div className="max-w-[640px]">
-                    <div className="mb-7 flex flex-wrap items-end gap-x-5 gap-y-3 border-b border-white/18 pb-5">
-                      <div className="flex items-end gap-3">
-                        <span className="font-condensed text-[4.8rem] font-black leading-[0.78] text-[var(--p1)] sm:text-[6rem]">
-                          {nextEvent.dateDay ?? nextEvent.dateLabel}
-                        </span>
-                        <span className="pb-1 font-condensed text-[1.15rem] font-black uppercase leading-none tracking-[0.18em] text-white">
-                          {nextEvent.dateMonth ?? nextEvent.city}
-                        </span>
-                      </div>
-                      <div className="pb-1">
-                        <p className="font-condensed text-[10px] font-black uppercase tracking-[3px] text-[var(--p2)]">
-                          {nextEvent.venue}
-                        </p>
-                        <p className="mt-2 font-sans text-[0.96rem] font-semibold leading-snug text-white/82">
-                          {nextEvent.city} - {nextEvent.timeLabel ?? nextEvent.dateLabel}
-                        </p>
-                      </div>
-                    </div>
-
-                    <p className="font-condensed text-[clamp(3.4rem,8vw,6.6rem)] font-black uppercase leading-[0.78] tracking-tight text-white">
-                      Corre.
-                      <span className="block text-[var(--p1)]">Recupera.</span>
-                      <span className="block">Conecta.</span>
-                    </p>
-                    <p className="mt-5 max-w-[34rem] font-sans text-[1rem] font-semibold leading-[1.75] text-white/84 sm:text-[1.08rem]">
-                      {nextEvent.campaignBody ?? nextEvent.summary}
-                    </p>
-                    <div className="mt-7 flex flex-wrap gap-2">
-                      {nextEvent.details.map((detail) => (
-                        <span
-                          key={detail.label}
-                          className="rounded-full border border-white/16 bg-white/[0.075] px-3 py-2 font-condensed text-[9px] font-black uppercase tracking-[2.5px] text-white/86"
-                        >
-                          {detail.value}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col gap-3 sm:flex-row">
-                    <TrackedLink
-                      href={nextEvent.cta.href}
-                      label={nextEvent.cta.label}
-                      trackingLabel={nextEvent.cta.trackingLabel}
-                      external={nextEvent.cta.external}
-                      className="btn-shimmer inline-flex min-h-[60px] flex-1 items-center justify-center rounded-full bg-[var(--p1)] px-8 py-3 font-condensed text-[0.84rem] font-black uppercase tracking-[0.24em] text-[#06275f] shadow-[0_18px_46px_-24px_rgba(90,200,255,0.85)] transition-all duration-200 hover:-translate-y-px hover:brightness-110 sm:flex-none sm:min-w-[270px]"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setSelectedEvent(nextEvent)}
-                      className="inline-flex min-h-[60px] flex-1 items-center justify-center rounded-full border border-white/22 bg-white/[0.085] px-7 py-3 font-condensed text-[0.8rem] font-black uppercase tracking-[0.24em] text-white backdrop-blur-sm transition-colors hover:bg-white/[0.14] sm:flex-none sm:min-w-[250px]"
-                    >
-                      {nextEvent.posterCtaLabel ?? nextEvent.cta.label}
-                    </button>
-                  </div>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => setSelectedEvent(nextEvent)}
-                  className="hidden"
-                  aria-label={`Ver detalle de ${nextEvent.name}`}
-                >
-                  <div>
-                    <p className="font-condensed text-[10px] font-black uppercase tracking-[4px] text-[var(--p2)]">
-                      {nextEvent.headline}
-                    </p>
-                    <h4 className="mt-6 font-condensed text-[3.4rem] font-black uppercase leading-[0.84] text-white">
-                      {nextEvent.campaignTitle ?? nextEvent.posterTitle}
-                      <span className="mt-2 block text-[var(--p1)]">
-                        {nextEvent.campaignAccent ?? nextEvent.posterKicker}
-                      </span>
-                    </h4>
-                  </div>
-
-                  <div>
-                    <div className="mb-5 flex flex-wrap gap-2">
-                      {nextEvent.details.map((detail) => (
-                        <span
-                          key={detail.label}
-                          className="rounded-full border border-white/12 bg-white/[0.05] px-3 py-2 font-condensed text-[9px] font-black uppercase tracking-[2.5px] text-white/78"
-                        >
-                          {detail.value}
-                        </span>
-                      ))}
-                    </div>
-                    <span className="inline-flex items-center font-condensed text-[0.84rem] font-black uppercase tracking-[0.24em] text-[var(--p1)] transition-transform group-hover:translate-x-1">
-                      Ver historia del evento →
-                    </span>
-                  </div>
-                </button>
-              </div>
+              <h3 className="font-condensed text-[1.5rem] font-semibold uppercase leading-[1.02] tracking-[0.02em] text-[var(--t1)]">
+                {step.title}
+              </h3>
+              <p className="mt-3 max-w-[34ch] font-sans text-[0.92rem] leading-[1.8] text-[var(--t2)]">
+                {step.body}
+              </p>
             </article>
-          </ScrollReveal>
-        </div>
-      </section>
+          ))}
+        </ScrollReveal>
+      </div>
+    </section>
+  );
+}
 
-      <section
-        data-event-section="evolution"
-        className="relative overflow-hidden bg-[var(--bg2)] py-24 md:py-28"
+function NextEventModal({ onClose }: { onClose: () => void }) {
+  const { nextEvent } = EVENTS_PAGE;
+
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-[980] flex items-center justify-center bg-black/75 px-4 py-6 backdrop-blur-[8px]"
+      role="dialog"
+      aria-modal="true"
+      aria-label={nextEvent.name}
+      onMouseDown={onClose}
+    >
+      <div
+        className="relative max-h-[92svh] w-full max-w-[980px] overflow-hidden rounded-[26px] shadow-[0_28px_90px_-38px_rgba(0,0,0,0.9)]"
+        onMouseDown={(e) => e.stopPropagation()}
       >
-        <div className="mx-auto max-w-landing px-6">
-          <SectionTitle
-            eyebrow={evolution.eyebrow}
-            headlinePre={evolution.headlinePre}
-            headlineAccent={evolution.headlineAccent}
-            headlinePost={evolution.headlinePost}
-            body={evolution.body}
-          />
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Cerrar"
+          className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 font-condensed text-[14px] font-bold text-white backdrop-blur-md transition-colors hover:bg-white/14"
+        >
+          ✕
+        </button>
 
-          <div className="mt-14 grid gap-0 border-y border-white/10 md:grid-cols-3">
-            {evolution.steps.map((step, index) => (
-              <ScrollReveal key={step.id} direction="up" delay={index * 90}>
-                <article className="relative min-h-[260px] border-b border-white/10 py-8 md:border-b-0 md:border-r md:px-8 md:last:border-r-0">
-                  <p className="font-display text-[5rem] leading-none text-white/12">
-                    0{index + 1}
-                  </p>
-                  <p className="mt-3 font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
-                    {step.label}
-                  </p>
-                  <h3 className="mt-5 max-w-[16ch] font-condensed text-[2rem] font-semibold uppercase leading-[0.96] text-white">
-                    {step.title}
-                  </h3>
-                  <p className="mt-5 max-w-[34ch] font-sans text-[0.94rem] leading-[1.85] text-[var(--t2)]">
-                    {step.body}
-                  </p>
-                </article>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section
-        data-event-section="manifesto"
-        className="relative overflow-hidden bg-[linear-gradient(180deg,#01305c_0%,#012547_100%)] py-24 md:py-32"
-      >
-        <div className="pointer-events-none absolute right-[-4%] top-8 hidden opacity-[0.12] lg:block [--fps:rgba(90,200,255,0.28)] [--fpg:rgba(90,200,255,0.02)]">
-          <FingerprintSVG animate={false} className="w-[360px]" />
-        </div>
-        <div className="mx-auto max-w-landing px-6">
-          <div className="grid gap-10 xl:grid-cols-[minmax(0,1fr)_minmax(300px,0.72fr)] xl:items-end">
-            <SectionTitle
-              eyebrow={manifesto.eyebrow}
-              headlinePre={manifesto.headlinePre}
-              headlineAccent={manifesto.headlineAccent}
-              headlinePost={manifesto.headlinePost}
-              body={manifesto.body}
+        <div className="grid max-h-[92svh] overflow-y-auto lg:grid-cols-[minmax(0,1.15fr)_380px]">
+          <div className="relative min-h-[280px] lg:min-h-[580px]">
+            <Image
+              src={nextEvent.image}
+              alt={nextEvent.imageAlt}
+              fill
+              quality={94}
+              sizes="(min-width: 1024px) 56vw, 100vw"
+              className="object-cover object-center"
             />
-            <ScrollReveal direction="up" delay={120}>
-              <blockquote className="border-l-2 border-[var(--p1)]/55 pl-6 font-condensed text-[clamp(1.6rem,3vw,2.6rem)] font-semibold uppercase leading-[1.04] text-white">
-                "{manifesto.quote}"
-              </blockquote>
-            </ScrollReveal>
           </div>
-        </div>
-      </section>
 
-      <section
-        data-event-section="past-events"
-        className="relative overflow-hidden bg-[var(--bg)] py-24 md:py-28"
-      >
-        <div className="mx-auto max-w-landing px-6">
-          <SectionTitle
-            eyebrow={pastEvents.eyebrow}
-            headlinePre={pastEvents.headlinePre}
-            headlineAccent={pastEvents.headlineAccent}
-            headlinePost={pastEvents.headlinePost}
-            body={pastEvents.body}
-          />
-
-          <div className="mt-12 divide-y divide-white/10 border-y border-white/10">
-            {pastEvents.items.map((eventItem, index) => (
-              <ScrollReveal key={eventItem.slug} direction="up" delay={index * 90}>
-                <button
-                  type="button"
-                  onClick={() => setSelectedEvent(eventItem)}
-                  className="group grid w-full gap-6 py-7 text-left transition-colors hover:bg-white/[0.035] md:grid-cols-[180px_minmax(0,1fr)_auto] md:items-center md:px-4"
-                >
-                  <div className="relative aspect-[1.35/1] overflow-hidden rounded-[18px]">
-                    <Image
-                      src={eventItem.image}
-                      alt={eventItem.imageAlt}
-                      fill
-                      quality={88}
-                      sizes="180px"
-                      className="object-cover opacity-88 saturate-[0.84] transition-transform duration-500 group-hover:scale-[1.04]"
-                    />
-                  </div>
-                  <div>
-                    <p className="font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
-                      {eventItem.dateLabel} · {eventItem.venue}
-                    </p>
-                    <h3 className="mt-3 font-condensed text-[clamp(1.8rem,3vw,2.7rem)] font-semibold uppercase leading-[0.95] text-white">
-                      {eventItem.name}
-                    </h3>
-                    <p className="mt-3 max-w-[56ch] font-sans text-[0.94rem] leading-[1.8] text-[var(--t2)]">
-                      {eventItem.summary}
-                    </p>
-                  </div>
-                  <span className="font-condensed text-[10px] font-bold uppercase tracking-[3px] text-white/52 transition-colors group-hover:text-[var(--p1)]">
-                    Ver detalle →
-                  </span>
-                </button>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section
-        data-event-section="system-cta"
-        className="relative overflow-hidden border-t border-white/10 bg-[linear-gradient(180deg,var(--bg2)_0%,#0f2d67_100%)] py-24 md:py-28"
-      >
-        <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.1] [--fps:rgba(255,255,255,0.92)] [--fpg:rgba(255,255,255,0.04)]">
-          <FingerprintSVG animate={false} className="w-[46vw] max-w-[420px] animate-heartbeat" />
-        </div>
-        <div className="relative z-10 mx-auto max-w-landing px-6">
-          <SectionTitle
-            eyebrow={finalCta.eyebrow}
-            headlinePre={finalCta.headlinePre}
-            headlineAccent={finalCta.headlineAccent}
-            headlinePost={finalCta.headlinePost}
-            body={finalCta.body}
-            align="center"
-          />
-
-          <ScrollReveal direction="up" delay={140}>
-            <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-              <TrackedLink
-                href={finalCta.primaryCta.href}
-                label={finalCta.primaryCta.label}
-                trackingLabel={finalCta.primaryCta.trackingLabel}
-                external={finalCta.primaryCta.external}
-                className="btn-shimmer inline-flex min-h-[54px] items-center justify-center rounded-[18px] bg-[var(--btn-bg)] px-7 py-3 font-condensed text-[0.84rem] font-bold uppercase tracking-[0.24em] text-[var(--btn-t)] transition-all duration-200 hover:-translate-y-px hover:brightness-110"
-              />
-              <TrackedLink
-                href={finalCta.secondaryCta.href}
-                label={finalCta.secondaryCta.label}
-                trackingLabel={finalCta.secondaryCta.trackingLabel}
-                className="inline-flex min-h-[54px] items-center justify-center rounded-[18px] border border-white/16 bg-white/[0.03] px-7 py-3 font-condensed text-[0.82rem] font-bold uppercase tracking-[0.24em] text-white transition-all duration-200 hover:border-[var(--p1)]/42 hover:bg-white/[0.06]"
-              />
+          <div className="flex flex-col bg-[#1b1e24]">
+            <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[linear-gradient(135deg,#5ac8ff,#7de8a8)] font-condensed text-[0.72rem] font-black text-[#06275f]">
+                  ES
+                </div>
+                <div>
+                  <p className="font-sans text-[0.88rem] font-bold text-white">
+                    esdec.ar
+                    <span className="ml-2 font-medium text-[#5ac8ff]">Seguir</span>
+                  </p>
+                  <p className="font-sans text-[0.74rem] text-white/45">
+                    {nextEvent.venue} · {nextEvent.city}
+                  </p>
+                </div>
+              </div>
+              <span className="font-sans text-[1.1rem] font-bold text-white">···</span>
             </div>
+
+            <div className="flex-1 space-y-5 overflow-y-auto p-5">
+              <p className="font-sans text-[0.88rem] leading-[1.7] text-white/80">
+                <span className="font-bold text-white">esdec.ar </span>
+                {nextEvent.about ?? nextEvent.summary}
+              </p>
+
+              <div className="divide-y divide-white/[0.07]">
+                {[
+                  { label: "Fecha", value: nextEvent.dateLabel },
+                  { label: "Lugar", value: `${nextEvent.venue}, ${nextEvent.city}` },
+                  { label: "Recepcion", value: nextEvent.receptionTime },
+                  { label: "Inicio", value: nextEvent.startTime },
+                ].map((item) => (
+                  <div key={item.label} className="py-3">
+                    <p className="font-condensed text-[8px] font-black uppercase tracking-[3px] text-white/36">
+                      {item.label}
+                    </p>
+                    <p className="mt-1 font-condensed text-[0.96rem] font-semibold uppercase leading-none text-white">
+                      {item.value}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              {nextEvent.highlights && nextEvent.highlights.length > 0 && (
+                <div className="border-t border-white/[0.07] pt-4">
+                  <p className="mb-3 font-condensed text-[8px] font-black uppercase tracking-[3px] text-white/36">
+                    Que incluye
+                  </p>
+                  <ul className="space-y-2">
+                    {nextEvent.highlights.map((item) => (
+                      <li key={item} className="flex items-start gap-2 font-sans text-[0.84rem] leading-[1.55] text-white/76">
+                        <span className="mt-[6px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#5ac8ff]" aria-hidden="true" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {nextEvent.benefit && (
+                <div className="rounded-[14px] border border-[#7de8a8]/25 bg-[#7de8a8]/[0.06] p-4">
+                  <p className="font-condensed text-[8px] font-black uppercase tracking-[3px] text-[#7de8a8]">
+                    Beneficio exclusivo
+                  </p>
+                  <p className="mt-2 font-sans text-[0.84rem] leading-[1.55] text-white/76">
+                    {nextEvent.benefit}
+                  </p>
+                </div>
+              )}
+
+              {nextEvent.spotsWarning && (
+                <div className="rounded-[14px] border border-[#5ac8ff]/20 bg-[#5ac8ff]/[0.05] p-4">
+                  <p className="font-condensed text-[8px] font-black uppercase tracking-[3px] text-[#5ac8ff]">
+                    Importante
+                  </p>
+                  <p className="mt-2 font-sans text-[0.84rem] leading-[1.55] text-white/76">
+                    {nextEvent.spotsWarning}
+                  </p>
+                </div>
+              )}
+            </div>
+
+            <div className="border-t border-white/10 p-5">
+              <a
+                href={nextEvent.cta.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackCTAClick(nextEvent.cta.trackingLabel)}
+                className="btn-shimmer flex min-h-[52px] w-full items-center justify-center rounded-[18px] bg-[#5ac8ff] font-condensed text-[0.8rem] font-black uppercase tracking-[0.22em] text-[#06275f] no-underline shadow-[0_18px_46px_-24px_rgba(90,200,255,0.9)] transition-all duration-200 hover:-translate-y-px hover:brightness-110 hover:no-underline"
+              >
+                {nextEvent.cta.label}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function NextEventSection() {
+  const { nextEvent } = EVENTS_PAGE;
+  const [modalOpen, setModalOpen] = useState(false);
+
+  return (
+    <section
+      id="proximo-evento"
+      data-event-section="next-event"
+      className="relative scroll-mt-36 overflow-hidden bg-[var(--bg)]"
+    >
+      <ScrollReveal direction="up">
+        <button
+          type="button"
+          onClick={() => setModalOpen(true)}
+          className="group relative block min-h-[460px] w-full cursor-pointer text-left lg:min-h-[560px]"
+          aria-label={`Ver detalle de ${nextEvent.name}`}
+        >
+          <Image
+            src={nextEvent.image}
+            alt={nextEvent.imageAlt}
+            fill
+            quality={94}
+            sizes="100vw"
+            className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.02]"
+          />
+          <div
+            className="pointer-events-none absolute inset-0 bg-[linear-gradient(105deg,rgba(0,10,24,0.94)_0%,rgba(0,18,48,0.72)_40%,rgba(0,18,48,0.16)_68%,rgba(0,10,24,0.42)_100%)]"
+            aria-hidden="true"
+          />
+
+          <div className="absolute inset-0 flex items-center">
+            <div className="mx-auto w-full max-w-landing px-6 lg:px-16">
+              <div className="flex items-center gap-3">
+                <BrandLines size="sm" animated />
+                <p className="font-condensed text-[10px] font-black uppercase tracking-[0.42em] text-[var(--p1)]">
+                  {nextEvent.eyebrow}
+                </p>
+              </div>
+              <h2 className="mt-5 max-w-[14ch] font-condensed text-[clamp(3rem,6.5vw,6rem)] font-black uppercase leading-[0.8] tracking-tight text-white">
+                {nextEvent.name}
+              </h2>
+              <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 font-condensed text-[0.88rem] font-black uppercase tracking-[0.16em] text-white/70">
+                <span>{nextEvent.dateDay} de {nextEvent.dateMonth}</span>
+                <span className="hidden h-5 w-px bg-white/30 sm:block" aria-hidden="true" />
+                <span>{nextEvent.receptionTime}</span>
+                <span className="hidden h-5 w-px bg-white/30 sm:block" aria-hidden="true" />
+                <span>{nextEvent.venue}</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="absolute bottom-6 right-6 flex items-center gap-2 rounded-full border border-white/20 bg-black/42 px-5 py-2.5 font-condensed text-[0.72rem] font-black uppercase tracking-[0.18em] text-white opacity-0 backdrop-blur-md transition-opacity duration-300 group-hover:opacity-100">
+            Ver experiencia →
+          </div>
+        </button>
+      </ScrollReveal>
+
+      {modalOpen && <NextEventModal onClose={() => setModalOpen(false)} />}
+    </section>
+  );
+}
+
+function ExperienceSection() {
+  const { experience } = EVENTS_PAGE;
+
+  const stepClasses = [
+    "[--ph:#5ac8ff]",
+    "[--ph:#7de8a8]",
+    "[--ph:#ffffff]",
+  ] as const;
+
+  return (
+    <section
+      id="experiencia"
+      data-event-section="experience"
+      className="relative isolate scroll-mt-36 overflow-hidden bg-[#2f68c8] px-6 py-20 md:py-28"
+    >
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.08]"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle, rgba(255,255,255,0.16) 1px, transparent 1px)",
+          backgroundSize: "28px 28px",
+        }}
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute bottom-[-190px] right-[-120px] opacity-[0.1] [--fpg:rgba(255,255,255,0.03)] [--fps:rgba(255,255,255,0.9)]"
+        aria-hidden="true"
+      >
+        <FingerprintSVG animate={false} className="w-[520px] animate-heartbeat" />
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-landing">
+        <ScrollReveal direction="up">
+          <div className="mb-4 flex items-center gap-3">
+            <BrandLines size="sm" animated />
+            <p className="font-condensed text-[10px] font-black uppercase tracking-[5px] text-[#7de8a8]">
+              {experience.eyebrow}
+            </p>
+          </div>
+          <h2 className="max-w-[860px] font-condensed text-[clamp(2.8rem,5.7vw,5.4rem)] font-black uppercase leading-[0.84] text-white">
+            {experience.title}
+          </h2>
+        </ScrollReveal>
+
+        <div className="relative mt-14">
+          <ScrollReveal
+            cascade
+            cascadeDelay={120}
+            className="grid gap-10 md:grid-cols-3 md:gap-8"
+          >
+            {experience.phases.map((phase, index) => (
+              <article
+                key={phase.id}
+                className={cn(
+                  "group relative min-h-[300px] overflow-hidden border-t border-white/82 pt-9 transition-transform duration-300 hover:-translate-y-1",
+                  stepClasses[index]
+                )}
+              >
+                <span className="relative z-10 block font-sans text-[clamp(5.8rem,9vw,7.8rem)] font-light leading-[0.78] tracking-tight text-white">
+                  0{index + 1}
+                </span>
+
+                <div className="relative z-10 mt-5">
+                  <div
+                    className="mb-5 h-[3px] w-12 rounded-full bg-[var(--ph)] transition-all duration-300 group-hover:w-20"
+                    aria-hidden="true"
+                  />
+                  <h3 className="font-condensed text-[clamp(2rem,3vw,2.8rem)] font-black uppercase leading-[0.9] text-white">
+                    {phase.title}
+                  </h3>
+
+                  <p className="mt-4 max-w-[22ch] font-sans text-[0.98rem] font-medium leading-[1.65] text-white/78">
+                    {phase.body}
+                  </p>
+                </div>
+
+                <div
+                  className="pointer-events-none absolute bottom-[-26px] right-[-8px] opacity-0 transition-all duration-500 group-hover:translate-y-[-8px] group-hover:opacity-100 [--fpg:rgba(255,255,255,0.02)] [--fps:rgba(255,255,255,0.32)]"
+                  aria-hidden="true"
+                >
+                  <FingerprintSVG animate={false} className="w-[170px]" />
+                </div>
+              </article>
+            ))}
           </ScrollReveal>
         </div>
-      </section>
+      </div>
+    </section>
+  );
+}
+function PastEventsSection() {
+  const { pastEvents } = EVENTS_PAGE;
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const [selectedEvent, setSelectedEvent] = useState<PastEvent | null>(null);
+  const carouselItems = [...pastEvents.items, ...pastEvents.items];
 
-      <EventModal event={selectedEvent} onClose={() => setSelectedEvent(null)} />
+  const scrollCarousel = (direction: "prev" | "next") => {
+    carouselRef.current?.scrollBy({
+      left: direction === "next" ? 380 : -380,
+      behavior: "smooth",
+    });
+  };
+
+  useEffect(() => {
+    let animationFrame = 0;
+    let lastTime = performance.now();
+    const speed = 26;
+
+    const animate = (time: number) => {
+      const carousel = carouselRef.current;
+      const delta = time - lastTime;
+      lastTime = time;
+
+      if (carousel && !selectedEvent) {
+        const loopPoint = carousel.scrollWidth / 2;
+        carousel.scrollLeft += (speed * delta) / 1000;
+
+        if (carousel.scrollLeft >= loopPoint) {
+          carousel.scrollLeft -= loopPoint;
+        }
+      }
+
+      animationFrame = window.requestAnimationFrame(animate);
+    };
+
+    animationFrame = window.requestAnimationFrame(animate);
+
+    return () => window.cancelAnimationFrame(animationFrame);
+  }, [selectedEvent]);
+
+  return (
+    <section
+      id="eventos-anteriores"
+      data-event-section="past-events"
+      className="relative scroll-mt-36 overflow-hidden bg-[var(--bg)] px-6 py-18 md:py-24"
+    >
+      <div className="mx-auto max-w-landing">
+        <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+          <SectionHeading eyebrow={pastEvents.eyebrow} title={pastEvents.title} />
+
+          <div className="flex items-center gap-3 md:pb-1">
+            <button
+              type="button"
+              onClick={() => scrollCarousel("prev")}
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-white/14 bg-white/[0.04] font-sans text-2xl font-light text-white transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--p1)]/55 hover:bg-white/[0.08]"
+              aria-label="Ver eventos anteriores previos"
+            >
+              {"\u2190"}
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollCarousel("next")}
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-white/14 bg-white/[0.04] font-sans text-2xl font-light text-white transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--p1)]/55 hover:bg-white/[0.08]"
+              aria-label="Ver mas eventos anteriores"
+            >
+              {"\u2192"}
+            </button>
+          </div>
+        </div>
+
+        <ScrollReveal direction="up" className="mt-12">
+          <div
+            ref={carouselRef}
+            className="-mx-6 overflow-x-auto px-6 pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            <div className="flex snap-x snap-mandatory gap-5">
+              {carouselItems.map((event, index) => (
+            <button
+              type="button"
+              onClick={() => setSelectedEvent(event)}
+              key={`${event.id}-${index}`}
+              className="group relative flex min-h-[520px] w-[82vw] max-w-[350px] shrink-0 snap-start flex-col overflow-hidden rounded-[28px] bg-[var(--bg2)] text-left shadow-[0_16px_48px_-24px_rgba(0,0,0,0.6)] transition-all duration-300 hover:-translate-y-1 sm:w-[46vw] lg:w-[340px]"
+              aria-label={`Ver detalle de ${event.name}`}
+            >
+              <Image
+                src={event.image}
+                alt={event.imageAlt}
+                fill
+                sizes="(min-width: 1024px) 340px, (min-width: 640px) 46vw, 82vw"
+                className="object-cover object-center opacity-80 saturate-75 transition-transform duration-700 group-hover:scale-[1.04]"
+              />
+              <div className="absolute inset-0 bg-[linear-gradient(168deg,rgba(0,10,24,0.22)_0%,rgba(0,10,24,0.68)_42%,rgba(0,10,24,0.97)_100%)]" />
+
+              <div className="relative z-10 flex flex-1 flex-col p-6">
+                <h3 className="font-sans text-[1.6rem] font-bold leading-[1.05] text-white">
+                  {event.name}
+                </h3>
+
+                <div className="flex-1" />
+
+                <div className="mt-6">
+                  <p className="font-sans text-[0.9rem] leading-[1.7] text-white/78">
+                    {event.summary}
+                  </p>
+                  <p className="mt-5 font-condensed text-[0.65rem] font-black uppercase tracking-[2.5px] text-white/55">
+                    {event.tag} · {event.date}
+                  </p>
+                      <span className="mt-5 block w-full rounded-full bg-white py-3.5 text-center font-sans text-[0.88rem] font-semibold text-[#001a33] transition-colors group-hover:bg-white/88">
+                        Ver registro
+                      </span>
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </ScrollReveal>
+      </div>
+
+      {selectedEvent && (
+        <PastEventModal
+          event={selectedEvent}
+          onClose={() => setSelectedEvent(null)}
+        />
+      )}
+    </section>
+  );
+}
+
+function PastEventModal({
+  event,
+  onClose,
+}: {
+  event: PastEvent;
+  onClose: () => void;
+}) {
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-[980] flex items-center justify-center bg-black/75 px-4 py-6 backdrop-blur-[8px]"
+      role="dialog"
+      aria-modal="true"
+      aria-label={event.name}
+      onMouseDown={onClose}
+    >
+      <div
+        className="relative max-h-[92svh] w-full max-w-[980px] overflow-hidden rounded-[26px] shadow-[0_28px_90px_-38px_rgba(0,0,0,0.9)]"
+        onMouseDown={(e) => e.stopPropagation()}
+      >
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Cerrar"
+          className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 font-condensed text-[14px] font-bold text-white backdrop-blur-md transition-colors hover:bg-white/14"
+        >
+          {"\u00d7"}
+        </button>
+
+        <div className="grid max-h-[92svh] overflow-y-auto lg:grid-cols-[minmax(0,1.15fr)_380px]">
+          <div className="relative min-h-[280px] lg:min-h-[580px]">
+            <Image
+              src={event.image}
+              alt={event.imageAlt}
+              fill
+              quality={94}
+              sizes="(min-width: 1024px) 56vw, 100vw"
+              className="object-cover object-center"
+            />
+          </div>
+
+          <div className="flex flex-col bg-[#1b1e24]">
+            <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[linear-gradient(135deg,#5ac8ff,#7de8a8)] font-condensed text-[0.72rem] font-black text-[#06275f]">
+                  ES
+                </div>
+                <div>
+                  <p className="font-sans text-[0.88rem] font-bold text-white">
+                    esdec.ar
+                    <span className="ml-2 font-medium text-[#5ac8ff]">Registro</span>
+                  </p>
+                  <p className="font-sans text-[0.74rem] text-white/45">
+                    Evento anterior
+                  </p>
+                </div>
+              </div>
+              <span className="font-sans text-[1.1rem] font-bold text-white">
+                {"\u00b7\u00b7\u00b7"}
+              </span>
+            </div>
+
+            <div className="flex-1 space-y-5 overflow-y-auto p-5">
+              <div>
+                <p className="font-condensed text-[9px] font-black uppercase tracking-[3.5px] text-[#7de8a8]">
+                  {event.tag}
+                </p>
+                <h3 className="mt-3 font-condensed text-[clamp(2.4rem,4vw,3.4rem)] font-black uppercase leading-[0.86] text-white">
+                  {event.name}
+                </h3>
+              </div>
+
+              <p className="font-sans text-[0.88rem] leading-[1.75] text-white/80">
+                <span className="font-bold text-white">esdec.ar </span>
+                {event.summary}
+              </p>
+
+              <div className="divide-y divide-white/[0.07]">
+                {[
+                  { label: "Fecha", value: event.date },
+                  { label: "Formato", value: event.tag },
+                  { label: "Registro", value: "Experiencia ESDEC" },
+                ].map((item) => (
+                  <div key={item.label} className="py-3">
+                    <p className="font-condensed text-[8px] font-black uppercase tracking-[3px] text-white/36">
+                      {item.label}
+                    </p>
+                    <p className="mt-1 font-condensed text-[0.96rem] font-semibold uppercase leading-none text-white">
+                      {item.value}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="rounded-[14px] border border-[#5ac8ff]/20 bg-[#5ac8ff]/[0.05] p-4">
+                <p className="font-condensed text-[8px] font-black uppercase tracking-[3px] text-[#5ac8ff]">
+                  Huella
+                </p>
+                <p className="mt-2 font-sans text-[0.84rem] leading-[1.55] text-white/76">
+                  Ya paso, pero sigue funcionando como registro vivo de comunidad,
+                  energia y progreso dentro de ESDEC.
+                </p>
+              </div>
+            </div>
+
+            <div className="border-t border-white/10 p-5">
+              <a
+                href="https://www.instagram.com/esdec.ar"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackCTAClick(`events_past_${event.id}`)}
+                className="flex min-h-[52px] w-full items-center justify-center rounded-[18px] bg-white font-condensed text-[0.8rem] font-black uppercase tracking-[0.22em] text-[#06275f] no-underline transition-all duration-200 hover:-translate-y-px hover:bg-white/88 hover:no-underline"
+              >
+                Ver registro
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+function FinalCtaSection() {
+  const { finalCta, nextEvent } = EVENTS_PAGE;
+
+  return (
+    <section
+      data-event-section="final-cta"
+      className="relative isolate flex min-h-[88svh] items-center overflow-hidden bg-[#000c1a] px-6 py-24 text-center"
+    >
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_55%_at_50%_28%,rgba(90,200,255,0.13),transparent)]"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_50%_38%_at_50%_72%,rgba(12,210,94,0.07),transparent)]"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,#5ac8ff,#7de8a8,transparent)]"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.055] [--fpg:rgba(255,255,255,0.02)] [--fps:rgba(255,255,255,0.9)]"
+        aria-hidden="true"
+      >
+        <FingerprintSVG animate className="w-[65vw] max-w-[720px] animate-heartbeat" />
+      </div>
+
+      <div className="relative z-10 mx-auto w-full max-w-[1020px]">
+        <ScrollReveal direction="up">
+          <div className="mb-8 flex items-center justify-center gap-3">
+            <BrandLines size="md" animated />
+            <p className="font-condensed text-[10px] font-black uppercase tracking-[5px] text-[#5ac8ff]">
+              {finalCta.eyebrow}
+            </p>
+          </div>
+
+          <h2 className="font-condensed text-[clamp(4rem,11vw,10.5rem)] font-black uppercase leading-[0.76] tracking-tight text-white">
+            <span className="block">{finalCta.headlineLine1}</span>
+            <span className="block text-[#5ac8ff]">{finalCta.headlineLine2}</span>
+          </h2>
+
+          <p className="mx-auto mt-10 max-w-[40ch] font-sans text-[1.06rem] font-medium leading-[1.9] text-white/55">
+            {finalCta.body}
+          </p>
+
+          <div className="mt-12">
+            <a
+              href={nextEvent.cta.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackCTAClick("events_final_cta")}
+              className="btn-shimmer inline-flex min-h-[76px] min-w-[340px] items-center justify-center rounded-[26px] bg-[#0cd25e] px-12 py-5 font-condensed text-[1rem] font-black uppercase tracking-[0.3em] text-[#001a33] no-underline shadow-[0_0_64px_rgba(12,210,94,0.44),0_28px_80px_-32px_rgba(0,0,0,0.9)] transition-all duration-300 hover:-translate-y-1 hover:brightness-110 hover:shadow-[0_0_96px_rgba(12,210,94,0.52),0_36px_96px_-32px_rgba(0,0,0,0.9)]"
+            >
+              {finalCta.ctas[0].label} →
+            </a>
+          </div>
+
+          <p className="mt-8 font-condensed text-[0.72rem] font-black uppercase tracking-[2.5px] text-white/28">
+            {nextEvent.dateDay} de {nextEvent.dateMonth} · {nextEvent.venue} · Cupos limitados
+          </p>
+        </ScrollReveal>
+      </div>
+    </section>
+  );
+}
+
+function RefinedFinalCtaSection() {
+  const { finalCta } = EVENTS_PAGE;
+
+  return (
+    <section
+      data-event-section="final-cta"
+      className="relative isolate overflow-hidden bg-[#001f3f] px-6 py-20 md:py-28"
+    >
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.12]"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px)",
+          backgroundSize: "28px 28px",
+        }}
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(90,200,255,0.12)_0%,transparent_62%)]"
+        aria-hidden="true"
+      />
+
+      <div className="relative z-10 mx-auto max-w-landing">
+        <ScrollReveal direction="up">
+          <div className="relative overflow-hidden rounded-[30px] bg-[#224f99] px-6 py-16 text-center shadow-[0_30px_90px_-48px_rgba(0,0,0,0.9)] md:px-12 md:py-20">
+            <div
+              className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(90,200,255,0.08)_0%,transparent_42%,rgba(125,232,168,0.06)_100%)]"
+              aria-hidden="true"
+            />
+            <div className="relative z-10 mb-7 flex items-center justify-center gap-3">
+              <BrandLines size="sm" animated />
+            <p className="font-condensed text-[10px] font-black uppercase tracking-[5px] text-[#5ac8ff]">
+              {finalCta.eyebrow}
+            </p>
+          </div>
+
+          <h2 className="relative z-10 mx-auto max-w-[850px] font-condensed text-[clamp(3rem,7.4vw,6.8rem)] font-black uppercase leading-[0.86] tracking-tight text-white">
+            <span>{finalCta.headlineLine1.replace("ECOSISTEMA", "")}</span>
+            <span className="ecos-title-accent">ECOSISTEMA</span>
+            <span className="block">{finalCta.headlineLine2}</span>
+          </h2>
+
+          <p className="relative z-10 mx-auto mt-7 max-w-[58ch] font-sans text-[1rem] font-medium leading-[1.85] text-white/76">
+            {finalCta.body}
+          </p>
+
+          <div className="relative z-10 mx-auto mt-10 flex max-w-[720px] flex-col justify-center gap-4 sm:flex-row">
+            {finalCta.ctas.map((cta) => (
+              <EventButton
+                key={cta.trackingLabel}
+                cta={cta}
+                className="w-full sm:min-w-[320px]"
+              />
+            ))}
+          </div>
+          </div>
+        </ScrollReveal>
+      </div>
+    </section>
+  );
+}
+
+function AthletePaletteFinalCtaSection() {
+  const { finalCta } = EVENTS_PAGE;
+
+  return (
+    <section
+      data-event-section="final-cta"
+      className="relative isolate overflow-hidden bg-[#3269c7] px-6 py-20 md:py-28 [--p1:#5ac8ff] [--p2:#7de8a8] [--t1:#ffffff] [--t2:rgba(255,255,255,0.78)]"
+    >
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.1]"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle, rgba(255,255,255,0.14) 1px, transparent 1px)",
+          backgroundSize: "28px 28px",
+        }}
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_18%_22%,rgba(90,200,255,0.24)_0%,transparent_48%)]"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,#5ac8ff,#7de8a8,transparent)]"
+        aria-hidden="true"
+      />
+      <div
+        className="pointer-events-none absolute inset-0 flex items-center justify-center [--fpg:rgba(90,200,255,0.02)] [--fps:rgba(90,200,255,0.08)]"
+        aria-hidden="true"
+      >
+        <FingerprintSVG
+          animate={false}
+          className="w-[78vw] max-w-[640px] animate-heartbeat"
+        />
+      </div>
+
+      <div className="relative z-10 mx-auto grid max-w-landing gap-12 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-end">
+        <ScrollReveal direction="up">
+          <div className="mb-7 flex items-center gap-3">
+            <BrandLines size="sm" animated />
+            <p className="font-condensed text-[10px] font-black uppercase tracking-[5px] text-[#5ac8ff]">
+              {finalCta.eyebrow}
+            </p>
+          </div>
+
+          <h2 className="max-w-[780px] font-condensed text-[clamp(3.25rem,7.1vw,6.75rem)] font-black uppercase leading-[0.84] tracking-tight text-white">
+            {finalCta.headlineStack.map((line, index) => (
+              <span
+                key={line}
+                className={cn(
+                  "block",
+                  index === finalCta.headlineStack.length - 1 && "text-[#5ac8ff]"
+                )}
+              >
+                {line}
+              </span>
+            ))}
+          </h2>
+
+          <p className="mt-8 max-w-[48ch] font-sans text-[1.02rem] font-medium leading-[1.9] text-white/78">
+            {finalCta.body}
+          </p>
+        </ScrollReveal>
+
+        <ScrollReveal direction="up" delay={120}>
+          <div className="group spec-card-accent relative overflow-hidden rounded-[24px] border border-white/20 bg-white/[0.075] p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_24px_70px_-38px_rgba(0,0,0,0.62)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-[#5ac8ff]/60 hover:bg-white/[0.1]">
+            <span
+              className="pointer-events-none absolute left-0 top-0 h-px w-full origin-left scale-x-0 bg-[linear-gradient(90deg,rgba(125,232,168,0.9)_0%,rgba(90,200,255,0.92)_100%)] transition-transform duration-500 ease-out group-hover:scale-x-100"
+              aria-hidden="true"
+            />
+            <div className="mb-5 flex items-center gap-3">
+              <BrandLines size="sm" />
+              <p className="font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[#5ac8ff]">
+                {finalCta.panelEyebrow}
+              </p>
+            </div>
+            <p className="mt-5 max-w-[13ch] font-condensed text-[2.25rem] font-black uppercase leading-[0.9] tracking-tight text-white">
+              {finalCta.panelTitle}
+            </p>
+            <p className="mt-6 max-w-[29ch] font-sans text-[0.98rem] font-semibold leading-[1.62] text-white/76">
+              {finalCta.panelBody}
+            </p>
+            <a
+              href={finalCta.ctas[0].href}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackCTAClick(finalCta.ctas[0].trackingLabel)}
+              className="mt-8 inline-flex min-h-[64px] w-full items-center justify-center rounded-full bg-[#7de8a8] px-8 py-4 font-sans text-[0.88rem] font-black uppercase tracking-[0.14em] text-[#0c2d7a] no-underline shadow-[0_22px_54px_-26px_rgba(125,232,168,0.9)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#92f0b6] hover:shadow-[0_26px_62px_-28px_rgba(125,232,168,1)] hover:no-underline"
+            >
+              {finalCta.ctas[0].label}
+            </a>
+            <p className="mt-4 text-center font-sans text-[0.78rem] font-semibold text-white/56">
+              {finalCta.panelTrust}
+            </p>
+          </div>
+        </ScrollReveal>
+      </div>
+    </section>
+  );
+}
+
+export default function EventsLandingPage() {
+  useEventsAnalytics();
+
+  const [showIntro, setShowIntro] = useState(
+    () => typeof window !== "undefined" && !sessionStorage.getItem(EVENTS_INTRO_KEY)
+  );
+
+  return (
+    <main className="overflow-hidden bg-[var(--bg)] text-[var(--t1)]">
+      {showIntro && <EventsIntro onComplete={() => setShowIntro(false)} />}
+      <HeroSection />
+      <TransitionSection />
+      <NextEventSection />
+      <ExperienceSection />
+      <PastEventsSection />
+      <AthletePaletteFinalCtaSection />
     </main>
   );
 }
