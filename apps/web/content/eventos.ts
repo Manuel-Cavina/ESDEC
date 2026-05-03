@@ -1,406 +1,307 @@
 // content/eventos.ts
-// Source of truth for the ESDEC events vertical copy and structured event data.
-
-export type EventStatus = "open" | "last-spots" | "closed" | "past";
-export type EventCategory = "running" | "clinica" | "activacion" | "comunidad";
+// Source of truth for the ESDEC events page copy and structured event data.
 
 export interface EventsCta {
   label: string;
   href: string;
   trackingLabel: string;
-  variant: "primary" | "secondary" | "ghost";
+  variant: "primary" | "secondary";
   external?: boolean;
 }
 
-export interface EventDetail {
-  label: string;
-  value: string;
-}
-
-export interface EventSocialComment {
-  author: string;
-  body: string;
-  icon: string;
-}
-
-export interface EventExperienceTab {
+export interface EventPhase {
   id: string;
   label: string;
   title: string;
   body: string;
 }
 
-export interface EventExperience {
+export interface EcosystemLink {
   id: string;
-  label: string;
   title: string;
   body: string;
+}
+
+export interface PastEvent {
+  id: string;
+  name: string;
+  date: string;
+  tag: string;
+  summary: string;
+  image: string;
+  imageAlt: string;
 }
 
 export interface EsdecEvent {
-  slug: string;
-  name: string;
   eyebrow: string;
-  category: EventCategory;
-  posterTitle?: string;
-  posterBody?: string;
-  posterKicker?: string;
-  posterCtaLabel?: string;
-  campaignLabel?: string;
-  campaignTitle?: string;
-  campaignAccent?: string;
-  campaignBody?: string;
-  campaignNote?: string;
-  dateDay?: string;
-  dateMonth?: string;
-  timeLabel?: string;
-  status: EventStatus;
+  name: string;
+  dateDay: string;
+  dateMonth: string;
   dateLabel: string;
+  receptionTime: string;
+  startTime: string;
   venue: string;
   city: string;
-  headline: string;
   summary: string;
+  about?: string;
+  highlights?: readonly string[];
+  benefit?: string;
+  spotsWarning?: string;
   image: string;
-  modalImage?: string;
   imageAlt: string;
-  details: readonly EventDetail[];
-  modalTitle: string;
-  modalBody: string;
-  modalBullets: readonly string[];
-  socialComments?: readonly EventSocialComment[];
-  experienceTabs?: readonly EventExperienceTab[];
-  instagram: {
-    label: string;
-    href: string;
-    handle: string;
-    note: string;
-  };
   cta: EventsCta;
-}
-
-export interface EvolutionStep {
-  id: string;
-  label: string;
-  title: string;
-  body: string;
+  ctas: readonly EventsCta[];
 }
 
 export const EVENTS_PAGE = {
   seo: {
     title: "Eventos Deportivos en Cordoba | ESDEC",
     description:
-      "Eventos deportivos de ESDEC en Cordoba: experiencias, comunidad y activaciones para entrar al ecosistema deportivo.",
+      "Eventos ESDEC en Cordoba: experiencias deportivas donde comunidad, energia y progreso se convierten en activacion real.",
   },
   hero: {
-    eyebrow: "Eventos ESDEC · Cordoba · Comunidad en movimiento",
-    headlinePre: "LOS EVENTOS",
-    headlineAccent: "ACTIVAN",
-    headlinePost: "EL ECOSISTEMA.",
+    eyebrow: "Eventos ESDEC · Cordoba",
+    headlineLine1: "NO VENIS A VER UN EVENTO.",
+    headlineLine2: "VENIS A ACTIVARTE.",
     body:
-      "No son fechas sueltas. Son experiencias que conectan deportistas, profesionales y marca dentro de una misma estructura con criterio, energia y continuidad.",
+      "Eventos ESDEC es donde la comunidad, la energia y el progreso se convierten en experiencia real.",
     image: "/images/athletes/maraton_1.jpg",
-    imageAlt:
-      "Corredores en una escena de maraton para la vertical de eventos ESDEC",
-    pillars: [
+    imageAlt: "Corredores en una activacion deportiva de ESDEC",
+    words: [
       {
-        eyebrow: "Comunidad",
-        title: "DONDE LA COMUNIDAD",
-        titleAccent: "SE ACTIVA",
+        label: "comunidad",
+        title: "personas que se mueven con vos",
       },
       {
-        eyebrow: "Marca",
-        title: "EXPERIENCIAS QUE",
-        titleAccent: "DEJAN MARCA",
+        label: "energia",
+        title: "un entorno que te enciende",
       },
       {
-        eyebrow: "Identidad ESDEC",
-        title: "ESDEC SE VIVE EN",
-        titleAccent: "PRIMERA PERSONA",
+        label: "activacion",
+        title: "pasas de mirar a estar",
+      },
+      {
+        label: "progreso",
+        title: "cada experiencia deja algo",
       },
     ],
-    primaryCta: {
-      label: "Reservar mi lugar",
-      href: "https://wa.me/5493515117555?text=Hola%20ESDEC%2C%20quiero%20reservar%20mi%20lugar%20para%20un%20evento.",
-      trackingLabel: "events_hero_primary",
-      variant: "primary",
-      external: true,
-    },
-    secondaryCta: {
-      label: "Descubrir la experiencia",
-      href: "#proximo-evento",
-      trackingLabel: "events_hero_secondary",
-      variant: "secondary",
-    },
+    ctas: [
+      {
+        label: "Ver proximo evento",
+        href: "#proximo-evento",
+        trackingLabel: "events_hero_next",
+        variant: "primary",
+      },
+      {
+        label: "Como se vive",
+        href: "#experiencia",
+        trackingLabel: "events_hero_how",
+        variant: "secondary",
+      },
+    ] satisfies EventsCta[],
+  },
+  transition: {
+    eyebrow: "El inicio",
+    title: "ASI EMPIEZA LA EXPERIENCIA",
+    steps: [
+      {
+        id: "descubri",
+        label: "Clave 01",
+        title: "DESCUBRI",
+        body:
+          "Encontrás una experiencia que te llama por algo más que la fecha: hay energía, comunidad y una razón concreta para moverte.",
+      },
+      {
+        id: "te-sumas",
+        label: "Clave 02",
+        title: "TE SUMAS",
+        body:
+          "Reservás tu lugar y empezás a entrar en clima. Ya no sos espectador: sos parte de una activación que se prepara con intención.",
+      },
+      {
+        id: "lo-vivis",
+        label: "Clave 03",
+        title: "LO VIVIS",
+        body:
+          "Llegás, entrenás, conectás y te vas distinto. El evento termina, pero la sensación de progreso sigue con vos.",
+      },
+    ] satisfies EventPhase[],
   },
   nextEvent: {
     eyebrow: "Proximo evento",
     name: "Run + Coffee + Recovery",
-    category: "clinica",
-    posterTitle: "Run + Coffee",
-    posterBody:
-      "Movimiento, recuperacion y comunidad en una manana unica en Diario Cafe.",
-    posterKicker: "Run + coffee + recovery",
-    posterCtaLabel: "Explorar la experiencia",
-    campaignLabel: "Activacion ESDEC",
-    campaignTitle: "Corre.",
-    campaignAccent: "Recupera. Conecta.",
-    campaignBody:
-      "Este 9 de mayo no venis solo a correr. Venis a vivir una experiencia: running, after running, cafe, crioterapia, estiramiento, musica, sorteos y marcas.",
-    campaignNote: "Inscripciones hasta el 4 de mayo - reserva por Tally",
     dateDay: "9",
     dateMonth: "Mayo",
-    timeLabel: "8:00 hs",
-    status: "open",
-    dateLabel: "Viernes 9 de mayo - 8:00 hs",
+    dateLabel: "Viernes 9 de mayo",
+    receptionTime: "8:00 AM",
+    startTime: "9:00 AM",
     venue: "Diario Cafe",
     city: "Cordoba Capital",
-    headline: "Run + Coffee + Recovery: correr, recuperar y conectar.",
     summary:
-      "Una experiencia que reune movimiento, recuperacion, comunidad, cafe, crioterapia, musica, sorteos y marcas en Diario Cafe.",
-    image: "/images/Evento/Image2.png",
-    modalImage: "/images/Evento/image.png",
-    imageAlt: "Runner en movimiento para la experiencia Run Coffee Recovery de ESDEC",
-    slug: "run-coffee-recovery",
-    details: [
-      { label: "Formato", value: "Run + Coffee + Recovery" },
-      { label: "Inscripcion", value: "Hasta el 4 de mayo inclusive" },
-      { label: "Reserva", value: "Por formulario Tally" },
+      "Movimiento, recuperacion y comunidad en una manana creada para activar el cuerpo y entrar al ecosistema desde una experiencia real.",
+    about:
+      "No es solo una carrera: es una manana pensada para vivir el deporte desde otro lugar. Movimiento con estructura, recuperacion real y comunidad que acompana antes, durante y despues del esfuerzo.",
+    highlights: [
+      "Estiramientos guiados para entrada en calor y enfriamiento.",
+      "Recuperacion activa post-esfuerzo.",
+      "Combo especial del espacio anfitrion para todos los participantes.",
+      "Sorteos entre asistentes: indumentaria, accesorios, suplementos deportivos y mas.",
+      "Descuentos exclusivos con codigo especial para quienes se registren.",
     ],
-    modalTitle: "Que se va a vivir en Run + Coffee + Recovery",
-    modalBody:
-      "Este 9 de mayo no venis solo a correr. Venis a vivir una manana donde el deporte se conecta con bienestar, comunidad y marcas que acompanian una propuesta distinta.",
-    modalBullets: [
-      "08:00 hs: presentacion oficial del evento en Diario Cafe.",
-      "09:00 a 09:30 hs: entrada en calor general y largada desde Parque Sarmiento.",
-      "Cierre con estiramiento, crioterapia, combo de cafe, musica, sorteos y after running.",
-    ],
-    socialComments: [
-      {
-        author: "formato",
-        icon: "FMT",
-        body:
-          "No venis solo a sumar kilometros: venis a vivir una manana con running, cafe, recuperacion y comunidad.",
-      },
-      {
-        author: "inscripcion",
-        icon: "OK",
-        body:
-          "Las inscripciones estan abiertas hasta el 4 de mayo. Si queres estar, tu proxima experiencia arranca aca.",
-      },
-      {
-        author: "reserva",
-        icon: "IN",
-        body:
-          "La reserva se hace por Tally: rapido, claro y directo para asegurar tu lugar en Diario Cafe.",
-      },
-      {
-        author: "running",
-        icon: "RUN",
-        body:
-          "Largamos desde Parque Sarmiento con recorridos 3K y 5K para moverte, activar el cuerpo y compartir ruta.",
-      },
-      {
-        author: "coffee",
-        icon: "CAF",
-        body:
-          "El after running baja a Diario Cafe con combo, musica, sorteos, marcas amigas y un espacio para conocerse.",
-      },
-      {
-        author: "recovery",
-        icon: "REC",
-        body:
-          "Crioterapia, estiramiento guiado y beneficios para que la experiencia no termine cuando frenas de correr.",
-      },
-    ],
-    experienceTabs: [
-      {
-        id: "run",
-        label: "Run",
-        title: "Movimiento con energia real",
-        body:
-          "Entrada en calor, largada desde Parque Sarmiento y recorridos 3K / 5K para activar la manana desde el deporte.",
-      },
-      {
-        id: "coffee",
-        label: "Coffee",
-        title: "After running en Diario Cafe",
-        body:
-          "Combo de cafe, musica, sorteos y marcas amigas para que el evento tambien sea encuentro, disfrute y comunidad.",
-      },
-      {
-        id: "recovery",
-        label: "Recovery",
-        title: "Recuperar tambien es parte",
-        body:
-          "Crioterapia y estiramiento guiado para cerrar con bienestar y entender que correr mejor tambien es recuperar mejor.",
-      },
-    ],
-    instagram: {
-      label: "Ver novedades en Instagram",
-      href: "https://www.instagram.com/esdec.ar?igsh=N3ZtMHd0a2I2aXVz",
-      handle: "@esdec.ar",
-      note: "Seguimos publicando avances, cupos, marcas que acompanian y contenido de la previa en Instagram.",
-    },
+    benefit:
+      "Todos los participantes reciben descuentos especiales en marcas del ecosistema. El codigo se entrega al completar la inscripcion.",
+    spotsWarning:
+      "Cupos limitados. Registrarte garantiza tu lugar y participacion en todos los sorteos del evento.",
+    image: "/images/Evento/imagen banner.png",
+    imageAlt: "Imagen principal del evento Run Coffee Recovery de ESDEC",
     cta: {
-      label: "Reservar por Tally",
+      label: "Reservar mi lugar",
       href: "https://tally.so/r/VL1BlM",
-      trackingLabel: "events_next_event_reserve",
+      trackingLabel: "events_next_reserve",
       variant: "primary",
       external: true,
     },
+    ctas: [
+      {
+        label: "Reservar mi lugar",
+        href: "https://tally.so/r/VL1BlM",
+        trackingLabel: "events_next_reserve",
+        variant: "primary",
+        external: true,
+      },
+      {
+        label: "Explorar la experiencia",
+        href: "#experiencia",
+        trackingLabel: "events_next_experience",
+        variant: "secondary",
+      },
+    ] satisfies EventsCta[],
   } satisfies EsdecEvent,
-  evolution: {
-    eyebrow: "Evolucion de experiencia",
-    headlinePre: "ANTES, DURANTE",
-    headlineAccent: "Y DESPUES.",
-    headlinePost: "UN RECORRIDO.",
-    body:
-      "Un evento ESDEC empieza antes de llegar al lugar y sigue despues de terminar. La experiencia ordena expectativa, accion y continuidad.",
-    steps: [
+  experience: {
+    eyebrow: "Como se vive un evento ESDEC",
+    title: "LO QUE TE LLEV\u00c1S DE UN EVENTO ESDEC",
+    phases: [
       {
         id: "antes",
-        label: "Antes",
-        title: "La previa construye deseo",
-        body:
-          "Comunicacion clara, reserva simple y una promesa concreta: saber que vas a vivir y por que vale estar.",
+        label: "01",
+        title: "CLARIDAD",
+        body: "Entren\u00e1s con intenci\u00f3n.",
       },
       {
         id: "durante",
-        label: "Durante",
-        title: "La experiencia se vuelve comunidad",
-        body:
-          "Movimiento, criterio, energia y marca conviven en un momento que se siente vivo, cuidado y compartible.",
+        label: "02",
+        title: "CONEXI\u00d3N",
+        body: "No entren\u00e1s solo.",
       },
       {
         id: "despues",
-        label: "Despues",
-        title: "El evento deja un siguiente paso",
-        body:
-          "La participacion se transforma en relacion: seguimiento, contenido, contacto y una entrada mas clara al sistema.",
+        label: "03",
+        title: "PROGRESO",
+        body: "Das un paso real.",
       },
-    ] satisfies EvolutionStep[],
-  },
-  manifesto: {
-    eyebrow: "Por que eventos",
-    headlinePre: "EL DEPORTE",
-    headlineAccent: "SE CONSTRUYE",
-    headlinePost: "EN MOVIMIENTO.",
-    body:
-      "Los eventos son el lugar donde ESDEC deja de ser una idea y se convierte en experiencia. No buscamos llenar una agenda: buscamos crear momentos que ordenen comunidad, activen identidad y hagan visible una forma distinta de vivir el deporte amateur.",
-    quote:
-      "Cuando una comunidad se encuentra con una estructura clara, el esfuerzo deja de sentirse aislado.",
+    ] satisfies EventPhase[],
   },
   pastEvents: {
-    eyebrow: "Eventos pasados",
-    headlinePre: "LO QUE YA",
-    headlineAccent: "DEJAMOS",
-    headlinePost: "ACTIVADO.",
-    body:
-      "Experiencias anteriores que muestran comunidad, movimiento y prueba real de marca. Tocalas para ver que se vivio.",
+    eyebrow: "Registro vivo",
+    title: "YA PASO. YA SE VIVIO. YA DEJO HUELLA.",
     items: [
       {
-        slug: "running-community-recovery",
+        id: "running-community",
         name: "Running Community + Recovery",
-        eyebrow: "Experiencia pasada",
-        category: "running",
-        status: "past",
-        dateLabel: "Abril 2026",
-        venue: "Nueva Cordoba",
-        city: "Cordoba Capital",
-        headline: "Una salida que termino en comunidad.",
+        date: "Abril 2026",
+        tag: "Running · Comunidad",
         summary:
-          "Una activacion breve y compartible que unio running, recovery y contacto posterior con ESDEC.",
+          "Salida grupal, movimiento compartido y cierre de recovery. Una activacion simple que dejo comunidad y vinculos reales.",
         image: "/images/team/Equipo_Escalinatas.png",
-        imageAlt: "Comunidad ESDEC en una activacion previa",
-        details: [
-          { label: "Asistencia", value: "72 participantes" },
-          { label: "Formato", value: "Salida guiada + recovery" },
-          { label: "Resultado", value: "Comunidad y contactos reales" },
-        ],
-        modalTitle: "Que se vivio en Running Community + Recovery",
-        modalBody:
-          "Fue una experiencia simple, fisica y cercana: convocatoria, movimiento compartido y un cierre pensado para que la comunidad no se corte cuando termina el entrenamiento.",
-        modalBullets: [
-          "Salida grupal con ritmo accesible.",
-          "Cierre de recovery y conversacion.",
-          "Contenido posterior para sostener el vinculo.",
-        ],
-        instagram: {
-          label: "Ver contenido en Instagram",
-          href: "https://www.instagram.com/esdec.ar?igsh=N3ZtMHd0a2I2aXVz",
-          handle: "@esdec.ar",
-          note: "Las fotos, reels y novedades de activaciones se comparten desde Instagram.",
-        },
-        cta: {
-          label: "Quiero vivir el proximo",
-          href: "https://wa.me/5493515117555?text=Hola%20ESDEC%2C%20quiero%20enterarme%20del%20proximo%20evento.",
-          trackingLabel: "events_past_running_interest",
-          variant: "ghost",
-          external: true,
-        },
+        imageAlt: "Comunidad ESDEC despues de una activacion running",
       },
       {
-        slug: "tecnica-en-movimiento",
+        id: "tecnica-en-movimiento",
         name: "Tecnica en Movimiento",
-        eyebrow: "Experiencia pasada",
-        category: "clinica",
-        status: "past",
-        dateLabel: "Marzo 2026",
-        venue: "Parque Sarmiento",
-        city: "Cordoba Capital",
-        headline: "Correr, observar y ajustar.",
+        date: "Marzo 2026",
+        tag: "Clinica · Prevencion",
         summary:
-          "Una experiencia de tecnica aplicada donde el valor estuvo en entender el proceso, no solo en completar una actividad.",
+          "Observacion tecnica aplicada al running. Correcciones, criterio preventivo y una mirada distinta del entrenamiento amateur.",
         image: "/images/lifestyle/Medico_2.jpg",
-        imageAlt: "Seguimiento tecnico y clinico en evento ESDEC",
-        details: [
-          { label: "Foco", value: "Tecnica y prevencion" },
-          { label: "Capas", value: "Clinica, bienestar y educacion" },
-          { label: "Aprendizaje", value: "Criterio para seguir entrenando" },
-        ],
-        modalTitle: "Que se trabajo en Tecnica en Movimiento",
-        modalBody:
-          "La actividad estuvo enfocada en leer mejor el cuerpo en accion: pequenas correcciones, criterios preventivos y una mirada mas ordenada del entrenamiento amateur.",
-        modalBullets: [
-          "Observacion tecnica en movimiento.",
-          "Correcciones simples y aplicables.",
-          "Cierre educativo para seguir con mas criterio.",
-        ],
-        instagram: {
-          label: "Ver registro en Instagram",
-          href: "https://www.instagram.com/esdec.ar?igsh=N3ZtMHd0a2I2aXVz",
-          handle: "@esdec.ar",
-          note: "Instagram funciona como registro vivo de lo que ESDEC activa en comunidad.",
-        },
-        cta: {
-          label: "Quiero una experiencia asi",
-          href: "https://wa.me/5493515117555?text=Hola%20ESDEC%2C%20quiero%20vivir%20una%20experiencia%20como%20Tecnica%20en%20Movimiento.",
-          trackingLabel: "events_past_technique_interest",
-          variant: "ghost",
-          external: true,
-        },
+        imageAlt: "Acompanamiento tecnico en una experiencia deportiva",
       },
-    ] satisfies EsdecEvent[],
+      {
+        id: "recovery-session",
+        name: "Recovery Session",
+        date: "Febrero 2026",
+        tag: "Recuperacion · Bienestar",
+        summary:
+          "Sesion enfocada en recuperacion activa y bienestar post-esfuerzo. Cuerpo, mente y comunidad en el mismo espacio.",
+        image: "/images/lifestyle/Yoga1.jpg",
+        imageAlt: "Sesion de recuperacion y bienestar deportivo",
+      },
+      {
+        id: "comunidad-en-ruta",
+        name: "Comunidad en Ruta",
+        date: "Enero 2026",
+        tag: "Running · Encuentro",
+        summary:
+          "Una salida que termino en encuentro. Ritmo accesible, energia grupal y un cierre compartido para todos los niveles.",
+        image: "/images/team/personascorriendo.jpg",
+        imageAlt: "Grupo de deportistas corriendo en comunidad",
+      },
+    ] satisfies PastEvent[],
+  },
+  ecosystem: {
+    eyebrow: "Continuidad",
+    title: "EVENTOS ESDEC NO TERMINA CUANDO TERMINA EL DIA.",
+    items: [
+      {
+        id: "bienestar",
+        title: "BIENESTAR",
+        body: "Recuperacion, habitos y cuidado para sostener lo que activaste.",
+      },
+      {
+        id: "clinica",
+        title: "CLINICA",
+        body: "Mirada profesional para entrenar con mas criterio y menos azar.",
+      },
+      {
+        id: "marca",
+        title: "MARCA",
+        body: "Comunidad, identidad y alianzas que amplifican cada experiencia.",
+      },
+      {
+        id: "tecnologia",
+        title: "TECNOLOGIA",
+        body: "Herramientas para convertir participacion en progreso visible.",
+      },
+    ] satisfies EcosystemLink[],
   },
   finalCta: {
-    eyebrow: "Unirte al sistema",
-    headlinePre: "ENTRA AL",
-    headlineAccent: "SISTEMA",
-    headlinePost: "ESDEC.",
+    eyebrow: "El momento es ahora",
+    headlineLine1: "EVOLUCIONAR NO ES UNA IDEA.",
+    headlineLine2: "ES UNA DECISI\u00d3N. Y ES AHORA.",
+    headlineStack: [
+      "EVOLUCIONAR NO ES UNA IDEA.",
+      "ES UNA DECISI\u00d3N.",
+      "Y ES AHORA.",
+    ],
     body:
-      "Sumarte a un evento es una forma concreta de entrar en contacto con la comunidad, entender la experiencia y descubrir como ESDEC puede acompanarte.",
-    primaryCta: {
-      label: "Unirme al sistema",
-      href: "https://wa.me/5493515117555?text=Hola%20ESDEC%2C%20quiero%20unirme%20al%20sistema%20y%20recibir%20novedades%20de%20eventos.",
-      trackingLabel: "events_system_join",
-      variant: "primary",
-      external: true,
-    },
-    secondaryCta: {
-      label: "Ver ecosistema",
-      href: "/ecosistema-deportivo-cordoba",
-      trackingLabel: "events_system_ecosystem",
-      variant: "secondary",
-    },
+      "Cada evento ESDEC es el punto donde empez\u00e1s a entrenar, conectar y avanzar en serio.",
+    panelEyebrow: "TU PR\u00d3XIMA EXPERIENCIA ARRANCA AC\u00c1",
+    panelTitle: "RESERV\u00c1 TU LUGAR EN ESDEC",
+    panelBody: "Esto empieza en un evento. No termina ah\u00ed.",
+    panelTrust: "Pr\u00f3ximo evento en C\u00f3rdoba \u00b7 Cupos limitados",
+    ctas: [
+      {
+        label: "QUIERO MI LUGAR \u2192",
+        href: "https://tally.so/r/VL1BlM",
+        trackingLabel: "events_final_place",
+        variant: "primary",
+        external: true,
+      },
+      {
+        label: "Ver todos los eventos",
+        href: "#eventos-anteriores",
+        trackingLabel: "events_final_all",
+        variant: "secondary",
+      },
+    ] satisfies EventsCta[],
   },
 } as const;
