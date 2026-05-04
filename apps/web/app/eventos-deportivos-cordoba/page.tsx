@@ -9,6 +9,10 @@ import { SITE_URL } from "@/lib/constants";
 import EventsLandingPage from "@/sections/events/EventsLandingPage";
 
 const pageUrl = `${SITE_URL}/eventos-deportivos-cordoba`;
+const hasUpcomingEvent =
+  new Date(EVENTS_PAGE.nextEvent.startsAt).getTime() > Date.now();
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: EVENTS_PAGE.seo.title,
@@ -44,21 +48,25 @@ export default function EventosDeportivosCordobaPage() {
       name: "ESDEC",
       url: SITE_URL,
     },
-    about: {
-      "@type": "SportsEvent",
-      name: EVENTS_PAGE.nextEvent.name,
-      eventStatus: "https://schema.org/EventScheduled",
-      startDate: "2026-05-09T08:00:00-03:00",
-      location: {
-        "@type": "Place",
-        name: EVENTS_PAGE.nextEvent.venue,
-        address: {
-          "@type": "PostalAddress",
-          addressLocality: EVENTS_PAGE.nextEvent.city,
-          addressCountry: "AR",
-        },
-      },
-    },
+    ...(hasUpcomingEvent
+      ? {
+          about: {
+            "@type": "SportsEvent",
+            name: EVENTS_PAGE.nextEvent.name,
+            eventStatus: "https://schema.org/EventScheduled",
+            startDate: EVENTS_PAGE.nextEvent.startsAt,
+            location: {
+              "@type": "Place",
+              name: EVENTS_PAGE.nextEvent.venue,
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: EVENTS_PAGE.nextEvent.city,
+                addressCountry: "AR",
+              },
+            },
+          },
+        }
+      : {}),
   };
 
   return (
