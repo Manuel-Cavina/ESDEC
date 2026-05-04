@@ -1,0 +1,31 @@
+
+> esdec-landing@0.1.0 dev C:\Users\cavin\Proyectos\ESDEC\ESDEC\apps\web
+> next dev "--port" "3001"
+
+  ▲ Next.js 14.2.5
+  - Local:        http://localhost:3001
+
+ ✓ Starting...
+ ✓ Ready in 3.8s
+ ○ Compiling /eventos-deportivos-cordoba ...
+ ✓ Compiled /eventos-deportivos-cordoba in 1168ms (561 modules)
+ GET /eventos-deportivos-cordoba 200 in 1476ms
+ GET /eventos-deportivos-cordoba 200 in 97ms
+ ○ Compiling /profesionales ...
+ ✓ Compiled /profesionales in 3.5s (596 modules)
+ ✓ Compiled in 507ms (299 modules)
+ ○ Compiling /salud-deportiva-cordoba ...
+ ✓ Compiled /salud-deportiva-cordoba in 1010ms (594 modules)
+ ○ Compiling /ecosistema-deportivo-cordoba ...
+ ✓ Compiled /ecosistema-deportivo-cordoba in 616ms (620 modules)
+ ○ Compiling /deportistas ...
+ ✓ Compiled /deportistas in 659ms (623 modules)
+ ✓ Compiled in 1741ms (637 modules)
+ GET /eventos-deportivos-cordoba 200 in 245ms
+ ✓ Compiled in 942ms (637 modules)
+ ✓ Compiled in 1291ms (637 modules)
+ GET /eventos-deportivos-cordoba 200 in 204ms
+ ✓ Compiled in 814ms (637 modules)
+ GET /eventos-deportivos-cordoba 200 in 245ms
+ ✓ Compiled in 1183ms (637 modules)
+ ✓ Compiled in 1293ms (637 modules)

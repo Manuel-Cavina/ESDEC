@@ -674,7 +674,7 @@ export const FOOTER = {
         { label: "Qué es ESDEC", href: "/ecosistema-deportivo-cordoba" },
         { label: "Red coordinada", href: "/ecosistema-deportivo-cordoba#ecosystem" },
         { label: "Cómo funciona", href: "/ecosistema-deportivo-cordoba#problem" },
-        { label: "Eventos", href: "/eventos-deportivos" },
+        { label: "Eventos", href: "/eventos-deportivos-cordoba" },
       ],
     },
     {

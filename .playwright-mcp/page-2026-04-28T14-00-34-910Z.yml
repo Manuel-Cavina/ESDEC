@@ -1,0 +1,266 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - navigation "Navegacion principal" [ref=e3]:
+      - generic [ref=e4]:
+        - generic:
+          - link "Ir al inicio de ESDEC":
+            - /url: /
+            - img "ESDEC" [ref=e5] [cursor=pointer]
+        - list [ref=e7]:
+          - listitem [ref=e8]:
+            - link "Sobre nosotros" [ref=e9] [cursor=pointer]:
+              - /url: /ecosistema-deportivo-cordoba
+              - text: Sobre nosotros▾
+            - generic [ref=e11]:
+              - paragraph [ref=e13]: Areas del ecosistema
+              - generic [ref=e14]:
+                - link "Salud deportiva" [ref=e15] [cursor=pointer]:
+                  - /url: /salud-deportiva-cordoba
+                - link "Tecnologia deportiva" [ref=e16] [cursor=pointer]:
+                  - /url: /tecnologia-deportiva-cordoba
+                - link "Bienestar deportivo" [ref=e17] [cursor=pointer]:
+                  - /url: /bienestar-deportivo-cordoba
+                - link "Market deportivo" [ref=e18] [cursor=pointer]:
+                  - /url: /market-deportivo-cordoba
+                - link "Educacion deportiva" [ref=e19] [cursor=pointer]:
+                  - /url: /educacion-deportiva-cordoba
+                - link "Eventos deportivos" [ref=e20] [cursor=pointer]:
+                  - /url: /eventos-deportivos-cordoba
+          - listitem [ref=e21]:
+            - link "Deportistas" [ref=e22] [cursor=pointer]:
+              - /url: /deportistas
+          - listitem [ref=e23]:
+            - link "Profesionales" [ref=e24] [cursor=pointer]:
+              - /url: /profesionales
+        - generic [ref=e25]:
+          - button "Ver el ecosistema →" [ref=e26]
+          - button "Abrir menu" [ref=e27]
+    - generic [ref=e29]:
+      - generic [ref=e30]:
+        - generic [ref=e31]:
+          - button "Sobre nosotros" [ref=e32]: Sobre nosotros▾
+          - generic [ref=e34]:
+            - link "Ver ecosistema" [ref=e35] [cursor=pointer]:
+              - /url: /ecosistema-deportivo-cordoba
+            - link "Salud deportiva" [ref=e36] [cursor=pointer]:
+              - /url: /salud-deportiva-cordoba
+            - link "Tecnologia deportiva" [ref=e37] [cursor=pointer]:
+              - /url: /tecnologia-deportiva-cordoba
+            - link "Bienestar deportivo" [ref=e38] [cursor=pointer]:
+              - /url: /bienestar-deportivo-cordoba
+            - link "Market deportivo" [ref=e39] [cursor=pointer]:
+              - /url: /market-deportivo-cordoba
+            - link "Educacion deportiva" [ref=e40] [cursor=pointer]:
+              - /url: /educacion-deportiva-cordoba
+            - link "Eventos deportivos" [ref=e41] [cursor=pointer]:
+              - /url: /eventos-deportivos-cordoba
+        - link "Deportistas" [ref=e42] [cursor=pointer]:
+          - /url: /deportistas
+        - link "Profesionales" [ref=e43] [cursor=pointer]:
+          - /url: /profesionales
+      - button "Ver el ecosistema →" [ref=e44]
+  - main [ref=e45]:
+    - generic [ref=e46]:
+      - img [ref=e47]
+      - img [ref=e49]
+      - generic [ref=e69]:
+        - generic [ref=e70]:
+          - paragraph [ref=e74]: Eventos ESDEC · Cordoba · Comunidad en movimiento
+          - heading "LOS EVENTOSACTIVANEL ECOSISTEMA." [level=1] [ref=e76]
+          - paragraph [ref=e78]: No son fechas sueltas. Son experiencias que conectan deportistas, profesionales y marca dentro de una misma estructura con criterio, energia y continuidad.
+          - generic [ref=e80]:
+            - link "Reservar mi lugar" [ref=e81] [cursor=pointer]:
+              - /url: https://wa.me/5493515117555?text=Hola%20ESDEC%2C%20quiero%20reservar%20mi%20lugar%20para%20un%20evento.
+            - link "Descubrir la experiencia" [ref=e82] [cursor=pointer]:
+              - /url: "#proximo-evento"
+        - generic [ref=e83]:
+          - article [ref=e85]:
+            - paragraph [ref=e86]: Comunidad
+            - heading "DONDE LA COMUNIDADSE ACTIVA" [level=3] [ref=e87]
+          - article [ref=e89]:
+            - paragraph [ref=e90]: Marca
+            - heading "EXPERIENCIAS QUEDEJAN MARCA" [level=3] [ref=e91]
+          - article [ref=e93]:
+            - paragraph [ref=e94]: Identidad ESDEC
+            - heading "ESDEC SE VIVE ENPRIMERA PERSONA" [level=3] [ref=e95]
+    - generic [ref=e96]:
+      - img [ref=e98]
+      - generic [ref=e118]:
+        - generic [ref=e121]:
+          - paragraph [ref=e124]: Proximo evento
+          - heading "PROXIMOEVENTO." [level=2] [ref=e125]
+        - article [ref=e127]:
+          - img "Runner en movimiento para la experiencia Run Coffee Recovery de ESDEC" [ref=e128]
+          - img [ref=e130]
+          - generic [ref=e150]:
+            - generic [ref=e151]:
+              - generic [ref=e152]:
+                - generic [ref=e153]:
+                  - paragraph [ref=e154]: Activacion ESDEC
+                  - paragraph [ref=e155]: Inscripciones hasta el 4 de mayo - reserva por Tally
+                - img "ESDEC" [ref=e156]
+              - generic [ref=e157]:
+                - generic [ref=e158]:
+                  - generic [ref=e159]: 9Mayo
+                  - generic [ref=e160]:
+                    - paragraph [ref=e161]: Diario Cafe
+                    - paragraph [ref=e162]: Cordoba Capital - 8:00 hs
+                - heading "Run + Coffee + Recovery" [level=3] [ref=e163]
+                - paragraph [ref=e164]: "Este 9 de mayo no venis solo a correr. Venis a vivir una experiencia: running, after running, cafe, crioterapia, estiramiento, musica, sorteos y marcas."
+                - generic [ref=e165]: Run + Coffee + RecoveryHasta el 4 de mayo inclusivePor formulario Tally
+              - generic [ref=e166]:
+                - link "Reservar por Tally" [ref=e167] [cursor=pointer]:
+                  - /url: https://tally.so/r/VL1BlM
+                - button "Explorar la experiencia" [ref=e168]
+            - button "Ver detalle de Run + Coffee + Recovery" [ref=e169]:
+              - generic [ref=e170]:
+                - paragraph [ref=e171]: "Run + Coffee + Recovery: correr, recuperar y conectar."
+                - heading "Corre.Recupera. Conecta." [level=4] [ref=e172]
+              - generic [ref=e173]:
+                - generic [ref=e174]: Run + Coffee + RecoveryHasta el 4 de mayo inclusivePor formulario Tally
+                - text: Ver historia del evento →
+    - generic [ref=e176]:
+      - generic [ref=e177]:
+        - paragraph [ref=e180]: Evolucion de experiencia
+        - heading "ANTES, DURANTEY DESPUES.UN RECORRIDO." [level=2] [ref=e181]
+        - paragraph [ref=e182]: Un evento ESDEC empieza antes de llegar al lugar y sigue despues de terminar. La experiencia ordena expectativa, accion y continuidad.
+      - generic [ref=e183]:
+        - article [ref=e185]:
+          - paragraph [ref=e186]: "01"
+          - paragraph [ref=e187]: Antes
+          - heading "La previa construye deseo" [level=3] [ref=e188]
+          - paragraph [ref=e189]: "Comunicacion clara, reserva simple y una promesa concreta: saber que vas a vivir y por que vale estar."
+        - article [ref=e191]:
+          - paragraph [ref=e192]: "02"
+          - paragraph [ref=e193]: Durante
+          - heading "La experiencia se vuelve comunidad" [level=3] [ref=e194]
+          - paragraph [ref=e195]: Movimiento, criterio, energia y marca conviven en un momento que se siente vivo, cuidado y compartible.
+        - article [ref=e197]:
+          - paragraph [ref=e198]: "03"
+          - paragraph [ref=e199]: Despues
+          - heading "El evento deja un siguiente paso" [level=3] [ref=e200]
+          - paragraph [ref=e201]: "La participacion se transforma en relacion: seguimiento, contenido, contacto y una entrada mas clara al sistema."
+    - generic [ref=e202]:
+      - img [ref=e204]
+      - generic [ref=e225]:
+        - generic [ref=e226]:
+          - paragraph [ref=e229]: Por que eventos
+          - heading "EL DEPORTESE CONSTRUYEEN MOVIMIENTO." [level=2] [ref=e230]
+          - paragraph [ref=e231]: "Los eventos son el lugar donde ESDEC deja de ser una idea y se convierte en experiencia. No buscamos llenar una agenda: buscamos crear momentos que ordenen comunidad, activen identidad y hagan visible una forma distinta de vivir el deporte amateur."
+        - blockquote [ref=e233]: "\"Cuando una comunidad se encuentra con una estructura clara, el esfuerzo deja de sentirse aislado.\""
+    - generic [ref=e235]:
+      - generic [ref=e236]:
+        - paragraph [ref=e239]: Eventos pasados
+        - heading "LO QUE YADEJAMOSACTIVADO." [level=2] [ref=e240]
+        - paragraph [ref=e241]: Experiencias anteriores que muestran comunidad, movimiento y prueba real de marca. Tocalas para ver que se vivio.
+      - generic [ref=e242]:
+        - button "Comunidad ESDEC en una activacion previa Abril 2026 · Nueva Cordoba Running Community + Recovery Una activacion breve y compartible que unio running, recovery y contacto posterior con ESDEC. Ver detalle →" [ref=e244]:
+          - img "Comunidad ESDEC en una activacion previa" [ref=e245]
+          - generic [ref=e246]:
+            - paragraph [ref=e247]: Abril 2026 · Nueva Cordoba
+            - heading "Running Community + Recovery" [level=3] [ref=e248]
+            - paragraph [ref=e249]: Una activacion breve y compartible que unio running, recovery y contacto posterior con ESDEC.
+          - text: Ver detalle →
+        - button "Seguimiento tecnico y clinico en evento ESDEC Marzo 2026 · Parque Sarmiento Tecnica en Movimiento Una experiencia de tecnica aplicada donde el valor estuvo en entender el proceso, no solo en completar una actividad. Ver detalle →" [ref=e251]:
+          - img "Seguimiento tecnico y clinico en evento ESDEC" [ref=e252]
+          - generic [ref=e253]:
+            - paragraph [ref=e254]: Marzo 2026 · Parque Sarmiento
+            - heading "Tecnica en Movimiento" [level=3] [ref=e255]
+            - paragraph [ref=e256]: Una experiencia de tecnica aplicada donde el valor estuvo en entender el proceso, no solo en completar una actividad.
+          - text: Ver detalle →
+    - generic [ref=e257]:
+      - img [ref=e259]
+      - generic [ref=e279]:
+        - generic [ref=e280]:
+          - paragraph [ref=e283]: Unirte al sistema
+          - heading "ENTRA ALSISTEMAESDEC." [level=2] [ref=e284]
+          - paragraph [ref=e285]: Sumarte a un evento es una forma concreta de entrar en contacto con la comunidad, entender la experiencia y descubrir como ESDEC puede acompanarte.
+        - generic [ref=e287]:
+          - link "Unirme al sistema" [ref=e288] [cursor=pointer]:
+            - /url: https://wa.me/5493515117555?text=Hola%20ESDEC%2C%20quiero%20unirme%20al%20sistema%20y%20recibir%20novedades%20de%20eventos.
+          - link "Ver ecosistema" [ref=e289] [cursor=pointer]:
+            - /url: /ecosistema-deportivo-cordoba
+  - contentinfo [ref=e290]:
+    - img [ref=e292]
+    - generic [ref=e312]:
+      - generic [ref=e313]:
+        - generic [ref=e314]:
+          - img "ESDEC" [ref=e316]
+          - paragraph [ref=e317]: La estructura que conecta progreso y expertise.
+          - paragraph [ref=e318]: Córdoba · Argentina
+          - generic [ref=e319]:
+            - link "contacto@esdec.com.ar" [ref=e320] [cursor=pointer]:
+              - /url: mailto:contacto@esdec.com.ar
+              - img [ref=e322]
+              - text: contacto@esdec.com.ar
+            - link "+54 9 3515 11-7555" [ref=e325] [cursor=pointer]:
+              - /url: https://wa.me/5493515117555
+              - img [ref=e327]
+              - text: +54 9 3515 11-7555
+            - paragraph [ref=e330]:
+              - img [ref=e332]
+              - text: Córdoba · Argentina
+          - generic [ref=e335]:
+            - link "Instagram" [ref=e336] [cursor=pointer]:
+              - /url: https://www.instagram.com/esdec.ar?igsh=N3ZtMHd0a2I2aXVz
+              - img [ref=e337]
+            - link "TikTok" [ref=e341] [cursor=pointer]:
+              - /url: https://www.tiktok.com/@_esdec?_r=1&_t=ZS-95XZ2oVQWqS
+              - img [ref=e342]
+            - link "WhatsApp" [ref=e344] [cursor=pointer]:
+              - /url: https://wa.me/5493515117555
+              - img [ref=e345]
+        - generic [ref=e347]:
+          - paragraph [ref=e348]: Plataforma
+          - list [ref=e349]:
+            - listitem [ref=e350]:
+              - link "Qué es ESDEC" [ref=e351] [cursor=pointer]:
+                - /url: /ecosistema-deportivo-cordoba
+                - text: Qué es ESDEC
+            - listitem [ref=e352]:
+              - link "Red coordinada" [ref=e353] [cursor=pointer]:
+                - /url: /ecosistema-deportivo-cordoba#ecosystem
+                - text: Red coordinada
+            - listitem [ref=e354]:
+              - link "Cómo funciona" [ref=e355] [cursor=pointer]:
+                - /url: /ecosistema-deportivo-cordoba#problem
+                - text: Cómo funciona
+            - listitem [ref=e356]:
+              - link "Eventos" [ref=e357] [cursor=pointer]:
+                - /url: /eventos-deportivos-cordoba
+                - text: Eventos
+        - generic [ref=e358]:
+          - paragraph [ref=e359]: Recorridos
+          - list [ref=e360]:
+            - listitem [ref=e361]:
+              - link "Para deportistas" [ref=e362] [cursor=pointer]:
+                - /url: /deportistas
+                - text: Para deportistas
+            - listitem [ref=e363]:
+              - link "Para profesionales" [ref=e364] [cursor=pointer]:
+                - /url: /profesionales
+                - text: Para profesionales
+            - listitem [ref=e365]:
+              - link "Empezar mi proceso" [ref=e366] [cursor=pointer]:
+                - /url: /deportistas#footprint
+                - text: Empezar mi proceso
+            - listitem [ref=e367]:
+              - link "Postularme como profesional" [ref=e368] [cursor=pointer]:
+                - /url: /profesionales#footprint
+                - text: Postularme como profesional
+        - generic [ref=e369]:
+          - generic [ref=e370]:
+            - paragraph [ref=e371]: ESDEC
+            - paragraph [ref=e374]:
+              - text: Elite Sports
+              - text: Development
+          - paragraph [ref=e375]: Córdoba · 2025
+      - generic [ref=e376]:
+        - generic [ref=e377]:
+          - generic [ref=e378]:
+            - link "Privacidad" [ref=e379] [cursor=pointer]:
+              - /url: "#"
+            - text: ·
+          - link "Terminos de uso" [ref=e381] [cursor=pointer]:
+            - /url: "#"
+        - paragraph [ref=e382]: © 2026 ESDEC · Elite Sports Development. Todos los derechos reservados.

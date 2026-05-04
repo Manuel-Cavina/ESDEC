@@ -81,7 +81,7 @@ export const ECOSISTEMA_OVERVIEW = {
     secondaryLabel: "Soy profesional",
     secondaryHref: "/profesionales",
     tertiaryLabel: "Ver eventos",
-    tertiaryHref: "/eventos-deportivos",
+    tertiaryHref: "/eventos-deportivos-cordoba",
   },
 } as const;
 
@@ -357,7 +357,7 @@ export const ECOSISTEMA_RECORRIDOS = {
       title: "Activaciones en Cordoba",
       body: "Clinicas, experiencias y comunidad para expandir el ecosistema en movimiento.",
       cta: "Ver eventos",
-      href: "/eventos-deportivos",
+      href: "/eventos-deportivos-cordoba",
       accent: "#6fd4db",
     },
   ],
@@ -398,7 +398,7 @@ export const ECOSISTEMA_SEO = {
       title: "ACTIVACIONES EN CORDOBA",
       body: "Clinicas, experiencias y comunidad para expandir el ecosistema.",
       cta: "Ver eventos",
-      href: "/eventos-deportivos",
+      href: "/eventos-deportivos-cordoba",
     },
   ],
 } as const;
