@@ -5,7 +5,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import EventsIntro, { EVENTS_INTRO_KEY } from "./EventsIntro";
 import BrandLines from "@/components/BrandLines";
 import FingerprintSVG from "@/components/FingerprintSVG";
@@ -313,7 +313,7 @@ function NextEventModal({ onClose }: { onClose: () => void }) {
         <div className="grid max-h-[92svh] overflow-y-auto lg:grid-cols-[minmax(0,1.15fr)_380px]">
           <div className="relative min-h-[280px] lg:min-h-[580px]">
             <Image
-              src={nextEvent.image}
+              src={nextEvent.modalImage ?? nextEvent.image}
               alt={nextEvent.imageAlt}
               fill
               quality={94}
@@ -425,6 +425,78 @@ function NextEventModal({ onClose }: { onClose: () => void }) {
 function NextEventSection() {
   const { nextEvent } = EVENTS_PAGE;
   const [modalOpen, setModalOpen] = useState(false);
+  const hasUpcomingEvent = new Date(nextEvent.startsAt).getTime() > Date.now();
+
+  if (!hasUpcomingEvent) {
+    const { waitlist } = nextEvent;
+
+    return (
+      <section
+        id="proximo-evento"
+        data-event-section="next-event"
+        className="relative isolate scroll-mt-36 overflow-hidden bg-[#001a33] px-6 py-20 md:py-28"
+      >
+        <Image
+          src={nextEvent.image}
+          alt=""
+          fill
+          quality={82}
+          sizes="100vw"
+          className="object-cover object-center opacity-18 saturate-50"
+        />
+        <div
+          className="absolute inset-0 bg-[linear-gradient(120deg,rgba(0,13,31,0.96)_0%,rgba(0,29,58,0.9)_50%,rgba(0,13,31,0.98)_100%)]"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute right-[-120px] top-1/2 hidden -translate-y-1/2 opacity-[0.12] [--fpg:rgba(90,200,255,0.03)] [--fps:rgba(90,200,255,0.9)] lg:block"
+          aria-hidden="true"
+        >
+          <FingerprintSVG animate={false} className="w-[520px] animate-heartbeat" />
+        </div>
+
+        <div className="relative z-10 mx-auto max-w-landing">
+          <ScrollReveal direction="up">
+            <div className="max-w-[760px]">
+              <div className="flex items-center gap-3">
+                <BrandLines size="sm" animated />
+                <p className="font-condensed text-[10px] font-black uppercase tracking-[0.42em] text-[#7de8a8]">
+                  {waitlist.eyebrow}
+                </p>
+              </div>
+
+              <h2 className="mt-5 font-condensed text-[clamp(3rem,7vw,6.4rem)] font-black uppercase leading-[0.82] tracking-tight text-white">
+                {waitlist.title}
+              </h2>
+
+              <p className="mt-6 max-w-[44ch] font-sans text-[1.05rem] font-medium leading-[1.85] text-white/70">
+                {waitlist.body}
+              </p>
+
+              <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+                <a
+                  href={waitlist.cta.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackCTAClick(waitlist.cta.trackingLabel)}
+                  className="inline-flex min-h-[58px] items-center justify-center rounded-[20px] bg-[#0cd25e] px-8 py-4 font-condensed text-[0.84rem] font-black uppercase tracking-[0.22em] text-[#001a33] no-underline shadow-[0_22px_54px_-28px_rgba(12,210,94,0.95)] transition-all duration-300 hover:-translate-y-1 hover:brightness-110 hover:no-underline"
+                >
+                  {waitlist.cta.label} {"\u2192"}
+                </a>
+                <a
+                  href={waitlist.secondaryCta.href}
+                  onClick={() => trackCTAClick(waitlist.secondaryCta.trackingLabel)}
+                  className="inline-flex min-h-[58px] items-center justify-center rounded-[20px] border border-white/16 bg-white/[0.05] px-8 py-4 font-condensed text-[0.82rem] font-black uppercase tracking-[0.2em] text-white no-underline transition-all duration-300 hover:border-[#5ac8ff]/55 hover:bg-white/[0.09] hover:no-underline"
+                >
+                  {waitlist.secondaryCta.label}
+                </a>
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section
@@ -576,43 +648,7 @@ function ExperienceSection() {
 }
 function PastEventsSection() {
   const { pastEvents } = EVENTS_PAGE;
-  const carouselRef = useRef<HTMLDivElement>(null);
   const [selectedEvent, setSelectedEvent] = useState<PastEvent | null>(null);
-  const carouselItems = [...pastEvents.items, ...pastEvents.items];
-
-  const scrollCarousel = (direction: "prev" | "next") => {
-    carouselRef.current?.scrollBy({
-      left: direction === "next" ? 380 : -380,
-      behavior: "smooth",
-    });
-  };
-
-  useEffect(() => {
-    let animationFrame = 0;
-    let lastTime = performance.now();
-    const speed = 26;
-
-    const animate = (time: number) => {
-      const carousel = carouselRef.current;
-      const delta = time - lastTime;
-      lastTime = time;
-
-      if (carousel && !selectedEvent) {
-        const loopPoint = carousel.scrollWidth / 2;
-        carousel.scrollLeft += (speed * delta) / 1000;
-
-        if (carousel.scrollLeft >= loopPoint) {
-          carousel.scrollLeft -= loopPoint;
-        }
-      }
-
-      animationFrame = window.requestAnimationFrame(animate);
-    };
-
-    animationFrame = window.requestAnimationFrame(animate);
-
-    return () => window.cancelAnimationFrame(animationFrame);
-  }, [selectedEvent]);
 
   return (
     <section
@@ -621,48 +657,23 @@ function PastEventsSection() {
       className="relative scroll-mt-36 overflow-hidden bg-[var(--bg)] px-6 py-18 md:py-24"
     >
       <div className="mx-auto max-w-landing">
-        <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-          <SectionHeading eyebrow={pastEvents.eyebrow} title={pastEvents.title} />
-
-          <div className="flex items-center gap-3 md:pb-1">
-            <button
-              type="button"
-              onClick={() => scrollCarousel("prev")}
-              className="flex h-12 w-12 items-center justify-center rounded-full border border-white/14 bg-white/[0.04] font-sans text-2xl font-light text-white transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--p1)]/55 hover:bg-white/[0.08]"
-              aria-label="Ver eventos anteriores previos"
-            >
-              {"\u2190"}
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollCarousel("next")}
-              className="flex h-12 w-12 items-center justify-center rounded-full border border-white/14 bg-white/[0.04] font-sans text-2xl font-light text-white transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--p1)]/55 hover:bg-white/[0.08]"
-              aria-label="Ver mas eventos anteriores"
-            >
-              {"\u2192"}
-            </button>
-          </div>
-        </div>
+        <SectionHeading eyebrow={pastEvents.eyebrow} title={pastEvents.title} />
 
         <ScrollReveal direction="up" className="mt-12">
-          <div
-            ref={carouselRef}
-            className="-mx-6 overflow-x-auto px-6 pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-          >
-            <div className="flex snap-x snap-mandatory gap-5">
-              {carouselItems.map((event, index) => (
+          <div className="grid gap-5 md:grid-cols-3">
+            {pastEvents.items.map((event) => (
             <button
               type="button"
               onClick={() => setSelectedEvent(event)}
-              key={`${event.id}-${index}`}
-              className="group relative flex min-h-[520px] w-[82vw] max-w-[350px] shrink-0 snap-start flex-col overflow-hidden rounded-[28px] bg-[var(--bg2)] text-left shadow-[0_16px_48px_-24px_rgba(0,0,0,0.6)] transition-all duration-300 hover:-translate-y-1 sm:w-[46vw] lg:w-[340px]"
+              key={event.id}
+              className="group relative flex min-h-[520px] flex-col overflow-hidden rounded-[28px] bg-[var(--bg2)] text-left shadow-[0_16px_48px_-24px_rgba(0,0,0,0.6)] outline-none transition-all duration-300 hover:-translate-y-1 focus:outline-none focus-visible:outline-none focus-visible:ring-0"
               aria-label={`Ver detalle de ${event.name}`}
             >
               <Image
                 src={event.image}
                 alt={event.imageAlt}
                 fill
-                sizes="(min-width: 1024px) 340px, (min-width: 640px) 46vw, 82vw"
+                sizes="(min-width: 768px) 33vw, 100vw"
                 className="object-cover object-center opacity-80 saturate-75 transition-transform duration-700 group-hover:scale-[1.04]"
               />
               <div className="absolute inset-0 bg-[linear-gradient(168deg,rgba(0,10,24,0.22)_0%,rgba(0,10,24,0.68)_42%,rgba(0,10,24,0.97)_100%)]" />
@@ -682,13 +693,12 @@ function PastEventsSection() {
                     {event.tag} · {event.date}
                   </p>
                       <span className="mt-5 block w-full rounded-full bg-white py-3.5 text-center font-sans text-[0.88rem] font-semibold text-[#001a33] transition-colors group-hover:bg-white/88">
-                        Ver registro
+                        {event.ctaLabel}
                       </span>
                     </div>
                   </div>
                 </button>
-              ))}
-            </div>
+            ))}
           </div>
         </ScrollReveal>
       </div>
@@ -710,6 +720,8 @@ function PastEventModal({
   event: PastEvent;
   onClose: () => void;
 }) {
+  const { modalLabels } = EVENTS_PAGE.pastEvents;
+
   useEffect(() => {
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -747,7 +759,7 @@ function PastEventModal({
         <div className="grid max-h-[92svh] overflow-y-auto lg:grid-cols-[minmax(0,1.15fr)_380px]">
           <div className="relative min-h-[280px] lg:min-h-[580px]">
             <Image
-              src={event.image}
+              src={event.modalImage ?? event.image}
               alt={event.imageAlt}
               fill
               quality={94}
@@ -768,7 +780,7 @@ function PastEventModal({
                     <span className="ml-2 font-medium text-[#5ac8ff]">Registro</span>
                   </p>
                   <p className="font-sans text-[0.74rem] text-white/45">
-                    Evento anterior
+                    {modalLabels.recordValue}
                   </p>
                 </div>
               </div>
@@ -794,9 +806,9 @@ function PastEventModal({
 
               <div className="divide-y divide-white/[0.07]">
                 {[
-                  { label: "Fecha", value: event.date },
-                  { label: "Formato", value: event.tag },
-                  { label: "Registro", value: "Experiencia ESDEC" },
+                  { label: modalLabels.date, value: event.date },
+                  { label: modalLabels.format, value: event.tag },
+                  { label: modalLabels.record, value: modalLabels.recordValue },
                 ].map((item) => (
                   <div key={item.label} className="py-3">
                     <p className="font-condensed text-[8px] font-black uppercase tracking-[3px] text-white/36">
@@ -811,24 +823,67 @@ function PastEventModal({
 
               <div className="rounded-[14px] border border-[#5ac8ff]/20 bg-[#5ac8ff]/[0.05] p-4">
                 <p className="font-condensed text-[8px] font-black uppercase tracking-[3px] text-[#5ac8ff]">
-                  Huella
+                  {modalLabels.description}
                 </p>
-                <p className="mt-2 font-sans text-[0.84rem] leading-[1.55] text-white/76">
-                  Ya paso, pero sigue funcionando como registro vivo de comunidad,
-                  energia y progreso dentro de ESDEC.
+                <p className="mt-2 font-sans text-[0.84rem] leading-[1.6] text-white/78">
+                  {event.description}
                 </p>
+              </div>
+
+              <div className="rounded-[14px] border border-white/[0.08] bg-white/[0.035] p-4">
+                <p className="font-condensed text-[8px] font-black uppercase tracking-[3px] text-[#7de8a8]">
+                  {modalLabels.pillars}
+                </p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {event.pillars.map((pillar) => (
+                    <span
+                      key={pillar}
+                      className="rounded-full border border-[#7de8a8]/25 bg-[#7de8a8]/[0.08] px-3 py-1.5 font-condensed text-[0.68rem] font-black uppercase tracking-[1.6px] text-white/82"
+                    >
+                      {pillar}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="rounded-[14px] border border-white/[0.08] bg-white/[0.035] p-4">
+                <p className="font-condensed text-[8px] font-black uppercase tracking-[3px] text-[#5ac8ff]">
+                  {modalLabels.benefits}
+                </p>
+                <ul className="mt-3 space-y-2">
+                  {event.benefits.map((benefit) => (
+                    <li key={benefit} className="flex items-start gap-2 font-sans text-[0.82rem] leading-[1.55] text-white/74">
+                      <span className="mt-[6px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#5ac8ff]" aria-hidden="true" />
+                      {benefit}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="rounded-[14px] border border-[#7de8a8]/25 bg-[#7de8a8]/[0.06] p-4">
+                <p className="font-condensed text-[8px] font-black uppercase tracking-[3px] text-[#7de8a8]">
+                  {modalLabels.evolution}
+                </p>
+                <ul className="mt-3 space-y-2">
+                  {event.evolution.map((step) => (
+                    <li key={step} className="flex items-start gap-2 font-sans text-[0.82rem] leading-[1.55] text-white/76">
+                      <span className="mt-[6px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#7de8a8]" aria-hidden="true" />
+                      {step}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
 
             <div className="border-t border-white/10 p-5">
               <a
-                href="https://www.instagram.com/esdec.ar"
+                href={event.ctaHref}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackCTAClick(`events_past_${event.id}`)}
                 className="flex min-h-[52px] w-full items-center justify-center rounded-[18px] bg-white font-condensed text-[0.8rem] font-black uppercase tracking-[0.22em] text-[#06275f] no-underline transition-all duration-200 hover:-translate-y-px hover:bg-white/88 hover:no-underline"
               >
-                Ver registro
+                {event.ctaLabel}
               </a>
             </div>
           </div>

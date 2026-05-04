@@ -28,13 +28,21 @@ export interface PastEvent {
   date: string;
   tag: string;
   summary: string;
+  description: string;
+  pillars: readonly string[];
+  benefits: readonly string[];
+  evolution: readonly string[];
   image: string;
+  modalImage?: string;
   imageAlt: string;
+  ctaLabel: string;
+  ctaHref: string;
 }
 
 export interface EsdecEvent {
   eyebrow: string;
   name: string;
+  startsAt: string;
   dateDay: string;
   dateMonth: string;
   dateLabel: string;
@@ -48,7 +56,15 @@ export interface EsdecEvent {
   benefit?: string;
   spotsWarning?: string;
   image: string;
+  modalImage?: string;
   imageAlt: string;
+  waitlist: {
+    eyebrow: string;
+    title: string;
+    body: string;
+    cta: EventsCta;
+    secondaryCta: EventsCta;
+  };
   cta: EventsCta;
   ctas: readonly EventsCta[];
 }
@@ -130,6 +146,7 @@ export const EVENTS_PAGE = {
   nextEvent: {
     eyebrow: "Proximo evento",
     name: "Run + Coffee + Recovery",
+    startsAt: "2026-05-09T08:00:00-03:00",
     dateDay: "9",
     dateMonth: "Mayo",
     dateLabel: "Viernes 9 de mayo",
@@ -153,7 +170,27 @@ export const EVENTS_PAGE = {
     spotsWarning:
       "Cupos limitados. Registrarte garantiza tu lugar y participacion en todos los sorteos del evento.",
     image: "/images/Evento/imagen banner.png",
+    modalImage: "/images/Evento/image.png",
     imageAlt: "Imagen principal del evento Run Coffee Recovery de ESDEC",
+    waitlist: {
+      eyebrow: "Proxima activacion",
+      title: "LA PR\u00d3XIMA ACTIVACI\u00d3N SE EST\u00c1 PREPARANDO.",
+      body:
+        "Sumate a la lista y te avisamos cuando abramos el pr\u00f3ximo evento ESDEC.",
+      cta: {
+        label: "Avisarme por WhatsApp",
+        href: "https://wa.me/5493515117555?text=Hola%20ESDEC%2C%20quiero%20sumarme%20a%20la%20lista%20para%20enterarme%20del%20proximo%20evento.",
+        trackingLabel: "events_waitlist_whatsapp",
+        variant: "primary",
+        external: true,
+      },
+      secondaryCta: {
+        label: "Ver eventos anteriores",
+        href: "#eventos-anteriores",
+        trackingLabel: "events_waitlist_past",
+        variant: "secondary",
+      },
+    },
     cta: {
       label: "Reservar mi lugar",
       href: "https://tally.so/r/VL1BlM",
@@ -204,46 +241,98 @@ export const EVENTS_PAGE = {
   pastEvents: {
     eyebrow: "Registro vivo",
     title: "YA PASO. YA SE VIVIO. YA DEJO HUELLA.",
+    modalLabels: {
+      date: "Fecha",
+      format: "Formato",
+      record: "Registro",
+      recordValue: "Experiencia ESDEC",
+      description: "Descripcion",
+      pillars: "Pilares",
+      benefits: "Beneficios",
+      evolution: "Evolucion",
+      cta: "Revivir la experiencia",
+    },
     items: [
       {
-        id: "running-community",
-        name: "Running Community + Recovery",
+        id: "trekking",
+        name: "Trekking ESDEC",
         date: "Abril 2026",
-        tag: "Running · Comunidad",
+        tag: "Trekking - Comunidad",
         summary:
-          "Salida grupal, movimiento compartido y cierre de recovery. Una activacion simple que dejo comunidad y vinculos reales.",
-        image: "/images/team/Equipo_Escalinatas.png",
-        imageAlt: "Comunidad ESDEC despues de una activacion running",
+          "Una salida al aire libre para conectar movimiento, naturaleza y grupo desde una experiencia accesible y con sentido.",
+        description:
+          "El trekking ESDEC fue una activacion pensada para que cada participante pudiera salir de la rutina, moverse con otros y reconocer que el progreso tambien se construye paso a paso, con entorno, energia y acompanamiento.",
+        pillars: ["Comunidad", "Bienestar", "Movimiento consciente", "Conexion"],
+        benefits: [
+          "Actividad guiada en un entorno natural.",
+          "Espacio para compartir con personas con objetivos similares.",
+          "Ritmo accesible para distintos niveles de experiencia.",
+          "Cierre grupal para integrar lo vivido y fortalecer vinculos.",
+        ],
+        evolution: [
+          "Los participantes ganaron confianza para sumarse a nuevas experiencias.",
+          "Se activaron vinculos reales entre personas que antes entrenaban de forma aislada.",
+          "La experiencia dejo una sensacion concreta de energia, claridad y continuidad.",
+        ],
+        image: "/images/Evento/Trekking/trekkingCARD.png",
+        modalImage: "/images/Evento/Trekking/trekkingMODAL.png",
+        imageAlt: "Participantes del trekking ESDEC en una experiencia al aire libre",
+        ctaLabel: "Revivir la experiencia",
+        ctaHref: "https://www.instagram.com/esdec.ar",
       },
       {
-        id: "tecnica-en-movimiento",
-        name: "Tecnica en Movimiento",
+        id: "pastoral",
+        name: "Pastoral ESDEC",
         date: "Marzo 2026",
-        tag: "Clinica · Prevencion",
+        tag: "Comunidad - Valores",
         summary:
-          "Observacion tecnica aplicada al running. Correcciones, criterio preventivo y una mirada distinta del entrenamiento amateur.",
-        image: "/images/lifestyle/Medico_2.jpg",
-        imageAlt: "Acompanamiento tecnico en una experiencia deportiva",
+          "Un encuentro donde el deporte funciono como puente para compartir valores, pertenencia y crecimiento personal.",
+        description:
+          "Pastoral ESDEC reunio a personas que buscaban algo mas que una actividad fisica: un espacio para sentirse parte, conversar, moverse y conectar el desarrollo deportivo con la dimension humana.",
+        pillars: ["Pertenencia", "Valores", "Acompanamiento", "Comunidad"],
+        benefits: [
+          "Espacio cuidado para compartir experiencias personales.",
+          "Actividad fisica como disparador de encuentro y reflexion.",
+          "Acompanamiento cercano antes, durante y despues de la jornada.",
+          "Mayor integracion entre personas, grupos y referentes.",
+        ],
+        evolution: [
+          "Los participantes se fueron con mas claridad sobre su lugar dentro de una comunidad.",
+          "Se fortalecio la confianza para hablar, pedir ayuda y acompanar a otros.",
+          "El evento transformo una participacion puntual en sentido de pertenencia.",
+        ],
+        image: "/images/Evento/Pastoral/pastoralCARD.png",
+        modalImage: "/images/Evento/Pastoral/pastoralMODAL.png",
+        imageAlt: "Participantes de Pastoral ESDEC compartiendo una jornada comunitaria",
+        ctaLabel: "Revivir la experiencia",
+        ctaHref: "https://www.instagram.com/esdec.ar",
       },
       {
-        id: "recovery-session",
-        name: "Recovery Session",
+        id: "torneo-padel",
+        name: "Torneo de Padel ESDEC",
         date: "Febrero 2026",
-        tag: "Recuperacion · Bienestar",
+        tag: "Padel - Competencia",
         summary:
-          "Sesion enfocada en recuperacion activa y bienestar post-esfuerzo. Cuerpo, mente y comunidad en el mismo espacio.",
-        image: "/images/lifestyle/Yoga1.jpg",
-        imageAlt: "Sesion de recuperacion y bienestar deportivo",
-      },
-      {
-        id: "comunidad-en-ruta",
-        name: "Comunidad en Ruta",
-        date: "Enero 2026",
-        tag: "Running · Encuentro",
-        summary:
-          "Una salida que termino en encuentro. Ritmo accesible, energia grupal y un cierre compartido para todos los niveles.",
-        image: "/images/team/personascorriendo.jpg",
-        imageAlt: "Grupo de deportistas corriendo en comunidad",
+          "Una competencia amateur organizada para vivir el deporte con estructura, energia y conexion entre jugadores.",
+        description:
+          "El torneo de padel ESDEC fue una experiencia competitiva con foco en el disfrute, la organizacion y el progreso. Cada pareja encontro un espacio para medirse, aprender y formar parte de una comunidad activa.",
+        pillars: ["Competencia sana", "Organizacion", "Progreso", "Comunidad"],
+        benefits: [
+          "Formato claro para competir sin perder el disfrute.",
+          "Encuentro entre jugadores de distintos niveles.",
+          "Motivacion para seguir entrenando despues del torneo.",
+          "Experiencia social alrededor del deporte.",
+        ],
+        evolution: [
+          "Los participantes identificaron aspectos concretos para mejorar su juego.",
+          "La competencia impulso constancia y nuevas ganas de entrenar.",
+          "El evento convirtio partidos aislados en una experiencia compartida con continuidad.",
+        ],
+        image: "/images/Evento/TorneoPadel/padelCARD.png",
+        modalImage: "/images/Evento/TorneoPadel/padelMODAL.png",
+        imageAlt: "Jugadores del Torneo de Padel ESDEC durante una competencia amateur",
+        ctaLabel: "Revivir la experiencia",
+        ctaHref: "https://www.instagram.com/esdec.ar",
       },
     ] satisfies PastEvent[],
   },

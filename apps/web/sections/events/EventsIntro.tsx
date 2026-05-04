@@ -92,7 +92,8 @@ export default function EventsIntro({ onComplete }: EventsIntroProps) {
   const [step, setStep] = useState(0);
   const [closing, setClosing] = useState(false);
   const { nextEvent } = EVENTS_PAGE;
-  const countdown = useCountdownIntro("2026-05-09T08:00:00-03:00");
+  const countdown = useCountdownIntro(nextEvent.startsAt);
+  const hasUpcomingEvent = !countdown.expired;
 
   const dismiss = (scrollTo?: string) => {
     setClosing(true);
@@ -269,15 +270,27 @@ export default function EventsIntro({ onComplete }: EventsIntroProps) {
             </div>
 
             <h2 className="font-condensed text-[clamp(2.6rem,6.5vw,5.6rem)] font-black uppercase leading-[0.82] tracking-tight text-white">
-              ALGO ESTÁ
-              <span className="block text-[#5ac8ff]">POR PASAR.</span>
+              {hasUpcomingEvent ? (
+                <>
+                  TU PROXIMA
+                  <span className="block text-[#5ac8ff]">EXPERIENCIA</span>
+                  <span className="block">ESTA POR PASAR.</span>
+                </>
+              ) : (
+                <>
+                  LA PR\u00d3XIMA
+                  <span className="block text-[#5ac8ff]">SE PREPARA.</span>
+                </>
+              )}
             </h2>
 
             <p className="mt-5 font-sans text-[1rem] font-medium leading-[1.75] text-white/50">
-              {nextEvent.dateDay} de {nextEvent.dateMonth} · {nextEvent.receptionTime} · {nextEvent.venue}, Córdoba
+              {hasUpcomingEvent
+                ? `${nextEvent.dateDay} de ${nextEvent.dateMonth} \u00b7 ${nextEvent.receptionTime} \u00b7 ${nextEvent.venue}, C\u00f3rdoba`
+                : nextEvent.waitlist.body}
             </p>
 
-            {!countdown.expired && (
+            {hasUpcomingEvent && (
               <div className="mt-10 flex items-end justify-center gap-3 sm:gap-4">
                 <CountdownUnit value={countdown.days} label="días" />
                 <span className="mb-6 font-condensed text-[1.6rem] font-black leading-none text-white/20" aria-hidden="true">:</span>
@@ -290,19 +303,31 @@ export default function EventsIntro({ onComplete }: EventsIntroProps) {
             )}
 
             <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-              <button
-                type="button"
-                onClick={() => dismiss("proximo-evento")}
-                className="btn-shimmer inline-flex min-h-[56px] min-w-[240px] items-center justify-center rounded-[18px] bg-[#5ac8ff] px-8 py-3 font-condensed text-[0.82rem] font-black uppercase tracking-[0.22em] text-[#06275f] shadow-[0_18px_46px_-24px_rgba(90,200,255,0.9)] transition-all duration-200 hover:-translate-y-px hover:brightness-110"
-              >
-                Ver proximo evento →
-              </button>
+              {hasUpcomingEvent ? (
+                <button
+                  type="button"
+                  onClick={() => dismiss("proximo-evento")}
+                  className="btn-shimmer inline-flex min-h-[56px] min-w-[240px] items-center justify-center rounded-[18px] bg-[#5ac8ff] px-8 py-3 font-condensed text-[0.82rem] font-black uppercase tracking-[0.22em] text-[#06275f] shadow-[0_18px_46px_-24px_rgba(90,200,255,0.9)] transition-all duration-200 hover:-translate-y-px hover:brightness-110"
+                >
+                  Ver proximo evento {"\u2192"}
+                </button>
+              ) : (
+                <a
+                  href={nextEvent.waitlist.cta.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => dismiss()}
+                  className="btn-shimmer inline-flex min-h-[56px] min-w-[240px] items-center justify-center rounded-[18px] bg-[#0cd25e] px-8 py-3 font-condensed text-[0.82rem] font-black uppercase tracking-[0.22em] text-[#001a33] no-underline shadow-[0_18px_46px_-24px_rgba(12,210,94,0.9)] transition-all duration-200 hover:-translate-y-px hover:brightness-110 hover:no-underline"
+                >
+                  {nextEvent.waitlist.cta.label} {"\u2192"}
+                </a>
+              )}
               <button
                 type="button"
                 onClick={() => dismiss("eventos-anteriores")}
                 className="inline-flex min-h-[56px] min-w-[220px] items-center justify-center rounded-[18px] border border-white/20 bg-white/[0.05] px-8 py-3 font-condensed text-[0.8rem] font-black uppercase tracking-[0.2em] text-white backdrop-blur-sm transition-all duration-200 hover:bg-white/[0.1]"
               >
-                Ver mas eventos →
+                Ver mas eventos {"\u2192"}
               </button>
             </div>
           </div>
