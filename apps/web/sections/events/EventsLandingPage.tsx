@@ -434,7 +434,7 @@ function NextEventSection() {
       <section
         id="proximo-evento"
         data-event-section="next-event"
-        className="relative isolate scroll-mt-36 overflow-hidden bg-[#001a33] px-6 py-20 md:py-28"
+        className="relative isolate scroll-mt-36 overflow-hidden bg-[#01305c] px-6 py-20 md:py-28"
       >
         <Image
           src={nextEvent.image}
@@ -442,10 +442,10 @@ function NextEventSection() {
           fill
           quality={82}
           sizes="100vw"
-          className="object-cover object-center opacity-18 saturate-50"
+          className="object-cover object-center opacity-[0.08] saturate-50"
         />
         <div
-          className="absolute inset-0 bg-[linear-gradient(120deg,rgba(0,13,31,0.96)_0%,rgba(0,29,58,0.9)_50%,rgba(0,13,31,0.98)_100%)]"
+          className="absolute inset-0 bg-[linear-gradient(180deg,rgba(1,48,92,0.98)_0%,rgba(1,48,92,0.94)_48%,rgba(0,26,51,0.98)_100%)]"
           aria-hidden="true"
         />
         <div
@@ -457,23 +457,23 @@ function NextEventSection() {
 
         <div className="relative z-10 mx-auto max-w-landing">
           <ScrollReveal direction="up">
-            <div className="max-w-[760px]">
-              <div className="flex items-center gap-3">
+            <div className="mx-auto max-w-[860px] text-center">
+              <div className="flex items-center justify-center gap-3">
                 <BrandLines size="sm" animated />
                 <p className="font-condensed text-[10px] font-black uppercase tracking-[0.42em] text-[#7de8a8]">
                   {waitlist.eyebrow}
                 </p>
               </div>
 
-              <h2 className="mt-5 font-condensed text-[clamp(3rem,7vw,6.4rem)] font-black uppercase leading-[0.82] tracking-tight text-white">
+              <h2 className="mx-auto mt-5 max-w-[11ch] font-condensed text-[clamp(3rem,7vw,6.4rem)] font-black uppercase leading-[0.82] tracking-tight text-white">
                 {waitlist.title}
               </h2>
 
-              <p className="mt-6 max-w-[44ch] font-sans text-[1.05rem] font-medium leading-[1.85] text-white/70">
+              <p className="mx-auto mt-6 max-w-[44ch] font-sans text-[1.05rem] font-medium leading-[1.85] text-white/70">
                 {waitlist.body}
               </p>
 
-              <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
                 <a
                   href={waitlist.cta.href}
                   target="_blank"
@@ -649,6 +649,7 @@ function ExperienceSection() {
 function PastEventsSection() {
   const { pastEvents } = EVENTS_PAGE;
   const [selectedEvent, setSelectedEvent] = useState<PastEvent | null>(null);
+  const carouselEvents = [...pastEvents.items, ...pastEvents.items];
 
   return (
     <section
@@ -660,13 +661,14 @@ function PastEventsSection() {
         <SectionHeading eyebrow={pastEvents.eyebrow} title={pastEvents.title} />
 
         <ScrollReveal direction="up" className="mt-12">
-          <div className="grid gap-5 md:grid-cols-3">
-            {pastEvents.items.map((event) => (
+          <div className="-mx-6 overflow-hidden px-6 [mask-image:linear-gradient(90deg,transparent,black_8%,black_92%,transparent)]">
+            <div className="flex w-max gap-5 animate-marquee hover:[animation-play-state:paused]">
+              {carouselEvents.map((event, index) => (
             <button
               type="button"
               onClick={() => setSelectedEvent(event)}
-              key={event.id}
-              className="group relative flex min-h-[520px] flex-col overflow-hidden rounded-[28px] bg-[var(--bg2)] text-left shadow-[0_16px_48px_-24px_rgba(0,0,0,0.6)] outline-none transition-all duration-300 hover:-translate-y-1 focus:outline-none focus-visible:outline-none focus-visible:ring-0"
+              key={`${event.id}-${index}`}
+              className="group relative flex min-h-[520px] w-[min(82vw,386px)] shrink-0 flex-col overflow-hidden rounded-[28px] bg-[var(--bg2)] text-left shadow-[0_16px_48px_-24px_rgba(0,0,0,0.6)] outline-none transition-all duration-300 hover:-translate-y-1 focus:outline-none focus-visible:outline-none focus-visible:ring-0"
               aria-label={`Ver detalle de ${event.name}`}
             >
               <Image
@@ -698,7 +700,8 @@ function PastEventsSection() {
                     </div>
                   </div>
                 </button>
-            ))}
+              ))}
+            </div>
           </div>
         </ScrollReveal>
       </div>
