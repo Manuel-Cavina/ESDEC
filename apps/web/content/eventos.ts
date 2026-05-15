@@ -174,7 +174,7 @@ export const EVENTS_PAGE = {
     imageAlt: "Imagen principal del evento Run Coffee Recovery de ESDEC",
     waitlist: {
       eyebrow: "Proxima activacion",
-      title: "LA PR\u00d3XIMA ACTIVACI\u00d3N SE EST\u00c1 PREPARANDO.",
+      title: "LA PR\u00d3XIMA EXPERIENCIA ESDEC YA SE EST\u00c1 CONSTRUYENDO.",
       body:
         "Sumate a la lista y te avisamos cuando abramos el pr\u00f3ximo evento ESDEC.",
       cta: {
@@ -253,6 +253,33 @@ export const EVENTS_PAGE = {
       cta: "Revivir la experiencia",
     },
     items: [
+      {
+        id: "social-running",
+        name: "Social Running ESDEC",
+        date: "Mayo 2026",
+        tag: "Running - Comunidad",
+        summary:
+          "Una activacion social para moverse, compartir cafe y entrar en recuperacion con energia de comunidad.",
+        description:
+          "Social Running ESDEC reunio movimiento, cafe y recovery en una experiencia pensada para activar el cuerpo, conectar con otros y vivir el deporte como punto de encuentro real.",
+        pillars: ["Running", "Comunidad", "Recovery", "Activacion"],
+        benefits: [
+          "Movimiento grupal en un formato accesible.",
+          "Espacio social para conectar antes y despues de la actividad.",
+          "Recuperacion y habitos para cerrar la experiencia con criterio.",
+          "Primer contacto con el ecosistema ESDEC desde una vivencia real.",
+        ],
+        evolution: [
+          "Los participantes pasaron de entrenar de forma aislada a compartir una experiencia con estructura.",
+          "La actividad transformo el movimiento en encuentro, energia y continuidad.",
+          "El evento dejo una invitacion concreta a seguir preparandose dentro del ecosistema.",
+        ],
+        image: "/images/Evento/image.png",
+        modalImage: "/images/Evento/image.png",
+        imageAlt: "Social Running ESDEC con running, cafe y recovery",
+        ctaLabel: "Revivir la experiencia",
+        ctaHref: "https://www.instagram.com/esdec.ar",
+      },
       {
         id: "trekking",
         name: "Trekking ESDEC",
