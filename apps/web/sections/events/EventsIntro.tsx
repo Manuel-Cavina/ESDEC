@@ -10,7 +10,7 @@ import BrandLines from "@/components/BrandLines";
 import { EVENTS_PAGE } from "@/content/eventos";
 import { cn } from "@/lib/utils";
 
-export const EVENTS_INTRO_KEY = "esdec-events-intro-v1";
+export const EVENTS_INTRO_KEY = "esdec-events-intro-v2";
 
 function useCountdownIntro(targetIso: string) {
   const target = new Date(targetIso).getTime();
@@ -278,8 +278,8 @@ export default function EventsIntro({ onComplete }: EventsIntroProps) {
                 </>
               ) : (
                 <>
-                  LA PR\u00d3XIMA
-                  <span className="block text-[#5ac8ff]">SE PREPARA.</span>
+                  ES TU MOMENTO
+                  <span className="block text-[#5ac8ff]">DE PREPARARTE</span>
                 </>
               )}
             </h2>
