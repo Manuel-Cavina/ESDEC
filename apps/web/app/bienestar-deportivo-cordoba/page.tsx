@@ -1,10 +1,10 @@
 // app/bienestar-deportivo-cordoba/page.tsx
-// Temporary SEO landing for the ESDEC wellbeing area.
+// Landing del area de Bienestar deportivo de ESDEC.
 
 import type { Metadata } from "next";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import AreaInDevelopmentPage from "@/components/areas/AreaInDevelopmentPage";
+import BienestarLanding from "@/sections/bienestar-salud/BienestarLanding";
 import { AREA_PAGES } from "@/content/areas";
 import { buildAreaJsonLd, buildAreaMetadata } from "@/lib/areas";
 
@@ -22,7 +22,7 @@ export default function BienestarDeportivoCordobaPage() {
       <div className="nav-visible">
         <Navbar audience={null} />
       </div>
-      <AreaInDevelopmentPage area={area} />
+      <BienestarLanding />
       <Footer />
       <script
         type="application/ld+json"

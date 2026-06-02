@@ -1,10 +1,10 @@
 // app/salud-deportiva-cordoba/page.tsx
-// Temporary SEO landing for the ESDEC health area.
+// Landing del area de Salud deportiva de ESDEC.
 
 import type { Metadata } from "next";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import AreaInDevelopmentPage from "@/components/areas/AreaInDevelopmentPage";
+import SaludLanding from "@/sections/bienestar-salud/SaludLanding";
 import { AREA_PAGES } from "@/content/areas";
 import { buildAreaJsonLd, buildAreaMetadata } from "@/lib/areas";
 
@@ -22,7 +22,7 @@ export default function SaludDeportivaCordobaPage() {
       <div className="nav-visible">
         <Navbar audience={null} />
       </div>
-      <AreaInDevelopmentPage area={area} />
+      <SaludLanding />
       <Footer />
       <script
         type="application/ld+json"
