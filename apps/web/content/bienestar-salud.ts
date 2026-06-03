@@ -439,11 +439,11 @@ export const SALUD_FOR_PROFESSIONALS = {
 
 export const SALUD_CTA = {
   eyebrow: "ESDEC — Salud deportiva",
-  headline: "TU CUERPO",
-  headlineAccent: "NO ESPERA.",
+  headline: "ENCONTRA TU",
+  headlineAccent: "ESPECIALISTA.",
   subtext:
-    "Entra al ecosistema como deportista o suma tu perfil como profesional de la salud deportiva en Cordoba.",
-  ctaAthlete: { label: "Entrar como deportista", href: "/deportistas" },
+    "Conecta con kinesiologo, deportologo, nutricionista y mas en Cordoba. Tu proceso de salud deportiva empieza hoy.",
+  ctaAthlete: { label: "Quiero mi especialista", href: "/deportistas" },
   ctaProfessional: { label: "Sumarme como profesional", href: "/profesionales" },
 };
 

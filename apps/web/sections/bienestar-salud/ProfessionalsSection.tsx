@@ -357,20 +357,21 @@ export default function ProfessionalsSection({ area }: Props) {
           </ScrollReveal>
         )}
 
-        {/* Carrusel — igual que eventos */}
+        {/* Carrusel — scroll manual con snap */}
         <ScrollReveal direction="up" delay={80}>
-          <div className="-mx-6 overflow-hidden px-6 [mask-image:linear-gradient(90deg,transparent,black_8%,black_92%,transparent)]">
+          <div className="-mx-6 overflow-hidden [mask-image:linear-gradient(90deg,transparent,black_4%,black_96%,transparent)]">
             <div
               key={activeGroup}
-              className="flex w-max gap-5 animate-marquee hover:[animation-play-state:paused]"
+              className="flex gap-5 overflow-x-auto px-6 pb-4 [scroll-snap-type:x_mandatory] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             >
-              {[...current.pros, ...current.pros].map((pro, i) => (
-                <ProfessionalCard
-                  key={`${activeGroup}-${pro.id}-${i}`}
-                  pro={pro}
-                  accent={copy.accent}
-                  onClick={() => setSelectedPro(pro)}
-                />
+              {current.pros.map((pro) => (
+                <div key={`${activeGroup}-${pro.id}`} className="[scroll-snap-align:start]">
+                  <ProfessionalCard
+                    pro={pro}
+                    accent={copy.accent}
+                    onClick={() => setSelectedPro(pro)}
+                  />
+                </div>
               ))}
             </div>
           </div>

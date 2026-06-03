@@ -56,15 +56,15 @@ export const AREA_PAGES: Record<AreaSlug, AreaPageConfig> = {
     shortName: "Salud deportiva",
     navLabel: "Salud deportiva",
     badge: AREA_BADGE,
-    h1: "Salud deportiva para procesos mejor coordinados",
+    h1: "Salud deportiva en Cordoba — kinesiologo, deportologo, nutricionista y mas",
     intro:
-      "Esta area esta en desarrollo. ESDEC la proyecta como una capa clave para ordenar salud, seguimiento y criterio dentro del ecosistema.",
-    seoTitle: "Salud deportiva en Cordoba | ESDEC",
+      "Conecta con kinesiologo, deportologo, nutricionista, traumatologo y preparador fisico en Cordoba. ESDEC coordina tu equipo de salud deportiva.",
+    seoTitle: "Salud deportiva en Cordoba — Kinesiologo, Deportologo, Nutricionista | ESDEC",
     metaDescription:
-      "Conoce como ESDEC proyecta su area de salud deportiva en Cordoba: evaluacion, prevencion y seguimiento dentro de un ecosistema deportivo mas coordinado.",
-    ogTitle: "Salud deportiva en Cordoba",
+      "Encontra tu kinesiologo deportivo, deportologo, nutricionista y traumatologo en Cordoba. ESDEC conecta deportistas con especialistas de salud deportiva para prevenir lesiones y mejorar el rendimiento.",
+    ogTitle: "Salud deportiva en Cordoba | ESDEC",
     ogDescription:
-      "Una landing temporal de ESDEC para presentar el rol de la salud deportiva dentro del ecosistema en construccion.",
+      "Conecta con kinesiologo, deportologo y nutricionista deportiva en Cordoba. ESDEC es el ecosistema que cuida tu cuerpo antes de que lo necesites.",
     athleteCtaLabel: "Entrar como deportista",
     professionalCtaLabel: "Entrar como profesional",
     contactCtaLabel: "Recibir novedades de salud deportiva",
