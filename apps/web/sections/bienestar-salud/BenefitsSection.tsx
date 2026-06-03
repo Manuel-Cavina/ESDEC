@@ -2,6 +2,7 @@
 // Numeros reales en formato editorial: stat grande a la izquierda + statement a la derecha.
 
 import BrandLines from "@/components/BrandLines";
+import Kicker from "@/components/ui/Kicker";
 import ScrollReveal from "@/components/ScrollReveal";
 import {
   SALUD_BENEFITS,
@@ -73,9 +74,7 @@ export default function BenefitsSection({ area }: Props) {
         {/* Header */}
         <ScrollReveal direction="up" className="mb-12">
           <BrandLines animated className="mb-5" />
-          <p className="mb-4 font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
-            {copy.eyebrow}
-          </p>
+          <Kicker className="mb-4">{copy.eyebrow}</Kicker>
           <h2 className="text-clamp-problem font-condensed font-black uppercase leading-[0.92] tracking-tight text-[var(--t1)]">
             {copy.headlinePre}{" "}
             <span className="text-[var(--p1)]">{copy.headlineAccent}</span>

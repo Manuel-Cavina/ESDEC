@@ -1097,6 +1097,14 @@ body {
   color: var(--t1);
 }
 
+/* Kicker label — gradient text con pulso */
+.kicker-gradient {
+  background: linear-gradient(135deg, #5ac8ff 0%, #0cd25e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 .ecos-title-accent {
   background: linear-gradient(90deg, var(--p1), #77d7ff 58%, var(--p2));
   -webkit-background-clip: text;

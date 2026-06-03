@@ -1,12 +1,12 @@
 // components/SharedHeroSection.tsx
 // Hero estandar para todas las paginas de ESDEC.
-// Fusion: overlay diagonal + dot grid + fingerprint (eventos) +
-//         contenido al fondo + grid de stats + fade inferior (profesionales).
+// Animacion stamp por palabra (estilo Nike) + overlay diagonal + fingerprint flotante.
 
 import Image from "next/image";
 import Link from "next/link";
 import BrandLines from "@/components/BrandLines";
 import FingerprintSVG from "@/components/FingerprintSVG";
+import Kicker from "@/components/ui/Kicker";
 import ScrollReveal from "@/components/ScrollReveal";
 
 export interface HeroStat {
@@ -15,26 +15,37 @@ export interface HeroStat {
 }
 
 interface SharedHeroSectionProps {
-  /** Foto de fondo — si no se provee usa gradiente solido */
   image?: string;
   imageAlt?: string;
-  /** Texto pequeno sobre el headline */
   eyebrow: string;
-  /** Primera linea — blanco */
   headlinePre: string;
-  /** Segunda linea — color acento (--p1) */
   headlineAccent: string;
-  /** Tercera linea opcional — blanco suave */
   headlinePost?: string;
-  /** Cuerpo */
   body: string;
-  /** CTA principal */
   ctaLabel: string;
   ctaHref: string;
   ctaExternal?: boolean;
-  /** Stats / beneficios en el pie — maximo 4 */
   stats?: HeroStat[];
   id?: string;
+}
+
+function StampWord({
+  word,
+  delay,
+  className = "",
+}: {
+  word: string;
+  delay: number;
+  className?: string;
+}) {
+  return (
+    <span
+      className={`animate-stamp inline-block ${className}`}
+      style={{ animationDelay: `${delay}ms`, animationFillMode: "both" }}
+    >
+      {word}
+    </span>
+  );
 }
 
 export default function SharedHeroSection({
@@ -53,12 +64,19 @@ export default function SharedHeroSection({
 }: SharedHeroSectionProps) {
   const hasStats = !!stats && stats.length > 0;
 
+  // Pre-calcula todas las palabras con su delay para el stamp
+  const preWords = headlinePre.trim().split(/\s+/);
+  const accentWords = headlineAccent.trim().split(/\s+/);
+  const postWords = headlinePost ? headlinePost.trim().split(/\s+/) : [];
+  const WORD_DELAY = 110;
+  let wi = 0;
+
   return (
     <section
       id={id}
       className="relative isolate min-h-[100svh] overflow-hidden bg-[var(--bg)]"
     >
-      {/* ── Foto de fondo ── */}
+      {/* Foto de fondo */}
       {image && (
         <Image
           src={image}
@@ -71,7 +89,7 @@ export default function SharedHeroSection({
         />
       )}
 
-      {/* ── Overlay diagonal LEFT-HEAVY (deja respirar la foto a la derecha) ── */}
+      {/* Overlay diagonal LEFT-HEAVY */}
       <div
         className="absolute inset-0"
         style={{
@@ -81,7 +99,7 @@ export default function SharedHeroSection({
         aria-hidden="true"
       />
 
-      {/* ── Dot grid — textura de profundidad ── */}
+      {/* Dot grid */}
       <div
         className="absolute inset-0 opacity-30"
         style={{
@@ -92,96 +110,112 @@ export default function SharedHeroSection({
         aria-hidden="true"
       />
 
-      {/* ── Fade inferior hacia el fondo de la proxima seccion ── */}
+      {/* Fingerprint flotante — desktop, top-right */}
       <div
-        className="absolute inset-x-0 bottom-0 h-44 md:h-56"
-        style={{
-          background: "linear-gradient(180deg, transparent 0%, var(--bg) 100%)",
-        }}
-        aria-hidden="true"
-      />
-
-      {/* ── Fingerprint flotante — desktop, esquina derecha ── */}
-      <div
-        className="pointer-events-none absolute -right-10 top-28 hidden w-[38vw] max-w-[500px] opacity-22 [--fpg:rgba(90,200,255,0.05)] [--fps:rgba(90,200,255,0.42)] lg:block"
+        className="pointer-events-none absolute -right-10 top-28 hidden w-[38vw] max-w-[500px] opacity-[0.22] [--fpg:rgba(90,200,255,0.05)] [--fps:rgba(90,200,255,0.42)] lg:block"
         aria-hidden="true"
       >
         <FingerprintSVG animate className="w-full animate-fp-float" strokeOpacity={0.5} />
       </div>
 
-      {/* ── Contenido — anclado al fondo ── */}
+      {/* Contenido — anclado al fondo */}
       <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-landing flex-col justify-end px-6 pb-0 pt-32 md:pt-40">
-        <div className="pb-12 lg:pb-16">
+        <div className="pb-12 lg:pb-14">
 
           {/* Eyebrow */}
           <ScrollReveal direction="up">
             <div className="mb-6 flex items-center gap-3">
               <BrandLines size="md" animated />
-              <p className="font-condensed text-[11px] font-black uppercase tracking-[0.44em] text-[var(--p1)]">
-                {eyebrow}
-              </p>
+              <Kicker>{eyebrow}</Kicker>
             </div>
           </ScrollReveal>
 
-          {/* Headline */}
-          <ScrollReveal direction="up" delay={80}>
-            <h1 className="max-w-[12ch] font-condensed text-[clamp(4.4rem,10.5vw,9.8rem)] font-black uppercase leading-[0.75] tracking-tight text-white">
-              <span className="block">{headlinePre}</span>
-              <span className="block text-[var(--p1)]">{headlineAccent}</span>
-              {headlinePost && (
-                <span className="block text-white/82">{headlinePost}</span>
-              )}
-            </h1>
-          </ScrollReveal>
+          {/* Headline con animacion stamp por palabra */}
+          <h1 className="max-w-[12ch] font-condensed text-[clamp(4.4rem,10.5vw,9.8rem)] font-black uppercase leading-[0.75] tracking-tight text-white">
+            {/* Palabras blancas */}
+            <span className="block">
+              {preWords.map((word) => (
+                <StampWord
+                  key={`pre-${word}-${wi}`}
+                  word={word}
+                  delay={wi++ * WORD_DELAY}
+                />
+              ))}
+            </span>
+
+            {/* Linea acento — stamp completo + gradiente marcado azul→verde */}
+            <span
+              className="animate-stamp block"
+              style={{
+                animationDelay: `${(wi = preWords.length) * WORD_DELAY}ms`,
+                animationFillMode: "both",
+                background: "linear-gradient(90deg, #5ac8ff 0%, #0cd25e 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+              }}
+            >
+              {headlineAccent}
+            </span>
+
+            {/* Tercera linea opcional */}
+            {postWords.length > 0 && (
+              <span className="block text-white/82">
+                {postWords.map((word) => (
+                  <StampWord
+                    key={`post-${word}-${wi}`}
+                    word={word}
+                    delay={wi++ * WORD_DELAY}
+                    className="mr-[0.18em] last:mr-0"
+                  />
+                ))}
+              </span>
+            )}
+          </h1>
 
           {/* Body */}
-          <ScrollReveal direction="up" delay={160}>
+          <ScrollReveal direction="up" delay={preWords.length * WORD_DELAY + 100}>
             <p className="mt-7 max-w-[55ch] font-sans text-[1rem] font-medium leading-[1.9] text-white/80 md:text-[1.08rem]">
               {body}
             </p>
           </ScrollReveal>
 
           {/* CTA */}
-          <ScrollReveal direction="up" delay={240}>
+          <ScrollReveal direction="up" delay={preWords.length * WORD_DELAY + 200}>
             <div className="mt-9">
               {ctaExternal ? (
                 <a
                   href={ctaHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-xl bg-[var(--btn-bg)] px-8 py-3.5 font-condensed text-[13px] font-bold uppercase tracking-[3px] text-[var(--btn-t)] transition-all duration-200 hover:-translate-y-px hover:brightness-110"
+                  className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-[#15dc62] px-8 font-condensed text-[0.84rem] font-bold uppercase tracking-[0.15em] text-[#05213d] transition-all duration-200 hover:-translate-y-px hover:brightness-105"
                 >
                   {ctaLabel} →
                 </a>
               ) : (
                 <Link
                   href={ctaHref}
-                  className="inline-flex items-center gap-2 rounded-xl bg-[var(--btn-bg)] px-8 py-3.5 font-condensed text-[13px] font-bold uppercase tracking-[3px] text-[var(--btn-t)] transition-all duration-200 hover:-translate-y-px hover:brightness-110"
+                  className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-[#15dc62] px-8 font-condensed text-[0.84rem] font-bold uppercase tracking-[0.15em] text-[#05213d] transition-all duration-200 hover:-translate-y-px hover:brightness-105"
                 >
                   {ctaLabel} →
                 </Link>
               )}
             </div>
           </ScrollReveal>
-
         </div>
 
-        {/* ── Stats / beneficios — separados por borde ── */}
+        {/* Stats bar — separados por border-t, sin fade */}
         {hasStats && (
-          <div className="border-t border-white/10 pb-10 pt-7 md:pb-14 md:pt-9">
+          <div className="-mx-6 border-t border-white/12 bg-[#001f3f]/55 px-6 py-7 backdrop-blur-[3px] md:mx-0 md:bg-transparent md:px-0">
             <div
-              className={`grid gap-6 md:gap-8 ${
-                stats!.length <= 3
-                  ? "md:grid-cols-3"
-                  : "sm:grid-cols-2 lg:grid-cols-4"
+              className={`grid gap-6 md:gap-10 ${
+                stats!.length <= 3 ? "md:grid-cols-3" : "sm:grid-cols-2 lg:grid-cols-4"
               }`}
             >
               {stats!.map((stat, i) => (
                 <ScrollReveal key={stat.label} direction="up" delay={i * 70}>
                   <article className="max-w-[24ch]">
-                    <p className="font-condensed text-[10px] font-bold uppercase tracking-[3px] text-[var(--p1)]">
-                      {stat.label}
-                    </p>
+                    <Kicker>{stat.label}</Kicker>
                     <div className="mt-3 h-px w-10 bg-gradient-to-r from-[var(--p1)]/90 to-transparent" />
                     <h3 className="mt-4 max-w-[18ch] font-condensed text-[clamp(1.1rem,1.8vw,1.35rem)] font-bold uppercase leading-[1.08] tracking-[0.02em] text-white">
                       {stat.title}

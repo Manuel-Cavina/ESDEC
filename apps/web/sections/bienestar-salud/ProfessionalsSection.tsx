@@ -8,6 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import BrandLines from "@/components/BrandLines";
 import ScrollReveal from "@/components/ScrollReveal";
+import Kicker from "@/components/ui/Kicker";
 import {
   SALUD_PROFESSIONALS,
   SALUD_PROFESSIONAL_GROUPS,
@@ -202,7 +203,7 @@ function ProfessionalModal({
             <div className="border-t border-white/[0.07] p-5">
               <Link
                 href={copy.ctaHref}
-                className="flex min-h-[52px] w-full items-center justify-center rounded-[16px] font-condensed text-[0.78rem] font-black uppercase tracking-[0.22em] no-underline transition-all duration-200 hover:-translate-y-px hover:brightness-110"
+                className="flex min-h-[52px] w-full items-center justify-center rounded-full font-condensed text-[0.78rem] font-black uppercase tracking-[0.12em] no-underline transition-all duration-200 hover:-translate-y-px hover:brightness-110"
                 style={{ background: copy.accent, color: copy.textColor }}
               >
                 {copy.ctaLabel} →
@@ -316,12 +317,7 @@ export default function ProfessionalsSection({ area }: Props) {
         {/* Header */}
         <ScrollReveal direction="up" className="mb-10">
           <BrandLines animated className="mb-5" />
-          <p
-            className="mb-3 font-condensed text-[10px] font-bold uppercase tracking-[4px]"
-            style={{ color: copy.accent }}
-          >
-            {copy.kicker}
-          </p>
+          <Kicker className="mb-3">{copy.kicker}</Kicker>
           <h2 className="font-condensed text-[clamp(34px,5vw,68px)] font-black uppercase leading-[0.92] tracking-tight text-[var(--t1)]">
             {copy.headline}{" "}
             <span style={{ color: copy.accent }}>{copy.headlineAccent}</span>
@@ -340,12 +336,11 @@ export default function ProfessionalsSection({ area }: Props) {
                   key={group.id}
                   type="button"
                   onClick={() => setActiveGroup(i)}
-                  className="rounded-full border px-5 py-2.5 font-condensed text-[0.72rem] font-bold uppercase tracking-[0.18em] transition-all duration-300"
-                  style={
+                  className={`rounded-full px-4 py-2 font-condensed text-[0.82rem] font-bold uppercase tracking-widest transition-colors duration-200 ${
                     i === activeGroup
-                      ? { borderColor: copy.accent, background: `${copy.accent}18`, color: copy.accent }
-                      : { borderColor: "rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.04)", color: "rgba(255,255,255,0.4)" }
-                  }
+                      ? "bg-white/15 text-white"
+                      : "bg-[var(--card-bg)] text-white/55 hover:text-white"
+                  }`}
                 >
                   {group.label}
                 </button>

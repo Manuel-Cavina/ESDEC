@@ -4,6 +4,7 @@
 
 import Link from "next/link";
 import BrandLines from "@/components/BrandLines";
+import Kicker from "@/components/ui/Kicker";
 import FingerprintSVG from "@/components/FingerprintSVG";
 import ScrollReveal from "@/components/ScrollReveal";
 
@@ -41,7 +42,7 @@ export default function SharedCTASection({
   const hasTwoCtas = !!secondaryCtaLabel && !!secondaryCtaHref;
 
   const primaryBtnClass =
-    "inline-flex min-h-[64px] w-full max-w-[480px] items-center justify-center rounded-[18px] bg-[#15dc62] px-10 py-4 font-condensed text-[0.86rem] font-bold uppercase tracking-[0.3em] text-[#05213d] no-underline transition-all duration-200 hover:-translate-y-px hover:brightness-105";
+    "inline-flex min-h-[64px] w-full max-w-[480px] items-center justify-center rounded-full bg-[#15dc62] px-10 py-4 font-condensed text-[0.86rem] font-bold uppercase tracking-[0.15em] text-[#05213d] no-underline transition-all duration-200 hover:-translate-y-px hover:brightness-105";
 
   return (
     <section
@@ -91,9 +92,7 @@ export default function SharedCTASection({
             {/* Eyebrow */}
             <div className="relative mb-6 flex items-center justify-center gap-3">
               <BrandLines size="sm" animated centered />
-              <p className="font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
-                {eyebrow}
-              </p>
+              <Kicker>{eyebrow}</Kicker>
             </div>
 
             {/* Titulo */}

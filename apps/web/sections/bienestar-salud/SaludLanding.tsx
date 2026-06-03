@@ -3,6 +3,7 @@
 // Flujo: Hero → Profesionales → Proceso → Numeros → CTA
 
 import SharedHeroSection from "@/components/SharedHeroSection";
+import SpecialtiesCarouselSection from "./SpecialtiesCarouselSection";
 import AthleteJourneySection from "./AthleteJourneySection";
 import BenefitsSection from "./BenefitsSection";
 import ProfessionalsSection from "./ProfessionalsSection";
@@ -12,8 +13,8 @@ export default function SaludLanding() {
   return (
     <main className="overflow-hidden bg-[var(--bg)] text-[var(--t1)]">
       <SharedHeroSection
-        image="/images/lifestyle/Medico_2.jpg"
-        imageAlt="Especialistas de salud deportiva en Cordoba"
+        image="/images/lifestyle/Correr_lluvia_1.jpg"
+        imageAlt="Deportista en accion — Salud deportiva ESDEC Cordoba"
         eyebrow="Ecosistema ESDEC — Salud deportiva"
         headlinePre="PREVENIR"
         headlineAccent="ES EL PLAN."
@@ -26,6 +27,7 @@ export default function SaludLanding() {
           { label: "Respuesta rapida", title: "Primer contacto en menos de 48 horas" },
         ]}
       />
+      <SpecialtiesCarouselSection />
       <ProfessionalsSection area="salud" />
       <AthleteJourneySection />
       <BenefitsSection area="salud" />
