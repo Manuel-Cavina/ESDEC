@@ -17,6 +17,7 @@ export interface Professional {
   bullets: string[];
   whenYouNeedThem: string[];
   accent: string;
+  image?: string;
 }
 
 export interface ProfessionalGroup {
@@ -193,43 +194,43 @@ export const SALUD_PROFESSIONALS: Professional[] = [
 
 export const SALUD_BENEFITS: BenefitItem[] = [
   {
-    id: "continuidad",
-    icon: "progreso",
-    stat: "3x",
-    statLabel: "mas continuidad",
-    title: "Menos semanas fuera",
-    description:
-      "El deportista con plan de prevencion activa interrumpe su proceso tres veces menos por lesiones que podrian haberse anticipado.",
-    accent: "#5ac8ff",
-  },
-  {
-    id: "visibilidad",
+    id: "prevenibles",
     icon: "criterio",
-    stat: "100%",
-    statLabel: "visibilidad de tu cuerpo",
-    title: "Sabes donde estas",
+    stat: "1/3",
+    statLabel: "lesiones deportivas son prevenibles",
+    title: "La que no tenia que pasar",
     description:
-      "Una evaluacion clinica completa te da datos reales sobre tu estado fisico actual. No suposiciones. Certeza para decidir bien.",
+      "Al menos 1 de cada 3 lesiones deportivas se puede prevenir con evaluacion clinica inicial y seguimiento activo. La mayoria pasa por no tener ese sistema.",
     accent: "#5ac8ff",
   },
   {
-    id: "lesion",
-    icon: "estructura",
-    stat: "0",
-    statLabel: "lesiones evitables",
-    title: "La lesion que no llega",
+    id: "sobreuso",
+    icon: "progreso",
+    stat: "80%",
+    statLabel: "de lesiones por sobreuso son detectables",
+    title: "Detectables antes de que duelan",
     description:
-      "El kinesiologo y el deportologo trabajando en prevencion activa detectan y neutralizan los riesgos antes de que se instalen.",
+      "El 80% de las lesiones por sobreuso — las mas comunes en el deporte amateur — son detectables antes de volverse agudas con seguimiento activo.",
+    accent: "#5ac8ff",
+  },
+  {
+    id: "recuperacion",
+    icon: "estructura",
+    stat: "12",
+    statLabel: "semanas promedio fuera por lesion muscular",
+    title: "El costo de no prevenir",
+    description:
+      "Una lesion muscular seria puede quitar entre 6 y 12 semanas de entrenamiento. La prevencion cuesta mucho menos tiempo que eso.",
     accent: "#5ac8ff",
   },
   {
     id: "equipo",
     icon: "equipo",
-    stat: "1",
-    statLabel: "sistema coordinado",
-    title: "Un equipo, no citas sueltas",
+    stat: "6",
+    statLabel: "tipos de especialistas coordinados",
+    title: "El equipo completo",
     description:
-      "Tus profesionales de salud comparten informacion y trabajan coordinados dentro del mismo ecosistema. Sin contradicciones ni vacios.",
+      "Kinesiologo, deportologo, nutricionista, traumatologo, preparador fisico y medico clinico. Los 6 dentro del mismo ecosistema, no por separado.",
     accent: "#5ac8ff",
   },
 ];
@@ -246,48 +247,49 @@ export interface JourneyPhase {
 
 export const SALUD_JOURNEY = {
   eyebrow: "Prevencion activa",
-  headline: "EL PROCESO QUE EVITA LA LESION.",
+  headlinePre: "DE LA EVALUACION",
+  headlineAccent: "AL RENDIMIENTO.",
   subtext:
-    "No se trata de reaccionar cuando algo falla. Se trata de construir el sistema antes. No te falta esfuerzo — te falta la estructura que lo sostenga.",
+    "No te falta esfuerzo — te falta la estructura que lo sostenga.",
   phases: [
     {
       id: "evaluacion",
       icon: "criterio",
-      title: "Evalua tu punto de partida",
+      title: "Punto de partida",
       description:
-        "Antes de exigirte mas, antes de agregar carga: conoce tu cuerpo hoy. Una evaluacion clinica y fisica completa que revela limitaciones, riesgos y potencial antes de que se conviertan en problemas reales.",
-      professionals: ["Kinesiologo deportivo", "Deportologo"],
+        "Antes de pedir mas al cuerpo, hay que saber desde donde se parte. Limitaciones, riesgos y potencial mapeados desde el primer dia.",
+      professionals: ["Kinesiologo", "Deportologo"],
     },
     {
       id: "plan",
       icon: "estructura",
-      title: "Construi tu plan de prevencion",
+      title: "Plan de prevencion",
       description:
-        "Con el diagnostico real, tu equipo diseña un plan que organiza nutricion, carga y seguimiento para que tu cuerpo aguante todo lo que el entrenamiento va a exigirle. Sin improvisacion.",
-      professionals: ["Nutricionista deportiva", "Preparador fisico"],
+        "Nutricion, carga y seguimiento en un solo plan. Construido para tu cuerpo, tu deporte y tu etapa — sin improvisacion.",
+      professionals: ["Nutricionista", "Preparador fisico"],
     },
     {
       id: "monitoreo",
       icon: "progreso",
-      title: "Monitoreo antes del problema",
+      title: "Monitoreo activo",
       description:
-        "La prevencion activa no es una consulta unica. Es seguimiento continuo que detecta senales tempranas de sobrecarga o riesgo antes de que se conviertan en lesiones que detienen el proceso.",
-      professionals: ["Todo el equipo de salud"],
+        "Seguimiento continuo que detecta senales de sobrecarga antes de que se conviertan en lesiones. No es una consulta. Es un sistema.",
+      professionals: ["Todo el equipo"],
     },
     {
       id: "respuesta",
       icon: "clinica",
-      title: "Si algo pasa, el sistema ya existe",
+      title: "Respuesta rapida",
       description:
-        "Nadie es invulnerable. Pero con un equipo coordinado, el protocolo ya existe: diagnostico rapido, plan de recuperacion claro y retorno supervisado al deporte. Sin improvisar, sin tiempo perdido.",
-      professionals: ["Traumatologo deportivo", "Kinesiologo deportivo"],
+        "Cuando algo pasa, el protocolo ya existe. Diagnostico, plan de recuperacion y retorno supervisado al deporte — sin tiempo perdido.",
+      professionals: ["Traumatologo", "Kinesiologo"],
     },
     {
       id: "continuidad",
       icon: "escala",
-      title: "Un cuerpo que aguanta. Un proceso que dura.",
+      title: "Rendimiento sostenido",
       description:
-        "El resultado de la prevencion activa: menos semanas fuera del deporte, mas entrenamientos cumplidos, rendimiento que no se corta. El cuerpo que se cuida es el que sostiene el proceso completo.",
+        "Menos semanas fuera. Mas entrenamientos cumplidos. Un proceso que no se corta porque el cuerpo esta cuidado.",
       professionals: ["Equipo coordinado ESDEC"],
     },
   ] as JourneyPhase[],

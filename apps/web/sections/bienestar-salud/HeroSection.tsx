@@ -224,25 +224,11 @@ export default function HeroSection({ area }: Props) {
         </ScrollReveal>
       </div>
 
-      {/* Marquee base */}
+      {/* Marquee base — solo para bienestar; salud usa SpecialtiesCarouselSection */}
+      {area === "bienestar" && (
       <div className="absolute bottom-0 left-0 right-0 overflow-hidden border-t border-white/[0.08] bg-[rgba(0,0,0,0.16)] py-3">
         <div className="animate-marquee flex items-center whitespace-nowrap">
-          {chips
-            ? chips.map((chip, i) => (
-                <span
-                  key={i}
-                  className="mx-2 inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-condensed text-[0.6rem] font-bold uppercase tracking-[0.14em]"
-                  style={{
-                    borderColor: `${cfg.accentColor}30`,
-                    background: `${cfg.accentColor}0a`,
-                    color: `${cfg.accentColor}bb`,
-                  }}
-                >
-                  <StickerIcon name={chip.icon} size="xxs" className="opacity-75" />
-                  {chip.label}
-                </span>
-              ))
-            : doubleText?.map((item, i) => (
+          {doubleText?.map((item, i) => (
                 <span
                   key={i}
                   className="mx-6 font-condensed text-[0.68rem] font-bold uppercase tracking-[0.28em] text-white/36"
@@ -253,6 +239,7 @@ export default function HeroSection({ area }: Props) {
               ))}
         </div>
       </div>
+      )}
     </section>
   );
 }

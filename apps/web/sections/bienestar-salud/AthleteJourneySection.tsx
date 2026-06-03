@@ -1,145 +1,79 @@
 // sections/bienestar-salud/AthleteJourneySection.tsx
-// Proceso de prevencion activa en formato bento grid con animacion cascade.
+// Proceso de prevencion activa — mismo layout, colores y animaciones que ProblemSection en /deportistas.
 
 import BrandLines from "@/components/BrandLines";
+import FingerprintSVG from "@/components/FingerprintSVG";
 import ScrollReveal from "@/components/ScrollReveal";
-import StickerIcon from "@/components/StickerIcon";
 import { SALUD_JOURNEY, type JourneyPhase } from "@/content/bienestar-salud";
 
-const ACCENT = "#5ac8ff";
-
-interface PhaseCardProps {
-  phase: JourneyPhase;
-  index: number;
-  isLast?: boolean;
-}
-
-function PhaseCard({ phase, index, isLast = false }: PhaseCardProps) {
-  const stepLabel = `Paso 0${index + 1}`;
+function PhaseCard({ phase, index }: { phase: JourneyPhase; index: number }) {
+  const number = String(index + 1).padStart(2, "0");
 
   return (
-    <div
-      className={`group relative overflow-hidden rounded-[24px] border p-7 transition-all duration-300 hover:-translate-y-0.5 ${
-        isLast
-          ? "border-[rgba(90,200,255,0.28)] bg-[rgba(90,200,255,0.07)]"
-          : "border-[rgba(255,255,255,0.1)] bg-[rgba(255,255,255,0.05)] hover:border-[rgba(90,200,255,0.2)] hover:bg-[rgba(255,255,255,0.07)]"
-      }`}
-    >
-      {/* Numero grande como watermark de fondo */}
-      <span
-        className="pointer-events-none absolute right-5 top-2 select-none font-condensed text-[7rem] font-black leading-none text-white"
-        style={{ opacity: isLast ? 0.04 : 0.025 }}
-        aria-hidden="true"
-      >
-        {String(index + 1).padStart(2, "0")}
-      </span>
-
-      {/* Accent line top — visible en ultimo paso siempre, en otros en hover */}
-      <span
-        className={`pointer-events-none absolute left-0 top-0 h-px w-full transition-opacity duration-300 ${
-          isLast ? "opacity-100" : "opacity-0 group-hover:opacity-100"
-        }`}
-        style={{
-          background: `linear-gradient(90deg, ${ACCENT} 0%, rgba(255,255,255,0.06) 100%)`,
-        }}
-        aria-hidden="true"
-      />
-
-      {/* Header: paso label + icon */}
-      <div className="relative mb-6 flex items-start justify-between">
-        <span
-          className="font-condensed text-[0.62rem] font-black uppercase tracking-[3px]"
-          style={{ color: ACCENT }}
+    <ScrollReveal direction="up" delay={index * 70}>
+      <article className="group relative overflow-hidden border-t-2 border-[var(--p1)]/20 py-10 transition-colors duration-300 hover:border-[var(--p1)]/70">
+        {/* Fingerprint aparece en hover — identico a ProblemCard */}
+        <div
+          className="pointer-events-none absolute -bottom-10 -right-10 opacity-0 transition-opacity duration-500 group-hover:opacity-100 [--fps:rgba(90,200,255,0.18)] [--fpg:rgba(90,200,255,0.04)]"
+          aria-hidden="true"
         >
-          {stepLabel}
+          <FingerprintSVG animate={false} className="w-36" />
+        </div>
+
+        {/* Numero grande */}
+        <span
+          className="mb-2 block select-none font-condensed text-[var(--p1)]/18 transition-colors duration-300 group-hover:text-[var(--p1)]/30"
+          style={{ fontSize: "clamp(72px, 9vw, 108px)", lineHeight: "1" }}
+          aria-hidden="true"
+        >
+          {number}
         </span>
-        <span style={{ color: ACCENT }} className={isLast ? "opacity-100" : "opacity-60 group-hover:opacity-90 transition-opacity"}>
-          <StickerIcon name={phase.icon} size="sm" />
-        </span>
-      </div>
 
-      {/* Titulo */}
-      <h3
-        className={`relative font-condensed font-bold uppercase leading-[1.05] tracking-[0.02em] text-[var(--t1)] ${
-          isLast ? "text-[1.3rem]" : "text-[1.1rem]"
-        }`}
-      >
-        {phase.title}
-      </h3>
+        {/* Linea de acento — se extiende en hover */}
+        <div className="mb-5 h-[2px] w-6 bg-[var(--p1)]/40 transition-all duration-300 group-hover:w-14 group-hover:bg-[var(--p1)]" />
 
-      {/* Descripcion */}
-      <p className="relative mt-3 font-sans text-[0.85rem] leading-[1.82] text-[var(--t2)]">
-        {phase.description}
-      </p>
+        {/* Titulo del paso */}
+        <h3 className="font-condensed text-[clamp(20px,2.4vw,34px)] font-semibold uppercase leading-[0.98] tracking-[0.02em] text-[var(--t1)] md:tracking-[0.03em]">
+          {phase.title}
+        </h3>
 
-      {/* Chips de profesionales */}
-      <div className="relative mt-5 flex flex-wrap gap-1.5">
-        {phase.professionals.map((pro) => (
-          <span
-            key={pro}
-            className="inline-flex rounded-full px-2.5 py-1 font-condensed text-[0.58rem] font-bold uppercase tracking-[0.1em]"
-            style={{
-              background: `${ACCENT}12`,
-              color: `${ACCENT}cc`,
-              border: `1px solid ${ACCENT}20`,
-            }}
-          >
-            {pro}
-          </span>
-        ))}
-      </div>
-    </div>
+        {/* Descripcion corta */}
+        <p className="mt-3 font-sans text-sm leading-[1.8] text-[var(--t2)]">
+          {phase.description}
+        </p>
+
+      </article>
+    </ScrollReveal>
   );
 }
 
 export default function AthleteJourneySection() {
-  const { eyebrow, headline, subtext, phases } = SALUD_JOURNEY;
+  const { eyebrow, headlinePre, headlineAccent, subtext, phases } = SALUD_JOURNEY;
 
   return (
-    <section
-      id="proceso"
-      className="relative overflow-hidden bg-[var(--bg)] py-24 md:py-28"
-    >
-      {/* Glow sutil izquierda */}
-      <div
-        className="pointer-events-none absolute left-0 top-[35%] h-[480px] w-[480px] -translate-x-1/2 rounded-full"
-        style={{
-          background: "radial-gradient(circle, rgba(90,200,255,0.12) 0%, transparent 68%)",
-          filter: "blur(80px)",
-        }}
-        aria-hidden="true"
-      />
-
-      <div className="relative z-10 mx-auto max-w-landing px-6">
-        {/* Header */}
-        <ScrollReveal direction="up" className="mb-12 max-w-3xl">
+    <section id="proceso" className="bg-[var(--bg2)] py-24 md:py-28">
+      <div className="mx-auto max-w-landing px-6">
+        {/* Header — mismo formato que ProblemSection */}
+        <ScrollReveal direction="up" className="mb-14 max-w-3xl">
           <BrandLines animated className="mb-5" />
-          <p
-            className="mb-3 font-condensed text-[10px] font-bold uppercase tracking-[4px]"
-            style={{ color: ACCENT }}
-          >
+          <p className="mb-4 font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
             {eyebrow}
           </p>
-          <h2 className="font-condensed text-[clamp(36px,5vw,72px)] font-black uppercase leading-[0.92] tracking-tight text-[var(--t1)]">
-            {headline}
+          <h2 className="text-clamp-problem mb-5 font-condensed font-black uppercase leading-[0.92] tracking-tight text-[var(--t1)]">
+            {headlinePre}{" "}
+            <span className="text-[var(--p1)]">{headlineAccent}</span>
           </h2>
-          <p className="mt-5 max-w-[60ch] font-sans text-[0.96rem] leading-[1.9] text-[var(--t2)]">
+          <p className="max-w-[52ch] font-sans text-base leading-[1.9] text-[var(--t2)]">
             {subtext}
           </p>
         </ScrollReveal>
 
-        {/* Bento grid — cascade animation en los hijos directos */}
-        <ScrollReveal cascade cascadeDelay={80} className="grid gap-4 lg:grid-cols-2">
-          {/* Fases 1-4: cada una ocupa 1 columna */}
-          <PhaseCard phase={phases[0]} index={0} />
-          <PhaseCard phase={phases[1]} index={1} />
-          <PhaseCard phase={phases[2]} index={2} />
-          <PhaseCard phase={phases[3]} index={3} />
-          {/* Fase 5: span completo — resultado final del proceso */}
-          <div className="lg:col-span-2">
-            <PhaseCard phase={phases[4]} index={4} isLast />
-          </div>
-        </ScrollReveal>
+        {/* Grid de fases — identico a ProblemCard en /deportistas */}
+        <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-5">
+          {phases.map((phase, index) => (
+            <PhaseCard key={phase.id} phase={phase} index={index} />
+          ))}
+        </div>
       </div>
     </section>
   );
