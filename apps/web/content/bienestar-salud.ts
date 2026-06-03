@@ -18,6 +18,7 @@ export interface Professional {
   whenYouNeedThem: string[];
   accent: string;
   image?: string;
+  name?: string;
 }
 
 export interface ProfessionalGroup {
@@ -88,6 +89,8 @@ export const SALUD_PROFESSIONALS: Professional[] = [
     role: "Kinesiologo deportivo",
     tagline: "Rehabilitacion y prevencion de lesiones",
     valueProp: "Para no parar. Para volver. Para anticipar.",
+    image: "/images/athletes/medicina2.jpg",
+    name: "Lic. Martina Rios",
     bullets: [
       "Rehabilitacion de lesiones musculares y articulares",
       "Planes de prevencion y readaptacion al deporte",
@@ -106,6 +109,8 @@ export const SALUD_PROFESSIONALS: Professional[] = [
     role: "Deportologo",
     tagline: "Medicina del deporte y seguimiento clinico",
     valueProp: "Para saber de donde partes antes de exigirte.",
+    image: "/images/lifestyle/Medico1.png",
+    name: "Dr. Sebastian Cano",
     bullets: [
       "Evaluaciones medicas deportivas completas",
       "Habilitaciones fisicas y apto deportivo para competir",
@@ -124,6 +129,8 @@ export const SALUD_PROFESSIONALS: Professional[] = [
     role: "Nutricionista deportiva",
     tagline: "Alimentacion orientada al rendimiento",
     valueProp: "Para la energia que el proceso demanda.",
+    image: "/images/lifestyle/Medico_2.jpg",
+    name: "Lic. Valentina Morales",
     bullets: [
       "Planes de alimentacion segun deporte y fase del proceso",
       "Nutricion para competencia, entrenamiento y recuperacion",
@@ -142,6 +149,8 @@ export const SALUD_PROFESSIONALS: Professional[] = [
     role: "Traumatologo deportivo",
     tagline: "Diagnostico y tratamiento de lesiones",
     valueProp: "Para saber cuando y como volver sin riesgos.",
+    image: "/images/lifestyle/Deportes_1.jpg",
+    name: "Dr. Agustin Ferraro",
     bullets: [
       "Diagnostico preciso de lesiones agudas y cronicas",
       "Tiempos de recuperacion reales y protocolo de retorno",
@@ -160,6 +169,8 @@ export const SALUD_PROFESSIONALS: Professional[] = [
     role: "Preparador fisico",
     tagline: "Planificacion de carga y periodizacion",
     valueProp: "Para entrenar con estructura, no con intuicion.",
+    image: "/images/athletes/maraton_1.jpg",
+    name: "Prof. Lucas Mendez",
     bullets: [
       "Planes de entrenamiento especificos por deporte y etapa",
       "Periodizacion para picos de rendimiento en competencia",
@@ -178,6 +189,8 @@ export const SALUD_PROFESSIONALS: Professional[] = [
     role: "Medico clinico deportivo",
     tagline: "Salud general para deportistas activos",
     valueProp: "Para el seguimiento que la mayoria ignora.",
+    image: "/images/athletes/metricas1.jpg",
+    name: "Dra. Carolina Paz",
     bullets: [
       "Analisis de laboratorio orientados al rendimiento deportivo",
       "Control de parametros clave: hierro, vitaminas, hormonas",

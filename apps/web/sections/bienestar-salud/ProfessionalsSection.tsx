@@ -1,13 +1,13 @@
 "use client";
 
 // sections/bienestar-salud/ProfessionalsSection.tsx
-// Cards de profesionales con foto estilo eventos + modal editorial (sin estetica de redes sociales).
+// Directorio de profesionales por sub-area. Cada sub-area tiene un spread tipo cupcake:
+// el profesional del centro es grande, los del costado se achican. Al tocar uno → aparece su info.
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import BrandLines from "@/components/BrandLines";
-import FingerprintSVG from "@/components/FingerprintSVG";
 import ScrollReveal from "@/components/ScrollReveal";
 import StickerIcon from "@/components/StickerIcon";
 import {
@@ -16,6 +16,7 @@ import {
   BIENESTAR_PROFESSIONALS,
   type BienestarSaludArea,
   type Professional,
+  type ProfessionalGroup,
 } from "@/content/bienestar-salud";
 
 interface Props {
@@ -28,10 +29,9 @@ const SECTION_COPY = {
     headline: "LOS PROFESIONALES",
     headlineAccent: "QUE TE CUIDAN.",
     subtext:
-      "Cada especialista tiene un rol preciso dentro de tu proceso. Hace click para conocer en detalle lo que hace y cuando lo necesitas.",
+      "Encontra al especialista que necesitas. Cada uno tiene un rol preciso en tu proceso de salud deportiva.",
     accent: "#5ac8ff",
-    areaBadge: "Salud deportiva",
-    ctaLabel: "Entrar al ecosistema",
+    ctaLabel: "Conectar",
     ctaHref: "/deportistas",
   },
   bienestar: {
@@ -39,310 +39,183 @@ const SECTION_COPY = {
     headline: "LOS PROFESIONALES",
     headlineAccent: "QUE TE SOSTIENEN.",
     subtext:
-      "Cada especialista tiene un rol preciso dentro de tu proceso. Hace click para conocer en detalle lo que hace y cuando lo necesitas.",
+      "Encontra al especialista que necesitas. Cada uno tiene un rol preciso en tu proceso de bienestar.",
     accent: "#7de8a8",
-    areaBadge: "Bienestar deportivo",
-    ctaLabel: "Entrar al ecosistema",
+    ctaLabel: "Conectar",
     ctaHref: "/deportistas",
   },
 } as const;
 
-// ─── Modal editorial ──────────────────────────────────────────────────────────
+// ─── Spread de una sub-area ───────────────────────────────────────────────────
 
-function ProfessionalModal({
-  pro,
-  area,
-  onClose,
+function ProfessionalSpread({
+  professionals,
+  accent,
+  ctaLabel,
+  ctaHref,
 }: {
-  pro: Professional;
-  area: BienestarSaludArea;
-  onClose: () => void;
+  professionals: Professional[];
+  accent: string;
+  ctaLabel: string;
+  ctaHref: string;
 }) {
-  const copy = SECTION_COPY[area];
+  const [active, setActive] = useState(Math.floor(professionals.length / 2));
+  const pro = professionals[active];
 
-  useEffect(() => {
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
-    window.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = prev;
-      window.removeEventListener("keydown", onKey);
-    };
-  }, [onClose]);
+  const SCALES  = [1, 0.76, 0.58, 0.45];
+  const OPACITY = [1, 0.62, 0.40, 0.25];
+
+  const firstName = pro.name?.split(" ").pop() ?? pro.role.split(" ")[0];
 
   return (
-    <div
-      className="fixed inset-0 z-[980] flex items-center justify-center bg-black/75 px-4 py-6 backdrop-blur-[8px]"
-      role="dialog"
-      aria-modal="true"
-      aria-label={pro.role}
-      onMouseDown={onClose}
-    >
-      <div
-        className="relative max-h-[92svh] w-full max-w-[980px] overflow-hidden rounded-[26px] shadow-[0_28px_90px_-38px_rgba(0,0,0,0.9)]"
-        onMouseDown={(e) => e.stopPropagation()}
-      >
-        <button
-          type="button"
-          onClick={onClose}
-          aria-label="Cerrar"
-          className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 font-condensed text-[14px] font-bold text-white backdrop-blur-md transition-colors hover:bg-white/14"
-        >
-          ✕
-        </button>
+    <div>
+      {/* ── Spread cupcake ── */}
+      <div className="relative flex items-end justify-center gap-3 overflow-visible pb-2">
+        {professionals.map((p, i) => {
+          const dist  = Math.abs(i - active);
+          const scale = SCALES[Math.min(dist, 3)];
+          const alpha = OPACITY[Math.min(dist, 3)];
 
-        <div className="grid max-h-[92svh] overflow-y-auto lg:grid-cols-[minmax(0,1.15fr)_380px]">
-          {/* Panel visual izquierdo */}
-          <div
-            className="relative flex min-h-[260px] items-end overflow-hidden lg:min-h-[580px]"
-            style={{
-              background: "linear-gradient(145deg, rgba(4,14,44,0.98) 0%, rgba(7,28,74,0.96) 55%, rgba(5,20,56,0.99) 100%)",
-            }}
-          >
-            {/* Foto si existe */}
-            {pro.image && (
-              <Image
-                src={pro.image}
-                alt={pro.role}
-                fill
-                quality={92}
-                sizes="(min-width: 1024px) 56vw, 100vw"
-                className="object-cover object-top opacity-80 saturate-75"
-              />
-            )}
-
-            {/* Placeholder sin foto */}
-            {!pro.image && (
-              <>
+          return (
+            <button
+              key={p.id}
+              type="button"
+              onClick={() => setActive(i)}
+              aria-label={`Ver ${p.name ?? p.role}`}
+              className="relative shrink-0 cursor-pointer overflow-hidden rounded-[20px] shadow-[0_20px_60px_-20px_rgba(0,0,0,0.7)] outline-none transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
+              style={{
+                width: "220px",
+                height: "320px",
+                transform: `scale(${scale})`,
+                opacity: alpha,
+                transformOrigin: "bottom center",
+                zIndex: 10 - dist,
+              }}
+            >
+              {/* Foto o placeholder */}
+              {p.image ? (
+                <Image
+                  src={p.image}
+                  alt={p.name ?? p.role}
+                  fill
+                  sizes="220px"
+                  className="object-cover saturate-75 opacity-85"
+                />
+              ) : (
                 <div
-                  className="pointer-events-none absolute inset-0 [--fps:rgba(90,200,255,0.18)] [--fpg:rgba(90,200,255,0.03)]"
-                  style={{ opacity: 0.12 }}
-                  aria-hidden="true"
+                  className="absolute inset-0"
+                  style={{ background: "linear-gradient(145deg, rgba(4,14,44,0.98) 0%, rgba(7,28,74,0.95) 100%)" }}
                 >
-                  <FingerprintSVG animate={false} className="h-full w-full object-cover" />
+                  <div className="absolute inset-0 flex items-center justify-center" style={{ color: accent }}>
+                    <StickerIcon name={p.icon} size="lg" className="opacity-20" />
+                  </div>
                 </div>
-                <div
-                  className="pointer-events-none absolute left-1/2 top-[38%] -translate-x-1/2 -translate-y-1/2"
-                  style={{ color: pro.accent }}
-                  aria-hidden="true"
-                >
-                  <StickerIcon
-                    name={pro.icon}
-                    size="lg"
-                    className="opacity-20 [&>svg]:drop-shadow-[0_0_20px_currentColor]"
-                  />
-                </div>
-              </>
-            )}
+              )}
 
-            {/* Gradient overlay */}
-            <div className="absolute inset-0 bg-[linear-gradient(168deg,rgba(0,10,24,0.08)_0%,rgba(0,10,24,0.55)_40%,rgba(4,14,44,0.97)_100%)]" />
+              {/* Overlay */}
+              <div className="absolute inset-0 bg-[linear-gradient(168deg,rgba(4,14,44,0.05)_0%,rgba(4,14,44,0.55)_50%,rgba(4,14,44,0.95)_100%)]" />
 
-            {/* Nombre + area al pie */}
-            <div className="relative z-10 w-full px-7 pb-7 pt-10">
-              <div className="mb-2 flex items-center gap-2">
+              {/* Borde acento en activo */}
+              {i === active && (
                 <span
-                  className="h-1.5 w-1.5 rounded-full"
-                  style={{ background: pro.accent }}
+                  className="pointer-events-none absolute inset-0 rounded-[20px] border-2"
+                  style={{ borderColor: `${accent}60` }}
                   aria-hidden="true"
                 />
-                <span
-                  className="font-condensed text-[0.62rem] font-black uppercase tracking-[3px]"
-                  style={{ color: pro.accent }}
-                >
-                  {copy.areaBadge} · ESDEC
-                </span>
-              </div>
-              <h3 className="font-condensed text-[clamp(1.6rem,3vw,2.4rem)] font-black uppercase leading-[0.9] text-white">
-                {pro.role}
-              </h3>
-            </div>
-          </div>
+              )}
 
-          {/* Panel de informacion — editorial, no redes sociales */}
-          <div className="flex flex-col bg-[#14181f]">
-            {/* Header limpio */}
-            <div className="border-b border-white/[0.08] px-6 py-5">
-              <p
-                className="font-condensed text-[0.68rem] font-black uppercase tracking-[2.5px]"
-                style={{ color: pro.accent }}
-              >
-                {pro.tagline}
-              </p>
-              <p className="mt-2 font-sans text-[0.85rem] font-medium leading-[1.55] text-white/60">
-                {pro.valueProp}
-              </p>
-            </div>
-
-            {/* Contenido */}
-            <div className="flex-1 space-y-4 overflow-y-auto p-5">
-              {/* Lo que hace */}
+              {/* Nombre — solo en el activo */}
               <div
-                className="rounded-[14px] border p-4"
-                style={{ borderColor: `${pro.accent}25`, background: `${pro.accent}07` }}
+                className="absolute bottom-0 left-0 right-0 p-4 transition-opacity duration-300"
+                style={{ opacity: i === active ? 1 : 0 }}
               >
                 <p
-                  className="mb-3 font-condensed text-[8px] font-black uppercase tracking-[3px]"
-                  style={{ color: pro.accent }}
+                  className="font-condensed text-[0.54rem] font-black uppercase tracking-[2.5px]"
+                  style={{ color: accent }}
                 >
-                  Lo que hace
+                  {p.role}
                 </p>
-                <ul className="space-y-2">
-                  {pro.bullets.map((b) => (
-                    <li
-                      key={b}
-                      className="flex items-start gap-2 font-sans text-[0.83rem] leading-[1.6] text-white/78"
-                    >
-                      <span
-                        className="mt-[6px] h-1.5 w-1.5 shrink-0 rounded-full"
-                        style={{ background: pro.accent }}
-                        aria-hidden="true"
-                      />
-                      {b}
-                    </li>
-                  ))}
-                </ul>
+                <h4 className="font-condensed text-[1rem] font-black uppercase leading-tight text-white">
+                  {p.name ?? p.role}
+                </h4>
               </div>
-
-              {/* Cuando lo necesitas */}
-              <div className="rounded-[14px] border border-white/[0.07] bg-white/[0.04] p-4">
-                <p className="mb-3 font-condensed text-[8px] font-black uppercase tracking-[3px] text-white/38">
-                  Cuando lo necesitas
-                </p>
-                <ul className="space-y-2">
-                  {pro.whenYouNeedThem.map((w) => (
-                    <li
-                      key={w}
-                      className="flex items-start gap-2 font-sans text-[0.83rem] leading-[1.6] text-white/70"
-                    >
-                      <span
-                        className="mt-[6px] h-1.5 w-1.5 shrink-0 rounded-full bg-white/28"
-                        aria-hidden="true"
-                      />
-                      {w}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            {/* CTA */}
-            <div className="border-t border-white/[0.08] p-5">
-              <Link
-                href={copy.ctaHref}
-                className="flex min-h-[52px] w-full items-center justify-center rounded-[18px] font-condensed text-[0.8rem] font-black uppercase tracking-[0.22em] no-underline transition-all duration-200 hover:-translate-y-px hover:brightness-110"
-                style={{
-                  background: pro.accent,
-                  color: area === "salud" ? "#06275f" : "#04213d",
-                }}
-              >
-                {copy.ctaLabel}
-              </Link>
-            </div>
-          </div>
-        </div>
+            </button>
+          );
+        })}
       </div>
-    </div>
-  );
-}
 
-// ─── Card estilo eventos — foto o placeholder editorial ───────────────────────
+      {/* Dots de navegación */}
+      <div className="mt-5 flex justify-center gap-1.5">
+        {professionals.map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            onClick={() => setActive(i)}
+            aria-label={`Ir al profesional ${i + 1}`}
+            className="rounded-full transition-all duration-300"
+            style={{
+              height: "5px",
+              width: i === active ? "18px" : "5px",
+              background: i === active ? accent : "rgba(255,255,255,0.2)",
+            }}
+          />
+        ))}
+      </div>
 
-function ProfessionalCard({
-  pro,
-  accent,
-  onClick,
-}: {
-  pro: Professional;
-  accent: string;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-label={`Ver especialista: ${pro.role}`}
-      className="group relative min-h-[300px] w-full overflow-hidden rounded-[22px] bg-[var(--bg)] text-left shadow-[0_16px_48px_-24px_rgba(0,0,0,0.6)] transition-all duration-300 hover:-translate-y-1 focus-visible:ring-2"
-      style={{ "--ring-color": accent } as React.CSSProperties}
-    >
-      {/* Foto real si existe */}
-      {pro.image && (
-        <Image
-          src={pro.image}
-          alt={pro.role}
-          fill
-          sizes="(min-width: 1280px) 33vw, (min-width: 640px) 50vw, 100vw"
-          className="object-cover object-top opacity-80 saturate-75 transition-transform duration-500 group-hover:scale-[1.03]"
-        />
-      )}
-
-      {/* Placeholder cuando no hay foto */}
-      {!pro.image && (
-        <div
-          className="absolute inset-0"
-          style={{
-            background: "linear-gradient(145deg, rgba(4,14,44,0.98) 0%, rgba(7,28,74,0.95) 55%, rgba(5,20,56,0.98) 100%)",
-          }}
-        >
-          <div
-            className="absolute inset-0 [--fps:rgba(255,255,255,0.4)] [--fpg:rgba(255,255,255,0.01)]"
-            style={{ opacity: 0.07 }}
-            aria-hidden="true"
-          >
-            <FingerprintSVG animate={false} className="h-full w-full object-cover" />
+      {/* ── Panel de info del activo ── */}
+      <div
+        key={pro.id}
+        className="animate-fade-up mt-6 overflow-hidden rounded-[20px] border border-[rgba(255,255,255,0.1)] bg-[rgba(255,255,255,0.05)] p-6"
+        style={{ animationFillMode: "both" }}
+      >
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p
+              className="mb-1 font-condensed text-[0.58rem] font-black uppercase tracking-[2.5px]"
+              style={{ color: accent }}
+            >
+              {pro.role}
+            </p>
+            <h4 className="font-condensed text-[1.25rem] font-black uppercase leading-tight text-white">
+              {pro.name ?? pro.role}
+            </h4>
           </div>
-          {/* Icono grande muy sutil */}
-          <div
-            className="absolute left-1/2 top-[38%] -translate-x-1/2 -translate-y-1/2"
-            style={{ color: accent }}
-            aria-hidden="true"
-          >
-            <StickerIcon
-              name={pro.icon}
-              size="lg"
-              className="opacity-[0.18] [&>svg]:drop-shadow-[0_0_16px_currentColor]"
-            />
-          </div>
+          <span style={{ color: accent }}>
+            <StickerIcon name={pro.icon} size="sm" className="opacity-70 [&>svg]:drop-shadow-[0_0_8px_currentColor]" />
+          </span>
         </div>
-      )}
 
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(168deg,rgba(0,10,24,0.08)_0%,rgba(0,10,24,0.6)_45%,rgba(0,10,24,0.97)_100%)]" />
-
-      {/* Linea de acento top — aparece en hover */}
-      <span
-        className="pointer-events-none absolute left-0 top-0 h-px w-full origin-left scale-x-0 transition-transform duration-500 ease-out group-hover:scale-x-100"
-        style={{ background: `linear-gradient(90deg, ${accent} 0%, rgba(255,255,255,0.08) 100%)` }}
-        aria-hidden="true"
-      />
-
-      {/* Contenido en la parte inferior */}
-      <div className="absolute bottom-0 left-0 right-0 p-5">
-        <p
-          className="mb-1.5 font-condensed text-[0.58rem] font-black uppercase tracking-[2.5px]"
-          style={{ color: accent }}
-        >
-          {pro.tagline}
-        </p>
-        <h3 className="font-condensed text-[1.1rem] font-bold uppercase leading-tight text-white">
-          {pro.role}
-        </h3>
-        <p className="mt-1.5 font-sans text-[0.76rem] leading-[1.5] text-white/52">
+        <p className="mt-3 font-sans text-[0.86rem] leading-[1.7] text-white/58">
           {pro.valueProp}
         </p>
+
+        <Link
+          href={ctaHref}
+          className="mt-5 inline-flex h-10 items-center gap-2 rounded-full px-6 font-condensed text-[0.7rem] font-black uppercase tracking-[0.2em] transition-all duration-200 hover:brightness-110"
+          style={{ background: accent, color: accent === "#5ac8ff" ? "#06275f" : "#04213d" }}
+        >
+          {ctaLabel} con {firstName} →
+        </Link>
       </div>
-    </button>
+    </div>
   );
 }
 
 // ─── Seccion principal ────────────────────────────────────────────────────────
 
 export default function ProfessionalsSection({ area }: Props) {
-  const [selected, setSelected] = useState<Professional | null>(null);
   const copy = SECTION_COPY[area];
   const isSalud = area === "salud";
   const allProfessionals = isSalud ? SALUD_PROFESSIONALS : BIENESTAR_PROFESSIONALS;
+
+  const groups: { group: ProfessionalGroup; pros: Professional[] }[] = isSalud
+    ? SALUD_PROFESSIONAL_GROUPS.map((g) => ({
+        group: g,
+        pros: g.professionalIds
+          .map((id) => allProfessionals.find((p) => p.id === id))
+          .filter((p): p is Professional => !!p),
+      }))
+    : [{ group: { id: "all", label: "Especialistas", description: "", professionalIds: [] }, pros: allProfessionals }];
 
   return (
     <section
@@ -361,7 +234,7 @@ export default function ProfessionalsSection({ area }: Props) {
 
       <div className="relative z-10 mx-auto max-w-landing px-6">
         {/* Header */}
-        <ScrollReveal direction="up" className="mb-14">
+        <ScrollReveal direction="up" className="mb-16">
           <BrandLines animated className="mb-5" />
           <p
             className="mb-4 font-condensed text-[10px] font-bold uppercase tracking-[4px]"
@@ -378,75 +251,40 @@ export default function ProfessionalsSection({ area }: Props) {
           </p>
         </ScrollReveal>
 
-        {/* Salud: agrupado por rubro */}
-        {isSalud ? (
-          <div className="space-y-14">
-            {SALUD_PROFESSIONAL_GROUPS.map((group, gi) => {
-              const groupPros = group.professionalIds
-                .map((id) => allProfessionals.find((p) => p.id === id))
-                .filter((p): p is Professional => !!p);
-
-              return (
-                <ScrollReveal key={group.id} direction="up" delay={gi * 60}>
-                  {/* Cabecera del grupo */}
-                  <div className="mb-5 flex items-center gap-4">
-                    <div className="h-px flex-1 bg-white/10" aria-hidden="true" />
-                    <div className="text-center">
-                      <p
-                        className="font-condensed text-[0.7rem] font-black uppercase tracking-[3px]"
-                        style={{ color: copy.accent }}
-                      >
-                        {group.label}
-                      </p>
-                      <p className="mt-0.5 font-sans text-[0.7rem] text-white/36">
-                        {group.description}
-                      </p>
-                    </div>
-                    <div className="h-px flex-1 bg-white/10" aria-hidden="true" />
+        {/* Sub-areas */}
+        <div className="space-y-20">
+          {groups.map(({ group, pros }, gi) => (
+            <ScrollReveal key={group.id} direction="up" delay={gi * 60}>
+              {/* Cabecera de sub-area */}
+              {isSalud && (
+                <div className="mb-8 flex items-center gap-4">
+                  <div className="h-px flex-1 bg-white/10" aria-hidden="true" />
+                  <div className="text-center">
+                    <p
+                      className="font-condensed text-[0.7rem] font-black uppercase tracking-[3px]"
+                      style={{ color: copy.accent }}
+                    >
+                      {group.label}
+                    </p>
+                    <p className="mt-0.5 font-sans text-[0.68rem] text-white/35">
+                      {group.description}
+                    </p>
                   </div>
+                  <div className="h-px flex-1 bg-white/10" aria-hidden="true" />
+                </div>
+              )}
 
-                  {/* Cards del grupo */}
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    {groupPros.map((pro) => (
-                      <ProfessionalCard
-                        key={pro.id}
-                        pro={pro}
-                        accent={copy.accent}
-                        onClick={() => setSelected(pro)}
-                      />
-                    ))}
-                  </div>
-                </ScrollReveal>
-              );
-            })}
-          </div>
-        ) : (
-          /* Bienestar: grid plano */
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {allProfessionals.map((pro, i) => (
-              <div
-                key={pro.id}
-                className="animate-fade-up"
-                style={{ animationDelay: `${i * 55}ms`, animationFillMode: "both" }}
-              >
-                <ProfessionalCard
-                  pro={pro}
-                  accent={copy.accent}
-                  onClick={() => setSelected(pro)}
-                />
-              </div>
-            ))}
-          </div>
-        )}
+              {/* Spread de la sub-area */}
+              <ProfessionalSpread
+                professionals={pros}
+                accent={copy.accent}
+                ctaLabel={copy.ctaLabel}
+                ctaHref={copy.ctaHref}
+              />
+            </ScrollReveal>
+          ))}
+        </div>
       </div>
-
-      {selected !== null && (
-        <ProfessionalModal
-          pro={selected}
-          area={area}
-          onClose={() => setSelected(null)}
-        />
-      )}
     </section>
   );
 }

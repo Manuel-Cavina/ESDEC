@@ -9,25 +9,19 @@ export default function SpecialtiesCarouselSection() {
 
   return (
     <section className="relative overflow-hidden border-y border-white/[0.08] bg-[var(--bg2)] py-10">
-      {/* Fade mask izquierda */}
       <div
         className="pointer-events-none absolute left-0 top-0 z-10 h-full w-24"
         style={{ background: "linear-gradient(to right, var(--bg2), transparent)" }}
         aria-hidden="true"
       />
-      {/* Fade mask derecha */}
       <div
         className="pointer-events-none absolute right-0 top-0 z-10 h-full w-24"
         style={{ background: "linear-gradient(to left, var(--bg2), transparent)" }}
         aria-hidden="true"
       />
-
-      {/* Label */}
       <p className="mb-4 text-center font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
         Especialidades de salud deportiva
       </p>
-
-      {/* Strip con pausa en hover */}
       <div className="group flex animate-marquee gap-5 px-4 [animation-play-state:running] hover:[animation-play-state:paused]">
         {chips.map((chip, i) => (
           <span
