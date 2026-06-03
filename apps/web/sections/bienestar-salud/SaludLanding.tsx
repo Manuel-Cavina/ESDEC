@@ -5,7 +5,6 @@
 import HeroSection from "./HeroSection";
 import SpecialtiesCarouselSection from "./SpecialtiesCarouselSection";
 import AthleteJourneySection from "./AthleteJourneySection";
-import ForProfessionalsSection from "./ForProfessionalsSection";
 import BenefitsSection from "./BenefitsSection";
 import ProfessionalsSection from "./ProfessionalsSection";
 import CTASection from "./CTASection";
@@ -16,7 +15,6 @@ export default function SaludLanding() {
       <HeroSection area="salud" />
       <SpecialtiesCarouselSection />
       <AthleteJourneySection />
-      <ForProfessionalsSection />
       <BenefitsSection area="salud" />
       <ProfessionalsSection area="salud" />
       <CTASection area="salud" />
