@@ -51,7 +51,7 @@ export default function AthleteJourneySection() {
   const { eyebrow, headlinePre, headlineAccent, subtext, phases } = SALUD_JOURNEY;
 
   return (
-    <section id="proceso" className="bg-[var(--bg2)] py-24 md:py-28">
+    <section id="proceso" className="bg-[var(--bg)] py-24 md:py-28">
       <div className="mx-auto max-w-landing px-6">
         {/* Header — mismo formato que ProblemSection */}
         <ScrollReveal direction="up" className="mb-14 max-w-3xl">
