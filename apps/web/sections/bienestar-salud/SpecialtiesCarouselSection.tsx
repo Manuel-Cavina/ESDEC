@@ -2,6 +2,7 @@
 // Carrusel de especialidades de salud — mismo patron visual que SportsCarouselSection en /deportistas.
 
 import StickerIcon from "@/components/StickerIcon";
+import Kicker from "@/components/ui/Kicker";
 import { SALUD_HERO } from "@/content/bienestar-salud";
 
 export default function SpecialtiesCarouselSection() {
@@ -19,14 +20,14 @@ export default function SpecialtiesCarouselSection() {
         style={{ background: "linear-gradient(to left, var(--bg2), transparent)" }}
         aria-hidden="true"
       />
-      <p className="mb-4 text-center font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
-        Especialidades de salud deportiva
-      </p>
-      <div className="group flex animate-marquee gap-5 px-4 [animation-play-state:running] hover:[animation-play-state:paused]">
+      <div className="mb-4 flex justify-center">
+        <Kicker align="center">Especialidades de salud deportiva</Kicker>
+      </div>
+      <div className="flex animate-marquee gap-5 px-4">
         {chips.map((chip, i) => (
           <span
             key={`${chip.label}-${i}`}
-            className="inline-flex shrink-0 items-center gap-2.5 rounded-full border border-[var(--card-bd)] bg-[var(--card-bg)] px-4 py-2 font-condensed text-[0.82rem] font-bold uppercase tracking-widest text-[var(--t2)]"
+            className="inline-flex shrink-0 items-center gap-2.5 rounded-full bg-[var(--card-bg)] px-4 py-2 font-condensed text-[0.82rem] font-bold uppercase tracking-widest text-white"
           >
             <StickerIcon name={chip.icon} size="xxs" />
             {chip.label}

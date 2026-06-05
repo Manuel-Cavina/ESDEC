@@ -2,6 +2,7 @@
 // Proceso de prevencion activa — mismo layout, colores y animaciones que ProblemSection en /deportistas.
 
 import BrandLines from "@/components/BrandLines";
+import Kicker from "@/components/ui/Kicker";
 import FingerprintSVG from "@/components/FingerprintSVG";
 import ScrollReveal from "@/components/ScrollReveal";
 import { SALUD_JOURNEY, type JourneyPhase } from "@/content/bienestar-salud";
@@ -38,7 +39,7 @@ function PhaseCard({ phase, index }: { phase: JourneyPhase; index: number }) {
         </h3>
 
         {/* Descripcion corta */}
-        <p className="mt-3 font-sans text-sm leading-[1.8] text-[var(--t2)]">
+        <p className="mt-3 font-sans text-base leading-[1.8] text-[var(--t2)]">
           {phase.description}
         </p>
 
@@ -51,14 +52,12 @@ export default function AthleteJourneySection() {
   const { eyebrow, headlinePre, headlineAccent, subtext, phases } = SALUD_JOURNEY;
 
   return (
-    <section id="proceso" className="bg-[var(--bg2)] py-24 md:py-28">
+    <section id="proceso" className="bg-[var(--bg)] py-24 md:py-28">
       <div className="mx-auto max-w-landing px-6">
         {/* Header — mismo formato que ProblemSection */}
         <ScrollReveal direction="up" className="mb-14 max-w-3xl">
           <BrandLines animated className="mb-5" />
-          <p className="mb-4 font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
-            {eyebrow}
-          </p>
+          <Kicker className="mb-4">{eyebrow}</Kicker>
           <h2 className="text-clamp-problem mb-5 font-condensed font-black uppercase leading-[0.92] tracking-tight text-[var(--t1)]">
             {headlinePre}{" "}
             <span className="text-[var(--p1)]">{headlineAccent}</span>

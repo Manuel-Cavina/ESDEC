@@ -99,14 +99,12 @@ export default function Navbar({ audience = null }: NavbarProps) {
   };
 
   const navToneClass = isProfessionalPalette
-    ? "bg-[rgba(10,47,90,0.82)] text-[#E8F0FC]"
-    : isAthletePalette
-      ? "bg-[rgba(50,105,199,0.82)] text-white"
-      : "bg-[rgba(50,105,199,0.82)] text-white";
+    ? "text-[#E8F0FC]"
+    : "text-white";
 
   const navMutedTextClass = isProfessionalPalette
-    ? "text-[#7A9EC4]"
-    : "text-[rgba(255,255,255,0.72)]";
+    ? "text-[#9BBCE0]"
+    : "text-white/82";
 
   const navHoverClass = isProfessionalPalette
     ? "hover:text-[#E8F0FC]"
@@ -132,8 +130,11 @@ export default function Navbar({ audience = null }: NavbarProps) {
       <nav
         aria-label="Navegacion principal"
         className={cn(
-          "fixed left-1/2 top-4 z-[900] w-[min(1240px,calc(100%-24px))] -translate-x-1/2 border-0 outline-none ring-0 backdrop-blur-[18px] transition-all duration-300",
-          "h-16 rounded-[24px] shadow-[0_16px_36px_rgba(0,0,0,0.16)] sm:h-[68px] sm:w-[min(1240px,calc(100%-32px))] lg:h-[76px] lg:rounded-[26px]",
+          "fixed left-1/2 top-4 z-[900] w-[min(1240px,calc(100%-24px))] -translate-x-1/2 outline-none ring-0 transition-all duration-300",
+          "h-16 rounded-[24px] sm:h-[68px] sm:w-[min(1240px,calc(100%-32px))] lg:h-[76px] lg:rounded-[26px]",
+          "backdrop-blur-[28px]",
+          "bg-[rgba(12,45,160,0.22)]",
+          "shadow-[inset_0_1px_0_rgba(255,255,255,0.18),inset_0_-1px_0_rgba(90,200,255,0.08),0_20px_48px_rgba(0,0,0,0.28)]",
           navToneClass,
         )}
       >
@@ -263,7 +264,7 @@ export default function Navbar({ audience = null }: NavbarProps) {
               type="button"
               onClick={() => setIsMobileOpen((prev) => !prev)}
               aria-label={isMobileOpen ? "Cerrar menu" : "Abrir menu"}
-              aria-expanded={isMobileOpen}
+              aria-expanded={isMobileOpen ? "true" : "false"}
               className={cn(
                 "flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-current transition-colors duration-200 hover:bg-white/14 lg:hidden"
               )}
@@ -304,7 +305,7 @@ export default function Navbar({ audience = null }: NavbarProps) {
       >
         <div
           className={cn(
-            "overflow-hidden rounded-[24px] border-0 outline-none ring-0 p-3 shadow-[0_22px_44px_rgba(0,0,0,0.22)] backdrop-blur-[20px]",
+            "overflow-hidden rounded-[24px] outline-none ring-0 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.10),0_22px_44px_rgba(0,0,0,0.28)] backdrop-blur-[20px]",
             navToneClass
           )}
         >

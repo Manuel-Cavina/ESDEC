@@ -2,6 +2,7 @@
 // Numeros reales en formato editorial: stat grande a la izquierda + statement a la derecha.
 
 import BrandLines from "@/components/BrandLines";
+import Kicker from "@/components/ui/Kicker";
 import ScrollReveal from "@/components/ScrollReveal";
 import {
   SALUD_BENEFITS,
@@ -45,16 +46,11 @@ function StatRow({ item, accent, index }: { item: BenefitItem; accent: string; i
 
         {/* Content */}
         <div className="self-center">
-          <p
-            className="mb-1.5 font-condensed text-[0.6rem] font-bold uppercase tracking-[0.22em]"
-            style={{ color: `${accent}70` }}
-          >
-            {item.statLabel}
-          </p>
-          <h3 className="font-condensed text-[clamp(1rem,2vw,1.2rem)] font-bold uppercase leading-[1.1] tracking-[0.02em] text-[var(--t1)]">
+          <Kicker className="mb-2">{item.statLabel}</Kicker>
+          <h3 className="font-condensed text-[clamp(1.15rem,2.2vw,1.45rem)] font-black uppercase leading-[1.05] tracking-[0.02em] text-[var(--t1)]">
             {item.title}
           </h3>
-          <p className="mt-2 max-w-[58ch] font-sans text-sm leading-[1.82] text-[var(--t2)]">
+          <p className="mt-2.5 max-w-[58ch] font-sans text-base leading-[1.82] text-[var(--t2)]">
             {item.description}
           </p>
         </div>
@@ -73,9 +69,7 @@ export default function BenefitsSection({ area }: Props) {
         {/* Header */}
         <ScrollReveal direction="up" className="mb-12">
           <BrandLines animated className="mb-5" />
-          <p className="mb-4 font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
-            {copy.eyebrow}
-          </p>
+          <Kicker className="mb-4">{copy.eyebrow}</Kicker>
           <h2 className="text-clamp-problem font-condensed font-black uppercase leading-[0.92] tracking-tight text-[var(--t1)]">
             {copy.headlinePre}{" "}
             <span className="text-[var(--p1)]">{copy.headlineAccent}</span>
