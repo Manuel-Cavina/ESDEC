@@ -39,7 +39,7 @@ function PhaseCard({ phase, index }: { phase: JourneyPhase; index: number }) {
         </h3>
 
         {/* Descripcion corta */}
-        <p className="mt-3 font-sans text-sm leading-[1.8] text-[var(--t2)]">
+        <p className="mt-3 font-sans text-base leading-[1.8] text-[var(--t2)]">
           {phase.description}
         </p>
 

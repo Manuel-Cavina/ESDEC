@@ -46,16 +46,11 @@ function StatRow({ item, accent, index }: { item: BenefitItem; accent: string; i
 
         {/* Content */}
         <div className="self-center">
-          <p
-            className="mb-1.5 font-condensed text-[0.6rem] font-bold uppercase tracking-[0.22em]"
-            style={{ color: `${accent}70` }}
-          >
-            {item.statLabel}
-          </p>
-          <h3 className="font-condensed text-[clamp(1rem,2vw,1.2rem)] font-bold uppercase leading-[1.1] tracking-[0.02em] text-[var(--t1)]">
+          <Kicker className="mb-2">{item.statLabel}</Kicker>
+          <h3 className="font-condensed text-[clamp(1.15rem,2.2vw,1.45rem)] font-black uppercase leading-[1.05] tracking-[0.02em] text-[var(--t1)]">
             {item.title}
           </h3>
-          <p className="mt-2 max-w-[58ch] font-sans text-sm leading-[1.82] text-[var(--t2)]">
+          <p className="mt-2.5 max-w-[58ch] font-sans text-base leading-[1.82] text-[var(--t2)]">
             {item.description}
           </p>
         </div>

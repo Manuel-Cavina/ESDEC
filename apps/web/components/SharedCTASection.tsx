@@ -5,6 +5,7 @@
 import Link from "next/link";
 import BrandLines from "@/components/BrandLines";
 import Kicker from "@/components/ui/Kicker";
+import SweepButton from "@/components/ui/SweepButton";
 import FingerprintSVG from "@/components/FingerprintSVG";
 import ScrollReveal from "@/components/ScrollReveal";
 
@@ -41,8 +42,6 @@ export default function SharedCTASection({
 }: SharedCTASectionProps) {
   const hasTwoCtas = !!secondaryCtaLabel && !!secondaryCtaHref;
 
-  const primaryBtnClass =
-    "inline-flex min-h-[64px] w-full max-w-[480px] items-center justify-center rounded-full bg-[#15dc62] px-10 py-4 font-condensed text-[0.86rem] font-bold uppercase tracking-[0.15em] text-[#05213d] no-underline transition-all duration-200 hover:-translate-y-px hover:brightness-105";
 
   return (
     <section
@@ -104,21 +103,19 @@ export default function SharedCTASection({
             </h2>
 
             {/* Body */}
-            <p className="relative mx-auto mt-6 max-w-[48ch] font-sans text-[0.96rem] leading-[1.9] text-white/70">
+            <p className="relative mx-auto mt-6 max-w-[48ch] font-sans text-base leading-[1.9] text-white/85">
               {body}
             </p>
 
-            {/* Boton principal — unico y prominente */}
+            {/* Boton principal */}
             <div className="relative mt-10 flex flex-col items-center gap-3">
-              {primaryCtaExternal ? (
-                <a href={primaryCtaHref} target="_blank" rel="noopener noreferrer" className={primaryBtnClass}>
-                  {primaryCtaLabel}
-                </a>
-              ) : (
-                <Link href={primaryCtaHref} className={primaryBtnClass}>
-                  {primaryCtaLabel}
-                </Link>
-              )}
+              <SweepButton
+                label={primaryCtaLabel}
+                href={primaryCtaHref}
+                external={primaryCtaExternal}
+                size="lg"
+                className="w-full max-w-[480px]"
+              />
 
               {/* Accion secundaria — link discreto, no compite con el principal */}
               {hasTwoCtas && (

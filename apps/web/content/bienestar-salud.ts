@@ -19,6 +19,9 @@ export interface Professional {
   accent: string;
   image?: string;
   name?: string;
+  experience?: string;
+  titles?: string[];
+  workStyle?: string;
 }
 
 export interface ProfessionalGroup {
@@ -91,6 +94,9 @@ export const SALUD_PROFESSIONALS: Professional[] = [
     valueProp: "Para no parar. Para volver. Para anticipar.",
     image: "/images/athletes/medicina2.jpg",
     name: "Lic. Martina Rios",
+    experience: "7+ años",
+    titles: ["Lic. Kinesiologia — UNC", "Especialista en Deporte y Actividad Fisica"],
+    workStyle: "Primera sesion de evaluacion de movimiento, luego plan progresivo basado en objetivos reales. Seguimiento activo para ajustar en el proceso, no al final.",
     bullets: [
       "Rehabilitacion de lesiones musculares y articulares",
       "Planes de prevencion y readaptacion al deporte",
@@ -111,6 +117,9 @@ export const SALUD_PROFESSIONALS: Professional[] = [
     valueProp: "Para saber de donde partes antes de exigirte.",
     image: "/images/lifestyle/Medico1.png",
     name: "Dr. Sebastian Cano",
+    experience: "10+ años",
+    titles: ["Medico — UNC", "Especialista en Medicina del Deporte — UBA"],
+    workStyle: "Evaluacion completa como punto de partida obligatorio. Habilitacion fisica rigurosa y seguimiento periodico coordinado con todo el equipo.",
     bullets: [
       "Evaluaciones medicas deportivas completas",
       "Habilitaciones fisicas y apto deportivo para competir",
@@ -131,6 +140,9 @@ export const SALUD_PROFESSIONALS: Professional[] = [
     valueProp: "Para la energia que el proceso demanda.",
     image: "/images/lifestyle/Medico_2.jpg",
     name: "Lic. Valentina Morales",
+    experience: "6+ años",
+    titles: ["Lic. Nutricion — UNC", "Posgrado en Nutricion Deportiva — FUSA"],
+    workStyle: "Plan de alimentacion construido desde el analisis real de habitos, deporte y objetivos. Sin plantillas genericas ni dietas de internet.",
     bullets: [
       "Planes de alimentacion segun deporte y fase del proceso",
       "Nutricion para competencia, entrenamiento y recuperacion",
@@ -151,6 +163,9 @@ export const SALUD_PROFESSIONALS: Professional[] = [
     valueProp: "Para saber cuando y como volver sin riesgos.",
     image: "/images/lifestyle/Deportes_1.jpg",
     name: "Dr. Agustin Ferraro",
+    experience: "12+ años",
+    titles: ["Medico Traumatologo — UNC", "Fellow en Cirugia Artroscopica"],
+    workStyle: "Diagnostico preciso desde el primer dia. Protocolo de recuperacion claro y coordinacion activa con kinesiologia para el retorno al deporte.",
     bullets: [
       "Diagnostico preciso de lesiones agudas y cronicas",
       "Tiempos de recuperacion reales y protocolo de retorno",
@@ -171,13 +186,16 @@ export const SALUD_PROFESSIONALS: Professional[] = [
     valueProp: "Para entrenar con estructura, no con intuicion.",
     image: "/images/athletes/maraton_1.jpg",
     name: "Prof. Lucas Mendez",
+    experience: "9+ años",
+    titles: ["Prof. Educacion Fisica — IPEF Cordoba", "Especialista en Entrenamiento Deportivo"],
+    workStyle: "Periodizacion basada en datos reales de rendimiento. Cada semana tiene un proposito. Sin improvisacion, sin planes copiados de internet.",
     bullets: [
       "Planes de entrenamiento especificos por deporte y etapa",
       "Periodizacion para picos de rendimiento en competencia",
       "Control de cargas y prevencion del sobreentrenamiento",
     ],
     whenYouNeedThem: [
-      "Cuando entrenás sin estructura ni progresion planificada",
+      "Cuando entrenas sin estructura ni progresion planificada",
       "Para prepararte especificamente para una competencia",
       "Para salir del estancamiento y volver a progresar",
     ],
@@ -191,6 +209,9 @@ export const SALUD_PROFESSIONALS: Professional[] = [
     valueProp: "Para el seguimiento que la mayoria ignora.",
     image: "/images/athletes/metricas1.jpg",
     name: "Dra. Carolina Paz",
+    experience: "8+ años",
+    titles: ["Medica Clinica — UNC", "Posgrado en Medicina del Deporte"],
+    workStyle: "Seguimiento preventivo orientado al rendimiento. Analisis de los indicadores que los medicos comunes no revisan en un deportista activo.",
     bullets: [
       "Analisis de laboratorio orientados al rendimiento deportivo",
       "Control de parametros clave: hierro, vitaminas, hormonas",
@@ -203,13 +224,17 @@ export const SALUD_PROFESSIONALS: Professional[] = [
     ],
     accent: "#5ac8ff",
   },
-  // ─ Profesionales extra para demo del carrusel ─
   {
     id: "fisiatra",
     icon: "bienestar",
     role: "Fisiatra deportivo",
     tagline: "Rehabilitacion funcional y dolor musculoesqueletico",
     valueProp: "Para recuperar la funcion sin perder el rendimiento.",
+    image: "/images/lifestyle/Deportes_2.jpg",
+    name: "Dr. Matias Rios",
+    experience: "6+ años",
+    titles: ["Medico Fisiatra — UNC", "Especialista en Rehabilitacion Musculoesqueletica"],
+    workStyle: "Evaluacion funcional completa, plan de rehabilitacion progresivo y coordinacion con el equipo para que el retorno al deporte sea seguro y definitivo.",
     bullets: [
       "Diagnostico y tratamiento del dolor musculoesqueletico",
       "Planes de rehabilitacion funcional orientados al deporte",
@@ -221,8 +246,6 @@ export const SALUD_PROFESSIONALS: Professional[] = [
       "Cuando otros tratamientos no dieron resultado estable",
     ],
     accent: "#5ac8ff",
-    image: "/images/lifestyle/Deportes_2.jpg",
-    name: "Dr. Matias Rios",
   },
   {
     id: "cardiologo",
@@ -230,6 +253,11 @@ export const SALUD_PROFESSIONALS: Professional[] = [
     role: "Cardiologo deportivo",
     tagline: "Evaluacion cardiologica para deportistas activos",
     valueProp: "Para entrenar sin limites y con el corazon chequeado.",
+    image: "/images/lifestyle/Vida1.jpg",
+    name: "Dra. Ana Vega",
+    experience: "9+ años",
+    titles: ["Medica Cardiologa — UNC", "Especialista en Cardiologia del Deporte"],
+    workStyle: "Evaluacion cardiologica completa antes de cargas intensas y seguimiento de la respuesta cardiovascular al entrenamiento. Sin el apto, no hay proceso.",
     bullets: [
       "Evaluacion cardiologica precompetitiva completa",
       "Deteccion de arritmias y patologias en deportistas jovenes",
@@ -241,8 +269,6 @@ export const SALUD_PROFESSIONALS: Professional[] = [
       "Para el apto cardiologico de competencias exigentes",
     ],
     accent: "#5ac8ff",
-    image: "/images/lifestyle/Vida1.jpg",
-    name: "Dra. Ana Vega",
   },
   {
     id: "osteópata",
@@ -250,6 +276,11 @@ export const SALUD_PROFESSIONALS: Professional[] = [
     role: "Osteopata deportivo",
     tagline: "Equilibrio postural y sistema musculoesqueletico",
     valueProp: "Para un cuerpo que se mueve sin compensaciones.",
+    image: "/images/athletes/Atleta_1.png",
+    name: "Lic. Pablo Benitez",
+    experience: "8+ años",
+    titles: ["Lic. Kinesiologia — UNC", "Osteopata Certificado — UQAM Canada"],
+    workStyle: "Abordaje global del cuerpo, no solo del sintoma. Evaluacion postural completa, tratamiento manual y plan preventivo integrado con el resto del equipo.",
     bullets: [
       "Evaluacion y tratamiento osteopatico del sistema locomotor",
       "Correccion de desequilibrios posturales que afectan el rendimiento",
@@ -261,8 +292,6 @@ export const SALUD_PROFESSIONALS: Professional[] = [
       "Como mantenimiento preventivo dentro del plan de salud",
     ],
     accent: "#5ac8ff",
-    image: "/images/athletes/Atleta_1.png",
-    name: "Lic. Pablo Benitez",
   },
   {
     id: "biomedico",
@@ -270,6 +299,11 @@ export const SALUD_PROFESSIONALS: Professional[] = [
     role: "Biomecanico deportivo",
     tagline: "Analisis del movimiento y optimizacion del gesto",
     valueProp: "Para entrenar con la tecnica que tu cuerpo necesita.",
+    image: "/images/lifestyle/Correr_lluvia_1.jpg",
+    name: "Lic. Rodrigo Paz",
+    experience: "5+ años",
+    titles: ["Lic. Kinesiologia y Fisioterapia — UNC", "Especialista en Biomecanica Deportiva"],
+    workStyle: "Analisis objetivo del movimiento con captura de marcha y gesto deportivo. Datos reales, no percepciones. Protocolo de correccion con seguimiento periodico.",
     bullets: [
       "Analisis del patron de movimiento en el gesto deportivo",
       "Identificacion de compensaciones que generan lesiones",
@@ -281,8 +315,6 @@ export const SALUD_PROFESSIONALS: Professional[] = [
       "Antes de cambiar de calzado, equipamiento o superficie",
     ],
     accent: "#5ac8ff",
-    image: "/images/lifestyle/Correr_lluvia_1.jpg",
-    name: "Lic. Rodrigo Paz",
   },
 ];
 
@@ -492,6 +524,9 @@ export const BIENESTAR_PROFESSIONALS: Professional[] = [
     role: "Psicologo deportivo",
     tagline: "Gestion emocional y mental para competir mejor",
     valueProp: "Para que la mente trabaje a favor y no en contra.",
+    experience: "8+ años",
+    titles: ["Lic. Psicologia — UNC", "Especialista en Psicologia del Deporte"],
+    workStyle: "Trabajo desde las herramientas del alto rendimiento adaptadas al deportista amateur comprometido. Sin cliches. Sin teoria vacia. Con resultados medibles.",
     bullets: [
       "Manejo de presion competitiva y ansiedad ante la competencia",
       "Construccion de confianza y mentalidad de crecimiento",
@@ -510,6 +545,9 @@ export const BIENESTAR_PROFESSIONALS: Professional[] = [
     role: "Coach deportivo",
     tagline: "Claridad de objetivos y direccion del proceso",
     valueProp: "Para saber hacia donde vas y por que vale la pena.",
+    experience: "7+ años",
+    titles: ["Lic. Psicologia — UCC", "Certified Professional Coach — ICF"],
+    workStyle: "Proceso de claridad en 3 fases: donde estas, hacia donde vas y que necesitas para no detenerte. Acompanamiento real, no motivacional.",
     bullets: [
       "Definicion de metas claras, medibles y alcanzables",
       "Desarrollo del mindset y la identidad del deportista",
@@ -528,6 +566,9 @@ export const BIENESTAR_PROFESSIONALS: Professional[] = [
     role: "Instructor de Yoga",
     tagline: "Flexibilidad, respiracion y recuperacion activa",
     valueProp: "Para recuperar mejor entre entrenamientos.",
+    experience: "10+ años",
+    titles: ["Instructora de Yoga — Escuela Sivananda", "Especializacion en Yoga para Deportistas"],
+    workStyle: "Clases adaptadas al cuerpo del deportista. Flexibilidad funcional, respiracion aplicada al rendimiento y recuperacion activa que realmente funciona.",
     bullets: [
       "Mejora de la flexibilidad y movilidad articular",
       "Tecnicas de respiracion para rendimiento y gestion del estres",
@@ -546,6 +587,9 @@ export const BIENESTAR_PROFESSIONALS: Professional[] = [
     role: "Instructor de Pilates",
     tagline: "Core, postura y movilidad funcional",
     valueProp: "Para un cuerpo estable que se mueve mejor.",
+    experience: "8+ años",
+    titles: ["Instructora de Pilates Clinico — STOTT Pilates", "Formacion en Pilates para Atletas"],
+    workStyle: "Trabajo de core profundo, estabilidad articular y correccion de patrones de movimiento compensatorios que frenan el rendimiento deportivo.",
     bullets: [
       "Fortalecimiento del core para mayor estabilidad deportiva",
       "Correccion postural y control motor especifico",
@@ -564,6 +608,9 @@ export const BIENESTAR_PROFESSIONALS: Professional[] = [
     role: "Instructor de Meditacion",
     tagline: "Concentracion, calma y control mental",
     valueProp: "Para rendir cuando mas importa.",
+    experience: "6+ años",
+    titles: ["Instructor de Mindfulness — MBSR", "Especializacion en Rendimiento Mental Deportivo"],
+    workStyle: "Tecnicas practicas de mindfulness y visualizacion aplicadas directamente al contexto de la competencia y el entrenamiento de alto nivel.",
     bullets: [
       "Tecnicas de mindfulness aplicadas al contexto deportivo",
       "Control del estres, la presion y la ansiedad competitiva",
@@ -582,6 +629,9 @@ export const BIENESTAR_PROFESSIONALS: Professional[] = [
     role: "Coach de Habitos",
     tagline: "Rutinas que sostienen el progreso dia a dia",
     valueProp: "Para convertir la disciplina en sistema.",
+    experience: "5+ años",
+    titles: ["Lic. Psicologia — UNC", "Certified Habit Coach — BJ Fogg Method"],
+    workStyle: "Construccion gradual de sistemas de habitos desde el analisis de tu vida real. Sin cambios radicales que no se sostienen. Sin recaidas previsibles.",
     bullets: [
       "Diseno de rutinas diarias realistas para deportistas",
       "Construccion de habitos de sueno, descanso y recuperacion",

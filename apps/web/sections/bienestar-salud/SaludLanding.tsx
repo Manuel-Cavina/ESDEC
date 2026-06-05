@@ -19,7 +19,7 @@ export default function SaludLanding() {
         headlinePre="PREVENIR"
         headlineAccent="ES EL PLAN."
         body="Los deportistas que evaluan, monitorean y actuan antes son los que mantienen la continuidad del proceso. Sin interrupciones. Sin lesiones evitables."
-        ctaLabel="Encontrar mi especialista"
+        ctaLabel="Encontrar mi especialista →"
         ctaHref="#profesionales"
         stats={[
           { label: "Prevencion activa", title: "Cuida tu cuerpo antes de que lo necesite" },

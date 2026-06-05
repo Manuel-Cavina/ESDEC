@@ -1,10 +1,7 @@
-﻿"use client";
+"use client";
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // components/Footer.tsx
-// Footer rediseñado: pre-footer CTA band | brand + links + contacto | legal
-// Redes: Instagram, TikTok, Twitter/X, WhatsApp â€” SVGs propios
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// Footer principal: glass card sobre fondo var(--bg), misma estetica que SharedCTASection.
 
 import Link from "next/link";
 import { FOOTER } from "@/content/landing";
@@ -13,8 +10,6 @@ import FingerprintSVG from "@/components/FingerprintSVG";
 import BrandLines from "@/components/BrandLines";
 import StickerIcon from "@/components/StickerIcon";
 import Logo from "@/components/Logo";
-
-// ── Íconos sociales SVG ───────────────────────────────────────────────────────
 
 function IconInstagram() {
   return (
@@ -62,57 +57,54 @@ function IconWhatsApp() {
 function SocialIcon({ icon }: { icon: string }) {
   if (icon === "ig" || icon === "instagram") return <IconInstagram />;
   if (icon === "tt" || icon === "tiktok") return <IconTikTok />;
-  if (icon === "x")  return <IconX />;
+  if (icon === "x") return <IconX />;
   if (icon === "wa" || icon === "whatsapp") return <IconWhatsApp />;
   return null;
 }
 
-// ── Footer principal ──────────────────────────────────────────────────────────
 export default function Footer() {
   const whatsappHref =
     FOOTER.social.find((item) => item.icon === "whatsapp")?.href ?? "#";
 
   return (
-    <>
-      {/* â”€â”€ Pre-footer: banda motivacional â”€â”€ */}
-      
+    <footer className="relative overflow-hidden bg-[var(--bg)]">
+      <div className="footer-dot-texture pointer-events-none absolute inset-0 opacity-[0.12]" aria-hidden="true" />
+      <div className="footer-glow pointer-events-none absolute left-1/2 top-0 h-[500px] w-[800px] -translate-x-1/2" aria-hidden="true" />
 
-      {/* â”€â”€ Footer principal â”€â”€ */}
-      <footer className="relative overflow-hidden bg-[var(--bg)] pt-16 pb-8">
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--p1)]/30 to-transparent" />
+      {/* Glass card — full width */}
+      <div className="relative">
+        <div className="relative overflow-hidden border-y border-white/[0.18] bg-white/[0.075] pb-6 pt-10 shadow-[inset_0_1px_0_rgba(255,255,255,0.07)] backdrop-blur-md">
 
-        {/* Huella watermark */}
-        <div
-          className="pointer-events-none absolute bottom-0 right-[-8%] opacity-[0.04] [--fps:rgba(255,255,255,1)] [--fpg:rgba(255,255,255,0.05)]"
-          aria-hidden="true"
-        >
-          <FingerprintSVG animate={false} className="w-[400px]" />
-        </div>
+          {/* Huella watermark */}
+          <div
+            className="pointer-events-none absolute -bottom-8 -right-8 opacity-[0.06] [--fps:rgba(255,255,255,1)] [--fpg:rgba(255,255,255,0.04)]"
+            aria-hidden="true"
+          >
+            <FingerprintSVG animate={false} className="w-[380px]" />
+          </div>
 
-        <div className="relative z-10 mx-auto max-w-landing px-6">
+          <div className="relative mx-auto max-w-landing px-6 md:px-14">
 
-          {/* â”€â”€ Fila principal â”€â”€ */}
-          <div className="grid grid-cols-1 gap-12 border-b border-white/10 pb-12 sm:grid-cols-2 lg:grid-cols-5">
+          {/* Fila principal */}
+          <div className="grid grid-cols-1 gap-10 border-b border-white/[0.1] pb-8 sm:grid-cols-2 lg:grid-cols-5">
 
-            {/* Brand block â€” 2 cols */}
+            {/* Brand block — 2 cols */}
             <div className="sm:col-span-2">
-              {/* Logo */}
               <div className="mb-5">
-                <Logo className="w-[144px] sm:w-[158px]" />
+                <Logo className="w-[200px] sm:w-[220px]" />
               </div>
 
-              <p className="mb-1 font-condensed text-[11px] font-bold uppercase tracking-[3px] text-[var(--p1)]">
+              <p className="mb-1 font-condensed text-[1.05rem] font-bold uppercase leading-snug text-white">
                 {FOOTER.tagline}
               </p>
-              <p className="mb-2 font-condensed text-[10px] font-bold uppercase tracking-[3px] text-[var(--t2)]/40">
+              <p className="mb-5 font-condensed text-[0.78rem] font-bold uppercase tracking-[2.5px] text-white/60">
                 {FOOTER.location}
               </p>
 
-              {/* Contacto */}
-              <div className="mb-6 mt-4 space-y-1.5">
+              <div className="mb-6 space-y-3">
                 <a
                   href={`mailto:${FOOTER.contact.email}`}
-                  className="contact-link flex items-center gap-2.5 font-sans text-xs text-[var(--t2)] transition-colors hover:text-[var(--t1)]"
+                  className="contact-link flex items-center gap-2.5 font-sans text-base text-white transition-colors hover:text-white"
                 >
                   <StickerIcon name="mail" size="xs" className="contact-link__icon text-[var(--p1)]" />
                   {FOOTER.contact.email}
@@ -121,7 +113,7 @@ export default function Footer() {
                   href={whatsappHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="contact-link flex items-center gap-2.5 font-sans text-xs text-[var(--t2)] transition-colors hover:text-[var(--t1)]"
+                  className="contact-link flex items-center gap-2.5 font-sans text-base text-white transition-colors hover:text-white"
                 >
                   <StickerIcon
                     name="whatsapp"
@@ -130,14 +122,13 @@ export default function Footer() {
                   />
                   {FOOTER.contact.phone}
                 </a>
-                <p className="contact-link flex items-center gap-2.5 font-sans text-xs text-[var(--t2)]">
+                <p className="contact-link flex items-center gap-2.5 font-sans text-base text-white">
                   <StickerIcon name="maps" size="xs" className="contact-link__icon text-[var(--p1)]" />
                   {FOOTER.contact.location}
                 </p>
               </div>
 
-              {/* Social icons */}
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2.5">
                 {FOOTER.social.map((s) => (
                   <a
                     key={s.label}
@@ -146,10 +137,10 @@ export default function Footer() {
                     rel="noopener noreferrer"
                     aria-label={s.label}
                     className={cn(
-                      "flex h-11 w-11 items-center justify-center rounded-full",
-                      "border border-white/20 bg-white/[0.02] text-[var(--t2)]",
+                      "flex h-10 w-10 items-center justify-center rounded-full",
+                      "border border-white/[0.2] bg-white/[0.07] text-white/70",
                       "transition-all duration-200",
-                      "hover:-translate-y-px hover:border-[var(--p1)] hover:text-[var(--t1)] hover:bg-white/[0.05]"
+                      "hover:-translate-y-px hover:border-[var(--p1)]/60 hover:bg-[var(--p1)]/10 hover:text-white"
                     )}
                   >
                     <SocialIcon icon={s.icon} />
@@ -161,7 +152,7 @@ export default function Footer() {
             {/* Grupos de links */}
             {FOOTER.groups.map((group) => (
               <div key={group.label}>
-                <p className="mb-5 font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
+                <p className="mb-4 font-condensed text-[0.65rem] font-black uppercase tracking-[3.5px] text-white/50">
                   {group.label}
                 </p>
                 <ul className="flex flex-col gap-3">
@@ -169,9 +160,9 @@ export default function Footer() {
                     <li key={link.label}>
                       <Link
                         href={link.href}
-                        className="group flex items-center gap-0 font-sans text-sm text-[var(--t2)] transition-colors duration-200 hover:text-[var(--t1)]"
+                        className="group flex items-center gap-0 font-sans text-base text-white transition-colors duration-200 hover:text-white"
                       >
-                        <span className="block h-px w-0 bg-[var(--p1)] transition-[width] duration-300 group-hover:w-3 group-hover:mr-2" />
+                        <span className="block h-px w-0 bg-[var(--p1)] transition-[width] duration-300 group-hover:mr-2 group-hover:w-3" />
                         {link.label}
                       </Link>
                     </li>
@@ -180,50 +171,54 @@ export default function Footer() {
               </div>
             ))}
 
-            {/* Columna extra: tagline + BrandLines */}
+            {/* Columna brand */}
             <div className="flex flex-col justify-between">
               <div>
-                <p className="mb-5 font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
+                <p className="mb-4 font-condensed text-[0.65rem] font-black uppercase tracking-[3.5px] text-white/50">
                   ESDEC
                 </p>
                 <div className="mb-4">
                   <BrandLines animated size="md" />
                 </div>
-                <p className="font-condensed text-[13px] font-bold uppercase leading-snug text-[var(--t2)]/60">
-                  Elite Sports<br />Development
+                <p className="font-condensed text-[1.15rem] font-black uppercase leading-[0.95] text-white">
+                  Elite Sports
+                  <br />
+                  Development
+                </p>
+                <p className="mt-2 font-sans text-base text-white">
+                  Cordoba, Argentina
                 </p>
               </div>
-              <p className="mt-6 font-condensed text-[9px] font-bold uppercase tracking-[3px] text-[var(--t2)]/30">
-                Córdoba · 2025
-              </p>
             </div>
           </div>
 
-          {/* â”€â”€ Fila inferior â”€â”€ */}
-          <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-4">
+          {/* Fila inferior */}
+          <div className="mt-6 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
               {FOOTER.legal.map((item, i) => (
-                <span key={item.label} className="flex items-center gap-4">
+                <span key={item.label} className="flex items-center gap-5">
                   <a
                     href={item.href}
-                    className="font-sans text-xs text-[var(--t2)] transition-colors duration-200 hover:text-[var(--t1)]"
+                    className="font-sans text-[0.9rem] text-white/70 transition-colors duration-200 hover:text-white"
                   >
                     {item.label}
                   </a>
                   {i < FOOTER.legal.length - 1 && (
-                    <span className="text-[var(--t2)]/30" aria-hidden="true">·</span>
+                    <span className="text-white/25" aria-hidden="true">
+                      &middot;
+                    </span>
                   )}
                 </span>
               ))}
             </div>
-            <p className="font-sans text-xs text-[var(--t2)]/50">
+            <p className="font-sans text-[0.9rem] text-white/60">
               {FOOTER.copy}
             </p>
           </div>
 
+          </div>{/* end max-w-landing */}
         </div>
-      </footer>
-    </>
+      </div>
+    </footer>
   );
 }
-

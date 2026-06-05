@@ -3,8 +3,8 @@
 // Animacion stamp por palabra (estilo Nike) + overlay diagonal + fingerprint flotante.
 
 import Image from "next/image";
-import Link from "next/link";
 import BrandLines from "@/components/BrandLines";
+import SweepButton from "@/components/ui/SweepButton";
 import FingerprintSVG from "@/components/FingerprintSVG";
 import Kicker from "@/components/ui/Kicker";
 import ScrollReveal from "@/components/ScrollReveal";
@@ -183,23 +183,13 @@ export default function SharedHeroSection({
           {/* CTA */}
           <ScrollReveal direction="up" delay={preWords.length * WORD_DELAY + 200}>
             <div className="mt-9">
-              {ctaExternal ? (
-                <a
-                  href={ctaHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-[#15dc62] px-8 font-condensed text-[0.84rem] font-bold uppercase tracking-[0.15em] text-[#05213d] transition-all duration-200 hover:-translate-y-px hover:brightness-105"
-                >
-                  {ctaLabel} →
-                </a>
-              ) : (
-                <Link
-                  href={ctaHref}
-                  className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full bg-[#15dc62] px-8 font-condensed text-[0.84rem] font-bold uppercase tracking-[0.15em] text-[#05213d] transition-all duration-200 hover:-translate-y-px hover:brightness-105"
-                >
-                  {ctaLabel} →
-                </Link>
-              )}
+              <SweepButton
+                label={ctaLabel}
+                href={ctaHref}
+                external={ctaExternal}
+                size="md"
+                variant="glass"
+              />
             </div>
           </ScrollReveal>
         </div>
