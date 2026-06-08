@@ -5,6 +5,7 @@
 
 import { PROBLEM, PROFESSIONAL_PROBLEM } from "@/content/landing";
 import BrandLines from "@/components/BrandLines";
+import Kicker from "@/components/ui/Kicker";
 import FingerprintSVG from "@/components/FingerprintSVG";
 import ScrollReveal from "@/components/ScrollReveal";
 import { cn } from "@/lib/utils";
@@ -65,9 +66,7 @@ function JourneyStep({ step, index, prefix }: JourneyStepProps) {
   return (
     <ScrollReveal direction="up" delay={index * 70}>
       <article className="spec-card-accent relative h-full overflow-hidden rounded-[24px] border border-[var(--card-bd)] bg-[var(--card-bg)] p-6">
-        <span className="font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
-          {prefix} {step.step}
-        </span>
+        <Kicker className="mb-1">{prefix} {step.step}</Kicker>
         <h3 className="mt-3 font-condensed text-[24px] font-semibold uppercase leading-[1] tracking-[0.02em] text-[var(--t1)] md:tracking-[0.03em]">
           {step.title}
         </h3>
@@ -85,9 +84,7 @@ function JourneySection({ data }: { data: ProblemData }) {
       <div className="relative z-10 mx-auto max-w-landing px-6">
         <ScrollReveal direction="up" className="mb-12 max-w-3xl">
           <BrandLines animated className="mb-5" />
-          <p className="font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
-            {data.journeyLabel}
-          </p>
+          <Kicker className="mb-3">{data.journeyLabel}</Kicker>
           <h2 className="text-clamp-journey mt-4 font-condensed font-black uppercase leading-[0.92] tracking-tight text-[var(--t1)]">
             {data.journeyHeadlinePre}{" "}
             <span className="text-[var(--p1)]">{data.journeyHeadlineAccent}</span>
@@ -128,9 +125,7 @@ export default function ProblemSection({
         <div className="mx-auto max-w-landing px-6">
           <div className="mb-20 grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
             <ScrollReveal direction="up">
-              <p className="mb-4 font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
-                {data.eyebrow}
-              </p>
+              <Kicker className="mb-4">{data.eyebrow}</Kicker>
               <h2 className="text-clamp-problem mb-8 font-condensed font-black uppercase leading-[0.92] tracking-tight text-[var(--t1)]">
                 {data.headline}{" "}
                 <span className="text-[var(--p1)]">{data.headlineAccent}</span>

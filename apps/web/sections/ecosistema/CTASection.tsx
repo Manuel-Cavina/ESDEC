@@ -3,6 +3,7 @@
 
 import Link from "next/link";
 import BrandLines from "@/components/BrandLines";
+import Kicker from "@/components/ui/Kicker";
 import { ECOSISTEMA_HERO, ECOSISTEMA_OVERVIEW } from "@/content/ecosistema";
 
 export default function CTASection() {
@@ -21,12 +22,11 @@ export default function CTASection() {
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto max-w-landing rounded-[32px] bg-[#234d9e]/70 px-6 py-10 text-center shadow-[0_26px_60px_-34px_rgba(0,0,0,0.6)] backdrop-blur-sm md:px-10 md:py-14">
+      <div className="relative mx-auto max-w-landing overflow-hidden rounded-[32px] bg-[#234d9e]/70 px-6 py-10 text-center shadow-[0_26px_60px_-34px_rgba(0,0,0,0.6)] backdrop-blur-sm md:px-10 md:py-14">
+        <span className="footer-brand-line pointer-events-none absolute inset-x-0 top-0 h-[1px]" aria-hidden="true" />
         <div className="mb-5 flex items-center justify-center gap-3">
           <BrandLines size="sm" animated centered />
-          <p className="ecos-kicker">
-            {cta.eyebrow}
-          </p>
+          <Kicker>{cta.eyebrow}</Kicker>
         </div>
 
         <h2 className="ecos-title-compact">

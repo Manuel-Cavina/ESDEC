@@ -8,6 +8,8 @@ import { ABOUT, ENTRY, PROFESSIONAL_ABOUT } from "@/content/landing";
 import BrandLines from "@/components/BrandLines";
 import FingerprintSVG from "@/components/FingerprintSVG";
 import ScrollReveal from "@/components/ScrollReveal";
+import Kicker from "@/components/ui/Kicker";
+import SweepButton from "@/components/ui/SweepButton";
 import { cn } from "@/lib/utils";
 
 type Audience = "deportista" | "profesional";
@@ -51,13 +53,6 @@ export default function EntrySection({
         }}
       />
 
-      <div
-        className="absolute inset-x-0 bottom-0 h-40 md:h-52"
-        style={{
-          background:
-            "linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, var(--bg) 100%)",
-        }}
-      />
 
       <div
         className={cn(
@@ -77,9 +72,7 @@ export default function EntrySection({
             <ScrollReveal direction="up">
               <div className="mb-6 flex items-center gap-3">
                 <BrandLines size="sm" animated />
-                <span className="font-condensed text-[11px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
-                  {intro.eyebrow}
-                </span>
+                <Kicker>{intro.eyebrow}</Kicker>
               </div>
 
               <h2 className="font-condensed text-[clamp(52px,8vw,118px)] font-black uppercase leading-[0.9] tracking-tight text-white">
@@ -92,28 +85,23 @@ export default function EntrySection({
                 {intro.body}
               </p>
 
-              <a
+              <SweepButton
+                label={`${intro.cta} →`}
                 href="#problem"
-                className={cn(
-                  "btn-shimmer relative mt-8 inline-flex items-center gap-2 overflow-hidden rounded-xl px-8 py-3.5",
-                  "bg-[var(--btn-bg)] font-condensed text-[13px] font-bold uppercase tracking-[3px] text-[var(--btn-t)]",
-                  "transition-all duration-200 hover:-translate-y-px hover:brightness-110"
-                )}
-              >
-                {intro.cta} →
-              </a>
+                variant="glass"
+                size="md"
+                className="mt-8"
+              />
             </ScrollReveal>
           </div>
 
-          <div className="mt-12 grid gap-6 border-t border-white/10 pt-6 md:grid-cols-3 md:gap-8 md:pt-8">
+          <div className="mt-12 grid gap-6 border-t border-white/[0.2] pt-6 md:grid-cols-3 md:gap-8 md:pt-8">
             {benefits.map((benefit, index) => (
               <ScrollReveal key={benefit.label} direction="up" delay={index * 80}>
                 <article className="max-w-[24ch]">
-                  <p className="font-condensed text-[10px] font-bold uppercase tracking-[3px] text-[var(--p1)]">
-                    {benefit.label}
-                  </p>
+                  <Kicker>{benefit.label}</Kicker>
                   <div className="mt-3 h-px w-10 bg-gradient-to-r from-[var(--p1)]/90 to-transparent" />
-                  <h3 className="mt-4 max-w-[18ch] font-condensed text-[20px] font-semibold uppercase leading-[1.08] tracking-[0.02em] text-white md:tracking-[0.03em]">
+                  <h3 className="mt-4 font-condensed text-[20px] font-semibold uppercase leading-[1.08] tracking-[0.02em] text-white md:tracking-[0.03em]">
                     {benefit.title}
                   </h3>
                 </article>

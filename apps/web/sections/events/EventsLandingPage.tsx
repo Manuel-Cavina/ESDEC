@@ -8,8 +8,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import EventsIntro, { EVENTS_INTRO_KEY } from "./EventsIntro";
 import BrandLines from "@/components/BrandLines";
+import Kicker from "@/components/ui/Kicker";
 import FingerprintSVG from "@/components/FingerprintSVG";
 import ScrollReveal from "@/components/ScrollReveal";
+import SharedCTASection from "@/components/SharedCTASection";
 import { EVENTS_PAGE, type EventsCta, type PastEvent } from "@/content/eventos";
 import { trackCTAClick, trackScrollDepth, trackSectionView } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
@@ -86,9 +88,7 @@ function SectionHeading({ eyebrow, title, align = "left" }: SectionHeadingProps)
     >
       <div className={cn("mb-5 flex items-center gap-3", align === "center" && "justify-center")}>
         <BrandLines size="sm" animated />
-        <p className="font-condensed text-[10px] font-black uppercase tracking-[0.4em] text-[var(--p1)]">
-          {eyebrow}
-        </p>
+        <Kicker>{eyebrow}</Kicker>
       </div>
       <h2 className="font-condensed text-[clamp(2.75rem,6.4vw,6.2rem)] font-black uppercase leading-[0.82] tracking-tight text-[var(--t1)]">
         {title}
@@ -257,9 +257,7 @@ function TransitionSection() {
               />
               <div className="mb-3 flex items-center gap-3">
                 <BrandLines size="sm" />
-                <p className="font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
-                  {step.label}
-                </p>
+                <Kicker>{step.label}</Kicker>
               </div>
               <h3 className="font-condensed text-[1.5rem] font-semibold uppercase leading-[1.02] tracking-[0.02em] text-[var(--t1)]">
                 {step.title}
@@ -1025,103 +1023,24 @@ function RefinedFinalCtaSection() {
   );
 }
 
-function AthletePaletteFinalCtaSection() {
+function EventsClosingCtaSection() {
   const { finalCta } = EVENTS_PAGE;
+  const [primaryCta, secondaryCta] = finalCta.ctas;
 
   return (
-    <section
-      data-event-section="final-cta"
-      className="relative isolate overflow-hidden bg-[#3269c7] px-6 py-20 md:py-28 [--p1:#5ac8ff] [--p2:#7de8a8] [--t1:#ffffff] [--t2:rgba(255,255,255,0.78)]"
-    >
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.1]"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle, rgba(255,255,255,0.14) 1px, transparent 1px)",
-          backgroundSize: "28px 28px",
-        }}
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_18%_22%,rgba(90,200,255,0.24)_0%,transparent_48%)]"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,#5ac8ff,#7de8a8,transparent)]"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute inset-0 flex items-center justify-center [--fpg:rgba(90,200,255,0.02)] [--fps:rgba(90,200,255,0.08)]"
-        aria-hidden="true"
-      >
-        <FingerprintSVG
-          animate={false}
-          className="w-[78vw] max-w-[640px] animate-heartbeat"
-        />
-      </div>
-
-      <div className="relative z-10 mx-auto grid max-w-landing gap-12 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-end">
-        <ScrollReveal direction="up">
-          <div className="mb-7 flex items-center gap-3">
-            <BrandLines size="sm" animated />
-            <p className="font-condensed text-[10px] font-black uppercase tracking-[5px] text-[#5ac8ff]">
-              {finalCta.eyebrow}
-            </p>
-          </div>
-
-          <h2 className="max-w-[780px] font-condensed text-[clamp(3.25rem,7.1vw,6.75rem)] font-black uppercase leading-[0.84] tracking-tight text-white">
-            {finalCta.headlineStack.map((line, index) => (
-              <span
-                key={line}
-                className={cn(
-                  "block",
-                  index === finalCta.headlineStack.length - 1 && "text-[#5ac8ff]"
-                )}
-              >
-                {line}
-              </span>
-            ))}
-          </h2>
-
-          <p className="mt-8 max-w-[48ch] font-sans text-[1.02rem] font-medium leading-[1.9] text-white/78">
-            {finalCta.body}
-          </p>
-        </ScrollReveal>
-
-        <ScrollReveal direction="up" delay={120}>
-          <div className="group spec-card-accent relative overflow-hidden rounded-[24px] border border-white/20 bg-white/[0.075] p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_24px_70px_-38px_rgba(0,0,0,0.62)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-[#5ac8ff]/60 hover:bg-white/[0.1]">
-            <span
-              className="pointer-events-none absolute left-0 top-0 h-px w-full origin-left scale-x-0 bg-[linear-gradient(90deg,rgba(125,232,168,0.9)_0%,rgba(90,200,255,0.92)_100%)] transition-transform duration-500 ease-out group-hover:scale-x-100"
-              aria-hidden="true"
-            />
-            <div className="mb-5 flex items-center gap-3">
-              <BrandLines size="sm" />
-              <p className="font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[#5ac8ff]">
-                {finalCta.panelEyebrow}
-              </p>
-            </div>
-            <p className="mt-5 max-w-[13ch] font-condensed text-[2.25rem] font-black uppercase leading-[0.9] tracking-tight text-white">
-              {finalCta.panelTitle}
-            </p>
-            <p className="mt-6 max-w-[29ch] font-sans text-[0.98rem] font-semibold leading-[1.62] text-white/76">
-              {finalCta.panelBody}
-            </p>
-            <a
-              href={finalCta.ctas[0].href}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => trackCTAClick(finalCta.ctas[0].trackingLabel)}
-              className="mt-8 inline-flex min-h-[64px] w-full items-center justify-center rounded-full bg-[#7de8a8] px-8 py-4 font-sans text-[0.88rem] font-black uppercase tracking-[0.14em] text-[#0c2d7a] no-underline shadow-[0_22px_54px_-26px_rgba(125,232,168,0.9)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#92f0b6] hover:shadow-[0_26px_62px_-28px_rgba(125,232,168,1)] hover:no-underline"
-            >
-              {finalCta.ctas[0].label}
-            </a>
-            <p className="mt-4 text-center font-sans text-[0.78rem] font-semibold text-white/56">
-              {finalCta.panelTrust}
-            </p>
-          </div>
-        </ScrollReveal>
-      </div>
-    </section>
+    <SharedCTASection
+      eyebrow={finalCta.eyebrow}
+      headline={finalCta.headlineLine1}
+      headlineAccent={finalCta.headlineLine2}
+      body={finalCta.body}
+      primaryCtaLabel={primaryCta.label}
+      primaryCtaHref={primaryCta.href}
+      primaryCtaExternal={primaryCta.external}
+      secondaryCtaLabel={secondaryCta?.label}
+      secondaryCtaHref={secondaryCta?.href}
+      secondaryCtaExternal={secondaryCta?.external}
+      trustText={finalCta.panelTrust}
+    />
   );
 }
 
@@ -1140,7 +1059,7 @@ export default function EventsLandingPage() {
       <NextEventSection />
       <ExperienceSection />
       <PastEventsSection />
-      <AthletePaletteFinalCtaSection />
+      <EventsClosingCtaSection />
     </main>
   );
 }

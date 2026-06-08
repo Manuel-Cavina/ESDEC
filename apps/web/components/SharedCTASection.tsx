@@ -10,14 +10,19 @@ import FingerprintSVG from "@/components/FingerprintSVG";
 import ScrollReveal from "@/components/ScrollReveal";
 
 interface SharedCTASectionProps {
+  /** Ancla para links internos (ej. navbar apuntando a "#footprint") */
+  id?: string;
   eyebrow: string;
   headline: string;
   headlineAccent?: string;
   body: string;
   /** Boton principal — verde, grande, centrado */
   primaryCtaLabel: string;
-  primaryCtaHref: string;
+  /** Requerido salvo que se use onPrimaryCtaClick (ej. abrir un modal) */
+  primaryCtaHref?: string;
   primaryCtaExternal?: boolean;
+  /** Si se pasa, el boton principal ejecuta esta accion en vez de navegar */
+  onPrimaryCtaClick?: () => void;
   /** Accion secundaria — se muestra como link de texto, no como boton */
   secondaryCtaLabel?: string;
   secondaryCtaHref?: string;
@@ -27,6 +32,7 @@ interface SharedCTASectionProps {
 }
 
 export default function SharedCTASection({
+  id,
   eyebrow,
   headline,
   headlineAccent,
@@ -34,6 +40,7 @@ export default function SharedCTASection({
   primaryCtaLabel,
   primaryCtaHref,
   primaryCtaExternal = false,
+  onPrimaryCtaClick,
   secondaryCtaLabel,
   secondaryCtaHref,
   secondaryCtaExternal = false,
@@ -45,6 +52,7 @@ export default function SharedCTASection({
 
   return (
     <section
+      id={id}
       className="relative overflow-hidden px-6 py-20 md:py-28"
       style={{ background: bg }}
     >
@@ -74,9 +82,9 @@ export default function SharedCTASection({
         <ScrollReveal direction="up">
           <div className="group relative overflow-hidden rounded-[32px] border border-white/20 bg-white/[0.075] px-8 py-14 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_30px_80px_-40px_rgba(0,0,0,0.65)] backdrop-blur-md md:px-12 md:py-20">
 
-            {/* Accent line en hover */}
+            {/* Brand line — siempre visible */}
             <span
-              className="pointer-events-none absolute left-0 top-0 h-px w-full origin-left scale-x-0 bg-[linear-gradient(90deg,rgba(125,232,168,0.9)_0%,rgba(90,200,255,0.92)_100%)] transition-transform duration-500 ease-out group-hover:scale-x-100"
+              className="footer-brand-line pointer-events-none absolute left-0 top-0 h-[1px] w-full"
               aria-hidden="true"
             />
 
@@ -111,8 +119,9 @@ export default function SharedCTASection({
             <div className="relative mt-10 flex flex-col items-center gap-3">
               <SweepButton
                 label={primaryCtaLabel}
-                href={primaryCtaHref}
+                href={primaryCtaHref ?? ""}
                 external={primaryCtaExternal}
+                onClick={onPrimaryCtaClick}
                 size="lg"
                 className="w-full max-w-[480px]"
               />

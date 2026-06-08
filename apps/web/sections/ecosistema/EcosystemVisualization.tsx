@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import FingerprintSVG from "@/components/FingerprintSVG";
+import Kicker from "@/components/ui/Kicker";
 import StickerIcon from "@/components/StickerIcon";
 import { ECOSISTEMA_ECOSYSTEM } from "@/content/ecosistema";
 
@@ -63,7 +64,7 @@ export default function EcosystemVisualization() {
                 activeId ? "translate-y-4 opacity-0 pointer-events-none" : "translate-y-0 opacity-100"
               }`}
             >
-              <p className="ecos-kicker mb-3">{eyebrow}</p>
+              <Kicker className="mb-3">{eyebrow}</Kicker>
               <h2 className="ecos-title-compact max-w-[11ch]">
                 {headline} <span className="ecos-title-accent">{headlineAccent}</span>
               </h2>

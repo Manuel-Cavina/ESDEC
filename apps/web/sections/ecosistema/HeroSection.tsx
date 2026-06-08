@@ -4,6 +4,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import BrandLines from "@/components/BrandLines";
+import Kicker from "@/components/ui/Kicker";
 import ScrollReveal from "@/components/ScrollReveal";
 import { ECOSISTEMA_HERO } from "@/content/ecosistema";
 
@@ -74,9 +75,7 @@ export default function HeroSection() {
         <ScrollReveal direction="up">
           <div className="mb-6 flex items-center justify-center gap-3">
             <BrandLines size="sm" animated centered />
-            <p className="ecos-kicker">
-              {eyebrow}
-            </p>
+            <Kicker>{eyebrow}</Kicker>
           </div>
 
           <h1 className="ecos-title">

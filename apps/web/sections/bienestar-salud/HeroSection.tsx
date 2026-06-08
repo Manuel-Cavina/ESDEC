@@ -5,6 +5,7 @@ import BrandLines from "@/components/BrandLines";
 import FingerprintSVG from "@/components/FingerprintSVG";
 import ScrollReveal from "@/components/ScrollReveal";
 import StickerIcon from "@/components/StickerIcon";
+import SweepButton from "@/components/ui/SweepButton";
 import {
   SALUD_HERO,
   BIENESTAR_HERO,

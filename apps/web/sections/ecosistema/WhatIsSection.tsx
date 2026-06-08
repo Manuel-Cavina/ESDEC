@@ -4,6 +4,7 @@
 // Bloque "Que es ESDEC" con layout editorial inspirado en la referencia.
 
 import BrandLines from "@/components/BrandLines";
+import Kicker from "@/components/ui/Kicker";
 import ScrollReveal from "@/components/ScrollReveal";
 import { ECOSISTEMA_MVV, ECOSISTEMA_PRINCIPLES } from "@/content/ecosistema";
 
@@ -29,7 +30,7 @@ export default function WhatIsSection() {
             <ScrollReveal direction="up">
               <div className="mb-6 flex items-center gap-3">
                 <BrandLines size="sm" animated />
-                <p className="ecos-kicker">Que es ESDEC</p>
+                <Kicker>Que es ESDEC</Kicker>
               </div>
 
               <h2 className="ecos-title">
@@ -46,9 +47,7 @@ export default function WhatIsSection() {
                     key={item.id}
                     className="grid gap-4 border-t border-white/18 py-6 md:grid-cols-[96px_1fr] md:gap-6"
                   >
-                    <p className="font-condensed text-[11px] font-bold uppercase tracking-[4px] text-[var(--p2)]">
-                      {item.label}
-                    </p>
+                    <Kicker>{item.label}</Kicker>
                     <p className="max-w-[58ch] font-sans text-[0.96rem] leading-[1.95] text-[var(--t2)]">
                       {item.body}
                     </p>
@@ -62,7 +61,7 @@ export default function WhatIsSection() {
             <ScrollReveal direction="up">
               <div className="mb-6 flex items-center gap-3">
                 <div className="h-px w-7 bg-[var(--p2)]" />
-                <p className="ecos-kicker text-[var(--p2)]">Lo que nos define</p>
+                <Kicker>Lo que nos define</Kicker>
               </div>
             </ScrollReveal>
 
@@ -79,9 +78,7 @@ export default function WhatIsSection() {
                     />
                     <div className="mb-3 flex items-center gap-3">
                       <BrandLines size="sm" />
-                      <p className="font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
-                        Clave {String(index + 1).padStart(2, "0")}
-                      </p>
+                      <Kicker>Clave {String(index + 1).padStart(2, "0")}</Kicker>
                     </div>
                     <h3 className="font-condensed text-[1.5rem] font-semibold uppercase leading-[1.02] tracking-[0.02em] text-[var(--t1)]">
                       {card.title}

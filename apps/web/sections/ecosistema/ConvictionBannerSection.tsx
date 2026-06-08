@@ -2,6 +2,7 @@
 // Franja full-width con imagen de fondo y las tres ideas fuerza.
 
 import BrandLines from "@/components/BrandLines";
+import Kicker from "@/components/ui/Kicker";
 import { ECOSISTEMA_OVERVIEW } from "@/content/ecosistema";
 
 export default function ConvictionBannerSection() {
@@ -21,9 +22,7 @@ export default function ConvictionBannerSection() {
       <div className="relative mx-auto max-w-landing text-center">
         <div className="mb-6 flex items-center justify-center gap-3">
           <BrandLines size="sm" animated centered />
-          <p className="ecos-kicker">
-            Conviccion con estructura
-          </p>
+          <Kicker>Conviccion con estructura</Kicker>
         </div>
 
         <h2 className="mx-auto max-w-[14ch] font-condensed text-[2.2rem] font-bold uppercase leading-[0.96] tracking-[-0.03em] text-white md:text-[3rem]">
@@ -42,9 +41,7 @@ export default function ConvictionBannerSection() {
               key={item.title}
               className="rounded-[18px] bg-white/[0.06] px-5 py-5 text-left shadow-[0_16px_42px_-24px_rgba(0,0,0,0.45)] backdrop-blur-sm"
             >
-              <p className="font-condensed text-[10px] font-bold uppercase tracking-[3.2px] text-[var(--p2)]">
-                {item.label}
-              </p>
+              <Kicker className="mb-2">{item.label}</Kicker>
               <p className="mt-3 font-condensed text-[1rem] font-semibold uppercase leading-[1.05] tracking-[0.01em] text-white">
                 {item.title}
               </p>
