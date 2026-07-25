@@ -179,24 +179,34 @@ export const PROFESSIONAL_ABOUT = {
 
 export const ENTRY = {
   deportista: {
-    eyebrow: "PARA DEPORTISTAS",
-    headlinePre: "EL FUTURO DEL",
-    headlineAccent: "DEPORTISTA",
-    headlinePost: "SE CONSTRUYE.",
+    eyebrow: "Para deportistas · ESDEC",
+    headlinePre: "EL TALENTO",
+    headlineAccent: "NECESITA SISTEMA.",
     body:
-      "ESDEC no viene a exigirte mas. Viene a ayudarte a crecer mejor, con el equipo correcto y una estructura capaz de sostener lo que hoy todavia parece lejano.",
-    cta: "Ver cómo funciona",
+      "El entrenamiento, la nutricion y la recuperacion integrados en una sola estructura. Menos intuicion, mas progreso sostenido.",
+    cta: "Ver cómo funciona →",
+    ctaHref: "#problem",
     image: "/images/athletes/maraton_1.jpg",
+    stats: [
+      { label: "Progreso real", title: "Menos intuicion, mas direccion" },
+      { label: "Equipo correcto", title: "Especialistas en sintonia" },
+      { label: "Criterio", title: "Decisiones con seguimiento" },
+    ],
   },
   profesional: {
-    eyebrow: "PARA PROFESIONALES",
-    headlinePre: "EL FUTURO DEL",
-    headlineAccent: "PROFESIONAL",
-    headlinePost: "SE POTENCIA.",
+    eyebrow: "Para profesionales · ESDEC",
+    headlinePre: "TU EXPERTISE",
+    headlineAccent: "CON SISTEMA.",
     body:
-      "ESDEC ordena el contexto alrededor de tu expertise para que tu trabajo gane visibilidad, coordinacion y proyeccion dentro de un ecosistema que lo respalda.",
-    cta: "Ver cómo funciona",
+      "ESDEC conecta tu especialidad con deportistas y procesos donde tu trabajo genera impacto real. Con visibilidad, coordinacion y escala.",
+    cta: "Ver cómo funciona →",
+    ctaHref: "#problem",
     image: "/images/athletes/medicina2.jpg",
+    stats: [
+      { label: "Demanda relevante", title: "Visibilidad frente a quien te necesita" },
+      { label: "Red coordinada", title: "Trabajo integrado con otros especialistas" },
+      { label: "Escala real", title: "Tu practica crece con el ecosistema" },
+    ],
   },
 } as const;
 
@@ -568,35 +578,22 @@ export const PROFESSIONAL_PROBLEM = {
 
 export const FOOTPRINT = {
   eyebrow: "Ingreso al ecosistema",
-  panelLabel: "Siguiente paso",
   variants: {
     deportista: {
-      headline: ["EMPEZÁ TU", "PROCESO."],
-      accent: "CON ESTRUCTURA.",
+      headline: "EMPEZÁ TU PROCESO.",
+      headlineAccent: "HOY.",
       body:
         "Contanos tu deporte y tu objetivo. Te guiamos por WhatsApp con el contexto justo para orientarte dentro del sistema ESDEC.",
-      features: [
-        "Primer contacto simple y guiado",
-        "Respuesta en menos de 48hs",
-        "Recorrido pensado para tu punto de partida",
-      ],
       cta: "Empezar por WhatsApp →",
-      note:
-        "Te hacemos pocas preguntas y te explicamos el siguiente paso antes de pedirte mas tiempo.",
+      trustText: "Respuesta por WhatsApp en menos de 48hs",
     },
     profesional: {
-      headline: ["SUMATE COMO", "PROFESIONAL."],
-      accent: "CON CRITERIO.",
+      headline: "SUMATE AL SISTEMA.",
+      headlineAccent: "HOY.",
       body:
         "Compartinos tu especialidad y cómo te contactamos. Revisamos tu perfil y seguimos la conversacion por WhatsApp con claridad sobre el siguiente paso.",
-      features: [
-        "Postulacion inicial liviana",
-        "Revision del perfil con contexto",
-        "Continuidad por WhatsApp en menos de 48hs",
-      ],
       cta: "Postularme por WhatsApp →",
-      note:
-        "La propuesta inicial es breve: buscamos validar encaje antes de pedirte mas informacion.",
+      trustText: "Revisamos tu perfil · Respuesta en menos de 48hs",
     },
   },
 } as const;
@@ -604,15 +601,15 @@ export const FOOTPRINT = {
 export const NAV = {
   groups: [
     {
-      label: "Sobre nosotros",
-      href: "/ecosistema-deportivo-cordoba",
+      label: "El ecosistema",
+      href: "/",
     },
     {
-      label: "Deportistas",
+      label: "Soy deportista",
       href: "/deportistas",
     },
     {
-      label: "Profesionales",
+      label: "Soy profesional",
       href: "/profesionales",
     },
   ],
@@ -671,19 +668,27 @@ export const FOOTER = {
     {
       label: "Plataforma",
       links: [
-        { label: "Qué es ESDEC", href: "/ecosistema-deportivo-cordoba" },
-        { label: "Red coordinada", href: "/ecosistema-deportivo-cordoba#ecosystem" },
-        { label: "Cómo funciona", href: "/ecosistema-deportivo-cordoba#problem" },
-        { label: "Eventos", href: "/eventos-deportivos-cordoba" },
+        { label: "El ecosistema", href: "/" },
+        { label: "Quiénes somos", href: "/nosotros" },
+        { label: "Cómo funciona", href: "/#problem" },
+        { label: "Eventos deportivos", href: "/eventos-deportivos-cordoba" },
+        { label: "Educación deportiva", href: "/educacion-deportiva-cordoba" },
       ],
     },
     {
-      label: "Recorridos",
+      label: "Deportistas",
       links: [
-        { label: "Para deportistas", href: "/deportistas" },
-        { label: "Para profesionales", href: "/profesionales" },
         { label: "Empezar mi proceso", href: "/deportistas#footprint" },
-        { label: "Postularme como profesional", href: "/profesionales#footprint" },
+        { label: "Salud deportiva", href: "/salud-deportiva-cordoba" },
+        { label: "Bienestar integral", href: "/bienestar-deportivo-cordoba" },
+      ],
+    },
+    {
+      label: "Profesionales",
+      links: [
+        { label: "Postularme", href: "/profesionales#footprint" },
+        { label: "Tecnología deportiva", href: "/tecnologia-deportiva-cordoba" },
+        { label: "Market deportivo", href: "/market-deportivo-cordoba" },
       ],
     },
   ],

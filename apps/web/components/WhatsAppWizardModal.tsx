@@ -1,17 +1,17 @@
 "use client";
 
-// sections/FootprintSection.tsx
-// Audience-aware closing section with a lighter, clearer WhatsApp flow.
+// components/WhatsAppWizardModal.tsx
+// Multi-step lead capture modal that hands the conversation off to WhatsApp.
+// Extracted from FootprintSection so any CTA can trigger the same flow.
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { FOOTPRINT, FOOTPRINT_MODAL } from "@/content/landing";
+import { FOOTPRINT_MODAL } from "@/content/landing";
 import BrandLines from "@/components/BrandLines";
-import FingerprintSVG from "@/components/FingerprintSVG";
-import ScrollReveal from "@/components/ScrollReveal";
+import Kicker from "@/components/ui/Kicker";
 import StickerIcon from "@/components/StickerIcon";
 import { cn } from "@/lib/utils";
 
-type Audience = "deportista" | "profesional";
+export type WizardAudience = "deportista" | "profesional";
 type StepType = "text" | "options" | "contact";
 
 interface StepOption {
@@ -29,8 +29,9 @@ interface StepConfig {
 
 type Answers = Record<string, string>;
 
-interface FootprintSectionProps {
-  audience?: Audience;
+interface WhatsAppWizardModalProps {
+  audience: WizardAudience;
+  onClose: () => void;
 }
 
 interface ProgressBarProps {
@@ -48,11 +49,6 @@ interface ModalStepProps {
   isLast: boolean;
   backLabel: string;
   submitLabel: string;
-}
-
-interface ModalProps {
-  audience: Audience;
-  onClose: () => void;
 }
 
 function ProgressBar({ current, total }: ProgressBarProps) {
@@ -143,7 +139,7 @@ function ModalStep({
           onClick={onNext}
           disabled={!canAdvance}
           className={cn(
-            "inline-flex items-center gap-2 rounded-xl px-7 py-3.5 font-condensed text-[13px] font-bold uppercase tracking-[3px] transition-all duration-200",
+            "inline-flex items-center gap-2 rounded-full px-8 py-3.5 font-sans text-[0.95rem] font-semibold uppercase tracking-[0.04em] transition-all duration-200",
             canAdvance
               ? "bg-[var(--btn-bg)] text-[var(--btn-t)] hover:-translate-y-px hover:brightness-110"
               : "cursor-not-allowed bg-white/10 text-white/30"
@@ -156,7 +152,7 @@ function ModalStep({
   );
 }
 
-function Modal({ audience, onClose }: ModalProps) {
+export default function WhatsAppWizardModal({ audience, onClose }: WhatsAppWizardModalProps) {
   const [stepIndex, setStepIndex] = useState(0);
   const [answers, setAnswers] = useState<Answers>({});
   const [success, setSuccess] = useState(false);
@@ -286,9 +282,7 @@ function Modal({ audience, onClose }: ModalProps) {
             <>
               <div className="mb-6">
                 <BrandLines size="sm" animated className="mb-3" />
-                <h2 className="font-condensed text-[11px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
-                  {config.title}
-                </h2>
+                <Kicker>{config.title}</Kicker>
                 <p className="mt-1 font-sans text-xs leading-[1.7] text-[var(--t2)]">
                   {config.subtitle}
                 </p>
@@ -313,124 +307,5 @@ function Modal({ audience, onClose }: ModalProps) {
         </div>
       </div>
     </div>
-  );
-}
-
-export default function FootprintSection({
-  audience = "deportista",
-}: FootprintSectionProps) {
-  const [modalOpen, setModalOpen] = useState(false);
-  const content = FOOTPRINT.variants[audience];
-
-  return (
-    <>
-      <section
-        id="footprint"
-        className="relative overflow-hidden bg-[var(--bg)] py-28 md:py-36"
-      >
-        <div
-          className="pointer-events-none absolute inset-0 flex items-center justify-center [--fps:rgba(90,200,255,0.08)] [--fpg:rgba(90,200,255,0.02)]"
-          aria-hidden="true"
-        >
-          <FingerprintSVG
-            animate={false}
-            className="w-[70vw] max-w-[600px] animate-heartbeat"
-          />
-        </div>
-
-        <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-64 opacity-25"
-          style={{
-            background:
-              "radial-gradient(ellipse at 50% 100%, var(--p1), transparent 70%)",
-          }}
-          aria-hidden="true"
-        />
-
-        <div className="relative z-10 mx-auto max-w-landing px-6">
-          <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,0.85fr)]">
-            <div>
-              <ScrollReveal direction="up" delay={0}>
-                <div className="mb-6 inline-flex items-center gap-3">
-                  <BrandLines size="sm" animated />
-                  <span className="font-condensed text-[11px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
-                    {FOOTPRINT.eyebrow}
-                  </span>
-                </div>
-              </ScrollReveal>
-
-              <ScrollReveal direction="up" delay={60}>
-                <h2 className="font-condensed font-black uppercase leading-[0.92] tracking-tight text-[var(--t1)] text-[clamp(52px,8vw,112px)]">
-                  <span className="block">{content.headline[0]}</span>
-                  <span className="block">{content.headline[1]}</span>
-                  <span className="mt-2 block text-[0.55em] font-bold text-[var(--p1)]">
-                    {content.accent}
-                  </span>
-                </h2>
-              </ScrollReveal>
-
-              <ScrollReveal direction="up" delay={120}>
-                <p className="mt-8 max-w-xl font-sans text-base leading-[1.9] text-[var(--t2)]">
-                  {content.body}
-                </p>
-              </ScrollReveal>
-            </div>
-
-            <ScrollReveal direction="up" delay={120}>
-              <div className="rounded-[28px] border border-white/10 bg-white/[0.04] p-7 shadow-[0_24px_70px_rgba(0,0,0,0.16)]">
-                <p className="font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
-                  {FOOTPRINT.panelLabel}
-                </p>
-                <ul className="mt-6 flex flex-col gap-3">
-                  {content.features.map((feature) => (
-                    <li
-                      key={feature}
-                      className="flex items-center gap-3 font-sans text-sm text-[var(--t2)]"
-                    >
-                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[var(--p2)]/20">
-                        <svg
-                          viewBox="0 0 12 12"
-                          fill="none"
-                          className="h-3 w-3 text-[var(--p2)]"
-                        >
-                          <path
-                            d="M2 6l2.5 2.5L10 3.5"
-                            stroke="currentColor"
-                            strokeWidth="1.8"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </span>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-
-                <p className="mt-6 font-sans text-sm leading-[1.8] text-[var(--t2)]">
-                  {content.note}
-                </p>
-
-                <button
-                  type="button"
-                  onClick={() => setModalOpen(true)}
-                  className={cn(
-                    "btn-shimmer relative mt-8 inline-flex items-center gap-3 overflow-hidden rounded-xl bg-[var(--btn-bg)] px-8 py-4",
-                    "font-condensed text-[14px] font-bold uppercase tracking-[4px] text-[var(--btn-t)]",
-                    "transition-all duration-200 hover:-translate-y-1 hover:brightness-110"
-                  )}
-                >
-                  {content.cta}
-                </button>
-              </div>
-            </ScrollReveal>
-          </div>
-        </div>
-      </section>
-
-      {modalOpen && (
-        <Modal audience={audience} onClose={() => setModalOpen(false)} />
-      )}
-    </>
   );
 }

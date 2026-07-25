@@ -39,12 +39,15 @@ function StampWord({
   className?: string;
 }) {
   return (
-    <span
-      className={`animate-stamp inline-block ${className}`}
-      style={{ animationDelay: `${delay}ms`, animationFillMode: "both" }}
-    >
-      {word}
-    </span>
+    <>
+      <span
+        className={`animate-stamp inline-block ${className}`}
+        style={{ animationDelay: `${delay}ms`, animationFillMode: "both" }}
+      >
+        {word}
+      </span>
+      {" "}
+    </>
   );
 }
 
@@ -207,7 +210,7 @@ export default function SharedHeroSection({
                   <article className="max-w-[24ch]">
                     <Kicker>{stat.label}</Kicker>
                     <div className="mt-3 h-px w-10 bg-gradient-to-r from-[var(--p1)]/90 to-transparent" />
-                    <h3 className="mt-4 max-w-[18ch] font-condensed text-[clamp(1.1rem,1.8vw,1.35rem)] font-bold uppercase leading-[1.08] tracking-[0.02em] text-white">
+                    <h3 className="mt-4 font-condensed text-[clamp(1.1rem,1.8vw,1.35rem)] font-bold uppercase leading-[1.08] tracking-[0.02em] text-white">
                       {stat.title}
                     </h3>
                   </article>

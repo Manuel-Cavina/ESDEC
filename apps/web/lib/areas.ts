@@ -6,7 +6,6 @@ import { FOOTER } from "@/content/landing";
 import { AREA_PAGES, type AreaPageConfig, type AreaSlug } from "@/content/areas";
 import { SITE_URL } from "@/lib/constants";
 
-const ECOSYSTEM_PATH = "/ecosistema-deportivo-cordoba";
 const OG_IMAGE_PATH = "/images/og-image.png";
 
 function getWhatsappBaseHref() {
@@ -29,7 +28,7 @@ export function getAreaUrl(slug: AreaSlug) {
 }
 
 export function getEcosystemUrl() {
-  return `${SITE_URL}${ECOSYSTEM_PATH}`;
+  return SITE_URL;
 }
 
 export function getAreaWhatsappHref(area: AreaPageConfig) {

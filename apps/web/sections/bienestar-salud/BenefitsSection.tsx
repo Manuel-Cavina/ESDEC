@@ -47,7 +47,8 @@ function StatRow({ item, accent, index }: { item: BenefitItem; accent: string; i
         {/* Content */}
         <div className="self-center">
           <Kicker className="mb-2">{item.statLabel}</Kicker>
-          <h3 className="font-condensed text-[clamp(1.15rem,2.2vw,1.45rem)] font-black uppercase leading-[1.05] tracking-[0.02em] text-[var(--t1)]">
+          <div className="mt-3 h-px w-10 bg-gradient-to-r from-[var(--p1)]/90 to-transparent" />
+          <h3 className="mt-4 font-condensed text-[clamp(1.1rem,1.8vw,1.35rem)] font-bold uppercase leading-[1.08] tracking-[0.02em] text-white">
             {item.title}
           </h3>
           <p className="mt-2.5 max-w-[58ch] font-sans text-base leading-[1.82] text-[var(--t2)]">
@@ -72,7 +73,7 @@ export default function BenefitsSection({ area }: Props) {
           <Kicker className="mb-4">{copy.eyebrow}</Kicker>
           <h2 className="text-clamp-problem font-condensed font-black uppercase leading-[0.92] tracking-tight text-[var(--t1)]">
             {copy.headlinePre}{" "}
-            <span className="text-[var(--p1)]">{copy.headlineAccent}</span>
+            <span className="ecos-title-accent">{copy.headlineAccent}</span>
           </h2>
           <p className="mt-5 max-w-[52ch] font-sans text-base leading-[1.9] text-[var(--t2)]">
             {copy.subtext}

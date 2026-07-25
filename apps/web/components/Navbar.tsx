@@ -9,6 +9,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { AREA_PAGE_ORDER, AREA_PAGES } from "@/content/areas";
 import { NAV } from "@/content/landing";
+import Kicker from "@/components/ui/Kicker";
 import { cn } from "@/lib/utils";
 
 interface NavbarProps {
@@ -74,7 +75,7 @@ export default function Navbar({ audience = null }: NavbarProps) {
 
     return {
       label: NAV.cta,
-      href: "/ecosistema-deportivo-cordoba",
+      href: "/",
     };
   }, [audience]);
 
@@ -169,7 +170,7 @@ export default function Navbar({ audience = null }: NavbarProps) {
             <ul className="flex items-center gap-2">
               {navLinks.map((link) => {
                 const active = isActiveLink(link.href);
-                const isAboutLink = link.label === "Sobre nosotros";
+                const isAboutLink = link.href === "/";
 
                 return (
                   <li
@@ -212,11 +213,10 @@ export default function Navbar({ audience = null }: NavbarProps) {
 
                     {isAboutLink ? (
                       <div className="pointer-events-none absolute left-0 top-full z-[920] pt-3 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
-                        <div className="w-[280px] overflow-hidden rounded-[22px] bg-[rgba(50,105,199,0.96)] p-3 text-white shadow-[0_20px_48px_rgba(0,0,0,0.26)] backdrop-blur-[20px]">
-                          <div className="px-3 pb-3">
-                            <p className="font-condensed text-[10px] font-bold uppercase tracking-[0.24em] text-[var(--p1)]">
-                              Areas del ecosistema
-                            </p>
+                        <div className="relative w-[280px] overflow-hidden rounded-[22px] bg-[rgba(12,45,160,0.68)] p-3 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.18),inset_0_-1px_0_rgba(90,200,255,0.08),0_20px_48px_rgba(0,0,0,0.28)] backdrop-blur-[28px]">
+                          <div className="footer-brand-line absolute inset-x-0 top-0 h-[1px]" aria-hidden="true" />
+                          <div className="px-3 pb-3 pt-1">
+                            <Kicker>Areas del ecosistema</Kicker>
                           </div>
                           <div className="grid grid-cols-2 gap-1 pt-2">
                             {aboutAreas.map((item) => (
@@ -252,7 +252,7 @@ export default function Navbar({ audience = null }: NavbarProps) {
               onClick={() => handleNavigate(ctaConfig.href)}
               className={cn(
                 "btn-shimmer relative hidden h-11 items-center justify-center overflow-hidden rounded-full px-5 sm:inline-flex",
-                "bg-[var(--btn-bg)] font-condensed text-[12px] font-bold uppercase tracking-[0.18em] text-[var(--btn-t)]",
+                "bg-[var(--btn-bg)] font-sans text-[13px] font-semibold uppercase tracking-[0.04em] text-[var(--btn-t)]",
                 "shadow-[0_10px_28px_rgba(0,0,0,0.14)] transition-all duration-200 hover:-translate-y-px hover:brightness-110",
                 "lg:min-w-[184px]"
               )}
@@ -305,14 +305,14 @@ export default function Navbar({ audience = null }: NavbarProps) {
       >
         <div
           className={cn(
-            "overflow-hidden rounded-[24px] outline-none ring-0 p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.10),0_22px_44px_rgba(0,0,0,0.28)] backdrop-blur-[20px]",
+            "overflow-hidden rounded-[24px] outline-none ring-0 p-3 bg-[rgba(10,38,140,0.95)] shadow-[inset_0_1px_0_rgba(255,255,255,0.10),0_22px_44px_rgba(0,0,0,0.28)] backdrop-blur-[20px]",
             navToneClass
           )}
         >
           <div className="space-y-1">
             {navLinks.map((link) => {
               const active = isActiveLink(link.href);
-              const isAboutLink = link.label === "Sobre nosotros";
+              const isAboutLink = link.href === "/";
 
               if (isAboutLink) {
                 return (
@@ -399,8 +399,8 @@ export default function Navbar({ audience = null }: NavbarProps) {
             type="button"
             onClick={() => handleNavigate(ctaConfig.href)}
             className={cn(
-              "btn-shimmer relative mt-3 flex h-12 w-full items-center justify-center overflow-hidden rounded-[18px]",
-              "bg-[var(--btn-bg)] font-condensed text-[13px] font-bold uppercase tracking-[0.16em] text-[var(--btn-t)]",
+              "btn-shimmer relative mt-3 flex h-12 w-full items-center justify-center overflow-hidden rounded-full",
+              "bg-[var(--btn-bg)] font-sans text-[14px] font-semibold uppercase tracking-[0.04em] text-[var(--btn-t)]",
               "shadow-[0_10px_24px_rgba(0,0,0,0.14)] transition-all duration-200 hover:brightness-110"
             )}
           >

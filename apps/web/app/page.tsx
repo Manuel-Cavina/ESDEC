@@ -1,29 +1,34 @@
 // app/page.tsx
-// Home ESDEC — portada pura.
-// Navbar + hero split + bridge mínimo.
-// Server Component.
+// Home ESDEC — el ecosistema integral deportivo, sin gate de audiencia previo.
 
-import Link from "next/link";
-import HeroSectionRouted from "@/sections/HeroSectionRouted";
+import type { Metadata } from "next";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import EcosistemaLanding from "@/sections/ecosistema/EcosistemaLanding";
+import { SITE_URL } from "@/lib/constants";
+
+export const metadata: Metadata = {
+  title: "Ecosistema Deportivo de Cordoba - ESDEC",
+  description:
+    "ESDEC es el ecosistema deportivo de Cordoba que conecta deportistas y profesionales del deporte en un solo sistema coordinado.",
+  alternates: { canonical: SITE_URL },
+  openGraph: {
+    url: SITE_URL,
+    title: "Ecosistema Deportivo de Cordoba - ESDEC",
+    description:
+      "El sistema que conecta deportistas y profesionales del deporte en Cordoba, Argentina.",
+    images: [{ url: "/images/og-image.png", width: 1200, height: 630 }],
+  },
+};
 
 export default function HomePage() {
   return (
-    <main>
-      <HeroSectionRouted />
-
-      <section className="border-t border-white/10 bg-[linear-gradient(180deg,var(--bg2)_0%,color-mix(in_srgb,var(--bg2)_74%,#09142d)_100%)] px-6 py-7">
-        <div className="mx-auto flex max-w-[920px] flex-col items-center justify-between gap-3 text-center sm:flex-row sm:text-left">
-          <p className="font-sans text-[0.84rem] leading-relaxed text-[var(--t2)]">
-            El futuro del deportista no se improvisa. Se construye.
-          </p>
-          <Link
-            href="/ecosistema-deportivo-cordoba"
-            className="font-condensed text-[11px] font-semibold uppercase tracking-[3px] text-[var(--p1)] transition-colors duration-200 hover:text-white"
-          >
-            Conocer ESDEC →
-          </Link>
-        </div>
-      </section>
-    </main>
+    <>
+      <div className="nav-visible">
+        <Navbar audience={null} />
+      </div>
+      <EcosistemaLanding />
+      <Footer />
+    </>
   );
 }

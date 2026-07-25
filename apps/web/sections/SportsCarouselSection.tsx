@@ -2,6 +2,7 @@
 // Carrusel de deportes activos — marquee infinito, pausa en hover.
 // Server Component: la animación es CSS puro (group-hover).
 
+import Kicker from "@/components/ui/Kicker";
 import StickerIcon from "@/components/StickerIcon";
 import { ECOSYSTEM } from "@/content/landing";
 
@@ -40,9 +41,7 @@ export default function SportsCarouselSection({
       />
 
       {/* Label */}
-      <p className="mb-4 text-center font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
-        {ECOSYSTEM.stripLabel}
-      </p>
+      <Kicker align="center" className="mb-4">{ECOSYSTEM.stripLabel}</Kicker>
 
       {/* Strip animado */}
       <div className="group flex animate-marquee gap-5 px-4 group-hover:[animation-play-state:paused]">

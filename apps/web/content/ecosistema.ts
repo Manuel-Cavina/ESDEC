@@ -1,33 +1,216 @@
 // content/ecosistema.ts
 // Copy exclusivo de la pagina /ecosistema-deportivo-cordoba.
 
-// —— NUEVO HERO ———————————————————————————————————————————————————————————————
+// —— HERO ———————————————————————————————————————————————————————————————————
 export const ECOSISTEMA_HERO = {
   eyebrow: "Ecosistema Deportivo · Cordoba · Argentina",
-  headlineLine1: "No te falta",
-  headlineLine2: "esfuerzo.",
-  headlineLine3: "Te falta",
-  headlineAccent: "sistema.",
-  subtext:
-    "ESDEC es la estructura que organiza el deporte amateur. Bienestar, clinica, marca, eventos, tecnologia y educacion dentro de una misma red que funciona junta.",
-  pillars: [
-    "Bienestar",
-    "Clinica",
-    "Marca",
-    "Eventos",
-    "Tecnologia",
-    "Educacion",
-  ],
+  headlinePre: "EL TALENTO SIN SISTEMA,",
+  headlineAccent: "SE DISPERSA.",
+  body:
+    "ESDEC es la estructura que organiza el deporte amateur en Cordoba — para quien entrena y para quien acompaña ese proceso. Bienestar, clinica, marca, eventos, tecnologia y educacion dentro de una misma red que funciona junta, siempre a mano.",
+  ctaLabel: "Ver el ecosistema",
+  ctaHref: "#areas",
   ctaDeportista: "Entrar como deportista",
   ctaProfesional: "Entrar como profesional",
   stats: [
-    { value: "6", label: "pilares integrados" },
-    { value: "247+", label: "perfiles activos" },
-    { value: "1°", label: "en Cordoba" },
-    { value: "360°", label: "vision del deportista" },
+    { label: "Pilares integrados", title: "6 areas conectadas en un mismo sistema" },
+    { label: "En Cordoba", title: "Pensado para el deporte amateur de la ciudad" },
+    { label: "Vision del deportista", title: "360° del proceso, en un mismo lugar" },
   ],
-  heroImage: "/images/lifestyle/Correr_lluvia_1.jpg",
-  heroImageAlt: "Deportista en accion dentro del ecosistema ESDEC",
+  heroImage: "/images/team/Personas_maraton.jpg",
+  heroImageAlt: "Comunidad deportiva dentro del ecosistema ESDEC",
+} as const;
+
+// —— HOOK: PUENTE ENTRE EL HERO Y LOS PILARES ————————————————————————————————
+export const ECOSISTEMA_HOOK = {
+  roles: [
+    { id: "seguimiento", icon: "progreso", label: "Seguimiento continuo", accent: "#7cc8ff" },
+    { id: "profesionales", icon: "equipo", label: "Profesionales reales", accent: "#7de8a8" },
+    { id: "estructura", icon: "estructura", label: "Un solo lugar", accent: "#6fd4db" },
+  ],
+  punch: "ESDEC ES TU SISTEMA.",
+} as const;
+
+// —— LA APP: EN DESARROLLO ————————————————————————————————————————————————
+export const ECOSISTEMA_APP_TEASER = {
+  eyebrow: "La app · En desarrollo",
+  badge: "Proximamente",
+  headline: "TODO ESDEC,",
+  headlineAccent: "SIEMPRE A MANO.",
+  body: "Seguimiento, planes y contacto directo con tu equipo — sin abrir seis pestanas distintas.",
+  benefits: [
+    "Tu proceso completo, en un solo lugar",
+    "Notificaciones de tu equipo, al instante",
+    "Progreso real, no promesas",
+  ],
+  sides: [
+    {
+      id: "deportista",
+      icon: "training",
+      label: "Para deportistas",
+      text: "Tu proceso, tu seguimiento y tus planes, siempre a mano.",
+      accent: "#7cc8ff",
+    },
+    {
+      id: "profesional",
+      icon: "equipo",
+      label: "Para profesionales",
+      text: "Tu practica, con mas contexto y mejor visibilidad.",
+      accent: "#7de8a8",
+    },
+  ],
+  mockup: {
+    statValue: "247+",
+    statLabel: "Perfiles activos",
+    progressLabel: "Tu proceso",
+    progressValue: 72,
+    rows: [
+      { icon: "progreso", label: "Seguimiento semanal" },
+      { icon: "equipo", label: "Mensaje de tu profesional" },
+      { icon: "estructura", label: "Plan actualizado" },
+    ],
+  },
+  journeys: [
+    {
+      id: "deportista",
+      label: "Para deportistas",
+      accent: "#7cc8ff",
+      steps: [
+        { title: "Cargas tu punto de partida", body: "Tu estado fisico y mental real, no el de otro deportista." },
+        { title: "La app hace seguimiento", body: "Detecta patrones en tu proceso, dia a dia." },
+        { title: "Recibis ajustes reales", body: "Tu plan cambia con vos, no al reves." },
+      ],
+    },
+    {
+      id: "profesional",
+      label: "Para profesionales",
+      accent: "#7de8a8",
+      steps: [
+        { title: "Ves a tus deportistas", body: "Contexto real de cada uno, sin perder el hilo." },
+        { title: "Ajustas planes al instante", body: "Cambios y seguimiento, sin planillas sueltas." },
+        { title: "Ganas visibilidad", body: "Mas contexto y mejor alcance dentro del ecosistema." },
+      ],
+    },
+  ],
+  ctaLabel: "Quiero ser de los primeros",
+  ctaHref: "https://wa.me/5493515117555",
+} as const;
+
+// —— FEATURES DE LA APP (sin foto de fondo) ——————————————————————————————————
+export const ECOSISTEMA_APP_FEATURES = {
+  eyebrow: "La app · En desarrollo",
+  headline: "Que va a",
+  headlineAccent: "hacer por vos.",
+  subtext: "Seis funciones concretas, pensadas para el proceso real de un deportista y de un profesional.",
+  items: [
+    {
+      id: "seguimiento",
+      icon: "progreso",
+      title: "Seguimiento real",
+      description: "Tu progreso, medido de verdad, no a ojo.",
+      problem: "Hoy no sabes si estas mejorando o no.",
+    },
+    {
+      id: "contacto",
+      icon: "equipo",
+      title: "Contacto directo",
+      description: "Hablá con tu profesional sin perder el hilo.",
+      problem: "Hoy el contacto se pierde entre mensajes sueltos.",
+    },
+    {
+      id: "planes",
+      icon: "estructura",
+      title: "Planes que se ajustan",
+      description: "Tu plan cambia con vos, no al reves.",
+      problem: "Hoy el plan queda viejo apenas cambia algo.",
+    },
+    {
+      id: "recordatorios",
+      icon: "objetivo",
+      title: "Recordatorios a tiempo",
+      description: "Nunca mas te olvidas de una sesion o un ajuste.",
+      problem: "Hoy dependes de acordarte vos solo.",
+    },
+    {
+      id: "metricas",
+      icon: "tecnologia",
+      title: "Metricas claras",
+      description: "Datos que se entienden, no numeros sueltos.",
+      problem: "Hoy los datos estan pero nadie los lee juntos.",
+    },
+    {
+      id: "unificado",
+      icon: "escala",
+      title: "Todo en un lugar",
+      description: "Sin diez apps distintas para tu proceso.",
+      problem: "Hoy todo esta repartido en apps y planillas.",
+    },
+  ],
+} as const;
+
+// —— NAVEGACION: DEPORTISTA / PROFESIONAL + 6 AREAS ——————————————————————————
+export const ECOSISTEMA_NAV = {
+  eyebrow: "Empeza por aca",
+  headline: "Elegi tu",
+  headlineAccent: "camino.",
+  intro:
+    "El ecosistema deportivo de Cordoba se recorre distinto segun quien sos. Elegi tu perfil para entrar al sistema que te corresponde.",
+  audiences: [
+    {
+      id: "deportista",
+      eyebrow: "Para deportistas",
+      title: "Quiero entrenar con estructura",
+      body: "Seguimiento, planificacion y profesionales reales acompañando tu proceso — bienestar, salud, tecnologia y mas, en un mismo sistema.",
+      cta: "Entrar como deportista",
+      href: "/deportistas",
+      image: "/images/athletes/maraton_1.jpg",
+      icon: "training",
+      accent: "#7cc8ff",
+    },
+    {
+      id: "profesional",
+      eyebrow: "Para profesionales",
+      title: "Quiero ejercer con plataforma",
+      body: "Suma tu practica a un ecosistema con contexto real, procesos claros y mayor visibilidad dentro del deporte amateur de Cordoba.",
+      cta: "Entrar como profesional",
+      href: "/profesionales",
+      image: "/images/athletes/medicina2.jpg",
+      icon: "equipo",
+      accent: "#7de8a8",
+    },
+  ],
+} as const;
+
+// —— CONFIANZA: SEGURIDAD / CONFIANZA / EVOLUCION —————————————————————————————
+export const ECOSISTEMA_TRUST = {
+  eyebrow: "Por que confiar en ESDEC",
+  headline: "Seguridad,",
+  headlineAccent: "confianza y evolucion.",
+  intro:
+    "No son palabras sueltas — es lo que sostiene el ecosistema deportivo de Cordoba en la practica, con datos reales detras.",
+  items: [
+    {
+      id: "seguridad",
+      icon: "clinica",
+      stat: "100%",
+      title: "Seguridad",
+      body: "Profesionales reales y evaluados, no perfiles anonimos ni consejos sin respaldo.",
+    },
+    {
+      id: "confianza",
+      icon: "equipo",
+      stat: "247+",
+      title: "Confianza",
+      body: "Deportistas y profesionales ya construyendo su proceso dentro del ecosistema.",
+    },
+    {
+      id: "evolucion",
+      icon: "progreso",
+      stat: "360°",
+      title: "Evolucion",
+      body: "Seguimiento continuo del proceso, no intervenciones aisladas ni decisiones sin contexto.",
+    },
+  ],
 } as const;
 
 export const ECOSISTEMA_OVERVIEW = {
@@ -70,31 +253,25 @@ export const ECOSISTEMA_OVERVIEW = {
     imageAlt: "Equipo y comunidad deportiva dentro del ecosistema ESDEC",
   },
   cta: {
-    eyebrow: "CTA",
-    headlinePre: "ENTRA AL",
-    headlineAccent: "ECOSISTEMA",
-    headlinePost: "ESDEC.",
+    eyebrow: "ESDEC",
+    headline: "El futuro del deporte",
+    headlineAccent: "no se improvisa.",
     body:
-      "Elegi tu recorrido y empeza a construir dentro de una estructura mas clara, coordinada y preparada para crecer.",
-    primaryLabel: "Soy deportista",
-    primaryHref: "/deportistas",
-    secondaryLabel: "Soy profesional",
-    secondaryHref: "/profesionales",
-    tertiaryLabel: "Ver eventos",
-    tertiaryHref: "/eventos-deportivos-cordoba",
+      "Se construye — con estructura, acompañamiento y un sistema que crece con vos, entrenes o acompañes ese proceso. Empeza cuando quieras.",
+    primaryCtaLabel: "Quiero sumarme a ESDEC",
+    primaryCtaHref: "https://wa.me/5493515117555",
+    primaryCtaExternal: true,
+    secondaryCtaLabel: "Ver eventos deportivos",
+    secondaryCtaHref: "/eventos-deportivos-cordoba",
+    trustText: "247+ perfiles ya construyendo su proceso en Cordoba.",
   },
 } as const;
 
 // —— OBJETIVO / VISIÓN / MISIÓN —————————————————————————————————————————————
 export const ECOSISTEMA_MVV = {
   eyebrow: "Institucional",
-  manifestoLines: [
-    { text: "No somos", accent: false },
-    { text: "una suma de", accent: false },
-    { text: "servicios.", accent: false },
-    { text: "Somos", accent: false },
-    { text: "el sistema.", accent: true },
-  ],
+  manifestoLead: "No somos una suma de servicios.",
+  manifestoPunch: "Somos el sistema.",
   closing: "ESDEC organiza el ecosistema deportivo. Bienestar, clinica, marca, eventos, tecnologia y educacion dentro de una estructura que funciona junta.",
   columns: [
     {
@@ -137,36 +314,42 @@ export const ECOSISTEMA_PRINCIPLES = {
   items: [
     {
       number: "01",
+      icon: "estructura",
       title: "Integracion total",
       body: "Bienestar, clinica, marca, educacion, tecnologia y eventos dentro de una misma estructura. No servicios sueltos: un sistema.",
       accent: "#7cc8ff",
     },
     {
       number: "02",
+      icon: "progreso",
       title: "Seguimiento continuo",
       body: "No trabajamos por intervenciones aisladas. Cada proceso tiene historia, contexto y una proxima etapa definida.",
       accent: "#7de8a8",
     },
     {
       number: "03",
+      icon: "tecnologia",
       title: "Inteligencia aplicada",
       body: "Datos, metricas y herramientas que convierten informacion dispersa en decisiones mas claras y mejor fundamentadas.",
       accent: "#6fd4db",
     },
     {
       number: "04",
+      icon: "criterio",
       title: "Criterio profesional",
       body: "Cada area del ecosistema esta respaldada por profesionales reales que aportan contexto, precision y responsabilidad.",
       accent: "#7cc8ff",
     },
     {
       number: "05",
+      icon: "equipo",
       title: "Comunidad real",
       body: "El ecosistema crece cuando las personas se conectan. Construimos vinculos que tienen valor dentro y fuera de la cancha.",
       accent: "#7de8a8",
     },
     {
       number: "06",
+      icon: "escala",
       title: "Escalabilidad",
       body: "El sistema que funciona para un deportista hoy puede crecer con el manana. Disenado para expandirse sin perder coherencia.",
       accent: "#6fd4db",
@@ -225,10 +408,10 @@ export const ECOSISTEMA_SIN_ESDEC = {
 // —— EL ECOSISTEMA DE ESDEC (visualizacion central) ——————————————————————
 export const ECOSISTEMA_ECOSYSTEM = {
   eyebrow: "El ecosistema de ESDEC",
-  headline: "Todo conectado",
-  headlineAccent: "desde el centro.",
+  headline: "Todo lo que necesitas,",
+  headlineAccent: "en un mismo sistema.",
   subtext:
-    "Seis pilares que convergen alrededor de una misma estructura. Cuando se conectan, el ecosistema funciona.",
+    "Bienestar, clinica, marca, eventos, tecnologia y educacion — cada area suma, pero el valor real aparece cuando funcionan juntas.",
   centerLabel: "ESDEC",
   centerTagline: "Ecosistema integral",
   pillars: [
@@ -238,8 +421,11 @@ export const ECOSISTEMA_ECOSYSTEM = {
       kicker: "Nutricion, mente y recovery",
       href: "/bienestar-deportivo-cordoba",
       ctaLabel: "Explorar bienestar deportivo",
-      description:
-        "El equilibrio interno como base para todo lo demas. Nutricion, psicologia y recuperacion dentro del sistema.",
+      bullets: [
+        { label: "Nutricion", icon: "nutricion" },
+        { label: "Psicologia", icon: "mentalidad" },
+        { label: "Recuperacion", icon: "yoga" },
+      ],
       icon: "bienestar",
       accent: "#7de8a8",
       image: "/images/lifestyle/Yoga1.jpg",
@@ -253,8 +439,11 @@ export const ECOSISTEMA_ECOSYSTEM = {
       kicker: "Prevencion y seguimiento",
       href: "/salud-deportiva-cordoba",
       ctaLabel: "Explorar salud deportiva",
-      description:
-        "Evaluacion, prevencion e intervencion con criterio profesional. El cuerpo como punto de partida.",
+      bullets: [
+        { label: "Evaluacion", icon: "criterio" },
+        { label: "Prevencion", icon: "objetivo" },
+        { label: "Seguimiento", icon: "progreso" },
+      ],
       icon: "clinica",
       accent: "#7cc8ff",
       image: "/images/lifestyle/Medico_2.jpg",
@@ -268,8 +457,11 @@ export const ECOSISTEMA_ECOSYSTEM = {
       kicker: "Visibilidad y proyeccion",
       href: "/market-deportivo-cordoba",
       ctaLabel: "Explorar market deportivo",
-      description:
-        "La identidad del deportista y el profesional como activo. Presencia real dentro del ecosistema.",
+      bullets: [
+        { label: "Identidad", icon: "marca" },
+        { label: "Visibilidad", icon: "visibilidad" },
+        { label: "Proyeccion", icon: "escala" },
+      ],
       icon: "marca",
       accent: "#6fd4db",
       image: "/images/athletes/marketing1.jpg",
@@ -283,8 +475,11 @@ export const ECOSISTEMA_ECOSYSTEM = {
       kicker: "Activaciones y comunidad",
       href: "/eventos-deportivos-cordoba",
       ctaLabel: "Explorar eventos deportivos",
-      description:
-        "Los momentos que conectan personas, expanden la red y le dan vida al ecosistema fuera de las pantallas.",
+      bullets: [
+        { label: "Activaciones", icon: "eventos" },
+        { label: "Comunidad", icon: "equipo" },
+        { label: "Experiencias", icon: "objetivo" },
+      ],
       icon: "eventos",
       accent: "#7de8a8",
       image: "/images/team/Personas_maraton.jpg",
@@ -298,8 +493,11 @@ export const ECOSISTEMA_ECOSYSTEM = {
       kicker: "Herramientas para ordenar",
       href: "/tecnologia-deportiva-cordoba",
       ctaLabel: "Explorar tecnologia deportiva",
-      description:
-        "La capa digital que une datos, procesos y personas. El sistema nervioso del ecosistema.",
+      bullets: [
+        { label: "Datos", icon: "infraestructura" },
+        { label: "Seguimiento", icon: "progreso" },
+        { label: "Herramientas", icon: "tecnologia" },
+      ],
       icon: "tecnologia",
       accent: "#7cc8ff",
       image: "/images/athletes/metricas1.jpg",
@@ -313,8 +511,11 @@ export const ECOSISTEMA_ECOSYSTEM = {
       kicker: "Guia y formacion",
       href: "/educacion-deportiva-cordoba",
       ctaLabel: "Explorar educacion deportiva",
-      description:
-        "Conocimiento que empodera. Contenido y formacion para crecer con mas autonomia y direccion.",
+      bullets: [
+        { label: "Cursos", icon: "educacion" },
+        { label: "Talleres", icon: "equipo" },
+        { label: "Contenidos", icon: "estructura" },
+      ],
       icon: "educacion",
       accent: "#6fd4db",
       image: "/images/lifestyle/Vida1.jpg",

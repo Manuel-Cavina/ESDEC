@@ -32,7 +32,7 @@ type ButtonProps = ButtonAsLink | ButtonAsButton;
 
 const primaryClasses = cn(
   "inline-flex items-center gap-2 group",
-  "font-condensed font-bold text-[15px] uppercase tracking-wide",
+  "font-sans font-semibold text-[15px] uppercase tracking-[0.04em]",
   "px-[30px] py-[13px] rounded-md",
   "bg-[var(--btn-bg)] text-[var(--btn-t)]",
   "transition-all duration-200 ease-out",

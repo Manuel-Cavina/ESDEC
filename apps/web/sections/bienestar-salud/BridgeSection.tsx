@@ -66,10 +66,7 @@ export default function BridgeSection() {
                 <span className="block text-[clamp(28px,4vw,56px)] text-[var(--t1)]">
                   {headlineLine1}
                 </span>
-                <span
-                  className="block text-[clamp(28px,4vw,56px)]"
-                  style={{ color: "#5ac8ff" }}
-                >
+                <span className="ecos-title-accent block text-[clamp(28px,4vw,56px)]">
                   {headlineAccent}
                 </span>
                 <span className="mt-1 block text-[clamp(24px,3.5vw,48px)] text-[var(--t2)]">
@@ -86,7 +83,7 @@ export default function BridgeSection() {
             <div className="shrink-0">
               <Link
                 href={cta.href}
-                className="group inline-flex min-h-[54px] items-center gap-3 rounded-[18px] border border-[rgba(125,232,168,0.28)] bg-[rgba(125,232,168,0.07)] px-7 py-3 font-condensed text-[0.78rem] font-bold uppercase tracking-[0.24em] text-[#7de8a8] transition-all duration-300 hover:-translate-y-px hover:border-[rgba(125,232,168,0.5)] hover:bg-[rgba(125,232,168,0.12)]"
+                className="group inline-flex min-h-[58px] items-center gap-3 rounded-full border border-[rgba(125,232,168,0.28)] bg-[rgba(125,232,168,0.07)] px-10 font-sans text-[0.95rem] font-semibold uppercase tracking-[0.04em] text-[#7de8a8] transition-all duration-300 hover:-translate-y-px hover:border-[rgba(125,232,168,0.5)] hover:bg-[rgba(125,232,168,0.12)]"
               >
                 {cta.label}
                 <span

@@ -172,7 +172,7 @@ export default function EventsIntro({ onComplete }: EventsIntroProps) {
             <button
               type="button"
               onClick={next}
-              className="mt-10 inline-flex min-h-[62px] min-w-[300px] items-center justify-center rounded-[22px] bg-[#0cd25e] px-10 py-4 font-condensed text-[0.9rem] font-black uppercase tracking-[0.3em] text-[#001a33] shadow-[0_0_52px_rgba(12,210,94,0.38),0_32px_64px_-32px_rgba(0,0,0,0.9)] transition-all duration-200 hover:-translate-y-px hover:brightness-110"
+              className="mt-10 inline-flex min-h-[62px] min-w-[300px] items-center justify-center rounded-full bg-[#0cd25e] px-10 py-4 font-sans text-[0.9rem] font-semibold uppercase tracking-[0.04em] text-[#001a33] shadow-[0_0_52px_rgba(12,210,94,0.38),0_32px_64px_-32px_rgba(0,0,0,0.9)] transition-all duration-200 hover:-translate-y-px hover:brightness-110"
             >
               Sí, quiero entrar →
             </button>
@@ -232,7 +232,7 @@ export default function EventsIntro({ onComplete }: EventsIntroProps) {
             <button
               type="button"
               onClick={next}
-              className="mt-10 inline-flex min-h-[58px] min-w-[260px] items-center justify-center rounded-[20px] bg-[#5ac8ff] px-9 py-3 font-condensed text-[0.86rem] font-black uppercase tracking-[0.26em] text-[#06275f] shadow-[0_18px_48px_-24px_rgba(90,200,255,0.88)] transition-all duration-200 hover:-translate-y-px hover:brightness-110"
+              className="mt-10 inline-flex min-h-[58px] min-w-[260px] items-center justify-center rounded-full bg-[#5ac8ff] px-9 py-3 font-sans text-[0.86rem] font-semibold uppercase tracking-[0.04em] text-[#06275f] shadow-[0_18px_48px_-24px_rgba(90,200,255,0.88)] transition-all duration-200 hover:-translate-y-px hover:brightness-110"
             >
               Ver el proximo evento →
             </button>
@@ -307,7 +307,7 @@ export default function EventsIntro({ onComplete }: EventsIntroProps) {
                 <button
                   type="button"
                   onClick={() => dismiss("proximo-evento")}
-                  className="btn-shimmer inline-flex min-h-[56px] min-w-[240px] items-center justify-center rounded-[18px] bg-[#5ac8ff] px-8 py-3 font-condensed text-[0.82rem] font-black uppercase tracking-[0.22em] text-[#06275f] shadow-[0_18px_46px_-24px_rgba(90,200,255,0.9)] transition-all duration-200 hover:-translate-y-px hover:brightness-110"
+                  className="btn-shimmer inline-flex min-h-[56px] min-w-[240px] items-center justify-center rounded-full bg-[#5ac8ff] px-8 py-3 font-sans text-[0.82rem] font-semibold uppercase tracking-[0.04em] text-[#06275f] shadow-[0_18px_46px_-24px_rgba(90,200,255,0.9)] transition-all duration-200 hover:-translate-y-px hover:brightness-110"
                 >
                   Ver proximo evento {"\u2192"}
                 </button>
@@ -317,7 +317,7 @@ export default function EventsIntro({ onComplete }: EventsIntroProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => dismiss()}
-                  className="btn-shimmer inline-flex min-h-[56px] min-w-[240px] items-center justify-center rounded-[18px] bg-[#0cd25e] px-8 py-3 font-condensed text-[0.82rem] font-black uppercase tracking-[0.22em] text-[#001a33] no-underline shadow-[0_18px_46px_-24px_rgba(12,210,94,0.9)] transition-all duration-200 hover:-translate-y-px hover:brightness-110 hover:no-underline"
+                  className="btn-shimmer inline-flex min-h-[56px] min-w-[240px] items-center justify-center rounded-full bg-[#0cd25e] px-8 py-3 font-sans text-[0.82rem] font-semibold uppercase tracking-[0.04em] text-[#001a33] no-underline shadow-[0_18px_46px_-24px_rgba(12,210,94,0.9)] transition-all duration-200 hover:-translate-y-px hover:brightness-110 hover:no-underline"
                 >
                   {nextEvent.waitlist.cta.label} {"\u2192"}
                 </a>
@@ -325,7 +325,7 @@ export default function EventsIntro({ onComplete }: EventsIntroProps) {
               <button
                 type="button"
                 onClick={() => dismiss("eventos-anteriores")}
-                className="inline-flex min-h-[56px] min-w-[220px] items-center justify-center rounded-[18px] border border-white/20 bg-white/[0.05] px-8 py-3 font-condensed text-[0.8rem] font-black uppercase tracking-[0.2em] text-white backdrop-blur-sm transition-all duration-200 hover:bg-white/[0.1]"
+                className="inline-flex min-h-[56px] min-w-[220px] items-center justify-center rounded-full border border-white/20 bg-white/[0.05] px-8 py-3 font-sans text-[0.8rem] font-semibold uppercase tracking-[0.04em] text-white backdrop-blur-sm transition-all duration-200 hover:bg-white/[0.1]"
               >
                 Ver mas eventos {"\u2192"}
               </button>
