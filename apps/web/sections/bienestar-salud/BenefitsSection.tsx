@@ -73,7 +73,7 @@ export default function BenefitsSection({ area }: Props) {
           <Kicker className="mb-4">{copy.eyebrow}</Kicker>
           <h2 className="text-clamp-problem font-condensed font-black uppercase leading-[0.92] tracking-tight text-[var(--t1)]">
             {copy.headlinePre}{" "}
-            <span className="text-[var(--p1)]">{copy.headlineAccent}</span>
+            <span className="ecos-title-accent">{copy.headlineAccent}</span>
           </h2>
           <p className="mt-5 max-w-[52ch] font-sans text-base leading-[1.9] text-[var(--t2)]">
             {copy.subtext}

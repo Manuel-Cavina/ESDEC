@@ -77,8 +77,8 @@ export const EVENTS_PAGE = {
   },
   hero: {
     eyebrow: "Eventos ESDEC · Cordoba",
-    headlineLine1: "NO VENIS A VER UN EVENTO.",
-    headlineLine2: "VENIS A ACTIVARTE.",
+    headlineLine1: "VENÍ.",
+    headlineLine2: "ACTIVÁTE.",
     body:
       "Eventos ESDEC es donde la comunidad, la energia y el progreso se convierten en experiencia real.",
     image: "/images/athletes/maraton_1.jpg",
@@ -118,7 +118,8 @@ export const EVENTS_PAGE = {
   },
   transition: {
     eyebrow: "El inicio",
-    title: "ASI EMPIEZA LA EXPERIENCIA",
+    title: "ASI EMPIEZA",
+    titleAccent: "LA EXPERIENCIA.",
     steps: [
       {
         id: "descubri",
@@ -216,7 +217,8 @@ export const EVENTS_PAGE = {
   } satisfies EsdecEvent,
   experience: {
     eyebrow: "Como se vive un evento ESDEC",
-    title: "LO QUE TE LLEV\u00c1S DE UN EVENTO ESDEC",
+    title: "LO QUE TE LLEV\u00c1S",
+    titleAccent: "DE UN EVENTO ESDEC.",
     phases: [
       {
         id: "antes",
@@ -240,7 +242,8 @@ export const EVENTS_PAGE = {
   },
   pastEvents: {
     eyebrow: "Registro vivo",
-    title: "YA PASO. YA SE VIVIO. YA DEJO HUELLA.",
+    title: "YA PASO. YA SE VIVIO.",
+    titleAccent: "YA DEJO HUELLA.",
     modalLabels: {
       date: "Fecha",
       format: "Formato",
@@ -391,8 +394,8 @@ export const EVENTS_PAGE = {
   },
   finalCta: {
     eyebrow: "El momento es ahora",
-    headlineLine1: "EVOLUCIONAR NO ES UNA IDEA.",
-    headlineLine2: "ES UNA DECISI\u00d3N. Y ES AHORA.",
+    headlineLine1: "RESERV\u00c1 TU LUGAR.",
+    headlineLine2: "HOY.",
     headlineStack: [
       "EVOLUCIONAR NO ES UNA IDEA.",
       "ES UNA DECISI\u00d3N.",

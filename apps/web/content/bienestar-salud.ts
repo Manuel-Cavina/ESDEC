@@ -434,36 +434,65 @@ export const SALUD_FOR_PROFESSIONALS = {
   eyebrow: "Para profesionales de la salud",
   headline: "TU EXPERTISE",
   headlineAccent: "TIENE UN LUGAR.",
-  subtext:
-    "ESDEC es el ecosistema que lo potencie. Un espacio donde los profesionales de la salud deportiva se desarrollan, conectan y construyen algo real.",
+  subtext: "El ecosistema donde tu trabajo se ve, conecta y crece.",
   valueProps: [
     {
       id: "visibilidad",
       icon: "objetivo",
       title: "Visibilidad dentro del ecosistema",
-      description:
-        "Tu perfil accesible para deportistas que necesitan exactamente lo que vos haces. Sin intermediarios, sin competencia de plataformas masivas.",
+      description: "Tu perfil, visible para quien necesita justo lo que haces.",
     },
     {
       id: "red",
       icon: "equipo",
       title: "Red profesional coordinada",
-      description:
-        "Trabaja coordinado con kinesiologo, nutricionista, deportologo y preparador fisico dentro del mismo sistema. Comunicacion real entre colegas.",
+      description: "Coordinado con otros profesionales, no en paralelo.",
     },
     {
       id: "clientes",
       icon: "marca",
       title: "Clientes alineados",
-      description:
-        "Deportistas amateurs comprometidos que buscan un profesional serio para su proceso. No casuales. Personas que entienden el valor de lo que haces.",
+      description: "Deportistas comprometidos, no casuales.",
     },
     {
       id: "espacio",
       icon: "infraestructura",
       title: "Un espacio para crecer",
-      description:
-        "Mas que una plataforma: un ecosistema. Un lugar dentro del deporte de Cordoba donde tu expertise tiene contexto, comunidad y proyeccion.",
+      description: "Contexto, comunidad y proyeccion para tu trabajo.",
+    },
+  ] as ProfessionalValueProp[],
+  cta: { label: "Sumarme como profesional", href: "/profesionales" },
+};
+
+export const BIENESTAR_FOR_PROFESSIONALS_VALUES = {
+  eyebrow: "Para profesionales del bienestar",
+  headline: "TU EXPERTISE",
+  headlineAccent: "TIENE UN LUGAR.",
+  subtext: "El ecosistema donde tu trabajo se ve, conecta y crece.",
+  valueProps: [
+    {
+      id: "visibilidad",
+      icon: "objetivo",
+      title: "Visibilidad dentro del ecosistema",
+      description: "Tu perfil, visible para quien necesita justo lo que haces.",
+    },
+    {
+      id: "red",
+      icon: "equipo",
+      title: "Red profesional coordinada",
+      description: "Coordinado con psicologos, nutricionistas y coaches, no en paralelo.",
+    },
+    {
+      id: "clientes",
+      icon: "marca",
+      title: "Clientes alineados",
+      description: "Deportistas comprometidos, no casuales.",
+    },
+    {
+      id: "espacio",
+      icon: "infraestructura",
+      title: "Un espacio para crecer",
+      description: "Contexto, comunidad y proyeccion para tu trabajo.",
     },
   ] as ProfessionalValueProp[],
   cta: { label: "Sumarme como profesional", href: "/profesionales" },
@@ -497,24 +526,17 @@ export const SALUD_BRIDGE = {
 // ─── BIENESTAR ────────────────────────────────────────────────────────────────
 
 export const BIENESTAR_HERO = {
-  eyebrow: "Ecosistema ESDEC — Bienestar deportivo",
-  headlineLine1: "EL RENDIMIENTO",
-  headlineLine2: "EMPIEZA ANTES.",
-  tagline: "Mente fuerte. Habitos solidos. Equilibrio real.",
-  subtext:
-    "El deportista que trabaja su mente, construye sus habitos y encuentra equilibrio rinde mas, abandona menos y disfruta mas el proceso.",
-  marqueeItems: [
-    "Psicologia deportiva",
-    "Coaching",
-    "Yoga",
-    "Pilates",
-    "Meditacion",
-    "Habitos",
-    "Mindfulness",
-    "Life coaching",
+  eyebrow: "Ecosistema ESDEC — Bienestar integral",
+  headlinePre: "EL RENDIMIENTO",
+  headlineAccent: "QUE NO SE VE.",
+  body: "Los deportistas que solo entrenan el fisico dejan el 40% de su potencial sin explorar. El bienestar integral no es un extra — es el sistema que convierte el esfuerzo en resultados reales.",
+  ctaLabel: "Iniciar mi programa →",
+  ctaHref: "#servicios",
+  stats: [
+    { label: "Rendimiento mental", title: "Gestiona tu estado cognitivo y emocional como variable de entrenamiento" },
+    { label: "5 disciplinas", title: "Coaching · Mentoring · Yoga · Pilates · Meditacion" },
+    { label: "Seguimiento diario", title: "Tecnologia que mide lo que los ojos no ven" },
   ],
-  ctaPrimary: { label: "Conocer los especialistas", href: "#profesionales" },
-  accent: "#7de8a8" as const,
 };
 
 export const BIENESTAR_PROFESSIONALS: Professional[] = [
@@ -690,11 +712,127 @@ export const BIENESTAR_BENEFITS: BenefitItem[] = [
 ];
 
 export const BIENESTAR_CTA = {
-  eyebrow: "ESDEC — Bienestar deportivo",
-  headline: "TU MENTE MERECE",
-  headlineAccent: "UN PLAN REAL.",
-  subtext:
-    "Entra al ecosistema como deportista o suma tu perfil como profesional del bienestar deportivo.",
-  ctaAthlete: { label: "Entrar como deportista", href: "/deportistas" },
-  ctaProfessional: { label: "Sumarme como profesional", href: "/profesionales" },
+  eyebrow: "Bienestar integral · ESDEC",
+  headline: "EMPEZA A ENTRENAR",
+  headlineAccent: "LO QUE NO SE VE.",
+  body: "El sistema que los mejores atletas ya usan — ahora disponible en Cordoba, con seguimiento real y profesionales especializados.",
+  primaryCtaLabel: "Iniciar mi programa →",
+  primaryCtaHref: "/deportistas",
+  secondaryCtaLabel: "Sumarme como profesional →",
+  secondaryCtaHref: "/profesionales",
+  trustText: "Sin costo inicial · Primer contacto en 48hs · Especialistas en Cordoba",
+};
+
+export const BIENESTAR_SYSTEM = {
+  eyebrow: "El sistema ESDEC",
+  headline: "TRES DIMENSIONES.",
+  headlineAccent: "UN RENDIMIENTO.",
+  subtext: "El rendimiento de elite no se construye solo en la cancha. Se construye en las tres dimensiones que lo sostienen.",
+  dimensions: [
+    {
+      id: "fisico",
+      number: "01",
+      label: "RENDIMIENTO FISICO",
+      description: "Control corporal, movilidad, respiracion y recuperacion activa. El cuerpo como herramienta de precision.",
+      tags: ["Yoga", "Pilates", "Respiracion", "Recuperacion"],
+      accent: "var(--p1)",
+    },
+    {
+      id: "mental",
+      number: "02",
+      label: "RENDIMIENTO MENTAL",
+      description: "Foco, gestion del estres y toma de decisiones bajo presion. La mente entrenada es la que no falla cuando mas importa.",
+      tags: ["Meditacion", "Coaching", "Focus", "Presion"],
+      accent: "var(--p2)",
+    },
+    {
+      id: "emocional",
+      number: "03",
+      label: "RENDIMIENTO EMOCIONAL",
+      description: "Motivacion sostenida, resiliencia e identidad deportiva. Lo que te hace volver cuando el cuerpo ya no quiere.",
+      tags: ["Mentoring", "Identidad", "Resiliencia", "Proposito"],
+      accent: "var(--p1)",
+    },
+  ],
+  techNote: "La tecnologia ESDEC trackea las tres dimensiones. No solo el fisico — el sistema completo.",
+};
+
+export const BIENESTAR_OUTCOMES = {
+  eyebrow: "Lo que aporta ESDEC",
+  headline: "LO QUE CAMBIA",
+  headlineAccent: "EN VOS.",
+  outcomes: [
+    {
+      id: "claridad",
+      number: "01",
+      headline: "LLEGAR PRESENTE.",
+      sub: "Cuando mas importa, la cabeza acompana. Sin bloqueos, sin ruido mental.",
+    },
+    {
+      id: "motivacion",
+      number: "02",
+      headline: "MOTIVACION QUE NO FALLA.",
+      sub: "No depende del estado del dia. Se construye con sistema.",
+    },
+    {
+      id: "recuperacion",
+      number: "03",
+      headline: "RECUPERACION REAL.",
+      sub: "Mas alla del musculo. El desgaste mental tambien se trabaja.",
+    },
+    {
+      id: "proceso",
+      number: "04",
+      headline: "PROCESO SIN QUEMARTE.",
+      sub: "El sistema que te hace sostenible en el tiempo.",
+    },
+  ],
+};
+
+export const BIENESTAR_APP = {
+  eyebrow: "La app · En desarrollo",
+  badge: "Proximamente",
+  headline: "EL SISTEMA QUE",
+  headlineAccent: "TE ACOMPANA.",
+  subtext: "Estamos construyendo la herramienta que integra el seguimiento diario de las tres dimensiones en un solo lugar. Esto es lo que va a hacer por vos:",
+  steps: [
+    {
+      id: "punto-partida",
+      tag: "Punto de partida",
+      headline: "La app aprende quien sos.",
+      body: "Estado fisico, mental y emocional. Tu baseline real — no el de otro deportista, el tuyo.",
+    },
+    {
+      id: "seguimiento",
+      tag: "En el dia a dia",
+      headline: "Detecta lo que te frena.",
+      body: "Seguimiento continuo. La app identifica patrones — que afecta tu rendimiento y por que.",
+    },
+    {
+      id: "guia",
+      tag: "Con el tiempo",
+      headline: "El sistema empieza a guiarte.",
+      body: "Recomendaciones y ajustes basados en tus datos, no en suposiciones.",
+    },
+    {
+      id: "alineacion",
+      tag: "En el proceso",
+      headline: "Todo tu proceso alineado.",
+      body: "El rendimiento que no encontrabas en el gym aparece. Porque el trabajo invisible ya esta hecho.",
+    },
+  ],
+  cta: { label: "Quiero acceso anticipado →", href: "#cta" },
+};
+
+export const BIENESTAR_FOR_PROFESSIONALS = {
+  eyebrow: "02 · Para el profesional",
+  headline: "COMPARTIS.",
+  headlineAccent: "TAMBIEN CRECES.",
+  subtext: "ESDEC te da la plataforma para impactar — y el espacio para desarrollarte vos.",
+  points: [
+    { icon: "escala", text: "Plataforma para llegar a mas deportistas" },
+    { icon: "equipo", text: "Red de profesionales afines" },
+    { icon: "criterio", text: "Tu propio espacio de bienestar" },
+  ],
+  cta: { label: "Unirme como profesional →", href: "#cta" },
 };

@@ -58,9 +58,16 @@ export default function ScrollReveal({
       const observer = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting) {
-            children.forEach((child) => {
+            children.forEach((child, i) => {
               child.style.opacity = "1";
               child.style.transform = "none";
+              // Despues de la entrada, se sueltan los inline styles: si quedan
+              // fijados por JS (aunque sea en "none"), le ganan por specificity
+              // a cualquier hover:scale/translate de Tailwind y lo bloquean.
+              window.setTimeout(() => {
+                child.style.transform = "";
+                child.style.transition = "";
+              }, i * cascadeDelay + delay + 550);
             });
             if (once) observer.disconnect();
           }
@@ -77,6 +84,12 @@ export default function ScrollReveal({
         if (entry.isIntersecting) {
           el.style.opacity = "1";
           el.style.transform = "none";
+          // Soltar el inline transform despues de la entrada, para no bloquear
+          // hover:scale/translate de Tailwind en el contenido de adentro.
+          window.setTimeout(() => {
+            el.style.transform = "";
+            el.style.transition = "";
+          }, delay + 750);
           if (once) observer.disconnect();
         }
       },

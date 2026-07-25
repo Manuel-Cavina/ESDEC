@@ -1,113 +1,89 @@
-"use client";
-
 // sections/ecosistema/MVVSection.tsx
-// Manifiesto tipográfico + acordeón Objetivo / Visión / Misión.
+// Manifiesto tipográfico + Objetivo / Visión / Misión en 3 columnas institucionales, sin ruido decorativo.
 
-import { useState } from "react";
 import BrandLines from "@/components/BrandLines";
+import Kicker from "@/components/ui/Kicker";
 import ScrollReveal from "@/components/ScrollReveal";
+import FingerprintSVG from "@/components/FingerprintSVG";
 import { ECOSISTEMA_MVV } from "@/content/ecosistema";
 
 export default function MVVSection() {
-  const { eyebrow, manifestoLines, closing, columns } = ECOSISTEMA_MVV;
-  const [openId, setOpenId] = useState<string | null>(null);
+  const { eyebrow, manifestoLead, manifestoPunch, closing, columns } = ECOSISTEMA_MVV;
 
   return (
-    <section className="bg-[#050e1a] px-6 py-28">
-      <div className="mx-auto max-w-landing">
+    <section id="que-es-esdec" className="relative scroll-mt-24 overflow-hidden bg-[var(--bg2)] px-6 py-28">
+      {/* Textura de fondo — grid sutil */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.07]"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(90,200,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(90,200,255,0.06) 1px, transparent 1px)",
+          backgroundSize: "44px 44px",
+        }}
+        aria-hidden="true"
+      />
+
+      {/* Huella de fondo — marca de agua discreta */}
+      <div
+        className="pointer-events-none absolute -right-24 top-1/2 hidden w-[38vw] max-w-[460px] -translate-y-1/2 opacity-[0.05] [--fpg:rgba(255,255,255,0.02)] [--fps:rgba(255,255,255,0.9)] lg:block"
+        aria-hidden="true"
+      >
+        <FingerprintSVG animate={false} className="w-full" />
+      </div>
+
+      <div className="relative mx-auto max-w-landing">
 
         {/* Eyebrow */}
         <ScrollReveal direction="up" delay={0}>
           <div className="mb-14 flex items-center gap-3">
-            <BrandLines size="sm" animated className="[&_[data-line]]:bg-[#7de8a8]" />
-            <p className="font-condensed text-[10px] font-semibold uppercase tracking-[4px] text-[#7de8a8]">
-              {eyebrow}
-            </p>
+            <BrandLines size="sm" animated />
+            <Kicker>{eyebrow}</Kicker>
           </div>
         </ScrollReveal>
 
-        {/* Manifiesto — texto display enorme */}
+        {/* Manifiesto — build-up + punch line */}
         <ScrollReveal direction="up" delay={80}>
-          <div className="mb-16">
-            {manifestoLines.map((line, i) => (
-              <p
-                key={i}
-                className="font-condensed text-[clamp(3.4rem,9vw,8rem)] uppercase leading-[0.88] tracking-[-0.04em]"
-              >
-                {line.accent ? (
-                  <span className="bg-[linear-gradient(90deg,#7cc8ff_0%,#6fd4db_45%,#7de8a8_100%)] bg-clip-text text-transparent">
-                    {line.text}
-                  </span>
-                ) : (
-                  <span className="text-[#eef4ff]">{line.text}</span>
-                )}
-              </p>
-            ))}
+          <div className="mb-20">
+            <p className="max-w-[22ch] font-condensed text-[clamp(1.6rem,3vw,2.4rem)] font-medium uppercase leading-[1.1] tracking-tight text-[var(--t2)]">
+              {manifestoLead}
+            </p>
+            <p className="mt-2 max-w-[16ch] font-condensed text-[clamp(2.8rem,6vw,5.2rem)] font-black uppercase leading-[0.92] tracking-tight">
+              <span className="ecos-title-accent">{manifestoPunch}</span>
+            </p>
 
             {/* Frase de cierre */}
-            <p className="mt-8 max-w-[52ch] font-sans text-[0.95rem] leading-[1.9] text-[#4a6a84]">
+            <p className="mt-8 max-w-[52ch] font-sans text-[0.95rem] leading-[1.9] text-[var(--t2)]">
               {closing}
             </p>
           </div>
         </ScrollReveal>
 
-        {/* Separador */}
-        <div className="mb-0 h-px bg-white/[0.08]" />
-
-        {/* Acordeón — Objetivo / Visión / Misión */}
-        <div>
-          {columns.map((col) => {
-            const isOpen = openId === col.id;
-            return (
-              <div key={col.id} className="border-b border-white/[0.08]">
-                <button
-                  type="button"
-                  className="group flex w-full items-center gap-6 py-7 text-left transition-colors duration-200 hover:bg-white/[0.015] md:gap-10"
-                  onClick={() => setOpenId(isOpen ? null : col.id)}
-                  aria-expanded={isOpen ? "true" : "false"}
-                >
-                  {/* Número */}
-                  <span className="w-10 flex-shrink-0 font-condensed text-[0.75rem] font-semibold uppercase tracking-[2px] text-[#7de8a8] opacity-60">
-                    {col.number}
-                  </span>
-
-                  {/* Label */}
-                  <span className="flex-shrink-0 font-condensed text-[10px] uppercase tracking-[4px] text-[#7de8a8]/60 md:w-24">
-                    {col.label}
-                  </span>
-
-                  {/* Título */}
-                  <span className="flex-1 font-condensed text-[clamp(1.4rem,3vw,2.2rem)] uppercase leading-none tracking-[-0.02em] text-[#c0cdd8] transition-colors duration-200 group-hover:text-[#eef4ff]">
-                    {col.headlinePre}{" "}
-                    <span className="bg-[linear-gradient(90deg,#7cc8ff,#7de8a8)] bg-clip-text text-transparent">
-                      {col.headlineAccent}
-                    </span>
-                    {col.headlinePost}
-                  </span>
-
-                  {/* Icono +/- */}
-                  <span
-                    className="ml-auto flex-shrink-0 font-light leading-none text-[#5ac8ff] transition-transform duration-300 text-[1.2rem]"
-                    style={{ transform: isOpen ? "rotate(45deg)" : "rotate(0deg)" }}
-                    aria-hidden="true"
-                  >
-                    +
-                  </span>
-                </button>
-
-                {/* Descripción expandible */}
-                <div
-                  className="overflow-hidden transition-all duration-400 ease-out"
-                  style={{ maxHeight: isOpen ? 200 : 0, opacity: isOpen ? 1 : 0 }}
-                >
-                  <p className="pb-8 pl-[4rem] font-sans text-[0.9rem] leading-[1.9] text-[#4a6a84] md:pl-[8.5rem]">
-                    {col.body}
-                  </p>
-                </div>
+        {/* Objetivo / Vision / Mision — 3 columnas institucionales */}
+        <ScrollReveal
+          cascade
+          cascadeDelay={90}
+          className="grid gap-10 border-t border-white/10 pt-10 md:grid-cols-3 md:gap-8"
+        >
+          {columns.map((col) => (
+            <article key={col.id}>
+              <div className="mb-4 flex items-center gap-3">
+                <span className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border border-white/15 font-condensed text-[0.7rem] font-bold text-[var(--p2)]">
+                  {col.number}
+                </span>
+                <Kicker>{col.label}</Kicker>
               </div>
-            );
-          })}
-        </div>
+
+              <h3 className="font-condensed text-[1.4rem] font-semibold leading-snug tracking-tight text-[var(--t1)]">
+                {col.headlinePre} <span className="text-[var(--p2)]">{col.headlineAccent}</span>
+                {col.headlinePost}
+              </h3>
+
+              <p className="mt-3 font-sans text-[0.92rem] leading-[1.8] text-[var(--t2)]">
+                {col.body}
+              </p>
+            </article>
+          ))}
+        </ScrollReveal>
       </div>
     </section>
   );

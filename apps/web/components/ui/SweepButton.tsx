@@ -16,9 +16,9 @@ interface SweepButtonProps {
 }
 
 const sizeClasses = {
-  sm: "min-h-[42px] px-6 text-[0.74rem]",
-  md: "min-h-[52px] px-8 text-[0.84rem]",
-  lg: "min-h-[64px] px-10 text-[0.86rem]",
+  sm: "min-h-[48px] px-7 text-[0.82rem]",
+  md: "min-h-[58px] px-10 text-[0.95rem]",
+  lg: "min-h-[68px] px-12 text-[1rem]",
 };
 
 export default function SweepButton({
@@ -33,7 +33,7 @@ export default function SweepButton({
   const base = cn(
     variant === "glass" ? "sweep-btn-glass" : variant === "dark" ? "sweep-btn-dark" : "sweep-btn",
     "inline-flex items-center justify-center rounded-full",
-    "font-condensed font-bold uppercase tracking-[0.15em]",
+    "font-sans font-semibold uppercase tracking-[0.04em]",
     sizeClasses[size],
     className
   );

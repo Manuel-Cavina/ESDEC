@@ -123,7 +123,7 @@ export default function EcosystemSection({
           </p>
           <h2 className="text-clamp-eco font-condensed font-black uppercase leading-[0.92] tracking-tight text-[var(--t1)]">
             {ECOSYSTEM.headline}{" "}
-            <span className="text-[var(--p1)]">{ECOSYSTEM.headlineAccent}</span>
+            <span className="ecos-title-accent">{ECOSYSTEM.headlineAccent}</span>
           </h2>
           <p className="mx-auto mt-5 max-w-3xl font-sans text-base leading-[1.85] text-[var(--t2)]">
             {ECOSYSTEM.body}

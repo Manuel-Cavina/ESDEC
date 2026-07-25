@@ -1,10 +1,10 @@
 // app/tecnologia-deportiva-cordoba/page.tsx
-// Temporary SEO landing for the ESDEC technology area.
+// Landing del area de Tecnologia deportiva de ESDEC.
 
 import type { Metadata } from "next";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import AreaInDevelopmentPage from "@/components/areas/AreaInDevelopmentPage";
+import TecnologiaLanding from "@/sections/tecnologia/TecnologiaLanding";
 import { AREA_PAGES } from "@/content/areas";
 import { buildAreaJsonLd, buildAreaMetadata } from "@/lib/areas";
 
@@ -22,7 +22,7 @@ export default function TecnologiaDeportivaCordobaPage() {
       <div className="nav-visible">
         <Navbar audience={null} />
       </div>
-      <AreaInDevelopmentPage area={area} />
+      <TecnologiaLanding />
       <Footer />
       <script
         type="application/ld+json"

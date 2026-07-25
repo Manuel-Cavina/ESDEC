@@ -8,9 +8,23 @@ import StickerIcon from "@/components/StickerIcon";
 import SweepButton from "@/components/ui/SweepButton";
 import {
   SALUD_HERO,
-  BIENESTAR_HERO,
   type BienestarSaludArea,
 } from "@/content/bienestar-salud";
+
+// Inline data for bienestar hero — BienestarLanding now uses SharedHeroSection directly.
+const BIENESTAR_HERO_INLINE = {
+  eyebrow: "Ecosistema ESDEC — Bienestar deportivo",
+  headlineLine1: "EL RENDIMIENTO",
+  headlineLine2: "EMPIEZA ANTES.",
+  tagline: "Mente fuerte. Habitos solidos. Equilibrio real.",
+  subtext: "El deportista que trabaja su mente, construye sus habitos y encuentra equilibrio rinde mas, abandona menos y disfruta mas el proceso.",
+  marqueeItems: [
+    "Psicologia deportiva", "Coaching", "Yoga", "Pilates",
+    "Meditacion", "Habitos", "Mindfulness", "Life coaching",
+  ],
+  ctaPrimary: { label: "Conocer los especialistas", href: "#profesionales" },
+  accent: "#7de8a8" as const,
+};
 
 interface Props {
   area: BienestarSaludArea;
@@ -39,7 +53,7 @@ const CONFIGS = {
     },
   },
   bienestar: {
-    data: BIENESTAR_HERO,
+    data: BIENESTAR_HERO_INLINE,
     glowPrimary:
       "radial-gradient(ellipse at 78% 52%, rgba(125,232,168,0.26) 0%, rgba(125,232,168,0.08) 38%, transparent 62%)",
     glowSecondary:
@@ -65,7 +79,7 @@ export default function HeroSection({ area }: Props) {
   const cfg = CONFIGS[area];
   const { data } = cfg;
   const chips = area === "salud" ? [...SALUD_HERO.marqueeChips, ...SALUD_HERO.marqueeChips] : null;
-  const doubleText = area === "bienestar" ? [...BIENESTAR_HERO.marqueeItems, ...BIENESTAR_HERO.marqueeItems] : null;
+  const doubleText = area === "bienestar" ? [...BIENESTAR_HERO_INLINE.marqueeItems, ...BIENESTAR_HERO_INLINE.marqueeItems] : null;
 
   return (
     <section className="relative isolate min-h-[100svh] overflow-hidden bg-[var(--bg)]">
@@ -213,7 +227,7 @@ export default function HeroSection({ area }: Props) {
           <div className="mt-8 flex justify-center">
             <a
               href={data.ctaPrimary.href}
-              className="inline-flex min-h-[52px] items-center justify-center rounded-[16px] px-9 py-3 font-condensed text-[0.8rem] font-bold uppercase tracking-[0.28em] transition-all duration-200 hover:-translate-y-px hover:brightness-105"
+              className="inline-flex min-h-[52px] items-center justify-center rounded-full px-9 py-3 font-sans text-[0.8rem] font-semibold uppercase tracking-[0.04em] transition-all duration-200 hover:-translate-y-px hover:brightness-105"
               style={{
                 background: cfg.ctaBg,
                 color: cfg.ctaText,

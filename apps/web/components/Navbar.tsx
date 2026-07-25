@@ -75,7 +75,7 @@ export default function Navbar({ audience = null }: NavbarProps) {
 
     return {
       label: NAV.cta,
-      href: "/ecosistema-deportivo-cordoba",
+      href: "/",
     };
   }, [audience]);
 
@@ -170,7 +170,7 @@ export default function Navbar({ audience = null }: NavbarProps) {
             <ul className="flex items-center gap-2">
               {navLinks.map((link) => {
                 const active = isActiveLink(link.href);
-                const isAboutLink = link.href === "/ecosistema-deportivo-cordoba";
+                const isAboutLink = link.href === "/";
 
                 return (
                   <li
@@ -252,7 +252,7 @@ export default function Navbar({ audience = null }: NavbarProps) {
               onClick={() => handleNavigate(ctaConfig.href)}
               className={cn(
                 "btn-shimmer relative hidden h-11 items-center justify-center overflow-hidden rounded-full px-5 sm:inline-flex",
-                "bg-[var(--btn-bg)] font-condensed text-[12px] font-bold uppercase tracking-[0.18em] text-[var(--btn-t)]",
+                "bg-[var(--btn-bg)] font-sans text-[13px] font-semibold uppercase tracking-[0.04em] text-[var(--btn-t)]",
                 "shadow-[0_10px_28px_rgba(0,0,0,0.14)] transition-all duration-200 hover:-translate-y-px hover:brightness-110",
                 "lg:min-w-[184px]"
               )}
@@ -312,7 +312,7 @@ export default function Navbar({ audience = null }: NavbarProps) {
           <div className="space-y-1">
             {navLinks.map((link) => {
               const active = isActiveLink(link.href);
-              const isAboutLink = link.href === "/ecosistema-deportivo-cordoba";
+              const isAboutLink = link.href === "/";
 
               if (isAboutLink) {
                 return (
@@ -399,8 +399,8 @@ export default function Navbar({ audience = null }: NavbarProps) {
             type="button"
             onClick={() => handleNavigate(ctaConfig.href)}
             className={cn(
-              "btn-shimmer relative mt-3 flex h-12 w-full items-center justify-center overflow-hidden rounded-[18px]",
-              "bg-[var(--btn-bg)] font-condensed text-[13px] font-bold uppercase tracking-[0.16em] text-[var(--btn-t)]",
+              "btn-shimmer relative mt-3 flex h-12 w-full items-center justify-center overflow-hidden rounded-full",
+              "bg-[var(--btn-bg)] font-sans text-[14px] font-semibold uppercase tracking-[0.04em] text-[var(--btn-t)]",
               "shadow-[0_10px_24px_rgba(0,0,0,0.14)] transition-all duration-200 hover:brightness-110"
             )}
           >

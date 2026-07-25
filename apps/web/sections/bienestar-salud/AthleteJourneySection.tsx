@@ -60,7 +60,7 @@ export default function AthleteJourneySection() {
           <Kicker className="mb-4">{eyebrow}</Kicker>
           <h2 className="text-clamp-problem mb-5 font-condensed font-black uppercase leading-[0.92] tracking-tight text-[var(--t1)]">
             {headlinePre}{" "}
-            <span className="text-[var(--p1)]">{headlineAccent}</span>
+            <span className="ecos-title-accent">{headlineAccent}</span>
           </h2>
           <p className="max-w-[52ch] font-sans text-base leading-[1.9] text-[var(--t2)]">
             {subtext}

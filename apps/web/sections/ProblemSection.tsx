@@ -87,7 +87,7 @@ function JourneySection({ data }: { data: ProblemData }) {
           <Kicker className="mb-3">{data.journeyLabel}</Kicker>
           <h2 className="text-clamp-journey mt-4 font-condensed font-black uppercase leading-[0.92] tracking-tight text-[var(--t1)]">
             {data.journeyHeadlinePre}{" "}
-            <span className="text-[var(--p1)]">{data.journeyHeadlineAccent}</span>
+            <span className="ecos-title-accent">{data.journeyHeadlineAccent}</span>
           </h2>
         </ScrollReveal>
 
@@ -128,7 +128,7 @@ export default function ProblemSection({
               <Kicker className="mb-4">{data.eyebrow}</Kicker>
               <h2 className="text-clamp-problem mb-8 font-condensed font-black uppercase leading-[0.92] tracking-tight text-[var(--t1)]">
                 {data.headline}{" "}
-                <span className="text-[var(--p1)]">{data.headlineAccent}</span>
+                <span className="ecos-title-accent">{data.headlineAccent}</span>
               </h2>
               <blockquote className="max-w-lg font-sans text-base leading-[1.9] text-[var(--t2)]">
                 {data.quote.replace(/"/g, "")}

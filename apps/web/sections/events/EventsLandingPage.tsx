@@ -12,6 +12,7 @@ import Kicker from "@/components/ui/Kicker";
 import FingerprintSVG from "@/components/FingerprintSVG";
 import ScrollReveal from "@/components/ScrollReveal";
 import SharedCTASection from "@/components/SharedCTASection";
+import SweepButton from "@/components/ui/SweepButton";
 import { EVENTS_PAGE, type EventsCta, type PastEvent } from "@/content/eventos";
 import { trackCTAClick, trackScrollDepth, trackSectionView } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
@@ -24,13 +25,14 @@ interface EventButtonProps {
 interface SectionHeadingProps {
   eyebrow: string;
   title: string;
+  titleAccent?: string;
   align?: "left" | "center";
 }
 
 
 function EventButton({ cta, className }: EventButtonProps) {
   const baseClass = cn(
-    "group inline-flex min-h-[54px] items-center justify-center overflow-hidden rounded-full px-7 py-4 font-condensed text-[0.78rem] font-black uppercase leading-none tracking-[0.22em] transition-all duration-300 hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--p1)]",
+    "group inline-flex min-h-[58px] items-center justify-center overflow-hidden rounded-full px-10 font-sans text-[0.95rem] font-semibold uppercase leading-none tracking-[0.04em] transition-all duration-300 hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--p1)]",
     cta.variant === "primary"
       ? "bg-[var(--p1)] text-[#06275f] shadow-[0_22px_54px_-26px_rgba(90,200,255,0.9)]"
       : "bg-[var(--p2)] text-[#05213d] shadow-[0_22px_54px_-26px_rgba(125,232,168,0.82)] hover:brightness-110",
@@ -80,7 +82,7 @@ function EventButton({ cta, className }: EventButtonProps) {
   );
 }
 
-function SectionHeading({ eyebrow, title, align = "left" }: SectionHeadingProps) {
+function SectionHeading({ eyebrow, title, titleAccent, align = "left" }: SectionHeadingProps) {
   return (
     <ScrollReveal
       direction="up"
@@ -90,8 +92,14 @@ function SectionHeading({ eyebrow, title, align = "left" }: SectionHeadingProps)
         <BrandLines size="sm" animated />
         <Kicker>{eyebrow}</Kicker>
       </div>
-      <h2 className="font-condensed text-[clamp(2.75rem,6.4vw,6.2rem)] font-black uppercase leading-[0.82] tracking-tight text-[var(--t1)]">
+      <h2 className="font-condensed text-[clamp(2.4rem,5vw,4.2rem)] font-black uppercase leading-[0.88] tracking-tight text-[var(--t1)]">
         {title}
+        {titleAccent && (
+          <>
+            {" "}
+            <span className="ecos-title-accent">{titleAccent}</span>
+          </>
+        )}
       </h2>
     </ScrollReveal>
   );
@@ -143,8 +151,23 @@ function useEventsAnalytics() {
   }, []);
 }
 
+function StampWord({ word, delay }: { word: string; delay: number }) {
+  return (
+    <>
+      <span
+        className="animate-stamp inline-block"
+        style={{ animationDelay: `${delay}ms`, animationFillMode: "both" }}
+      >
+        {word}
+      </span>
+      {" "}
+    </>
+  );
+}
+
 function HeroSection() {
   const { hero } = EVENTS_PAGE;
+  const WORD_DELAY = 110;
 
   return (
     <section
@@ -187,12 +210,26 @@ function HeroSection() {
               </div>
             </ScrollReveal>
 
-            <ScrollReveal direction="up" delay={80}>
-              <h1 className="max-w-[12ch] font-condensed text-[clamp(4.4rem,10.5vw,9.8rem)] font-black uppercase leading-[0.75] tracking-tight text-white">
-                <span className="block">{hero.headlineLine1}</span>
-                <span className="ecos-title-accent block">{hero.headlineLine2}</span>
-              </h1>
-            </ScrollReveal>
+            <h1 className="max-w-[12ch] font-condensed text-[clamp(4.4rem,10.5vw,9.8rem)] font-black uppercase leading-[0.75] tracking-tight text-white">
+              <span className="block">
+                {hero.headlineLine1.trim().split(/\s+/).map((word, i) => (
+                  <StampWord key={`h1-${i}`} word={word} delay={i * WORD_DELAY} />
+                ))}
+              </span>
+              <span
+                className="animate-stamp block"
+                style={{
+                  animationDelay: `${hero.headlineLine1.trim().split(/\s+/).length * WORD_DELAY}ms`,
+                  animationFillMode: "both",
+                  background: "linear-gradient(90deg, #5ac8ff 0%, #0cd25e 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
+              >
+                {hero.headlineLine2}
+              </span>
+            </h1>
 
             <ScrollReveal direction="up" delay={160}>
               <p className="mt-7 max-w-[55ch] font-sans text-[1rem] font-medium leading-[1.9] text-white/82 md:text-[1.08rem]">
@@ -202,8 +239,16 @@ function HeroSection() {
 
             <ScrollReveal direction="up" delay={240}>
               <div className="mt-9 flex flex-col gap-4 sm:flex-row">
-                {hero.ctas.map((cta) => (
-                  <EventButton key={cta.trackingLabel} cta={cta} className="sm:min-w-[230px]" />
+                {hero.ctas.map((cta, i) => (
+                  <div key={cta.trackingLabel} onClick={() => trackCTAClick(cta.trackingLabel)}>
+                    <SweepButton
+                      label={cta.label}
+                      href={cta.href}
+                      external={cta.external}
+                      size="md"
+                      variant={i === 0 ? "glass" : "ghost"}
+                    />
+                  </div>
                 ))}
               </div>
             </ScrollReveal>
@@ -239,7 +284,7 @@ function TransitionSection() {
       className="relative overflow-hidden bg-[#3269c7] px-6 py-18 md:py-24 [--p1:#5ac8ff] [--p2:#7de8a8] [--t1:#ffffff] [--t2:rgba(255,255,255,0.78)] [--card-bg:rgba(255,255,255,0.08)] [--card-bg2:rgba(255,255,255,0.12)] [--card-bd:rgba(255,255,255,0.18)]"
     >
       <div className="mx-auto max-w-landing">
-        <SectionHeading eyebrow={transition.eyebrow} title={transition.title} />
+        <SectionHeading eyebrow={transition.eyebrow} title={transition.title} titleAccent={transition.titleAccent} />
 
         <ScrollReveal
           cascade
@@ -408,7 +453,7 @@ function NextEventModal({ onClose }: { onClose: () => void }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackCTAClick(nextEvent.cta.trackingLabel)}
-                className="btn-shimmer flex min-h-[52px] w-full items-center justify-center rounded-[18px] bg-[#5ac8ff] font-condensed text-[0.8rem] font-black uppercase tracking-[0.22em] text-[#06275f] no-underline shadow-[0_18px_46px_-24px_rgba(90,200,255,0.9)] transition-all duration-200 hover:-translate-y-px hover:brightness-110 hover:no-underline"
+                className="btn-shimmer flex min-h-[52px] w-full items-center justify-center rounded-full bg-[#5ac8ff] font-sans text-[0.8rem] font-semibold uppercase tracking-[0.04em] text-[#06275f] no-underline shadow-[0_18px_46px_-24px_rgba(90,200,255,0.9)] transition-all duration-200 hover:-translate-y-px hover:brightness-110 hover:no-underline"
               >
                 {nextEvent.cta.label}
               </a>
@@ -477,14 +522,14 @@ function NextEventSection() {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => trackCTAClick(waitlist.cta.trackingLabel)}
-                  className="inline-flex min-h-[58px] items-center justify-center rounded-[20px] bg-[#0cd25e] px-8 py-4 font-condensed text-[0.84rem] font-black uppercase tracking-[0.22em] text-[#001a33] no-underline shadow-[0_22px_54px_-28px_rgba(12,210,94,0.95)] transition-all duration-300 hover:-translate-y-1 hover:brightness-110 hover:no-underline"
+                  className="inline-flex min-h-[58px] items-center justify-center rounded-full bg-[#0cd25e] px-8 py-4 font-sans text-[0.84rem] font-semibold uppercase tracking-[0.04em] text-[#001a33] no-underline shadow-[0_22px_54px_-28px_rgba(12,210,94,0.95)] transition-all duration-300 hover:-translate-y-1 hover:brightness-110 hover:no-underline"
                 >
                   {waitlist.cta.label} {"\u2192"}
                 </a>
                 <a
                   href={waitlist.secondaryCta.href}
                   onClick={() => trackCTAClick(waitlist.secondaryCta.trackingLabel)}
-                  className="inline-flex min-h-[58px] items-center justify-center rounded-[20px] border border-white/16 bg-white/[0.05] px-8 py-4 font-condensed text-[0.82rem] font-black uppercase tracking-[0.2em] text-white no-underline transition-all duration-300 hover:border-[#5ac8ff]/55 hover:bg-white/[0.09] hover:no-underline"
+                  className="inline-flex min-h-[58px] items-center justify-center rounded-full border border-white/16 bg-white/[0.05] px-8 py-4 font-sans text-[0.82rem] font-semibold uppercase tracking-[0.04em] text-white no-underline transition-all duration-300 hover:border-[#5ac8ff]/55 hover:bg-white/[0.09] hover:no-underline"
                 >
                   {waitlist.secondaryCta.label}
                 </a>
@@ -593,8 +638,9 @@ function ExperienceSection() {
               {experience.eyebrow}
             </p>
           </div>
-          <h2 className="max-w-[860px] font-condensed text-[clamp(2.8rem,5.7vw,5.4rem)] font-black uppercase leading-[0.84] text-white">
-            {experience.title}
+          <h2 className="max-w-[860px] font-condensed text-[clamp(2.4rem,5vw,4.2rem)] font-black uppercase leading-[0.88] text-white">
+            {experience.title}{" "}
+            <span className="ecos-title-accent">{experience.titleAccent}</span>
           </h2>
         </ScrollReveal>
 
@@ -656,7 +702,7 @@ function PastEventsSection() {
       className="relative scroll-mt-36 overflow-hidden bg-[var(--bg)] px-6 py-18 md:py-24"
     >
       <div className="mx-auto max-w-landing">
-        <SectionHeading eyebrow={pastEvents.eyebrow} title={pastEvents.title} />
+        <SectionHeading eyebrow={pastEvents.eyebrow} title={pastEvents.title} titleAccent={pastEvents.titleAccent} />
 
         <ScrollReveal direction="up" className="mt-12">
           <div className="-mx-6 overflow-hidden px-6 [mask-image:linear-gradient(90deg,transparent,black_8%,black_92%,transparent)]">
@@ -946,7 +992,7 @@ function FinalCtaSection() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackCTAClick("events_final_cta")}
-              className="btn-shimmer inline-flex min-h-[76px] min-w-[340px] items-center justify-center rounded-[26px] bg-[#0cd25e] px-12 py-5 font-condensed text-[1rem] font-black uppercase tracking-[0.3em] text-[#001a33] no-underline shadow-[0_0_64px_rgba(12,210,94,0.44),0_28px_80px_-32px_rgba(0,0,0,0.9)] transition-all duration-300 hover:-translate-y-1 hover:brightness-110 hover:shadow-[0_0_96px_rgba(12,210,94,0.52),0_36px_96px_-32px_rgba(0,0,0,0.9)]"
+              className="btn-shimmer inline-flex min-h-[76px] min-w-[340px] items-center justify-center rounded-full bg-[#0cd25e] px-12 py-5 font-sans text-[1rem] font-semibold uppercase tracking-[0.04em] text-[#001a33] no-underline shadow-[0_0_64px_rgba(12,210,94,0.44),0_28px_80px_-32px_rgba(0,0,0,0.9)] transition-all duration-300 hover:-translate-y-1 hover:brightness-110 hover:shadow-[0_0_96px_rgba(12,210,94,0.52),0_36px_96px_-32px_rgba(0,0,0,0.9)]"
             >
               {finalCta.ctas[0].label} →
             </a>

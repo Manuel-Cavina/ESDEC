@@ -83,7 +83,7 @@ function ConceptA() {
             <p className="mt-3 font-sans text-[0.86rem] leading-[1.7] text-white/58">{pro.valueProp}</p>
             <button
               type="button"
-              className="mt-6 inline-flex h-11 items-center gap-2 rounded-full border border-[rgba(90,200,255,0.35)] bg-[rgba(90,200,255,0.1)] px-6 font-condensed text-[0.7rem] font-bold uppercase tracking-[0.2em] text-[#5ac8ff] transition-all hover:bg-[rgba(90,200,255,0.2)]"
+              className="mt-6 inline-flex h-11 items-center gap-2 rounded-full border border-[rgba(90,200,255,0.35)] bg-[rgba(90,200,255,0.1)] px-6 font-sans text-[0.7rem] font-semibold uppercase tracking-[0.04em] text-[#5ac8ff] transition-all hover:bg-[rgba(90,200,255,0.2)]"
             >
               Trabajar con {(pro.name ?? pro.role).split(" ")[pro.name ? 1 : 0]} →
             </button>
@@ -175,7 +175,7 @@ function ConceptC() {
           </p>
           <button
             type="button"
-            className="mt-5 inline-flex h-11 items-center gap-2 rounded-full bg-[#5ac8ff] px-6 font-condensed text-[0.7rem] font-black uppercase tracking-[0.2em] text-[#06275f] transition-all hover:brightness-110"
+            className="mt-5 inline-flex h-11 items-center gap-2 rounded-full bg-[#5ac8ff] px-6 font-sans text-[0.7rem] font-semibold uppercase tracking-[0.04em] text-[#06275f] transition-all hover:brightness-110"
           >
             Conectar →
           </button>

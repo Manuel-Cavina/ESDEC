@@ -6,7 +6,7 @@ import SharedHeroSection from "@/components/SharedHeroSection";
 import SpecialtiesCarouselSection from "./SpecialtiesCarouselSection";
 import AthleteJourneySection from "./AthleteJourneySection";
 import BenefitsSection from "./BenefitsSection";
-import ProfessionalsSection from "./ProfessionalsSection";
+import SpecialtyGroupsSection from "./SpecialtyGroupsSection";
 import SharedCTASection from "@/components/SharedCTASection";
 
 export default function SaludLanding() {
@@ -28,7 +28,7 @@ export default function SaludLanding() {
         ]}
       />
       <SpecialtiesCarouselSection />
-      <ProfessionalsSection area="salud" />
+      <SpecialtyGroupsSection />
       <AthleteJourneySection />
       <BenefitsSection area="salud" />
       <SharedCTASection

@@ -60,7 +60,7 @@ export default function EmotionalSection({
 
           <h2 className="text-clamp-beat-lg font-condensed font-black uppercase leading-[0.92] tracking-tight text-white">
             <span className="block">{data.headlinePre}</span>
-            <span className="block text-[var(--p1)]">{data.headlineAccent}</span>
+            <span className="ecos-title-accent block">{data.headlineAccent}</span>
             <span className="block text-white/84">{data.headlinePost}</span>
           </h2>
 

@@ -39,12 +39,15 @@ function StampWord({
   className?: string;
 }) {
   return (
-    <span
-      className={`animate-stamp inline-block ${className}`}
-      style={{ animationDelay: `${delay}ms`, animationFillMode: "both" }}
-    >
-      {word}
-    </span>
+    <>
+      <span
+        className={`animate-stamp inline-block ${className}`}
+        style={{ animationDelay: `${delay}ms`, animationFillMode: "both" }}
+      >
+        {word}
+      </span>
+      {" "}
+    </>
   );
 }
 

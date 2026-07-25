@@ -139,7 +139,7 @@ function ModalStep({
           onClick={onNext}
           disabled={!canAdvance}
           className={cn(
-            "inline-flex items-center gap-2 rounded-xl px-7 py-3.5 font-condensed text-[13px] font-bold uppercase tracking-[3px] transition-all duration-200",
+            "inline-flex items-center gap-2 rounded-full px-8 py-3.5 font-sans text-[0.95rem] font-semibold uppercase tracking-[0.04em] transition-all duration-200",
             canAdvance
               ? "bg-[var(--btn-bg)] text-[var(--btn-t)] hover:-translate-y-px hover:brightness-110"
               : "cursor-not-allowed bg-white/10 text-white/30"
