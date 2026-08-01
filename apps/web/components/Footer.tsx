@@ -56,7 +56,7 @@ export default function Footer() {
     FOOTER.social.find((item) => item.icon === "whatsapp")?.href ?? "#";
 
   return (
-    <footer className="relative overflow-hidden bg-[var(--bg)]">
+    <footer className="relative overflow-hidden bg-[#295ab4]">
       <div className="footer-brand-line absolute inset-x-0 top-0 z-10 h-[1px]" aria-hidden="true" />
       <div className="footer-dot-texture pointer-events-none absolute inset-0 opacity-[0.12]" aria-hidden="true" />
       <div className="footer-glow pointer-events-none absolute left-1/2 top-0 h-[420px] w-[700px] -translate-x-1/2" aria-hidden="true" />

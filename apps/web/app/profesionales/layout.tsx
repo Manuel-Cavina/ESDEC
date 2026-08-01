@@ -1,8 +1,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // app/profesionales/layout.tsx
-// Layout de la ruta /profesionales — activa modo oscuro (dark mode).
-// .dark es una clase CSS en globals.css — el wrapper div la aplica a todo el
-// árbol sin necesidad de tocar <html>.
+// Layout de la ruta /profesionales — solo metadata SEO. Ya no fuerza modo
+// oscuro: la pagina respeta el tema del usuario como el resto del sitio.
 // ─────────────────────────────────────────────────────────────────────────────
 
 import type { Metadata } from "next";
@@ -39,6 +38,5 @@ export default function ProfesionalesLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // El div .dark activa todas las CSS vars del tema navy sin modificar <html>
-  return <div className="dark">{children}</div>;
+  return <>{children}</>;
 }

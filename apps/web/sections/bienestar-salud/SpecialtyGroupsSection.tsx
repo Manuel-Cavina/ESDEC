@@ -6,11 +6,12 @@
 import BrandLines from "@/components/BrandLines";
 import Kicker from "@/components/ui/Kicker";
 import ScrollReveal from "@/components/ScrollReveal";
+import StepCard from "@/components/ui/StepCard";
 import { SALUD_PROFESSIONAL_GROUPS, SALUD_PROFESSIONALS } from "@/content/bienestar-salud";
 
 export default function SpecialtyGroupsSection() {
   return (
-    <section className="bg-[var(--bg)] py-20 md:py-28">
+    <section className="bg-[var(--bg2)] py-20 md:py-28">
       <div className="mx-auto max-w-landing px-6">
 
         <ScrollReveal direction="up">
@@ -44,21 +45,18 @@ export default function SpecialtyGroupsSection() {
 
             return (
               <ScrollReveal key={group.id} direction="up" delay={i * 80}>
-                <article className="flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.04] p-7 backdrop-blur-sm">
-                  <div className="mb-5 h-px w-10 bg-gradient-to-r from-[var(--p1)] to-transparent" />
-                  <Kicker>{`Área 0${i + 1}`}</Kicker>
-                  <h3 className="mt-3 font-condensed text-[1.35rem] font-black uppercase leading-[1.05] tracking-[0.01em] text-white">
-                    {group.label}
-                  </h3>
-                  <p className="mt-3 font-sans text-[0.9rem] leading-[1.75] text-white/60">
-                    {group.description}
-                  </p>
+                <StepCard
+                  number={String(i + 1).padStart(2, "0")}
+                  title={group.label}
+                  body={group.description}
+                  className="h-full"
+                >
                   {roles.length > 0 && (
                     <ul className="mt-5 space-y-2">
                       {roles.map((role) => (
                         <li
                           key={role}
-                          className="flex items-start gap-2 font-sans text-[0.82rem] text-white/50"
+                          className="flex items-start gap-2 font-sans text-[0.82rem] text-[var(--t2)]"
                         >
                           <span className="mt-[5px] h-1 w-1 shrink-0 rounded-full bg-[var(--p1)]" />
                           {role}
@@ -66,7 +64,7 @@ export default function SpecialtyGroupsSection() {
                       ))}
                     </ul>
                   )}
-                </article>
+                </StepCard>
               </ScrollReveal>
             );
           })}

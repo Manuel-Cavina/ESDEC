@@ -24,7 +24,7 @@ export default function AppTeaserSection() {
             </span>
           </div>
 
-          <h2 className="text-clamp-problem font-condensed font-black uppercase leading-[0.92] tracking-tight text-[var(--t1)]">
+          <h2 className="font-condensed text-[clamp(36px,5vw,68px)] font-black uppercase leading-[0.92] tracking-tight text-[var(--t1)]">
             {headline} <span className="ecos-title-accent">{headlineAccent}</span>
           </h2>
 

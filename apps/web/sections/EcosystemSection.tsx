@@ -108,7 +108,7 @@ export default function EcosystemSection({
             {sportsLoop.map((sport, index) => (
               <span
                 key={`${sport.label}-${index}`}
-                className="inline-flex shrink-0 items-center gap-3 rounded-full border border-[var(--card-bd)] bg-[var(--card-bg)] px-4 py-2.5 font-condensed text-sm font-bold uppercase tracking-widest text-[var(--t2)]"
+                className="inline-flex shrink-0 items-center gap-3 rounded-full border border-[rgba(255,255,255,0.35)] bg-[rgba(255,255,255,0.2)] px-4 py-2.5 font-condensed text-sm font-bold uppercase tracking-widest text-[var(--t1)] backdrop-blur-md"
               >
                 <StickerIcon name={sport.icon} size="xs" className="rounded-full" />
                 <span>{sport.label}</span>

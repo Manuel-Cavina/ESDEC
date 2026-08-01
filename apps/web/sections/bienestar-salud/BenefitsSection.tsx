@@ -71,7 +71,7 @@ export default function BenefitsSection({ area }: Props) {
         <ScrollReveal direction="up" className="mb-12">
           <BrandLines animated className="mb-5" />
           <Kicker className="mb-4">{copy.eyebrow}</Kicker>
-          <h2 className="text-clamp-problem font-condensed font-black uppercase leading-[0.92] tracking-tight text-[var(--t1)]">
+          <h2 className="font-condensed text-[clamp(36px,5vw,68px)] font-black uppercase leading-[0.92] tracking-tight text-[var(--t1)]">
             {copy.headlinePre}{" "}
             <span className="ecos-title-accent">{copy.headlineAccent}</span>
           </h2>

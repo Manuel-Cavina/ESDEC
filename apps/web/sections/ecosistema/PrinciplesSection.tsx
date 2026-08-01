@@ -4,7 +4,7 @@
 import BrandLines from "@/components/BrandLines";
 import Kicker from "@/components/ui/Kicker";
 import ScrollReveal from "@/components/ScrollReveal";
-import StickerIcon from "@/components/StickerIcon";
+import StepCard from "@/components/ui/StepCard";
 import { ECOSISTEMA_PRINCIPLES } from "@/content/ecosistema";
 
 export default function PrinciplesSection() {
@@ -35,29 +35,13 @@ export default function PrinciplesSection() {
         {/* Grilla de principios */}
         <ScrollReveal cascade cascadeDelay={70} className="grid gap-5 sm:grid-cols-2">
           {items.map((item) => (
-            <article
+            <StepCard
               key={item.number}
-              className="group relative overflow-hidden rounded-[20px] border border-[var(--card-bd)] bg-[var(--card-bg)] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--p1)]/50 hover:bg-[var(--card-bg2)]"
-            >
-              <div className="mb-4 flex items-center gap-3">
-                <span
-                  className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full"
-                  style={{ backgroundColor: `${item.accent}1f`, color: item.accent }}
-                >
-                  <StickerIcon name={item.icon} size="sm" />
-                </span>
-                <span className="font-condensed text-[0.7rem] font-semibold uppercase tracking-[2px] text-[var(--t2)]">
-                  {item.number}
-                </span>
-              </div>
-
-              <h3 className="font-condensed text-[1.2rem] font-semibold leading-snug tracking-tight text-[var(--t1)]">
-                {item.title}
-              </h3>
-              <p className="mt-2 font-sans text-[0.9rem] leading-[1.8] text-[var(--t2)]">
-                {item.body}
-              </p>
-            </article>
+              number={item.number}
+              icon={item.icon}
+              title={item.title}
+              body={item.body}
+            />
           ))}
         </ScrollReveal>
       </div>
