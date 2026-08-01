@@ -1,20 +1,13 @@
-﻿"use client";
+"use client";
 
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // components/Footer.tsx
-// Footer rediseñado: pre-footer CTA band | brand + links + contacto | legal
-// Redes: Instagram, TikTok, Twitter/X, WhatsApp â€” SVGs propios
-// â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 import Link from "next/link";
 import { FOOTER } from "@/content/landing";
 import { cn } from "@/lib/utils";
-import FingerprintSVG from "@/components/FingerprintSVG";
-import BrandLines from "@/components/BrandLines";
 import StickerIcon from "@/components/StickerIcon";
 import Logo from "@/components/Logo";
-
-// ── Íconos sociales SVG ───────────────────────────────────────────────────────
+import Kicker from "@/components/ui/Kicker";
 
 function IconInstagram() {
   return (
@@ -43,14 +36,6 @@ function IconTikTok() {
   );
 }
 
-function IconX() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className="h-[17px] w-[17px]" aria-hidden="true">
-      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.736l7.737-8.859L2.11 2.25H8.08l4.274 5.651 5.89-5.651zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z" />
-    </svg>
-  );
-}
-
 function IconWhatsApp() {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className="h-[17px] w-[17px]" aria-hidden="true">
@@ -62,168 +47,130 @@ function IconWhatsApp() {
 function SocialIcon({ icon }: { icon: string }) {
   if (icon === "ig" || icon === "instagram") return <IconInstagram />;
   if (icon === "tt" || icon === "tiktok") return <IconTikTok />;
-  if (icon === "x")  return <IconX />;
   if (icon === "wa" || icon === "whatsapp") return <IconWhatsApp />;
   return null;
 }
 
-// ── Footer principal ──────────────────────────────────────────────────────────
 export default function Footer() {
   const whatsappHref =
     FOOTER.social.find((item) => item.icon === "whatsapp")?.href ?? "#";
 
   return (
-    <>
-      {/* â”€â”€ Pre-footer: banda motivacional â”€â”€ */}
-      
+    <footer className="relative overflow-hidden bg-[var(--bg)]">
+      <div className="footer-brand-line absolute inset-x-0 top-0 z-10 h-[1px]" aria-hidden="true" />
+      <div className="footer-dot-texture pointer-events-none absolute inset-0 opacity-[0.12]" aria-hidden="true" />
+      <div className="footer-glow pointer-events-none absolute left-1/2 top-0 h-[420px] w-[700px] -translate-x-1/2" aria-hidden="true" />
 
-      {/* â”€â”€ Footer principal â”€â”€ */}
-      <footer className="relative overflow-hidden bg-[var(--bg)] pt-16 pb-8">
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--p1)]/30 to-transparent" />
+      <div className="relative">
+        <div className="relative overflow-hidden bg-white/[0.06] pb-8 pt-12 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] backdrop-blur-md">
+          <div className="relative mx-auto max-w-landing px-6 md:px-14">
 
-        {/* Huella watermark */}
-        <div
-          className="pointer-events-none absolute bottom-0 right-[-8%] opacity-[0.04] [--fps:rgba(255,255,255,1)] [--fpg:rgba(255,255,255,0.05)]"
-          aria-hidden="true"
-        >
-          <FingerprintSVG animate={false} className="w-[400px]" />
-        </div>
+            <div className="grid grid-cols-1 gap-10 lg:grid-cols-5">
 
-        <div className="relative z-10 mx-auto max-w-landing px-6">
+              {/* Brand block
+                  Mobile: logo (left) + social/contact (right) en row
+                  Desktop lg: stacked verticalmente */}
+              <div className="lg:col-span-2">
+                <div className="flex flex-row items-start gap-8 lg:flex-col lg:gap-0">
 
-          {/* â”€â”€ Fila principal â”€â”€ */}
-          <div className="grid grid-cols-1 gap-12 border-b border-white/10 pb-12 sm:grid-cols-2 lg:grid-cols-5">
+                  {/* Logo */}
+                  <Logo className="h-[46px] w-auto shrink-0 lg:mb-7 lg:h-[64px]" />
 
-            {/* Brand block â€” 2 cols */}
-            <div className="sm:col-span-2">
-              {/* Logo */}
-              <div className="mb-5">
-                <Logo className="w-[144px] sm:w-[158px]" />
+                  {/* Social + Contact — columna derecha en mobile, bloque propio en lg */}
+                  <div className="min-w-0 flex-1">
+                    <div className="mb-4 flex flex-wrap gap-2 lg:mb-7 lg:gap-2.5">
+                      {FOOTER.social.map((s) => (
+                        <a
+                          key={s.label}
+                          href={s.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={s.label}
+                          className={cn(
+                            "btn-shimmer relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-full lg:h-10 lg:w-10",
+                            "border border-white/[0.18] bg-white/[0.07] text-white",
+                            "transition-all duration-300",
+                            "hover:-translate-y-1 hover:border-[var(--p1)] hover:bg-[var(--p1)]/10 hover:text-[var(--p1)]",
+                            "hover:shadow-[0_0_14px_rgba(90,200,255,0.22),0_6px_18px_rgba(90,200,255,0.14)]"
+                          )}
+                        >
+                          <SocialIcon icon={s.icon} />
+                        </a>
+                      ))}
+                    </div>
+
+                    <div className="space-y-2.5 lg:space-y-3">
+                      <a
+                        href={`mailto:${FOOTER.contact.email}`}
+                        className="contact-link flex items-center gap-2 font-sans text-[0.8rem] text-white transition-colors hover:text-[var(--p1)] lg:text-[0.875rem]"
+                      >
+                        <StickerIcon name="mail" size="xs" className="contact-link__icon shrink-0 text-[var(--p1)]" />
+                        {FOOTER.contact.email}
+                      </a>
+                      <a
+                        href={whatsappHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="contact-link flex items-center gap-2 font-sans text-[0.8rem] text-white transition-colors hover:text-[var(--p1)] lg:text-[0.875rem]"
+                      >
+                        <StickerIcon name="whatsapp" size="xs" className="contact-link__icon shrink-0 text-[var(--p1)]" />
+                        {FOOTER.contact.phone}
+                      </a>
+                      <p className="flex items-center gap-2 font-sans text-[0.8rem] text-white lg:text-[0.875rem]">
+                        <StickerIcon name="maps" size="xs" className="shrink-0 text-[var(--p1)]" />
+                        {FOOTER.contact.location}
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <p className="mb-1 font-condensed text-[11px] font-bold uppercase tracking-[3px] text-[var(--p1)]">
-                {FOOTER.tagline}
-              </p>
-              <p className="mb-2 font-condensed text-[10px] font-bold uppercase tracking-[3px] text-[var(--t2)]/40">
-                {FOOTER.location}
-              </p>
-
-              {/* Contacto */}
-              <div className="mb-6 mt-4 space-y-1.5">
-                <a
-                  href={`mailto:${FOOTER.contact.email}`}
-                  className="contact-link flex items-center gap-2.5 font-sans text-xs text-[var(--t2)] transition-colors hover:text-[var(--t1)]"
-                >
-                  <StickerIcon name="mail" size="xs" className="contact-link__icon text-[var(--p1)]" />
-                  {FOOTER.contact.email}
-                </a>
-                <a
-                  href={whatsappHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="contact-link flex items-center gap-2.5 font-sans text-xs text-[var(--t2)] transition-colors hover:text-[var(--t1)]"
-                >
-                  <StickerIcon
-                    name="whatsapp"
-                    size="xs"
-                    className="contact-link__icon text-[var(--p1)]"
-                  />
-                  {FOOTER.contact.phone}
-                </a>
-                <p className="contact-link flex items-center gap-2.5 font-sans text-xs text-[var(--t2)]">
-                  <StickerIcon name="maps" size="xs" className="contact-link__icon text-[var(--p1)]" />
-                  {FOOTER.contact.location}
-                </p>
+              {/* Link groups — 2 col en mobile, 3 col en lg */}
+              <div className="grid grid-cols-2 gap-6 gap-y-8 lg:col-span-3 lg:grid-cols-3">
+                {FOOTER.groups.map((group) => (
+                  <div key={group.label}>
+                    <div className="mb-4">
+                      <Kicker withLine>{group.label}</Kicker>
+                    </div>
+                    <ul className="flex flex-col gap-2.5">
+                      {group.links.map((link) => (
+                        <li key={link.label}>
+                          <Link
+                            href={link.href}
+                            className="group flex items-center gap-0 font-sans text-[0.8rem] text-white transition-colors duration-200 hover:text-[var(--p1)] lg:text-[0.875rem]"
+                          >
+                            <span className="block h-px w-0 bg-[var(--p1)] transition-[width] duration-300 group-hover:mr-2 group-hover:w-3" />
+                            {link.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
               </div>
+            </div>
 
-              {/* Social icons */}
-              <div className="flex items-center gap-3">
-                {FOOTER.social.map((s) => (
+            {/* Bottom bar */}
+            <div className="mt-10 flex flex-col items-start gap-3 border-t border-white/[0.07] pt-6 sm:flex-row sm:items-center sm:justify-between">
+              <p className="font-sans text-[0.75rem] text-white/45">
+                {FOOTER.copy}
+              </p>
+              <div className="flex items-center gap-5">
+                {FOOTER.legal.map((item) => (
                   <a
-                    key={s.label}
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={s.label}
-                    className={cn(
-                      "flex h-11 w-11 items-center justify-center rounded-full",
-                      "border border-white/20 bg-white/[0.02] text-[var(--t2)]",
-                      "transition-all duration-200",
-                      "hover:-translate-y-px hover:border-[var(--p1)] hover:text-[var(--t1)] hover:bg-white/[0.05]"
-                    )}
+                    key={item.label}
+                    href={item.href}
+                    className="font-sans text-[0.75rem] text-white/45 transition-colors duration-200 hover:text-white"
                   >
-                    <SocialIcon icon={s.icon} />
+                    {item.label}
                   </a>
                 ))}
               </div>
             </div>
 
-            {/* Grupos de links */}
-            {FOOTER.groups.map((group) => (
-              <div key={group.label}>
-                <p className="mb-5 font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
-                  {group.label}
-                </p>
-                <ul className="flex flex-col gap-3">
-                  {group.links.map((link) => (
-                    <li key={link.label}>
-                      <Link
-                        href={link.href}
-                        className="group flex items-center gap-0 font-sans text-sm text-[var(--t2)] transition-colors duration-200 hover:text-[var(--t1)]"
-                      >
-                        <span className="block h-px w-0 bg-[var(--p1)] transition-[width] duration-300 group-hover:w-3 group-hover:mr-2" />
-                        {link.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-
-            {/* Columna extra: tagline + BrandLines */}
-            <div className="flex flex-col justify-between">
-              <div>
-                <p className="mb-5 font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
-                  ESDEC
-                </p>
-                <div className="mb-4">
-                  <BrandLines animated size="md" />
-                </div>
-                <p className="font-condensed text-[13px] font-bold uppercase leading-snug text-[var(--t2)]/60">
-                  Elite Sports<br />Development
-                </p>
-              </div>
-              <p className="mt-6 font-condensed text-[9px] font-bold uppercase tracking-[3px] text-[var(--t2)]/30">
-                Córdoba · 2025
-              </p>
-            </div>
           </div>
-
-          {/* â”€â”€ Fila inferior â”€â”€ */}
-          <div className="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-4">
-              {FOOTER.legal.map((item, i) => (
-                <span key={item.label} className="flex items-center gap-4">
-                  <a
-                    href={item.href}
-                    className="font-sans text-xs text-[var(--t2)] transition-colors duration-200 hover:text-[var(--t1)]"
-                  >
-                    {item.label}
-                  </a>
-                  {i < FOOTER.legal.length - 1 && (
-                    <span className="text-[var(--t2)]/30" aria-hidden="true">·</span>
-                  )}
-                </span>
-              ))}
-            </div>
-            <p className="font-sans text-xs text-[var(--t2)]/50">
-              {FOOTER.copy}
-            </p>
-          </div>
-
         </div>
-      </footer>
-    </>
+      </div>
+    </footer>
   );
 }
-

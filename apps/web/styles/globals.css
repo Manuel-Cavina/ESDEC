@@ -22,7 +22,7 @@
 
   /* Texto */
   --t1: #ffffff;
-  --t2: rgba(255, 255, 255, 0.75);
+  --t2: rgba(255, 255, 255, 0.88);
   --t3: rgba(255, 255, 255, 0.45);
 
   /* Bordes */
@@ -1095,6 +1095,160 @@ body {
   letter-spacing: -0.015em;
   text-transform: uppercase;
   color: var(--t1);
+}
+
+/* Kicker label — gradient text con pulso */
+/* Boton glass — fondo semi-transparente con blur, borde blanco sutil */
+.sweep-btn-glass {
+  position: relative;
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: rgba(255, 255, 255, 0.92);
+  transition: background 0.25s ease, border-color 0.3s ease, transform 0.2s ease;
+}
+
+.sweep-btn-glass::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, #5ac8ff 0%, #0cd25e 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.sweep-btn-glass:hover {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: transparent;
+  transform: translateY(-1px);
+  background: linear-gradient(135deg, #5ac8ff 0%, #0cd25e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.sweep-btn-glass:hover::after {
+  opacity: 1;
+}
+
+/* Boton ghost — borde blanco por defecto, gradiente azul→verde en hover */
+.sweep-btn {
+  position: relative;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.85);
+  transition: border-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Pseudo-elemento: borde gradiente que aparece en hover usando mask technique */
+.sweep-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, #5ac8ff 0%, #0cd25e 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.sweep-btn:hover {
+  border-color: transparent;
+  transform: translateY(-1px);
+  background: linear-gradient(135deg, #5ac8ff 0%, #0cd25e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.sweep-btn:hover::after {
+  opacity: 1;
+}
+
+/* Boton dark — para fondos blancos/claros */
+.sweep-btn-dark {
+  position: relative;
+  background: transparent;
+  border: 1px solid rgba(14, 28, 61, 0.22);
+  color: rgba(14, 28, 61, 0.82);
+  transition: border-color 0.3s ease, transform 0.2s ease;
+}
+
+.sweep-btn-dark::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, #5ac8ff 0%, #0cd25e 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.sweep-btn-dark:hover {
+  border-color: transparent;
+  transform: translateY(-1px);
+  background: linear-gradient(135deg, #5ac8ff 0%, #0cd25e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.sweep-btn-dark:hover::after {
+  opacity: 1;
+}
+
+.footer-dot-texture {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.footer-glow {
+  background: radial-gradient(ellipse, rgba(90, 200, 255, 0.09) 0%, transparent 70%);
+  filter: blur(50px);
+}
+
+.footer-brand-line {
+  background: linear-gradient(90deg, var(--p1) 0%, rgba(255, 255, 255, 0.12) 50%, var(--p2) 100%);
+}
+
+.pro-modal-bg {
+  background: linear-gradient(160deg, #1556d4 0%, #0c35a8 100%);
+}
+
+.pro-card-fallback {
+  background: linear-gradient(145deg, rgba(4, 14, 50, 0.98) 0%, rgba(10, 30, 80, 0.96) 100%);
+}
+
+.pro-section-grid {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+.kicker-gradient {
+  background: linear-gradient(135deg, #5ac8ff 0%, #0cd25e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .ecos-title-accent {

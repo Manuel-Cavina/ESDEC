@@ -29,7 +29,7 @@ export default function CommunitySection() {
             style={{ fontSize: "clamp(36px, 5.5vw, 80px)" }}
           >
             {COMMUNITY.headline}{" "}
-            <span className="text-[var(--p1)]">{COMMUNITY.headlineAccent}</span>
+            <span className="ecos-title-accent">{COMMUNITY.headlineAccent}</span>
           </h2>
         </ScrollReveal>
       </div>

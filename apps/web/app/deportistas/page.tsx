@@ -9,7 +9,7 @@ import Footer from "@/components/Footer";
 import EntrySection from "@/sections/EntrySection";
 import SportsCarouselSection from "@/sections/SportsCarouselSection";
 import ProblemSection from "@/sections/ProblemSection";
-import FootprintSection from "@/sections/FootprintSection";
+import ClosingCTASection from "@/sections/ClosingCTASection";
 
 export default function DeportistasPage() {
   return (
@@ -21,7 +21,7 @@ export default function DeportistasPage() {
       <EntrySection audience="deportista" />
       <SportsCarouselSection audience="deportista" />
       <ProblemSection audience="deportista" />
-      <FootprintSection audience="deportista" />
+      <ClosingCTASection audience="deportista" />
       <Footer />
     </main>
   );

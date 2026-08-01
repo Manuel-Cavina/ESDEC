@@ -3,6 +3,7 @@
 
 import Link from "next/link";
 import BrandLines from "@/components/BrandLines";
+import Kicker from "@/components/ui/Kicker";
 import FingerprintSVG from "@/components/FingerprintSVG";
 import ScrollReveal from "@/components/ScrollReveal";
 import { AREA_PAGE_ORDER, AREA_PAGES, type AreaPageConfig } from "@/content/areas";
@@ -84,13 +85,13 @@ export default function AreaInDevelopmentPage({
               <div className="mt-10 flex flex-col items-center gap-4 md:flex-row md:justify-center md:gap-6">
                 <Link
                   href="/deportistas"
-                  className="inline-flex min-h-[54px] w-full max-w-[320px] items-center justify-center rounded-[18px] bg-[#78d0ff] px-8 py-3 font-condensed text-[0.84rem] font-bold uppercase tracking-[0.3em] text-[#0f326f] transition-all duration-200 hover:-translate-y-px hover:brightness-105 md:min-w-[320px]"
+                  className="inline-flex min-h-[54px] w-full max-w-[320px] items-center justify-center rounded-full bg-[#78d0ff] px-8 py-3 font-sans text-[0.84rem] font-semibold uppercase tracking-[0.04em] text-[#0f326f] transition-all duration-200 hover:-translate-y-px hover:brightness-105 md:min-w-[320px]"
                 >
                   {area.athleteCtaLabel}
                 </Link>
                 <Link
                   href="/profesionales"
-                  className="inline-flex min-h-[54px] w-full max-w-[320px] items-center justify-center rounded-[18px] bg-[#15dc62] px-8 py-3 font-condensed text-[0.84rem] font-bold uppercase tracking-[0.3em] text-[#05213d] transition-all duration-200 hover:-translate-y-px hover:brightness-105 md:min-w-[320px]"
+                  className="inline-flex min-h-[54px] w-full max-w-[320px] items-center justify-center rounded-full bg-[#15dc62] px-8 py-3 font-sans text-[0.84rem] font-semibold uppercase tracking-[0.04em] text-[#05213d] transition-all duration-200 hover:-translate-y-px hover:brightness-105 md:min-w-[320px]"
                 >
                   {area.professionalCtaLabel}
                 </Link>
@@ -114,9 +115,7 @@ export default function AreaInDevelopmentPage({
         <div className="relative z-10 mx-auto max-w-landing px-6">
           <ScrollReveal direction="up" className="mb-12 max-w-3xl">
             <BrandLines animated className="mb-5" />
-            <p className="font-condensed text-[10px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
-              Ecosistema ESDEC
-            </p>
+            <Kicker className="mb-3">Ecosistema ESDEC</Kicker>
             <h2 className="font-condensed text-[clamp(40px,5vw,72px)] font-black uppercase leading-[0.92] tracking-tight text-[var(--t1)]">
               Todas las areas.
             </h2>
@@ -135,9 +134,7 @@ export default function AreaInDevelopmentPage({
                   }`}
                 >
                   <div>
-                    <p className="font-condensed text-[11px] font-bold uppercase tracking-[4px] text-[var(--p1)]">
-                      {item.slug === area.slug ? "Area actual" : "Area del ecosistema"}
-                    </p>
+                    <Kicker className="mb-1">{item.slug === area.slug ? "Area actual" : "Area del ecosistema"}</Kicker>
                     <h3 className="mt-3 font-condensed text-[28px] font-semibold uppercase leading-[0.98] tracking-[0.02em] text-[var(--t1)] transition-colors duration-200 group-hover:text-[var(--p1)]">
                       {item.navLabel}
                     </h3>
@@ -165,7 +162,7 @@ export default function AreaInDevelopmentPage({
           <ScrollReveal direction="up" delay={120}>
             <div className="mt-12 text-center">
               <Link
-                href="/ecosistema-deportivo-cordoba"
+                href="/"
                 className="inline-flex items-center gap-2 font-condensed text-[11px] font-bold uppercase tracking-[0.26em] text-white/68 transition-colors duration-200 hover:text-[var(--p1)]"
               >
                 Volver al ecosistema completo

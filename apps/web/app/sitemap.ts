@@ -23,13 +23,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
-      url: `${SITE_URL}/profesionales`,
+      url: `${SITE_URL}/nosotros`,
       lastModified: now,
       changeFrequency: "monthly",
-      priority: 0.9,
+      priority: 0.6,
     },
     {
-      url: `${SITE_URL}/ecosistema-deportivo-cordoba`,
+      url: `${SITE_URL}/profesionales`,
       lastModified: now,
       changeFrequency: "monthly",
       priority: 0.9,

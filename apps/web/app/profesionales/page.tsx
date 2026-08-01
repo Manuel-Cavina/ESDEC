@@ -9,7 +9,7 @@ import Footer from "@/components/Footer";
 import EntrySection from "@/sections/EntrySection";
 import SportsCarouselSection from "@/sections/SportsCarouselSection";
 import ProblemSection from "@/sections/ProblemSection";
-import FootprintSection from "@/sections/FootprintSection";
+import ClosingCTASection from "@/sections/ClosingCTASection";
 
 export default function ProfesionalesPage() {
   return (
@@ -21,7 +21,7 @@ export default function ProfesionalesPage() {
       <EntrySection audience="profesional" />
       <SportsCarouselSection audience="profesional" />
       <ProblemSection audience="profesional" />
-      <FootprintSection audience="profesional" />
+      <ClosingCTASection audience="profesional" />
       <Footer />
     </main>
   );

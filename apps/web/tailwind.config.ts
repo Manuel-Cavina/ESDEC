@@ -155,6 +155,11 @@ const config: Config = {
           from: { width: "0" },
           to:   { width: "var(--w, 0%)" },
         },
+        // Flecha en movimiento — desliza y vuelve, en loop
+        "arrow-slide": {
+          "0%, 100%": { transform: "translateX(0)" },
+          "50%":      { transform: "translateX(6px)" },
+        },
       },
 
       // ── ANIMATIONS
@@ -177,6 +182,7 @@ const config: Config = {
         "slot-roll":     "slot-roll 0.3s cubic-bezier(.22,1,.36,1) both",
         "ripple-mode":   "ripple-mode 0.75s ease-out forwards",
         "blink":         "blink 1s infinite",
+        "arrow-slide":   "arrow-slide 0.9s ease-in-out infinite",
       },
 
       // ── SPACING personalizado
