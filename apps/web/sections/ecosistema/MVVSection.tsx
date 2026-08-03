@@ -74,7 +74,7 @@ export default function MVVSection() {
               </div>
 
               <h3 className="font-condensed text-[1.4rem] font-semibold leading-snug tracking-tight text-[var(--t1)]">
-                {col.headlinePre} <span className="text-[var(--p2)]">{col.headlineAccent}</span>
+                {col.headlinePre} <span className="ecos-title-accent">{col.headlineAccent}</span>
                 {col.headlinePost}
               </h3>
 

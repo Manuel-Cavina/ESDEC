@@ -93,7 +93,7 @@ export const ECOSISTEMA_APP_TEASER = {
     },
   ],
   ctaLabel: "Quiero ser de los primeros",
-  ctaHref: "https://wa.me/5493515117555",
+  ctaHref: "https://wa.me/5493515117555?text=Hola%20ESDEC%2C%20quiero%20ser%20de%20los%20primeros%20en%20probar%20la%20app.",
 } as const;
 
 // —— FEATURES DE LA APP (sin foto de fondo) ——————————————————————————————————
@@ -259,7 +259,7 @@ export const ECOSISTEMA_OVERVIEW = {
     body:
       "Se construye — con estructura, acompañamiento y un sistema que crece con vos, entrenes o acompañes ese proceso. Empeza cuando quieras.",
     primaryCtaLabel: "Quiero sumarme a ESDEC",
-    primaryCtaHref: "https://wa.me/5493515117555",
+    primaryCtaHref: "https://wa.me/5493515117555?text=Hola%20ESDEC%2C%20quiero%20sumarme%20al%20ecosistema.",
     primaryCtaExternal: true,
     secondaryCtaLabel: "Ver eventos deportivos",
     secondaryCtaHref: "/eventos-deportivos-cordoba",

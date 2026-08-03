@@ -7,7 +7,7 @@
 // animate="draw" → stroke-dashoffset animado al montar.
 // ─────────────────────────────────────────────────────────────────────────────
 
-import { useEffect, useRef } from "react";
+import { useEffect, useId, useRef } from "react";
 import { cn } from "@/lib/utils";
 
 interface FingerprintSVGProps {
@@ -16,6 +16,8 @@ interface FingerprintSVGProps {
   animate?: boolean;
   /** Opacidad base de los paths (default: 1, usar en CSS con opacity del wrapper) */
   strokeOpacity?: number;
+  /** Si true, el trazo usa el degrade de marca (var(--p1) -> var(--p2)) en vez de --fps */
+  gradient?: boolean;
 }
 
 // Los 18 paths de la huella — de adentro hacia afuera
@@ -45,8 +47,11 @@ export default function FingerprintSVG({
   className,
   animate = false,
   strokeOpacity = 1,
+  gradient = false,
 }: FingerprintSVGProps) {
   const svgRef = useRef<SVGSVGElement>(null);
+  const gradientId = useId();
+  const strokeColor = gradient ? `url(#${gradientId})` : "var(--fps, rgba(90,200,255,0.22))";
 
   useEffect(() => {
     if (!animate || !svgRef.current) return;
@@ -72,6 +77,14 @@ export default function FingerprintSVG({
       aria-hidden="true"
       focusable="false"
     >
+      {gradient && (
+        <defs>
+          <linearGradient id={gradientId} x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="var(--p1)" />
+            <stop offset="100%" stopColor="var(--p2)" />
+          </linearGradient>
+        </defs>
+      )}
       {/* Glow interior */}
       <ellipse
         cx="100"
@@ -79,7 +92,8 @@ export default function FingerprintSVG({
         rx="22"
         ry="26"
         className="fp-glow"
-        fill="var(--fpg, rgba(90,200,255,0.06))"
+        fill={gradient ? `url(#${gradientId})` : "var(--fpg, rgba(90,200,255,0.06))"}
+        opacity={gradient ? 0.2 : 1}
       />
       {/* Líneas concéntricas */}
       {PATHS.map((p, i) => (
@@ -88,7 +102,7 @@ export default function FingerprintSVG({
           d={p.d}
           className="fp-path"
           fill="none"
-          stroke="var(--fps, rgba(90,200,255,0.22))"
+          stroke={strokeColor}
           strokeWidth={p.w}
           strokeLinecap="round"
           opacity={strokeOpacity}

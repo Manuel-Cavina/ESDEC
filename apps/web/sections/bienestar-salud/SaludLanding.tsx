@@ -20,7 +20,8 @@ export default function SaludLanding() {
         headlineAccent="ES EL PLAN."
         body="Los deportistas que evaluan, monitorean y actuan antes son los que mantienen la continuidad del proceso. Sin interrupciones. Sin lesiones evitables."
         ctaLabel="Encontrar mi especialista →"
-        ctaHref="#profesionales"
+        ctaHref="https://wa.me/5493515117555?text=Hola%20ESDEC%2C%20estoy%20buscando%20un%20especialista%20en%20salud%20deportiva."
+        ctaExternal
         stats={[
           { label: "Prevencion activa", title: "Cuida tu cuerpo antes de que lo necesite" },
           { label: "Equipo coordinado", title: "6 tipos de especialistas en un ecosistema" },
