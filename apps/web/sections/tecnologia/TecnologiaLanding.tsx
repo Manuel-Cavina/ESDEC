@@ -34,6 +34,7 @@ export default function TecnologiaLanding() {
         secondaryCtaLabel={TECNOLOGIA_CTA.secondaryCtaLabel}
         secondaryCtaHref={TECNOLOGIA_CTA.secondaryCtaHref}
         trustText={TECNOLOGIA_CTA.trustText}
+        bg="var(--bg2)"
       />
     </main>
   );

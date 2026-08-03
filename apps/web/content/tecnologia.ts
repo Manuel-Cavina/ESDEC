@@ -116,7 +116,7 @@ export const TECNOLOGIA_CTA = {
   headlineAccent: "NO SE IMPROVISA.",
   body: "Se construye — con datos reales, no con suposiciones.",
   primaryCtaLabel: "Quiero sumarme a ESDEC",
-  primaryCtaHref: "https://wa.me/5493515117555",
+  primaryCtaHref: "https://wa.me/5493515117555?text=Hola%20ESDEC%2C%20quiero%20sumarme%20a%20la%20tecnologia%20deportiva.",
   primaryCtaExternal: true,
   secondaryCtaLabel: "Conocer el ecosistema",
   secondaryCtaHref: "/",

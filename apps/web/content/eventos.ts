@@ -18,6 +18,7 @@ export interface EventPhase {
 
 export interface EcosystemLink {
   id: string;
+  icon: string;
   title: string;
   body: string;
 }
@@ -80,7 +81,7 @@ export const EVENTS_PAGE = {
     headlineLine1: "VENÍ.",
     headlineLine2: "ACTIVÁTE.",
     body:
-      "Eventos ESDEC es donde la comunidad, la energia y el progreso se convierten en experiencia real.",
+      "Running, trekking, torneos y encuentros pensados para moverte, sumar comunidad y llevarte beneficios reales — no solo mirar desde afuera.",
     image: "/images/athletes/maraton_1.jpg",
     imageAlt: "Corredores en una activacion deportiva de ESDEC",
     words: [
@@ -91,10 +92,6 @@ export const EVENTS_PAGE = {
       {
         label: "energia",
         title: "un entorno que te enciende",
-      },
-      {
-        label: "activacion",
-        title: "pasas de mirar a estar",
       },
       {
         label: "progreso",
@@ -128,21 +125,21 @@ export const EVENTS_PAGE = {
         label: "Clave 01",
         title: "DESCUBRI",
         body:
-          "Encontrás una experiencia que te llama por algo más que la fecha: hay energía, comunidad y una razón concreta para moverte.",
+          "Running, trekking, torneos y encuentros — publicados en Instagram y por WhatsApp, con cupo limitado.",
       },
       {
         id: "te-sumas",
         label: "Clave 02",
         title: "TE SUMAS",
         body:
-          "Reservás tu lugar y empezás a entrar en clima. Ya no sos espectador: sos parte de una activación que se prepara con intención.",
+          "Reservás tu lugar con un formulario simple. Confirmación al instante, sin vueltas.",
       },
       {
         id: "lo-vivis",
         label: "Clave 03",
         title: "LO VIVIS",
         body:
-          "Llegás, entrenás, conectás y te vas distinto. El evento termina, pero la sensación de progreso sigue con vos.",
+          "Guía profesional en el momento, recuperación activa y beneficios exclusivos para quienes participan.",
       },
     ] satisfies EventPhase[],
   },
@@ -177,9 +174,9 @@ export const EVENTS_PAGE = {
     imageAlt: "Imagen principal del evento Run Coffee Recovery de ESDEC",
     waitlist: {
       eyebrow: "Proxima activacion",
-      title: "LA PR\u00d3XIMA EXPERIENCIA ESDEC YA SE EST\u00c1 CONSTRUYENDO.",
+      title: "S\u00c9 DE LOS PRIMEROS EN ENTERARTE.",
       body:
-        "Sumate a la lista y te avisamos cuando abramos el pr\u00f3ximo evento ESDEC.",
+        "Cada evento ESDEC tiene cupos limitados y beneficios exclusivos para quienes se anotan antes. Dejanos tu WhatsApp y te avisamos apenas abramos inscripciones.",
       cta: {
         label: "Avisarme por WhatsApp",
         href: "https://wa.me/5493515117555?text=Hola%20ESDEC%2C%20quiero%20sumarme%20a%20la%20lista%20para%20enterarme%20del%20proximo%20evento.",
@@ -192,6 +189,7 @@ export const EVENTS_PAGE = {
         href: "#eventos-anteriores",
         trackingLabel: "events_waitlist_past",
         variant: "secondary",
+        external: false,
       },
     },
     cta: {
@@ -225,20 +223,20 @@ export const EVENTS_PAGE = {
       {
         id: "antes",
         label: "01",
-        title: "CLARIDAD",
-        body: "Entren\u00e1s con intenci\u00f3n.",
+        title: "COMUNIDAD",
+        body: "Entren\u00e1s y compart\u00eds con gente que se mueve en serio, no con espectadores.",
       },
       {
         id: "durante",
         label: "02",
-        title: "CONEXI\u00d3N",
-        body: "No entren\u00e1s solo.",
+        title: "GU\u00cdA EN EL MOMENTO",
+        body: "Estiramiento, recuperaci\u00f3n activa y criterio profesional, ah\u00ed mismo, sin turno.",
       },
       {
         id: "despues",
         label: "03",
-        title: "PROGRESO",
-        body: "Das un paso real.",
+        title: "BENEFICIOS REALES",
+        body: "Descuentos y sorteos exclusivos del ecosistema ESDEC para cada participante.",
       },
     ] satisfies EventPhase[],
   },
@@ -249,8 +247,6 @@ export const EVENTS_PAGE = {
     modalLabels: {
       date: "Fecha",
       format: "Formato",
-      record: "Registro",
-      recordValue: "Experiencia ESDEC",
       description: "Descripcion",
       pillars: "Pilares",
       benefits: "Beneficios",
@@ -369,28 +365,35 @@ export const EVENTS_PAGE = {
     ] satisfies PastEvent[],
   },
   ecosystem: {
-    eyebrow: "Continuidad",
-    title: "EVENTOS ESDEC NO TERMINA CUANDO TERMINA EL DIA.",
+    eyebrow: "Despues del evento",
+    title: "EL EVENTO ES SOLO EL ARRANQUE.",
+    titleAccent: "NO EL FINAL.",
+    intro:
+      "Lo que activás en un evento ESDEC no se queda ahí — sigue en el resto del ecosistema.",
     items: [
       {
-        id: "bienestar",
-        title: "BIENESTAR",
-        body: "Recuperacion, habitos y cuidado para sostener lo que activaste.",
+        id: "comunidad",
+        icon: "equipo",
+        title: "SEGUÍS EN COMUNIDAD",
+        body: "La gente que conocés en el evento no se pierde al otro día — queda como red real dentro de ESDEC.",
       },
       {
-        id: "clinica",
-        title: "CLINICA",
-        body: "Mirada profesional para entrenar con mas criterio y menos azar.",
+        id: "salud",
+        icon: "bienestar",
+        title: "TU CUERPO, ACOMPAÑADO",
+        body: "Lo que activaste se conecta con Salud Deportiva ESDEC: recuperación y seguimiento real, no solo el día del evento.",
       },
       {
-        id: "marca",
-        title: "MARCA",
-        body: "Comunidad, identidad y alianzas que amplifican cada experiencia.",
+        id: "educacion",
+        icon: "educacion",
+        title: "APRENDÉS DE VERDAD",
+        body: "Cada evento es también una puerta a Educación ESDEC — contenido de profesionales para entrenar con criterio.",
       },
       {
         id: "tecnologia",
-        title: "TECNOLOGIA",
-        body: "Herramientas para convertir participacion en progreso visible.",
+        icon: "tecnologia",
+        title: "TU PROGRESO, MEDIDO",
+        body: "Tecnología ESDEC conecta lo que hacés en cada evento con tu proceso completo — no arrancás de cero cada vez.",
       },
     ] satisfies EcosystemLink[],
   },

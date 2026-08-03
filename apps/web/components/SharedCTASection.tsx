@@ -73,7 +73,7 @@ export default function SharedCTASection({
         style={{
           backgroundImage:
             "radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px)",
-          backgroundSize: "28px 28px",
+          backgroundSize: "28px 28px"
         }}
         aria-hidden="true"
       />
@@ -106,7 +106,7 @@ export default function SharedCTASection({
             <h2 className="text-clamp-problem relative font-condensed font-black uppercase leading-[0.88] tracking-tight text-white">
               {headline}{" "}
               {headlineAccent && (
-                <span className="text-[var(--p2)]">{headlineAccent}</span>
+                <span className="ecos-title-accent">{headlineAccent}</span>
               )}
             </h2>
 

@@ -4,7 +4,7 @@
 import BrandLines from "@/components/BrandLines";
 import Kicker from "@/components/ui/Kicker";
 import ScrollReveal from "@/components/ScrollReveal";
-import StickerIcon from "@/components/StickerIcon";
+import IconFeatureCard from "@/components/ui/IconFeatureCard";
 import { TECNOLOGIA_OFFERINGS } from "@/content/tecnologia";
 
 export default function TecnologiaOfferingsSection() {
@@ -29,27 +29,13 @@ export default function TecnologiaOfferingsSection() {
 
         <ScrollReveal cascade cascadeDelay={80} className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {features.map((feature) => (
-            <div
+            <IconFeatureCard
               key={feature.id}
-              className="group relative overflow-hidden rounded-[20px] border border-black/10 bg-[var(--card-bg)] p-6 shadow-[0_18px_40px_-24px_rgba(0,0,0,0.35)] transition-all duration-300 hover:-translate-y-1 hover:border-[var(--p1)]/40 dark:border-white/12 dark:shadow-[0_18px_40px_-24px_rgba(0,0,0,0.6)]"
-            >
-              <span
-                className="pointer-events-none absolute left-0 top-0 h-[2px] w-full"
-                style={{ background: "linear-gradient(90deg, var(--p1) 0%, transparent 100%)" }}
-                aria-hidden="true"
-              />
-
-              <span className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--p1)]/20 text-[var(--p1)]">
-                <StickerIcon name={feature.icon} size="sm" />
-              </span>
-
-              <h3 className="mb-2 font-condensed text-[1rem] font-bold uppercase leading-[1.1] tracking-[0.02em] text-[var(--t1)]">
-                {feature.title}
-              </h3>
-              <p className="font-sans text-[0.85rem] leading-[1.75] text-[var(--t2)]">
-                {feature.description}
-              </p>
-            </div>
+              icon={feature.icon}
+              title={feature.title}
+              body={feature.description}
+              size="md"
+            />
           ))}
         </ScrollReveal>
       </div>

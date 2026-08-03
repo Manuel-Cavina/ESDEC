@@ -670,7 +670,7 @@ export const FOOTER = {
       links: [
         { label: "El ecosistema", href: "/" },
         { label: "Quiénes somos", href: "/nosotros" },
-        { label: "Cómo funciona", href: "/#problem" },
+        { label: "Cómo funciona", href: "/deportistas#problem" },
         { label: "Eventos deportivos", href: "/eventos-deportivos-cordoba" },
         { label: "Educación deportiva", href: "/educacion-deportiva-cordoba" },
       ],
@@ -694,7 +694,6 @@ export const FOOTER = {
   ],
   legal: [
     { label: "Privacidad", href: "#" },
-    { label: "Terminos de uso", href: "#" },
   ],
   social: [
     {
@@ -709,7 +708,7 @@ export const FOOTER = {
     },
     {
       label: "WhatsApp",
-      href: "https://wa.me/5493515117555",
+      href: "https://wa.me/5493515117555?text=Hola%20ESDEC%2C%20quiero%20mas%20informacion.",
       icon: "whatsapp",
     },
   ],

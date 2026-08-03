@@ -71,13 +71,11 @@ export default function EventosDeportivosCordobaPage() {
 
   return (
     <>
-      <div className="dark">
-        <div className="nav-visible [--btn-bg:#5ac8ff] [--btn-t:#0c2d7a]">
-          <Navbar audience="deportista" />
-        </div>
-        <EventsLandingPage />
-        <Footer />
+      <div className="nav-visible">
+        <Navbar audience={null} />
       </div>
+      <EventsLandingPage />
+      <Footer />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

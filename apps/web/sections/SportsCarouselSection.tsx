@@ -5,6 +5,7 @@
 import Kicker from "@/components/ui/Kicker";
 import StickerIcon from "@/components/StickerIcon";
 import { ECOSYSTEM } from "@/content/landing";
+import { cn } from "@/lib/utils";
 
 type Audience = "deportista" | "profesional";
 
@@ -12,31 +13,28 @@ interface SportsCarouselSectionProps {
   audience?: Audience;
 }
 
-const BG: Record<Audience, string> = {
-  deportista: "#3269c7",
-  profesional: "#0a2f5a",
-};
-
 export default function SportsCarouselSection({
   audience = "deportista",
 }: SportsCarouselSectionProps) {
   const sportsLoop = [...ECOSYSTEM.sports, ...ECOSYSTEM.sports];
-  const bg = BG[audience];
 
   return (
     <section
-      className="relative overflow-hidden border-y border-white/[0.08] py-10"
-      style={{ background: bg }}
+      className={cn(
+        "relative overflow-hidden border-y border-white/[0.08] py-10 [--stripe:#3269c7]",
+        audience === "profesional" && "dark:[--stripe:#0a2f5a]"
+      )}
+      style={{ background: "var(--stripe)" }}
     >
       {/* Fade masks laterales */}
       <div
         className="pointer-events-none absolute left-0 top-0 z-10 h-full w-24"
-        style={{ background: `linear-gradient(to right, ${bg}, transparent)` }}
+        style={{ background: "linear-gradient(to right, var(--stripe), transparent)" }}
         aria-hidden="true"
       />
       <div
         className="pointer-events-none absolute right-0 top-0 z-10 h-full w-24"
-        style={{ background: `linear-gradient(to left, ${bg}, transparent)` }}
+        style={{ background: "linear-gradient(to left, var(--stripe), transparent)" }}
         aria-hidden="true"
       />
 
@@ -48,7 +46,7 @@ export default function SportsCarouselSection({
         {sportsLoop.map((sport, i) => (
           <span
             key={`${sport.label}-${i}`}
-            className="inline-flex shrink-0 items-center gap-2.5 rounded-full border border-[var(--card-bd)] bg-[var(--card-bg)] px-4 py-2 font-condensed text-[0.82rem] font-bold uppercase tracking-widest text-[var(--t2)]"
+            className="inline-flex shrink-0 items-center gap-2.5 rounded-full border border-[rgba(255,255,255,0.35)] bg-[rgba(255,255,255,0.2)] px-4 py-2 font-condensed text-[0.82rem] font-bold uppercase tracking-widest text-[var(--t1)] backdrop-blur-md"
           >
             <StickerIcon name={sport.icon} size="xxs" />
             {sport.label}
