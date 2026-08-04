@@ -46,7 +46,7 @@ export default function CommunitySection() {
               placeholder="blur"
               blurDataURL={BLUR}
               priority={i === 0}
-              quality={100}
+              quality={90}
               sizes="(max-width: 768px) 100vw, 50vw"
             />
             <div className="community-overlay" />

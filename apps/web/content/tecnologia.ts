@@ -22,6 +22,7 @@ export const TECNOLOGIA_HERO = {
   eyebrow: "Ecosistema ESDEC — Tecnologia deportiva",
   headlinePre: "DATOS SIN ORDEN,",
   headlineAccent: "NO SON DECISIONES.",
+  keyword: "Tecnología deportiva en Córdoba, Argentina",
   body:
     "La tecnologia de ESDEC organiza seguimiento, metricas y procesos en un mismo lugar en Cordoba — para decidir con criterio, no a ciegas.",
   ctaLabel: "Ver como funciona",
@@ -32,6 +33,36 @@ export const TECNOLOGIA_HERO = {
     { label: "Para los dos", title: "Pensado para deportistas y profesionales" },
   ],
 };
+
+// ─── FAQ ──────────────────────────────────────────────────────────────────────
+
+export const TECNOLOGIA_FAQ = [
+  {
+    question: "¿Qué es la tecnología deportiva de ESDEC?",
+    answer:
+      "Es la capa digital de ESDEC que organiza el proceso de cada deportista en Córdoba: registra datos, mide métricas de progreso y conecta esa información con los profesionales que forman parte de tu equipo, en un mismo lugar en vez de planillas sueltas o mensajes dispersos.",
+  },
+  {
+    question: "¿Cómo hace ESDEC el seguimiento de mi rendimiento deportivo?",
+    answer:
+      "Cada dato que registrás —entrenamiento, seguimiento, ajustes— entra a un mismo sistema y se organiza en una línea de tiempo, sin que tengas que armar planillas por tu cuenta. Queda visible tanto para vos como para tu equipo de profesionales.",
+  },
+  {
+    question: "¿Los profesionales que uso pueden ver mi historial en ESDEC?",
+    answer:
+      "Sí. Uno de los objetivos de esta área es que tu proceso y el de tu profesional queden en el mismo contexto, para que no pierdas el hilo entre consultas ni repitas información cada vez que cambiás de especialista.",
+  },
+  {
+    question: "¿ESDEC tiene una app?",
+    answer:
+      "La tecnología de ESDEC no es una app más para instalar por separado — es la capa que conecta lo que ya hacés dentro del ecosistema. Hay además una app propia en desarrollo que va a centralizar seguimiento, planes y contacto directo con tu equipo de profesionales en un mismo lugar.",
+  },
+  {
+    question: "¿Qué datos y métricas puedo seguir con ESDEC?",
+    answer:
+      "Tu progreso a lo largo del tiempo, el historial ordenado de tu proceso, y alertas o recordatorios para no perderte una sesión o un ajuste. Todo pensado para que decidas con datos reales, no a ojo.",
+  },
+] as const;
 
 // ─── COMO FUNCIONA ────────────────────────────────────────────────────────────
 
@@ -116,7 +147,7 @@ export const TECNOLOGIA_CTA = {
   headlineAccent: "NO SE IMPROVISA.",
   body: "Se construye — con datos reales, no con suposiciones.",
   primaryCtaLabel: "Quiero sumarme a ESDEC",
-  primaryCtaHref: "https://wa.me/5493515117555",
+  primaryCtaHref: "https://wa.me/5493515117555?text=Hola%20ESDEC%2C%20quiero%20sumarme%20a%20la%20tecnologia%20deportiva.",
   primaryCtaExternal: true,
   secondaryCtaLabel: "Conocer el ecosistema",
   secondaryCtaHref: "/",

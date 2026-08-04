@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import { EVENTS_PAGE } from "@/content/eventos";
 import { SITE_URL } from "@/lib/constants";
 import EventsLandingPage from "@/sections/events/EventsLandingPage";
+import { buildFaqJsonLd } from "@/lib/faq";
 
 const pageUrl = `${SITE_URL}/eventos-deportivos-cordoba`;
 const hasUpcomingEvent =
@@ -37,7 +38,7 @@ export const metadata: Metadata = {
 };
 
 export default function EventosDeportivosCordobaPage() {
-  const jsonLd = {
+  const collectionJsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     name: EVENTS_PAGE.seo.title,
@@ -69,15 +70,15 @@ export default function EventosDeportivosCordobaPage() {
       : {}),
   };
 
+  const jsonLd = [collectionJsonLd, buildFaqJsonLd(EVENTS_PAGE.faq)];
+
   return (
     <>
-      <div className="dark">
-        <div className="nav-visible [--btn-bg:#5ac8ff] [--btn-t:#0c2d7a]">
-          <Navbar audience="deportista" />
-        </div>
-        <EventsLandingPage />
-        <Footer />
+      <div className="nav-visible">
+        <Navbar audience={null} />
       </div>
+      <EventsLandingPage />
+      <Footer />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

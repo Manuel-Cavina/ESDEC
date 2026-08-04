@@ -7,6 +7,8 @@ import Navbar from "@/components/Navbar";
 import EducacionLanding from "@/sections/educacion/EducacionLanding";
 import { AREA_PAGES } from "@/content/areas";
 import { buildAreaJsonLd, buildAreaMetadata } from "@/lib/areas";
+import { EDUCACION_FAQ } from "@/content/educacion";
+import { buildFaqJsonLd } from "@/lib/faq";
 
 const area = AREA_PAGES["educacion-deportiva-cordoba"];
 
@@ -15,7 +17,7 @@ export function generateMetadata(): Metadata {
 }
 
 export default function EducacionDeportivaCordobaPage() {
-  const jsonLd = buildAreaJsonLd(area);
+  const jsonLd = [...buildAreaJsonLd(area), buildFaqJsonLd(EDUCACION_FAQ)];
 
   return (
     <>

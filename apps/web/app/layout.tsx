@@ -6,7 +6,6 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Bebas_Neue, Barlow_Condensed, Barlow } from "next/font/google";
-import { BRAND } from "@/content/landing";
 import { SITE_URL } from "@/lib/constants";
 import "@/styles/globals.css";
 
@@ -57,7 +56,7 @@ const organizationSchema = {
     addressCountry: "AR",
   },
   areaServed: ["Córdoba", "Argentina"],
-  sameAs: [],
+  sameAs: ["https://www.instagram.com/esdec.ar?igsh=N3ZtMHd0a2I2aXVz"],
 };
 
 // ── Metadata
@@ -68,7 +67,7 @@ export const metadata: Metadata = {
   google: "KDw-9aJ8UkfjtiFv9Br5sqaDJqx0WcucK1q_dNsZLs8",
 },
   title: {
-    default: `ESDEC — ${BRAND.fullName}`,
+    default: "ESDEC — Ecosistema Deportivo de Córdoba, Argentina",
     template: `%s | ESDEC`,
   },
   description:
@@ -110,7 +109,7 @@ export const metadata: Metadata = {
     locale: "es_AR",
     url: SITE_URL,
     siteName: "ESDEC",
-    title: `ESDEC — ${BRAND.fullName}`,
+    title: "ESDEC — Ecosistema Deportivo de Córdoba, Argentina",
     description:
       "El ecosistema deportivo que conecta entrenamiento, nutrición, mentalidad y profesionales en un solo sistema. Córdoba, Argentina.",
     images: [
@@ -118,7 +117,7 @@ export const metadata: Metadata = {
         url: "/images/og-image.png",
         width: 1200,
         height: 630,
-        alt: "ESDEC — Elite Sports Development",
+        alt: "ESDEC — Ecosistema Deportivo de Córdoba, Argentina",
       },
     ],
   },
@@ -126,9 +125,9 @@ export const metadata: Metadata = {
   // ── Twitter/X
   twitter: {
     card: "summary_large_image",
-    title: `ESDEC — ${BRAND.fullName}`,
+    title: "ESDEC — Ecosistema Deportivo de Córdoba, Argentina",
     description:
-      "El ecosistema deportivo que conecta entrenamiento, nutrición, mentalidad y profesionales en un solo sistema.",
+      "El ecosistema deportivo que conecta entrenamiento, nutrición, mentalidad y profesionales en un solo sistema. Córdoba, Argentina.",
     images: ["/images/og-image.png"],
   },
 

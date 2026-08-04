@@ -1,12 +1,13 @@
 // app/market-deportivo-cordoba/page.tsx
-// Temporary SEO landing for the ESDEC market area.
+// "Proximamente" landing for the ESDEC market area.
 
 import type { Metadata } from "next";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import AreaInDevelopmentPage from "@/components/areas/AreaInDevelopmentPage";
+import MarketComingSoonSection from "@/sections/market/MarketComingSoonSection";
 import { AREA_PAGES } from "@/content/areas";
 import { buildAreaJsonLd, buildAreaMetadata } from "@/lib/areas";
+import { buildFaqJsonLd } from "@/lib/faq";
 
 const area = AREA_PAGES["market-deportivo-cordoba"];
 
@@ -15,14 +16,17 @@ export function generateMetadata(): Metadata {
 }
 
 export default function MarketDeportivoCordobaPage() {
-  const jsonLd = buildAreaJsonLd(area);
+  const jsonLd = [
+    ...buildAreaJsonLd(area),
+    ...(area.faq && area.faq.length > 0 ? [buildFaqJsonLd(area.faq)] : []),
+  ];
 
   return (
     <>
       <div className="nav-visible">
         <Navbar audience={null} />
       </div>
-      <AreaInDevelopmentPage area={area} />
+      <MarketComingSoonSection area={area} />
       <Footer />
       <script
         type="application/ld+json"

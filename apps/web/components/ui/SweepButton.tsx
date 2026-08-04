@@ -1,15 +1,20 @@
+"use client";
+
 // components/ui/SweepButton.tsx
 // Boton ghost — fondo transparente, borde acento.
 // Hover: texto se convierte en el gradiente azul→verde del sistema de marca.
 
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { trackCTAClick } from "@/lib/analytics";
 
 interface SweepButtonProps {
   label: string;
   href: string;
   external?: boolean;
   onClick?: () => void;
+  /** Identificador para analytics — si no se pasa, usa `label`. */
+  trackingLabel?: string;
   className?: string;
   size?: "sm" | "md" | "lg";
   variant?: "ghost" | "glass" | "dark";
@@ -26,6 +31,7 @@ export default function SweepButton({
   href,
   external = false,
   onClick,
+  trackingLabel,
   className,
   size = "md",
   variant = "ghost",
@@ -38,12 +44,26 @@ export default function SweepButton({
     className
   );
 
+  // Todo CTA que manda directo a WhatsApp es una conversion — se trackea sola,
+  // sin tener que instrumentar cada punto de uso a mano.
+  const isWhatsappLink = external && href.includes("wa.me");
+
   if (onClick) {
     return <button type="button" onClick={onClick} className={base}>{label}</button>;
   }
 
   if (external) {
-    return <a href={href} target="_blank" rel="noopener noreferrer" className={base}>{label}</a>;
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={base}
+        onClick={isWhatsappLink ? () => trackCTAClick(trackingLabel ?? label) : undefined}
+      >
+        {label}
+      </a>
+    );
   }
 
   return <Link href={href} className={base}>{label}</Link>;

@@ -164,7 +164,7 @@ export default function AboutSection({
                   {data.thesisLabel}
                 </p>
                 <blockquote className="text-clamp-quote max-w-2xl font-condensed font-bold italic leading-[1.2] text-[var(--t1)]">
-                  "{data.quote}"
+                  &ldquo;{data.quote}&rdquo;
                 </blockquote>
                 <cite className="block font-condensed text-[11px] font-bold uppercase tracking-[3px] text-[var(--p1)] not-italic">
                   {data.quoteAuthor}

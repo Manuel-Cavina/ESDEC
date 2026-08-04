@@ -6,6 +6,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import EcosistemaLanding from "@/sections/ecosistema/EcosistemaLanding";
 import { SITE_URL } from "@/lib/constants";
+import { HOME_FAQ } from "@/content/landing";
+import { buildFaqJsonLd } from "@/lib/faq";
 
 export const metadata: Metadata = {
   title: "Ecosistema Deportivo de Cordoba - ESDEC",
@@ -21,6 +23,8 @@ export const metadata: Metadata = {
   },
 };
 
+const faqJsonLd = buildFaqJsonLd(HOME_FAQ);
+
 export default function HomePage() {
   return (
     <>
@@ -29,6 +33,10 @@ export default function HomePage() {
       </div>
       <EcosistemaLanding />
       <Footer />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
     </>
   );
 }

@@ -35,6 +35,7 @@ export const EDUCACION_HERO = {
   eyebrow: "Ecosistema ESDEC — Educación deportiva",
   headlinePre: "APRENDER",
   headlineAccent: "TAMBIÉN ES ENTRENAR.",
+  keyword: "Educación deportiva en Córdoba, Argentina",
   body:
     "Mejorar no es solo entrenar más — es comprender mejor. Contenido creado por profesionales, listo para aplicar a tu proceso.",
   ctaLabel: "Explorar Educación",
@@ -198,3 +199,28 @@ export const EDUCACION_CTA = {
   secondaryCtaHref: "/",
   trustText: "Contenido creado por profesionales del ecosistema ESDEC.",
 };
+
+// ─── FAQ ──────────────────────────────────────────────────────────────────────
+
+export const EDUCACION_FAQ = [
+  {
+    question: "¿Qué tipo de contenido ofrece la educación deportiva de ESDEC?",
+    answer:
+      "Cursos y programas por niveles, talleres y encuentros en vivo, contenidos como videos y guías, y rutas de aprendizaje según tu objetivo (empezar, competir o prevenir lesiones) — todo creado por profesionales del ecosistema.",
+  },
+  {
+    question: "¿Sobre qué temas puedo aprender con ESDEC?",
+    answer:
+      "Entrenamiento y planificación, nutrición e hidratación, prevención de lesiones, recuperación y descanso, salud mental y motivación, rendimiento deportivo, y tecnología aplicada al deporte, entre otros.",
+  },
+  {
+    question: "¿Cómo se organiza el contenido educativo de ESDEC?",
+    answer:
+      "Según tu disciplina, nivel y objetivo, no como una biblioteca suelta de videos. Primero descubrís el contenido relevante para vos, lo aprendés, lo aplicás a tu entrenamiento y tus hábitos diarios, y avanzás con más criterio.",
+  },
+  {
+    question: "¿Los cursos de ESDEC tienen certificación oficial?",
+    answer:
+      "Hoy no — el foco está en contenido aplicable al proceso del deportista, no en certificaciones formales equivalentes a un título institucional.",
+  },
+] as const;

@@ -4,82 +4,34 @@
 // Narrative landing page for the ESDEC events experience.
 
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
-import EventsIntro, { EVENTS_INTRO_KEY } from "./EventsIntro";
 import BrandLines from "@/components/BrandLines";
 import Kicker from "@/components/ui/Kicker";
 import FingerprintSVG from "@/components/FingerprintSVG";
 import ScrollReveal from "@/components/ScrollReveal";
 import SharedCTASection from "@/components/SharedCTASection";
+import IconFeatureCard from "@/components/ui/IconFeatureCard";
+import StepCard from "@/components/ui/StepCard";
 import SweepButton from "@/components/ui/SweepButton";
-import { EVENTS_PAGE, type EventsCta, type PastEvent } from "@/content/eventos";
+import FAQSection from "@/components/FAQSection";
+import RelatedGuides from "@/components/RelatedGuides";
+import { EVENTS_PAGE, type PastEvent } from "@/content/eventos";
+import { GUIDES } from "@/content/guias";
 import { trackCTAClick, trackScrollDepth, trackSectionView } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
-interface EventButtonProps {
-  cta: EventsCta;
-  className?: string;
-}
+const eventosGuides = GUIDES.filter((guide) => guide.pillar === "eventos-deportivos-cordoba");
+
+// EVENTS_PAGE.nextEvent.startsAt es contenido estatico — se calcula una sola vez
+// al cargar el modulo, en vez de en cada render (evita leer Date.now() en render).
+const hasUpcomingEvent =
+  new Date(EVENTS_PAGE.nextEvent.startsAt).getTime() > Date.now();
 
 interface SectionHeadingProps {
   eyebrow: string;
   title: string;
   titleAccent?: string;
   align?: "left" | "center";
-}
-
-
-function EventButton({ cta, className }: EventButtonProps) {
-  const baseClass = cn(
-    "group inline-flex min-h-[58px] items-center justify-center overflow-hidden rounded-full px-10 font-sans text-[0.95rem] font-semibold uppercase leading-none tracking-[0.04em] transition-all duration-300 hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--p1)]",
-    cta.variant === "primary"
-      ? "bg-[var(--p1)] text-[#06275f] shadow-[0_22px_54px_-26px_rgba(90,200,255,0.9)]"
-      : "bg-[var(--p2)] text-[#05213d] shadow-[0_22px_54px_-26px_rgba(125,232,168,0.82)] hover:brightness-110",
-    className
-  );
-
-  const content = (
-    <>
-      <span className="relative z-10">{cta.label}</span>
-      <span
-        className="ml-3 h-px w-7 origin-left bg-current transition-transform duration-300 group-hover:scale-x-125"
-        aria-hidden="true"
-      />
-    </>
-  );
-
-  if (cta.external) {
-    return (
-      <a
-        href={cta.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={() => trackCTAClick(cta.trackingLabel)}
-        className={baseClass}
-      >
-        {content}
-      </a>
-    );
-  }
-
-  if (cta.href.startsWith("#")) {
-    return (
-      <a
-        href={cta.href}
-        onClick={() => trackCTAClick(cta.trackingLabel)}
-        className={baseClass}
-      >
-        {content}
-      </a>
-    );
-  }
-
-  return (
-    <Link href={cta.href} onClick={() => trackCTAClick(cta.trackingLabel)} className={baseClass}>
-      {content}
-    </Link>
-  );
 }
 
 function SectionHeading({ eyebrow, title, titleAccent, align = "left" }: SectionHeadingProps) {
@@ -188,6 +140,10 @@ function HeroSection() {
         aria-hidden="true"
       />
       <div
+        className="absolute inset-x-0 bottom-0 h-[42%] bg-[linear-gradient(180deg,transparent_0%,rgba(0,10,24,0.62)_65%,rgba(0,10,24,0.88)_100%)]"
+        aria-hidden="true"
+      />
+      <div
         className="absolute inset-0 opacity-35 [background-image:radial-gradient(rgba(255,255,255,0.18)_1px,transparent_1px)] [background-size:18px_18px]"
         aria-hidden="true"
       />
@@ -204,9 +160,7 @@ function HeroSection() {
             <ScrollReveal direction="up">
               <div className="mb-6 flex items-center gap-3">
                 <BrandLines size="md" animated />
-                <p className="font-condensed text-[11px] font-black uppercase tracking-[0.44em] text-[var(--p1)]">
-                  {hero.eyebrow}
-                </p>
+                <Kicker>{hero.eyebrow}</Kicker>
               </div>
             </ScrollReveal>
 
@@ -230,6 +184,12 @@ function HeroSection() {
                 {hero.headlineLine2}
               </span>
             </h1>
+
+            <ScrollReveal direction="up" delay={110}>
+              <h2 className="mt-4 font-condensed text-[0.78rem] font-bold uppercase tracking-[0.28em] text-white/60 md:text-[0.85rem]">
+                {hero.keyword}
+              </h2>
+            </ScrollReveal>
 
             <ScrollReveal direction="up" delay={160}>
               <p className="mt-7 max-w-[55ch] font-sans text-[1rem] font-medium leading-[1.9] text-white/82 md:text-[1.08rem]">
@@ -256,13 +216,11 @@ function HeroSection() {
 
         </div>
 
-        <div className="relative -mx-6 border-t border-white/12 bg-[#001f3f]/55 px-6 py-7 backdrop-blur-[3px] md:mx-0 md:bg-transparent md:px-0">
-          <div className="grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="relative border-t border-white/12 pb-14 pt-7 md:pb-20">
+          <div className="grid gap-x-10 gap-y-8 sm:grid-cols-3">
             {hero.words.map((word) => (
               <div key={word.label}>
-                <p className="font-condensed text-[12px] font-black uppercase tracking-[0.36em] text-[var(--p1)]">
-                  {word.label}
-                </p>
+                <Kicker>{word.label}</Kicker>
                 <p className="mt-6 max-w-[17ch] font-condensed text-[clamp(1.18rem,1.8vw,1.42rem)] font-bold uppercase leading-[1.08] tracking-[0.01em] text-white">
                   {word.title}
                 </p>
@@ -283,6 +241,10 @@ function TransitionSection() {
       data-event-section="transition"
       className="relative overflow-hidden bg-[#3269c7] px-6 py-18 md:py-24 [--p1:#5ac8ff] [--p2:#7de8a8] [--t1:#ffffff] [--t2:rgba(255,255,255,0.78)] [--card-bg:rgba(255,255,255,0.08)] [--card-bg2:rgba(255,255,255,0.12)] [--card-bd:rgba(255,255,255,0.18)]"
     >
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[linear-gradient(180deg,rgba(0,10,24,0.4)_0%,transparent_100%)]"
+        aria-hidden="true"
+      />
       <div className="mx-auto max-w-landing">
         <SectionHeading eyebrow={transition.eyebrow} title={transition.title} titleAccent={transition.titleAccent} />
 
@@ -291,26 +253,13 @@ function TransitionSection() {
           cascadeDelay={100}
           className="mt-12 grid gap-5 lg:grid-cols-3"
         >
-          {transition.steps.map((step) => (
-            <article
+          {transition.steps.map((step, index) => (
+            <StepCard
               key={step.id}
-              className="group spec-card-accent relative min-h-[220px] overflow-hidden rounded-[24px] border border-[var(--card-bd)] bg-[var(--card-bg)] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--p1)]/60 hover:bg-[var(--card-bg2)]"
-            >
-              <span
-                className="pointer-events-none absolute left-0 top-0 h-px w-full origin-left scale-x-0 bg-[linear-gradient(90deg,rgba(125,232,168,0.9)_0%,rgba(90,200,255,0.92)_100%)] transition-transform duration-500 ease-out group-hover:scale-x-100"
-                aria-hidden="true"
-              />
-              <div className="mb-3 flex items-center gap-3">
-                <BrandLines size="sm" />
-                <Kicker>{step.label}</Kicker>
-              </div>
-              <h3 className="font-condensed text-[1.5rem] font-semibold uppercase leading-[1.02] tracking-[0.02em] text-[var(--t1)]">
-                {step.title}
-              </h3>
-              <p className="mt-3 max-w-[34ch] font-sans text-[0.92rem] leading-[1.8] text-[var(--t2)]">
-                {step.body}
-              </p>
-            </article>
+              number={String(index + 1).padStart(2, "0")}
+              title={step.title}
+              body={step.body}
+            />
           ))}
         </ScrollReveal>
       </div>
@@ -318,9 +267,50 @@ function TransitionSection() {
   );
 }
 
-function NextEventModal({ onClose }: { onClose: () => void }) {
-  const { nextEvent } = EVENTS_PAGE;
+interface EventModalSection {
+  id: string;
+  kicker: string;
+  body?: string;
+  list?: readonly string[];
+  chips?: readonly string[];
+}
 
+interface EventModalInfoRow {
+  label: string;
+  value: string;
+}
+
+interface EventModalCta {
+  label: string;
+  href: string;
+  trackingLabel: string;
+}
+
+interface EventModalProps {
+  image: string;
+  imageAlt: string;
+  name: string;
+  eyebrow?: string;
+  intro?: string;
+  infoRows: EventModalInfoRow[];
+  sections: EventModalSection[];
+  cta: EventModalCta;
+  onClose: () => void;
+}
+
+// Modal compartido para el evento proximo y los eventos pasados —
+// mismo lenguaje visual que ProfessionalModal (pro-modal-bg + Kicker + SweepButton).
+function EventModal({
+  image,
+  imageAlt,
+  name,
+  eyebrow,
+  intro,
+  infoRows,
+  sections,
+  cta,
+  onClose,
+}: EventModalProps) {
   useEffect(() => {
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -334,21 +324,25 @@ function NextEventModal({ onClose }: { onClose: () => void }) {
 
   return (
     <div
-      className="fixed inset-0 z-[980] flex items-center justify-center bg-black/75 px-4 py-6 backdrop-blur-[8px]"
+      className="fixed inset-0 z-[980] flex items-center justify-center bg-black/75 px-4 py-6 backdrop-blur-[10px]"
       role="dialog"
       aria-modal="true"
-      aria-label={nextEvent.name}
+      aria-label={name}
       onMouseDown={onClose}
     >
       <div
-        className="relative max-h-[92svh] w-full max-w-[980px] overflow-hidden rounded-[26px] shadow-[0_28px_90px_-38px_rgba(0,0,0,0.9)]"
+        className="relative max-h-[92svh] w-full max-w-[980px] overflow-hidden rounded-[26px] bg-[linear-gradient(160deg,#3269c7_0%,#2a56ab_100%)] shadow-[0_40px_120px_-24px_rgba(14,28,61,0.5),inset_0_1px_0_rgba(255,255,255,0.2)] [--card-bd:rgba(255,255,255,0.35)] [--card-bg:rgba(255,255,255,0.2)] [--card-bg2:rgba(255,255,255,0.3)] [--t1:#ffffff] [--t2:rgba(255,255,255,0.85)] [--t3:rgba(255,255,255,0.6)]"
         onMouseDown={(e) => e.stopPropagation()}
       >
+        <div
+          className="pointer-events-none absolute inset-0 z-10 bg-[linear-gradient(135deg,rgba(255,255,255,0.22)_0%,rgba(255,255,255,0)_30%,rgba(255,255,255,0)_70%,rgba(255,255,255,0.1)_100%)]"
+          aria-hidden="true"
+        />
         <button
           type="button"
           onClick={onClose}
           aria-label="Cerrar"
-          className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 font-condensed text-[14px] font-bold text-white backdrop-blur-md transition-colors hover:bg-white/14"
+          className="absolute right-4 top-4 z-20 flex h-9 w-9 items-center justify-center rounded-full bg-[var(--card-bg)] font-condensed text-[13px] font-bold text-[var(--t2)] backdrop-blur-md transition-all hover:bg-[var(--card-bg2)] hover:text-[var(--t1)]"
         >
           ✕
         </button>
@@ -356,8 +350,8 @@ function NextEventModal({ onClose }: { onClose: () => void }) {
         <div className="grid max-h-[92svh] overflow-y-auto lg:grid-cols-[minmax(0,1.15fr)_380px]">
           <div className="relative min-h-[280px] lg:min-h-[580px]">
             <Image
-              src={nextEvent.modalImage ?? nextEvent.image}
-              alt={nextEvent.imageAlt}
+              src={image}
+              alt={imageAlt}
               fill
               quality={94}
               sizes="(min-width: 1024px) 56vw, 100vw"
@@ -365,97 +359,81 @@ function NextEventModal({ onClose }: { onClose: () => void }) {
             />
           </div>
 
-          <div className="flex flex-col bg-[#1b1e24]">
-            <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[linear-gradient(135deg,#5ac8ff,#7de8a8)] font-condensed text-[0.72rem] font-black text-[#06275f]">
-                  ES
-                </div>
-                <div>
-                  <p className="font-sans text-[0.88rem] font-bold text-white">
-                    esdec.ar
-                    <span className="ml-2 font-medium text-[#5ac8ff]">Seguir</span>
-                  </p>
-                  <p className="font-sans text-[0.74rem] text-white/45">
-                    {nextEvent.venue} · {nextEvent.city}
-                  </p>
-                </div>
-              </div>
-              <span className="font-sans text-[1.1rem] font-bold text-white">···</span>
-            </div>
+          <div className="flex flex-col">
+            <div className="flex-1 space-y-5 overflow-y-auto p-6">
+              {eyebrow && <Kicker>{eyebrow}</Kicker>}
 
-            <div className="flex-1 space-y-5 overflow-y-auto p-5">
-              <p className="font-sans text-[0.88rem] leading-[1.7] text-white/80">
-                <span className="font-bold text-white">esdec.ar </span>
-                {nextEvent.about ?? nextEvent.summary}
-              </p>
+              <h3 className="font-condensed text-[clamp(2rem,4vw,3rem)] font-black uppercase leading-[0.92] text-[var(--t1)]">
+                {name}
+              </h3>
 
-              <div className="divide-y divide-white/[0.07]">
-                {[
-                  { label: "Fecha", value: nextEvent.dateLabel },
-                  { label: "Lugar", value: `${nextEvent.venue}, ${nextEvent.city}` },
-                  { label: "Recepcion", value: nextEvent.receptionTime },
-                  { label: "Inicio", value: nextEvent.startTime },
-                ].map((item) => (
-                  <div key={item.label} className="py-3">
-                    <p className="font-condensed text-[8px] font-black uppercase tracking-[3px] text-white/36">
-                      {item.label}
+              {intro && (
+                <p className="font-sans text-[0.9rem] leading-[1.75] text-[var(--t2)]">{intro}</p>
+              )}
+
+              <div className="divide-y divide-[var(--card-bd)]">
+                {infoRows.map((row) => (
+                  <div key={row.label} className="py-3">
+                    <p className="font-condensed text-[8px] font-black uppercase tracking-[3px] text-[var(--t3)]">
+                      {row.label}
                     </p>
-                    <p className="mt-1 font-condensed text-[0.96rem] font-semibold uppercase leading-none text-white">
-                      {item.value}
+                    <p className="mt-1 font-condensed text-[0.96rem] font-semibold uppercase leading-none text-[var(--t1)]">
+                      {row.value}
                     </p>
                   </div>
                 ))}
               </div>
 
-              {nextEvent.highlights && nextEvent.highlights.length > 0 && (
-                <div className="border-t border-white/[0.07] pt-4">
-                  <p className="mb-3 font-condensed text-[8px] font-black uppercase tracking-[3px] text-white/36">
-                    Que incluye
-                  </p>
-                  <ul className="space-y-2">
-                    {nextEvent.highlights.map((item) => (
-                      <li key={item} className="flex items-start gap-2 font-sans text-[0.84rem] leading-[1.55] text-white/76">
-                        <span className="mt-[6px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#5ac8ff]" aria-hidden="true" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+              {sections.map((section) => (
+                <div
+                  key={section.id}
+                  className="rounded-[16px] border border-[var(--card-bd)] bg-[var(--card-bg)] p-5 backdrop-blur-md"
+                >
+                  <Kicker className="mb-3">{section.kicker}</Kicker>
 
-              {nextEvent.benefit && (
-                <div className="rounded-[14px] border border-[#7de8a8]/25 bg-[#7de8a8]/[0.06] p-4">
-                  <p className="font-condensed text-[8px] font-black uppercase tracking-[3px] text-[#7de8a8]">
-                    Beneficio exclusivo
-                  </p>
-                  <p className="mt-2 font-sans text-[0.84rem] leading-[1.55] text-white/76">
-                    {nextEvent.benefit}
-                  </p>
-                </div>
-              )}
+                  {section.body && (
+                    <p className="font-sans text-[0.88rem] leading-[1.6] text-[var(--t2)]">{section.body}</p>
+                  )}
 
-              {nextEvent.spotsWarning && (
-                <div className="rounded-[14px] border border-[#5ac8ff]/20 bg-[#5ac8ff]/[0.05] p-4">
-                  <p className="font-condensed text-[8px] font-black uppercase tracking-[3px] text-[#5ac8ff]">
-                    Importante
-                  </p>
-                  <p className="mt-2 font-sans text-[0.84rem] leading-[1.55] text-white/76">
-                    {nextEvent.spotsWarning}
-                  </p>
+                  {section.list && (
+                    <ul className="space-y-2.5">
+                      {section.list.map((item) => (
+                        <li
+                          key={item}
+                          className="flex items-start gap-3 font-sans text-[0.88rem] leading-[1.6] text-[var(--t2)]"
+                        >
+                          <span className="mt-[8px] h-[4px] w-[4px] shrink-0 rounded-full bg-[var(--p1)]" aria-hidden="true" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  {section.chips && (
+                    <div className="flex flex-wrap gap-2">
+                      {section.chips.map((chip) => (
+                        <span
+                          key={chip}
+                          className="rounded-full border border-[var(--card-bd)] bg-[var(--card-bg2)] px-3 py-1.5 font-condensed text-[0.68rem] font-black uppercase tracking-[1.6px] text-[var(--t1)] backdrop-blur-sm"
+                        >
+                          {chip}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
-              )}
+              ))}
             </div>
 
-            <div className="border-t border-white/10 p-5">
+            <div className="px-6 pb-6 pt-1">
               <a
-                href={nextEvent.cta.href}
+                href={cta.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => trackCTAClick(nextEvent.cta.trackingLabel)}
-                className="btn-shimmer flex min-h-[52px] w-full items-center justify-center rounded-full bg-[#5ac8ff] font-sans text-[0.8rem] font-semibold uppercase tracking-[0.04em] text-[#06275f] no-underline shadow-[0_18px_46px_-24px_rgba(90,200,255,0.9)] transition-all duration-200 hover:-translate-y-px hover:brightness-110 hover:no-underline"
+                onClick={() => trackCTAClick(cta.trackingLabel)}
+                className="flex min-h-[52px] w-full items-center justify-center rounded-full bg-white font-sans text-[0.85rem] font-bold uppercase tracking-[0.05em] text-[#0e1c3d] no-underline shadow-[0_18px_46px_-24px_rgba(0,0,0,0.4)] transition-all duration-200 hover:-translate-y-px hover:brightness-95 hover:no-underline"
               >
-                {nextEvent.cta.label}
+                {cta.label}
               </a>
             </div>
           </div>
@@ -468,84 +446,16 @@ function NextEventModal({ onClose }: { onClose: () => void }) {
 function NextEventSection() {
   const { nextEvent } = EVENTS_PAGE;
   const [modalOpen, setModalOpen] = useState(false);
-  const hasUpcomingEvent = new Date(nextEvent.startsAt).getTime() > Date.now();
 
   if (!hasUpcomingEvent) {
-    const { waitlist } = nextEvent;
-
-    return (
-      <section
-        id="proximo-evento"
-        data-event-section="next-event"
-        className="relative isolate scroll-mt-36 overflow-hidden bg-[#01305c] px-6 py-20 md:py-28"
-      >
-        <Image
-          src={nextEvent.image}
-          alt=""
-          fill
-          quality={82}
-          sizes="100vw"
-          className="object-cover object-center opacity-[0.08] saturate-50"
-        />
-        <div
-          className="absolute inset-0 bg-[linear-gradient(180deg,rgba(1,48,92,0.98)_0%,rgba(1,48,92,0.94)_48%,rgba(0,26,51,0.98)_100%)]"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute right-[-120px] top-1/2 hidden -translate-y-1/2 opacity-[0.12] [--fpg:rgba(90,200,255,0.03)] [--fps:rgba(90,200,255,0.9)] lg:block"
-          aria-hidden="true"
-        >
-          <FingerprintSVG animate={false} className="w-[520px] animate-heartbeat" />
-        </div>
-
-        <div className="relative z-10 mx-auto max-w-landing">
-          <ScrollReveal direction="up">
-            <div className="mx-auto max-w-[860px] text-center">
-              <div className="flex items-center justify-center gap-3">
-                <BrandLines size="sm" animated />
-                <p className="font-condensed text-[10px] font-black uppercase tracking-[0.42em] text-[#7de8a8]">
-                  {waitlist.eyebrow}
-                </p>
-              </div>
-
-              <h2 className="mx-auto mt-5 max-w-[11ch] font-condensed text-[clamp(3rem,7vw,6.4rem)] font-black uppercase leading-[0.82] tracking-tight text-white">
-                {waitlist.title}
-              </h2>
-
-              <p className="mx-auto mt-6 max-w-[44ch] font-sans text-[1.05rem] font-medium leading-[1.85] text-white/70">
-                {waitlist.body}
-              </p>
-
-              <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
-                <a
-                  href={waitlist.cta.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => trackCTAClick(waitlist.cta.trackingLabel)}
-                  className="inline-flex min-h-[58px] items-center justify-center rounded-full bg-[#0cd25e] px-8 py-4 font-sans text-[0.84rem] font-semibold uppercase tracking-[0.04em] text-[#001a33] no-underline shadow-[0_22px_54px_-28px_rgba(12,210,94,0.95)] transition-all duration-300 hover:-translate-y-1 hover:brightness-110 hover:no-underline"
-                >
-                  {waitlist.cta.label} {"\u2192"}
-                </a>
-                <a
-                  href={waitlist.secondaryCta.href}
-                  onClick={() => trackCTAClick(waitlist.secondaryCta.trackingLabel)}
-                  className="inline-flex min-h-[58px] items-center justify-center rounded-full border border-white/16 bg-white/[0.05] px-8 py-4 font-sans text-[0.82rem] font-semibold uppercase tracking-[0.04em] text-white no-underline transition-all duration-300 hover:border-[#5ac8ff]/55 hover:bg-white/[0.09] hover:no-underline"
-                >
-                  {waitlist.secondaryCta.label}
-                </a>
-              </div>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-    );
+    return null;
   }
 
   return (
     <section
       id="proximo-evento"
       data-event-section="next-event"
-      className="relative scroll-mt-36 overflow-hidden bg-[var(--bg)]"
+      className="relative scroll-mt-36 overflow-hidden bg-[var(--bg2)]"
     >
       <ScrollReveal direction="up">
         <button
@@ -571,9 +481,7 @@ function NextEventSection() {
             <div className="mx-auto w-full max-w-landing px-6 lg:px-16">
               <div className="flex items-center gap-3">
                 <BrandLines size="sm" animated />
-                <p className="font-condensed text-[10px] font-black uppercase tracking-[0.42em] text-[var(--p1)]">
-                  {nextEvent.eyebrow}
-                </p>
+                <Kicker>{nextEvent.eyebrow}</Kicker>
               </div>
               <h2 className="mt-5 max-w-[14ch] font-condensed text-[clamp(3rem,6.5vw,6rem)] font-black uppercase leading-[0.8] tracking-tight text-white">
                 {nextEvent.name}
@@ -594,7 +502,36 @@ function NextEventSection() {
         </button>
       </ScrollReveal>
 
-      {modalOpen && <NextEventModal onClose={() => setModalOpen(false)} />}
+      {modalOpen && (
+        <EventModal
+          image={nextEvent.modalImage ?? nextEvent.image}
+          imageAlt={nextEvent.imageAlt}
+          name={nextEvent.name}
+          eyebrow={nextEvent.eyebrow}
+          intro={nextEvent.about ?? nextEvent.summary}
+          infoRows={[
+            { label: "Fecha", value: nextEvent.dateLabel },
+            { label: "Lugar", value: `${nextEvent.venue}, ${nextEvent.city}` },
+            { label: "Recepcion", value: nextEvent.receptionTime },
+            { label: "Inicio", value: nextEvent.startTime },
+          ]}
+          sections={(
+            [
+              nextEvent.highlights && nextEvent.highlights.length > 0
+                ? { id: "highlights", kicker: "Que incluye", list: nextEvent.highlights }
+                : null,
+              nextEvent.benefit
+                ? { id: "benefit", kicker: "Beneficio exclusivo", body: nextEvent.benefit }
+                : null,
+              nextEvent.spotsWarning
+                ? { id: "spots", kicker: "Importante", body: nextEvent.spotsWarning }
+                : null,
+            ] as (EventModalSection | null)[]
+          ).filter((section): section is EventModalSection => section !== null)}
+          cta={nextEvent.cta}
+          onClose={() => setModalOpen(false)}
+        />
+      )}
     </section>
   );
 }
@@ -602,17 +539,11 @@ function NextEventSection() {
 function ExperienceSection() {
   const { experience } = EVENTS_PAGE;
 
-  const stepClasses = [
-    "[--ph:#5ac8ff]",
-    "[--ph:#7de8a8]",
-    "[--ph:#ffffff]",
-  ] as const;
-
   return (
     <section
       id="experiencia"
       data-event-section="experience"
-      className="relative isolate scroll-mt-36 overflow-hidden bg-[#2f68c8] px-6 py-20 md:py-28"
+      className="relative isolate scroll-mt-36 overflow-hidden bg-[var(--bg)] px-6 py-20 md:py-28"
     >
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.08]"
@@ -634,9 +565,7 @@ function ExperienceSection() {
         <ScrollReveal direction="up">
           <div className="mb-4 flex items-center gap-3">
             <BrandLines size="sm" animated />
-            <p className="font-condensed text-[10px] font-black uppercase tracking-[5px] text-[#7de8a8]">
-              {experience.eyebrow}
-            </p>
+            <Kicker>{experience.eyebrow}</Kicker>
           </div>
           <h2 className="max-w-[860px] font-condensed text-[clamp(2.4rem,5vw,4.2rem)] font-black uppercase leading-[0.88] text-white">
             {experience.title}{" "}
@@ -651,38 +580,12 @@ function ExperienceSection() {
             className="grid gap-10 md:grid-cols-3 md:gap-8"
           >
             {experience.phases.map((phase, index) => (
-              <article
+              <StepCard
                 key={phase.id}
-                className={cn(
-                  "group relative min-h-[300px] overflow-hidden border-t border-white/82 pt-9 transition-transform duration-300 hover:-translate-y-1",
-                  stepClasses[index]
-                )}
-              >
-                <span className="relative z-10 block font-sans text-[clamp(5.8rem,9vw,7.8rem)] font-light leading-[0.78] tracking-tight text-white">
-                  0{index + 1}
-                </span>
-
-                <div className="relative z-10 mt-5">
-                  <div
-                    className="mb-5 h-[3px] w-12 rounded-full bg-[var(--ph)] transition-all duration-300 group-hover:w-20"
-                    aria-hidden="true"
-                  />
-                  <h3 className="font-condensed text-[clamp(2rem,3vw,2.8rem)] font-black uppercase leading-[0.9] text-white">
-                    {phase.title}
-                  </h3>
-
-                  <p className="mt-4 max-w-[22ch] font-sans text-[0.98rem] font-medium leading-[1.65] text-white/78">
-                    {phase.body}
-                  </p>
-                </div>
-
-                <div
-                  className="pointer-events-none absolute bottom-[-26px] right-[-8px] opacity-0 transition-all duration-500 group-hover:translate-y-[-8px] group-hover:opacity-100 [--fpg:rgba(255,255,255,0.02)] [--fps:rgba(255,255,255,0.32)]"
-                  aria-hidden="true"
-                >
-                  <FingerprintSVG animate={false} className="w-[170px]" />
-                </div>
-              </article>
+                number={String(index + 1).padStart(2, "0")}
+                title={phase.title}
+                body={phase.body}
+              />
             ))}
           </ScrollReveal>
         </div>
@@ -690,6 +593,45 @@ function ExperienceSection() {
     </section>
   );
 }
+
+function EventsEcosystemSection() {
+  const { ecosystem } = EVENTS_PAGE;
+
+  return (
+    <section
+      data-event-section="ecosystem"
+      className="relative overflow-hidden bg-[var(--bg2)] px-6 py-20 md:py-28"
+    >
+      <div className="relative z-10 mx-auto max-w-landing">
+        <ScrollReveal direction="up" className="max-w-3xl">
+          <div className="mb-5 flex items-center gap-3">
+            <BrandLines size="sm" animated />
+            <Kicker>{ecosystem.eyebrow}</Kicker>
+          </div>
+          <h2 className="font-condensed text-[clamp(36px,5vw,68px)] font-black uppercase leading-[0.92] tracking-tight">
+            <span className="text-[var(--t1)]">{ecosystem.title}</span>{" "}
+            <span className="ecos-title-accent">{ecosystem.titleAccent}</span>
+          </h2>
+          <p className="mt-5 max-w-[56ch] font-sans text-[0.96rem] leading-[1.9] text-[var(--t2)]">
+            {ecosystem.intro}
+          </p>
+        </ScrollReveal>
+
+        <ScrollReveal cascade cascadeDelay={80} className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2">
+          {ecosystem.items.map((item) => (
+            <IconFeatureCard
+              key={item.id}
+              icon={item.icon}
+              title={item.title}
+              body={item.body}
+            />
+          ))}
+        </ScrollReveal>
+      </div>
+    </section>
+  );
+}
+
 function PastEventsSection() {
   const { pastEvents } = EVENTS_PAGE;
   const [selectedEvent, setSelectedEvent] = useState<PastEvent | null>(null);
@@ -699,7 +641,7 @@ function PastEventsSection() {
     <section
       id="eventos-anteriores"
       data-event-section="past-events"
-      className="relative scroll-mt-36 overflow-hidden bg-[var(--bg)] px-6 py-18 md:py-24"
+      className="relative scroll-mt-36 overflow-hidden bg-[var(--bg2)] px-6 py-18 md:py-24"
     >
       <div className="mx-auto max-w-landing">
         <SectionHeading eyebrow={pastEvents.eyebrow} title={pastEvents.title} titleAccent={pastEvents.titleAccent} />
@@ -708,40 +650,45 @@ function PastEventsSection() {
           <div className="-mx-6 overflow-hidden px-6 [mask-image:linear-gradient(90deg,transparent,black_8%,black_92%,transparent)]">
             <div className="flex w-max gap-5 animate-marquee hover:[animation-play-state:paused]">
               {carouselEvents.map((event, index) => (
-            <button
-              type="button"
-              onClick={() => setSelectedEvent(event)}
-              key={`${event.id}-${index}`}
-              className="group relative flex min-h-[520px] w-[min(82vw,386px)] shrink-0 flex-col overflow-hidden rounded-[28px] bg-[var(--bg2)] text-left shadow-[0_16px_48px_-24px_rgba(0,0,0,0.6)] outline-none transition-all duration-300 hover:-translate-y-1 focus:outline-none focus-visible:outline-none focus-visible:ring-0"
-              aria-label={`Ver detalle de ${event.name}`}
-            >
-              <Image
-                src={event.image}
-                alt={event.imageAlt}
-                fill
-                sizes="(min-width: 768px) 33vw, 100vw"
-                className="object-cover object-center opacity-80 saturate-75 transition-transform duration-700 group-hover:scale-[1.04]"
-              />
-              <div className="absolute inset-0 bg-[linear-gradient(168deg,rgba(0,10,24,0.22)_0%,rgba(0,10,24,0.68)_42%,rgba(0,10,24,0.97)_100%)]" />
+                <button
+                  type="button"
+                  onClick={() => setSelectedEvent(event)}
+                  key={`${event.id}-${index}`}
+                  className="group relative flex min-h-[420px] w-[min(82vw,360px)] shrink-0 flex-col overflow-hidden rounded-[24px] border border-[rgba(255,255,255,0.35)] bg-[rgba(255,255,255,0.2)] text-left outline-none backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-[var(--p1)]/50 hover:bg-[rgba(255,255,255,0.28)] focus:outline-none focus-visible:outline-none focus-visible:ring-0"
+                  aria-label={`Ver detalle de ${event.name}`}
+                >
+                  <div className="relative h-[210px] w-full shrink-0 overflow-hidden">
+                    <Image
+                      src={event.image}
+                      alt={event.imageAlt}
+                      fill
+                      sizes="(min-width: 768px) 33vw, 100vw"
+                      className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.04]"
+                    />
+                    <div
+                      className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,10,24,0.05)_0%,rgba(0,10,24,0.5)_100%)]"
+                      aria-hidden="true"
+                    />
+                  </div>
 
-              <div className="relative z-10 flex flex-1 flex-col p-6">
-                <h3 className="font-sans text-[1.6rem] font-bold leading-[1.05] text-white">
-                  {event.name}
-                </h3>
+                  <div className="relative z-10 flex flex-1 flex-col p-6">
+                    <Kicker>{event.tag} · {event.date}</Kicker>
+                    <h3 className="mt-2 font-condensed text-[1.35rem] font-bold uppercase leading-[1.05] text-[var(--t1)]">
+                      {event.name}
+                    </h3>
 
-                <div className="flex-1" />
+                    <p className="mt-3 font-sans text-[0.86rem] leading-[1.7] text-[var(--t2)]">
+                      {event.summary}
+                    </p>
 
-                <div className="mt-6">
-                  <p className="font-sans text-[0.9rem] leading-[1.7] text-white/78">
-                    {event.summary}
-                  </p>
-                  <p className="mt-5 font-condensed text-[0.65rem] font-black uppercase tracking-[2.5px] text-white/55">
-                    {event.tag} · {event.date}
-                  </p>
-                      <span className="mt-5 block w-full rounded-full bg-white py-3.5 text-center font-sans text-[0.88rem] font-semibold text-[#001a33] transition-colors group-hover:bg-white/88">
-                        {event.ctaLabel}
+                    <div className="flex-1" />
+
+                    <span className="mt-5 inline-flex items-center gap-2 font-condensed text-[0.76rem] font-bold uppercase tracking-[0.16em] text-[var(--t1)] transition-colors duration-200 group-hover:text-[var(--p1)]">
+                      {event.ctaLabel}
+                      <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">
+                        →
                       </span>
-                    </div>
+                    </span>
                   </div>
                 </button>
               ))}
@@ -751,8 +698,27 @@ function PastEventsSection() {
       </div>
 
       {selectedEvent && (
-        <PastEventModal
-          event={selectedEvent}
+        <EventModal
+          image={selectedEvent.modalImage ?? selectedEvent.image}
+          imageAlt={selectedEvent.imageAlt}
+          name={selectedEvent.name}
+          eyebrow={selectedEvent.tag}
+          intro={selectedEvent.summary}
+          infoRows={[
+            { label: pastEvents.modalLabels.date, value: selectedEvent.date },
+            { label: pastEvents.modalLabels.format, value: selectedEvent.tag },
+          ]}
+          sections={[
+            { id: "description", kicker: pastEvents.modalLabels.description, body: selectedEvent.description },
+            { id: "pillars", kicker: pastEvents.modalLabels.pillars, chips: selectedEvent.pillars },
+            { id: "benefits", kicker: pastEvents.modalLabels.benefits, list: selectedEvent.benefits },
+            { id: "evolution", kicker: pastEvents.modalLabels.evolution, list: selectedEvent.evolution },
+          ]}
+          cta={{
+            label: selectedEvent.ctaLabel,
+            href: selectedEvent.ctaHref,
+            trackingLabel: `events_past_${selectedEvent.id}`,
+          }}
           onClose={() => setSelectedEvent(null)}
         />
       )}
@@ -760,317 +726,27 @@ function PastEventsSection() {
   );
 }
 
-function PastEventModal({
-  event,
-  onClose,
-}: {
-  event: PastEvent;
-  onClose: () => void;
-}) {
-  const { modalLabels } = EVENTS_PAGE.pastEvents;
-
-  useEffect(() => {
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = prev;
-      window.removeEventListener("keydown", onKey);
-    };
-  }, [onClose]);
-
-  return (
-    <div
-      className="fixed inset-0 z-[980] flex items-center justify-center bg-black/75 px-4 py-6 backdrop-blur-[8px]"
-      role="dialog"
-      aria-modal="true"
-      aria-label={event.name}
-      onMouseDown={onClose}
-    >
-      <div
-        className="relative max-h-[92svh] w-full max-w-[980px] overflow-hidden rounded-[26px] shadow-[0_28px_90px_-38px_rgba(0,0,0,0.9)]"
-        onMouseDown={(e) => e.stopPropagation()}
-      >
-        <button
-          type="button"
-          onClick={onClose}
-          aria-label="Cerrar"
-          className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 font-condensed text-[14px] font-bold text-white backdrop-blur-md transition-colors hover:bg-white/14"
-        >
-          {"\u00d7"}
-        </button>
-
-        <div className="grid max-h-[92svh] overflow-y-auto lg:grid-cols-[minmax(0,1.15fr)_380px]">
-          <div className="relative min-h-[280px] lg:min-h-[580px]">
-            <Image
-              src={event.modalImage ?? event.image}
-              alt={event.imageAlt}
-              fill
-              quality={94}
-              sizes="(min-width: 1024px) 56vw, 100vw"
-              className="object-cover object-center"
-            />
-          </div>
-
-          <div className="flex flex-col bg-[#1b1e24]">
-            <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[linear-gradient(135deg,#5ac8ff,#7de8a8)] font-condensed text-[0.72rem] font-black text-[#06275f]">
-                  ES
-                </div>
-                <div>
-                  <p className="font-sans text-[0.88rem] font-bold text-white">
-                    esdec.ar
-                    <span className="ml-2 font-medium text-[#5ac8ff]">Registro</span>
-                  </p>
-                  <p className="font-sans text-[0.74rem] text-white/45">
-                    {modalLabels.recordValue}
-                  </p>
-                </div>
-              </div>
-              <span className="font-sans text-[1.1rem] font-bold text-white">
-                {"\u00b7\u00b7\u00b7"}
-              </span>
-            </div>
-
-            <div className="flex-1 space-y-5 overflow-y-auto p-5">
-              <div>
-                <p className="font-condensed text-[9px] font-black uppercase tracking-[3.5px] text-[#7de8a8]">
-                  {event.tag}
-                </p>
-                <h3 className="mt-3 font-condensed text-[clamp(2.4rem,4vw,3.4rem)] font-black uppercase leading-[0.86] text-white">
-                  {event.name}
-                </h3>
-              </div>
-
-              <p className="font-sans text-[0.88rem] leading-[1.75] text-white/80">
-                <span className="font-bold text-white">esdec.ar </span>
-                {event.summary}
-              </p>
-
-              <div className="divide-y divide-white/[0.07]">
-                {[
-                  { label: modalLabels.date, value: event.date },
-                  { label: modalLabels.format, value: event.tag },
-                  { label: modalLabels.record, value: modalLabels.recordValue },
-                ].map((item) => (
-                  <div key={item.label} className="py-3">
-                    <p className="font-condensed text-[8px] font-black uppercase tracking-[3px] text-white/36">
-                      {item.label}
-                    </p>
-                    <p className="mt-1 font-condensed text-[0.96rem] font-semibold uppercase leading-none text-white">
-                      {item.value}
-                    </p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="rounded-[14px] border border-[#5ac8ff]/20 bg-[#5ac8ff]/[0.05] p-4">
-                <p className="font-condensed text-[8px] font-black uppercase tracking-[3px] text-[#5ac8ff]">
-                  {modalLabels.description}
-                </p>
-                <p className="mt-2 font-sans text-[0.84rem] leading-[1.6] text-white/78">
-                  {event.description}
-                </p>
-              </div>
-
-              <div className="rounded-[14px] border border-white/[0.08] bg-white/[0.035] p-4">
-                <p className="font-condensed text-[8px] font-black uppercase tracking-[3px] text-[#7de8a8]">
-                  {modalLabels.pillars}
-                </p>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {event.pillars.map((pillar) => (
-                    <span
-                      key={pillar}
-                      className="rounded-full border border-[#7de8a8]/25 bg-[#7de8a8]/[0.08] px-3 py-1.5 font-condensed text-[0.68rem] font-black uppercase tracking-[1.6px] text-white/82"
-                    >
-                      {pillar}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="rounded-[14px] border border-white/[0.08] bg-white/[0.035] p-4">
-                <p className="font-condensed text-[8px] font-black uppercase tracking-[3px] text-[#5ac8ff]">
-                  {modalLabels.benefits}
-                </p>
-                <ul className="mt-3 space-y-2">
-                  {event.benefits.map((benefit) => (
-                    <li key={benefit} className="flex items-start gap-2 font-sans text-[0.82rem] leading-[1.55] text-white/74">
-                      <span className="mt-[6px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#5ac8ff]" aria-hidden="true" />
-                      {benefit}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="rounded-[14px] border border-[#7de8a8]/25 bg-[#7de8a8]/[0.06] p-4">
-                <p className="font-condensed text-[8px] font-black uppercase tracking-[3px] text-[#7de8a8]">
-                  {modalLabels.evolution}
-                </p>
-                <ul className="mt-3 space-y-2">
-                  {event.evolution.map((step) => (
-                    <li key={step} className="flex items-start gap-2 font-sans text-[0.82rem] leading-[1.55] text-white/76">
-                      <span className="mt-[6px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#7de8a8]" aria-hidden="true" />
-                      {step}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            <div className="border-t border-white/10 p-5">
-              <a
-                href={event.ctaHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => trackCTAClick(`events_past_${event.id}`)}
-                className="flex min-h-[52px] w-full items-center justify-center rounded-[18px] bg-white font-condensed text-[0.8rem] font-black uppercase tracking-[0.22em] text-[#06275f] no-underline transition-all duration-200 hover:-translate-y-px hover:bg-white/88 hover:no-underline"
-              >
-                {event.ctaLabel}
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-
-function FinalCtaSection() {
+function EventsClosingCtaSection() {
   const { finalCta, nextEvent } = EVENTS_PAGE;
 
-  return (
-    <section
-      data-event-section="final-cta"
-      className="relative isolate flex min-h-[88svh] items-center overflow-hidden bg-[#000c1a] px-6 py-24 text-center"
-    >
-      <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_55%_at_50%_28%,rgba(90,200,255,0.13),transparent)]"
-        aria-hidden="true"
+  if (!hasUpcomingEvent) {
+    const { waitlist } = nextEvent;
+    return (
+      <SharedCTASection
+        id="proximo-evento"
+        eyebrow={waitlist.eyebrow}
+        headline={waitlist.title}
+        body={waitlist.body}
+        primaryCtaLabel={waitlist.cta.label}
+        primaryCtaHref={waitlist.cta.href}
+        primaryCtaExternal={waitlist.cta.external}
+        secondaryCtaLabel={waitlist.secondaryCta.label}
+        secondaryCtaHref={waitlist.secondaryCta.href}
+        secondaryCtaExternal={waitlist.secondaryCta.external}
       />
-      <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_50%_38%_at_50%_72%,rgba(12,210,94,0.07),transparent)]"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,#5ac8ff,#7de8a8,transparent)]"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.055] [--fpg:rgba(255,255,255,0.02)] [--fps:rgba(255,255,255,0.9)]"
-        aria-hidden="true"
-      >
-        <FingerprintSVG animate className="w-[65vw] max-w-[720px] animate-heartbeat" />
-      </div>
+    );
+  }
 
-      <div className="relative z-10 mx-auto w-full max-w-[1020px]">
-        <ScrollReveal direction="up">
-          <div className="mb-8 flex items-center justify-center gap-3">
-            <BrandLines size="md" animated />
-            <p className="font-condensed text-[10px] font-black uppercase tracking-[5px] text-[#5ac8ff]">
-              {finalCta.eyebrow}
-            </p>
-          </div>
-
-          <h2 className="font-condensed text-[clamp(4rem,11vw,10.5rem)] font-black uppercase leading-[0.76] tracking-tight text-white">
-            <span className="block">{finalCta.headlineLine1}</span>
-            <span className="block text-[#5ac8ff]">{finalCta.headlineLine2}</span>
-          </h2>
-
-          <p className="mx-auto mt-10 max-w-[40ch] font-sans text-[1.06rem] font-medium leading-[1.9] text-white/55">
-            {finalCta.body}
-          </p>
-
-          <div className="mt-12">
-            <a
-              href={nextEvent.cta.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => trackCTAClick("events_final_cta")}
-              className="btn-shimmer inline-flex min-h-[76px] min-w-[340px] items-center justify-center rounded-full bg-[#0cd25e] px-12 py-5 font-sans text-[1rem] font-semibold uppercase tracking-[0.04em] text-[#001a33] no-underline shadow-[0_0_64px_rgba(12,210,94,0.44),0_28px_80px_-32px_rgba(0,0,0,0.9)] transition-all duration-300 hover:-translate-y-1 hover:brightness-110 hover:shadow-[0_0_96px_rgba(12,210,94,0.52),0_36px_96px_-32px_rgba(0,0,0,0.9)]"
-            >
-              {finalCta.ctas[0].label} →
-            </a>
-          </div>
-
-          <p className="mt-8 font-condensed text-[0.72rem] font-black uppercase tracking-[2.5px] text-white/28">
-            {nextEvent.dateDay} de {nextEvent.dateMonth} · {nextEvent.venue} · Cupos limitados
-          </p>
-        </ScrollReveal>
-      </div>
-    </section>
-  );
-}
-
-function RefinedFinalCtaSection() {
-  const { finalCta } = EVENTS_PAGE;
-
-  return (
-    <section
-      data-event-section="final-cta"
-      className="relative isolate overflow-hidden bg-[#001f3f] px-6 py-20 md:py-28"
-    >
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.12]"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px)",
-          backgroundSize: "28px 28px",
-        }}
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(90,200,255,0.12)_0%,transparent_62%)]"
-        aria-hidden="true"
-      />
-
-      <div className="relative z-10 mx-auto max-w-landing">
-        <ScrollReveal direction="up">
-          <div className="relative overflow-hidden rounded-[30px] bg-[#224f99] px-6 py-16 text-center shadow-[0_30px_90px_-48px_rgba(0,0,0,0.9)] md:px-12 md:py-20">
-            <div
-              className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,rgba(90,200,255,0.08)_0%,transparent_42%,rgba(125,232,168,0.06)_100%)]"
-              aria-hidden="true"
-            />
-            <div className="relative z-10 mb-7 flex items-center justify-center gap-3">
-              <BrandLines size="sm" animated />
-            <p className="font-condensed text-[10px] font-black uppercase tracking-[5px] text-[#5ac8ff]">
-              {finalCta.eyebrow}
-            </p>
-          </div>
-
-          <h2 className="relative z-10 mx-auto max-w-[850px] font-condensed text-[clamp(3rem,7.4vw,6.8rem)] font-black uppercase leading-[0.86] tracking-tight text-white">
-            <span>{finalCta.headlineLine1.replace("ECOSISTEMA", "")}</span>
-            <span className="ecos-title-accent">ECOSISTEMA</span>
-            <span className="block">{finalCta.headlineLine2}</span>
-          </h2>
-
-          <p className="relative z-10 mx-auto mt-7 max-w-[58ch] font-sans text-[1rem] font-medium leading-[1.85] text-white/76">
-            {finalCta.body}
-          </p>
-
-          <div className="relative z-10 mx-auto mt-10 flex max-w-[720px] flex-col justify-center gap-4 sm:flex-row">
-            {finalCta.ctas.map((cta) => (
-              <EventButton
-                key={cta.trackingLabel}
-                cta={cta}
-                className="w-full sm:min-w-[320px]"
-              />
-            ))}
-          </div>
-          </div>
-        </ScrollReveal>
-      </div>
-    </section>
-  );
-}
-
-function EventsClosingCtaSection() {
-  const { finalCta } = EVENTS_PAGE;
   const [primaryCta, secondaryCta] = finalCta.ctas;
 
   return (
@@ -1093,18 +769,22 @@ function EventsClosingCtaSection() {
 export default function EventsLandingPage() {
   useEventsAnalytics();
 
-  const [showIntro, setShowIntro] = useState(
-    () => typeof window !== "undefined" && !sessionStorage.getItem(EVENTS_INTRO_KEY)
-  );
-
   return (
     <main className="overflow-hidden bg-[var(--bg)] text-[var(--t1)]">
-      {showIntro && <EventsIntro onComplete={() => setShowIntro(false)} />}
       <HeroSection />
       <TransitionSection />
+      <PastEventsSection />
       <NextEventSection />
       <ExperienceSection />
-      <PastEventsSection />
+      <EventsEcosystemSection />
+      <FAQSection
+        id="preguntas-frecuentes"
+        eyebrow="Preguntas frecuentes"
+        headline="EVENTOS DEPORTIVOS,"
+        headlineAccent="SIN VUELTAS."
+        items={EVENTS_PAGE.faq}
+      />
+      <RelatedGuides guides={eventosGuides} />
       <EventsClosingCtaSection />
     </main>
   );

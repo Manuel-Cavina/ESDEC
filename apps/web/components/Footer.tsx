@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import StickerIcon from "@/components/StickerIcon";
 import Logo from "@/components/Logo";
 import Kicker from "@/components/ui/Kicker";
+import { trackCTAClick } from "@/lib/analytics";
 
 function IconInstagram() {
   return (
@@ -56,7 +57,7 @@ export default function Footer() {
     FOOTER.social.find((item) => item.icon === "whatsapp")?.href ?? "#";
 
   return (
-    <footer className="relative overflow-hidden bg-[var(--bg)]">
+    <footer className="relative overflow-hidden bg-[#295ab4]">
       <div className="footer-brand-line absolute inset-x-0 top-0 z-10 h-[1px]" aria-hidden="true" />
       <div className="footer-dot-texture pointer-events-none absolute inset-0 opacity-[0.12]" aria-hidden="true" />
       <div className="footer-glow pointer-events-none absolute left-1/2 top-0 h-[420px] w-[700px] -translate-x-1/2" aria-hidden="true" />
@@ -86,6 +87,11 @@ export default function Footer() {
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label={s.label}
+                          onClick={
+                            s.icon === "whatsapp"
+                              ? () => trackCTAClick("footer_social_whatsapp")
+                              : undefined
+                          }
                           className={cn(
                             "btn-shimmer relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-full lg:h-10 lg:w-10",
                             "border border-white/[0.18] bg-white/[0.07] text-white",
@@ -111,6 +117,7 @@ export default function Footer() {
                         href={whatsappHref}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={() => trackCTAClick("footer_contact_whatsapp")}
                         className="contact-link flex items-center gap-2 font-sans text-[0.8rem] text-white transition-colors hover:text-[var(--p1)] lg:text-[0.875rem]"
                       >
                         <StickerIcon name="whatsapp" size="xs" className="contact-link__icon shrink-0 text-[var(--p1)]" />

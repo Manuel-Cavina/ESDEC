@@ -12,7 +12,7 @@
 
 declare global {
   interface Window {
-    gtag?: (...args: unknown[]) => void;
+    dataLayer?: unknown[];
     fbq?: (...args: unknown[]) => void;
   }
 }
@@ -21,10 +21,11 @@ function isBrowser(): boolean {
   return typeof window !== "undefined";
 }
 
-// ── GA4 base
+// ── GA4 via Google Tag Manager (GTM-PQ2TVJ2P, cargado en app/layout.tsx)
 export function trackEvent(name: string, params?: Record<string, unknown>): void {
-  if (!isBrowser() || !window.gtag) return;
-  window.gtag("event", name, params ?? {});
+  if (!isBrowser()) return;
+  window.dataLayer = window.dataLayer ?? [];
+  window.dataLayer.push({ event: name, ...params });
 }
 
 // ── CTA click (ej: "hero_primary", "footprint_cta")
@@ -36,8 +37,8 @@ export function trackCTAClick(label: string): void {
 }
 
 // ── Formulario enviado
-export function trackFormSubmit(): void {
-  trackEvent("form_submit", { form_id: "footprint_waitlist" });
+export function trackFormSubmit(formId: string = "footprint_waitlist"): void {
+  trackEvent("form_submit", { form_id: formId });
   if (isBrowser() && window.fbq) {
     window.fbq("track", "CompleteRegistration");
   }

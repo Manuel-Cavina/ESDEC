@@ -21,6 +21,7 @@ interface SharedHeroSectionProps {
   headlinePre: string;
   headlineAccent: string;
   headlinePost?: string;
+  keyword?: string;
   body: string;
   ctaLabel: string;
   ctaHref: string;
@@ -58,6 +59,7 @@ export default function SharedHeroSection({
   headlinePre,
   headlineAccent,
   headlinePost,
+  keyword,
   body,
   ctaLabel,
   ctaHref,
@@ -69,7 +71,6 @@ export default function SharedHeroSection({
 
   // Pre-calcula todas las palabras con su delay para el stamp
   const preWords = headlinePre.trim().split(/\s+/);
-  const accentWords = headlineAccent.trim().split(/\s+/);
   const postWords = headlinePost ? headlinePost.trim().split(/\s+/) : [];
   const WORD_DELAY = 110;
   let wi = 0;
@@ -175,6 +176,15 @@ export default function SharedHeroSection({
               </span>
             )}
           </h1>
+
+          {/* Keyword real, para desambiguacion SEO/GEO (H2 debajo del H1 de marca) */}
+          {keyword && (
+            <ScrollReveal direction="up" delay={preWords.length * WORD_DELAY + 60}>
+              <h2 className="mt-4 font-condensed text-[0.78rem] font-bold uppercase tracking-[0.28em] text-white/60 md:text-[0.85rem]">
+                {keyword}
+              </h2>
+            </ScrollReveal>
+          )}
 
           {/* Body */}
           <ScrollReveal direction="up" delay={preWords.length * WORD_DELAY + 100}>

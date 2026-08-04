@@ -1,6 +1,8 @@
 // content/areas.ts
 // Source of truth for the temporary SEO landings of each ESDEC ecosystem area.
 
+import type { FAQItem } from "@/lib/faq";
+
 export type AreaSlug =
   | "salud-deportiva-cordoba"
   | "tecnologia-deportiva-cordoba"
@@ -26,6 +28,8 @@ export interface AreaPageConfig {
   navLabel: string;
   badge: string;
   h1: string;
+  keyword?: string;
+  faq?: FAQItem[];
   intro: string;
   seoTitle: string;
   metaDescription: string;
@@ -246,6 +250,24 @@ export const AREA_PAGES: Record<AreaSlug, AreaPageConfig> = {
     navLabel: "Market deportivo",
     badge: AREA_BADGE,
     h1: "Market deportivo para dar visibilidad a lo que vale",
+    keyword: "Marketplace deportivo en Córdoba, Argentina",
+    faq: [
+      {
+        question: "¿Qué es el market deportivo de ESDEC?",
+        answer:
+          "Es el área de ESDEC pensada para dar visibilidad a deportistas, profesionales y proyectos dentro del ecosistema deportivo de Córdoba.",
+      },
+      {
+        question: "¿El market deportivo ya está funcionando?",
+        answer:
+          "Todavía no — es un área en desarrollo. Podés dejar tu contacto para ser de los primeros en enterarte cuando esté activa.",
+      },
+      {
+        question: "¿A quién está dirigido el market deportivo de ESDEC?",
+        answer:
+          "A profesionales, proyectos y deportistas que necesitan visibilidad con dirección dentro del ecosistema deportivo de Córdoba.",
+      },
+    ],
     intro:
       "Esta area esta en desarrollo. ESDEC la proyecta como una capa de visibilidad, posicionamiento y conexion para el ecosistema.",
     seoTitle: "Market deportivo en Cordoba | ESDEC",

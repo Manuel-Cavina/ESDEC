@@ -7,6 +7,8 @@ import Navbar from "@/components/Navbar";
 import SaludLanding from "@/sections/bienestar-salud/SaludLanding";
 import { AREA_PAGES } from "@/content/areas";
 import { buildAreaJsonLd, buildAreaMetadata } from "@/lib/areas";
+import { SALUD_FAQ } from "@/content/bienestar-salud";
+import { buildFaqJsonLd } from "@/lib/faq";
 
 const area = AREA_PAGES["salud-deportiva-cordoba"];
 
@@ -15,7 +17,7 @@ export function generateMetadata(): Metadata {
 }
 
 export default function SaludDeportivaCordobaPage() {
-  const jsonLd = buildAreaJsonLd(area);
+  const jsonLd = [...buildAreaJsonLd(area), buildFaqJsonLd(SALUD_FAQ)];
 
   return (
     <>
