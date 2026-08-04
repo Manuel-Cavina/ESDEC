@@ -182,6 +182,7 @@ export const ENTRY = {
     eyebrow: "Para deportistas · ESDEC",
     headlinePre: "EL TALENTO",
     headlineAccent: "NECESITA SISTEMA.",
+    keyword: "Para deportistas amateurs en Córdoba, Argentina",
     body:
       "El entrenamiento, la nutricion y la recuperacion integrados en una sola estructura. Menos intuicion, mas progreso sostenido.",
     cta: "Ver cómo funciona →",
@@ -197,6 +198,7 @@ export const ENTRY = {
     eyebrow: "Para profesionales · ESDEC",
     headlinePre: "TU EXPERTISE",
     headlineAccent: "CON SISTEMA.",
+    keyword: "Marketplace de profesionales del deporte en Córdoba, Argentina",
     body:
       "ESDEC conecta tu especialidad con deportistas y procesos donde tu trabajo genera impacto real. Con visibilidad, coordinacion y escala.",
     cta: "Ver cómo funciona →",
@@ -208,107 +210,6 @@ export const ENTRY = {
       { label: "Escala real", title: "Tu practica crece con el ecosistema" },
     ],
   },
-} as const;
-
-const ECOSYSTEM_LEGACY = {
-  eyebrow: "Red coordinada",
-  cardSupportLabel: "Coordinacion ESDEC",
-  bridgeLabel: "Lectura del sistema",
-  headline: "LAS PERSONAS",
-  headlineAccent: "QUE HACEN FUNCIONAR EL SISTEMA.",
-  body:
-    "El valor de ESDEC no vive en una promesa abstracta. Vive en una red de especialidades que se entienden entre si y trabajan con un criterio compartido.",
-  audienceBody: {
-    deportista:
-      "Ves al otro lado de la estructura: quienes sostienen tu proceso con criterio, seguimiento y coordinacion real.",
-    profesional:
-      "Ves la red con la que vas a coordinar tu practica, sumar contexto y amplificar el impacto de tu especialidad.",
-  },
-  stripLabel: "Disciplinas activas",
-  sports: [
-    "⚽ Futbol",
-    "🏃 Running",
-    "🏑 Hockey",
-    "🏉 Rugby",
-    "🏀 Basquet",
-    "🎾 Tenis",
-    "🏊 Natacion",
-    "🚴 Ciclismo",
-    "🥊 Boxeo",
-    "🤸 Crossfit",
-    "🤼 Artes marciales",
-    "⛷️ Esqui",
-    "🏄 Surf",
-    "🧘 Yoga deportivo",
-  ],
-  bridge: {
-    deportista:
-      "Cada especialidad suma una capa del sistema que te ayuda a crecer mejor.",
-    profesional:
-      "Cada especialidad suma una capa del sistema con la que podes coordinar y trabajar mejor.",
-  },
-  specialists: [
-    {
-      number: "01",
-      icon: "🧠",
-      role: "Salud mental",
-      title: "Psicologia deportiva",
-      description:
-        "Mentalidad, foco y regulacion emocional integrados en el proceso del atleta. No es un extra: es parte de la estructura.",
-      tag: "Core",
-      image: "/images/lifestyle/Correr_lluvia_1.jpg",
-    },
-    {
-      number: "02",
-      icon: "🥗",
-      role: "Rendimiento",
-      title: "Nutricion deportiva",
-      description:
-        "Planes conectados al contexto real del entrenamiento, la recuperacion y los objetivos de evolucion.",
-      tag: "Core",
-      image: "/images/lifestyle/Deportes_1.jpg",
-    },
-    {
-      number: "03",
-      icon: "clinica",
-      role: "Prevencion",
-      title: "Kinesiologia y biomecanica",
-      description:
-        "Prevencion, recuperacion y lectura del cuerpo dentro de un sistema que protege el progreso y evita improvisar.",
-      tag: "Core",
-      image: "/images/lifestyle/Medico1.png",
-    },
-    {
-      number: "04",
-      icon: "🏋️",
-      role: "Entrenamiento",
-      title: "Coaching y planificacion",
-      description:
-        "Direccion tecnica, carga adecuada y seguimiento para que cada decision tenga un porque y una continuidad.",
-      tag: "Core",
-      image: "/images/athletes/Atleta_1.png",
-    },
-    {
-      number: "05",
-      icon: "💆",
-      role: "Recovery",
-      title: "Recuperacion y descarga",
-      description:
-        "La recuperacion entra al sistema como parte del rendimiento y no como un agregado desconectado del resto.",
-      tag: "Plus",
-      image: "/images/lifestyle/EstilodeVida.jpg",
-    },
-    {
-      number: "06",
-      icon: "🌟",
-      role: "Proyeccion",
-      title: "Marca personal y visibilidad",
-      description:
-        "Una capa de posicionamiento para atletas y profesionales que necesitan convertir trabajo serio en presencia y oportunidad.",
-      tag: "Plus",
-      image: "/images/lifestyle/Deportes_2.jpg",
-    },
-  ],
 } as const;
 
 export const ECOSYSTEM = {
@@ -693,7 +594,7 @@ export const FOOTER = {
     },
   ],
   legal: [
-    { label: "Privacidad", href: "#" },
+    { label: "Privacidad", href: "/privacidad" },
   ],
   social: [
     {
@@ -719,6 +620,106 @@ export const FOOTER = {
   },
   location: "Córdoba · Argentina",
   copy: `© ${new Date().getFullYear()} ESDEC · Elite Sports Development. Todos los derechos reservados.`,
+} as const;
+
+export const HOME_FAQ = [
+  {
+    question: "¿Qué es ESDEC?",
+    answer:
+      "ESDEC es el ecosistema deportivo de Córdoba, Argentina. Conecta a deportistas amateurs y semiprofesionales con profesionales del deporte —kinesiólogos, nutricionistas, psicólogos deportivos y entrenadores— dentro de una misma estructura, en vez de que cada uno tenga que buscarlos por separado.",
+  },
+  {
+    question: "¿Para quién es ESDEC?",
+    answer:
+      "Para dos perfiles: deportistas amateurs y semiprofesionales que quieren entrenar con más estructura, y profesionales del deporte que buscan visibilidad y coordinación con otros especialistas dentro de un mismo ecosistema.",
+  },
+  {
+    question: "¿Cómo funciona ESDEC?",
+    answer:
+      "El proceso tiene 5 pasos: se mapea tu perfil (objetivos, deporte, punto de partida), se arma tu equipo de especialistas, se define un plan que integra entrenamiento, nutrición, recuperación y mentalidad, se hace seguimiento con ajustes sostenidos, y el sistema escala con vos sin reiniciar el progreso. El contacto inicial se coordina por WhatsApp, con respuesta en menos de 48 horas.",
+  },
+  {
+    question: "¿En qué se diferencia ESDEC de una app de entrenamiento?",
+    answer:
+      "Una app de entrenamiento suele cubrir un solo aspecto, como las rutinas. ESDEC integra seis áreas dentro de un mismo sistema —Salud Deportiva, Bienestar, Tecnología, Educación, Eventos y Marketplace de profesionales— para que el deportista no tenga que coordinar cada pieza por separado con proveedores distintos.",
+  },
+  {
+    question: "¿Dónde funciona ESDEC?",
+    answer:
+      "ESDEC opera en Córdoba, Argentina. Es donde hoy están los deportistas y profesionales que forman parte del ecosistema.",
+  },
+  {
+    question: "¿Qué profesionales participan en ESDEC?",
+    answer:
+      "Profesionales del deporte de distintas disciplinas: kinesiólogos, nutricionistas, psicólogos deportivos y entrenadores, entre otros. Cada uno se suma al ecosistema según su especialidad y disponibilidad.",
+  },
+  {
+    question: "¿Cuánto cuesta ESDEC?",
+    answer:
+      "ESDEC está en una etapa inicial de validación, así que todavía no hay un esquema de precios público. Escribinos por WhatsApp y te contamos las condiciones según tu caso.",
+  },
+] as const;
+
+export const PRIVACY_POLICY = {
+  updatedAt: "3 de agosto de 2026",
+  intro:
+    "Esta política explica qué datos recolecta ESDEC a través de esdec.com.ar, con qué finalidad, y cómo podés ejercer tus derechos sobre ellos, en línea con la Ley 25.326 de Protección de Datos Personales de la República Argentina.",
+  sections: [
+    {
+      title: "1. Responsable de los datos",
+      body: [
+        "El sitio esdec.com.ar es operado por Manuel Cavina, en carácter de titular del proyecto ESDEC, con domicilio en Córdoba, Argentina.",
+        "Contacto para consultas de privacidad: esdec.elite@gmail.com.",
+      ],
+    },
+    {
+      title: "2. Qué datos recolectamos",
+      body: [
+        "Datos que ingresás vos mismo: cuando completás el formulario de contacto (nombre, deporte o rol, y la información que agregues) para iniciar una conversación por WhatsApp. Estos datos se procesan únicamente en tu navegador y se envían de forma directa a WhatsApp recién cuando vos confirmás el envío del mensaje — ESDEC no los almacena en una base de datos propia ni los recibe en un servidor propio.",
+        "Datos de navegación: usamos Google Tag Manager, una herramienta que puede activar servicios de medición como Google Analytics, para entender cómo se usa el sitio (páginas visitadas, dispositivo, ubicación aproximada). Esto puede implicar el uso de cookies o identificadores similares.",
+      ],
+    },
+    {
+      title: "3. Con quién compartimos los datos",
+      body: [
+        "WhatsApp / Meta Platforms: recibe el mensaje que vos enviás a través del formulario de contacto, según sus propias políticas de privacidad.",
+        "Google: procesa datos de navegación agregados a través de Google Tag Manager / Google Analytics.",
+        "Vercel: aloja el sitio y procesa datos técnicos de acceso (como la dirección IP) necesarios para servir las páginas.",
+        "ESDEC no vende ni cede datos personales a terceros con fines comerciales.",
+      ],
+    },
+    {
+      title: "4. Base legal",
+      body: [
+        "El tratamiento de tus datos se basa en tu consentimiento, otorgado al completar voluntariamente el formulario de contacto o al navegar el sitio aceptando el uso de cookies de analítica.",
+      ],
+    },
+    {
+      title: "5. Conservación de datos",
+      body: [
+        "ESDEC no mantiene una base de datos propia de contactos en esta etapa del proyecto (MVP inicial). Los datos de navegación se conservan según los plazos estándar de Google Analytics.",
+      ],
+    },
+    {
+      title: "6. Tus derechos (acceso, rectificación, actualización y supresión)",
+      body: [
+        "Como titular de tus datos, tenés derecho a solicitar acceso, rectificación, actualización o supresión de la información que nos hayas provisto, conforme a la Ley 25.326. Podés ejercerlos escribiendo a esdec.elite@gmail.com.",
+        "La Agencia de Acceso a la Información Pública, en su carácter de Órgano de Control de la Ley 25.326, tiene la atribución de atender las denuncias y reclamos que se interpongan con relación al incumplimiento de las normas sobre protección de datos personales.",
+      ],
+    },
+    {
+      title: "7. Menores de edad",
+      body: [
+        "El sitio no está dirigido a menores de 18 años y no recolectamos deliberadamente datos de menores sin el consentimiento de sus padres o tutores.",
+      ],
+    },
+    {
+      title: "8. Cambios en esta política",
+      body: [
+        "Esta política puede actualizarse a medida que ESDEC incorpore nuevas funcionalidades (por ejemplo, registro de usuarios). La fecha de la última actualización figura al inicio de este documento.",
+      ],
+    },
+  ],
 } as const;
 
 export const FOOTPRINT_MODAL = {

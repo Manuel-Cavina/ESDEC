@@ -7,7 +7,6 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { useEffect, useRef, ReactNode } from "react";
-import { cn } from "@/lib/utils";
 
 type Direction = "up" | "left" | "right" | "none";
 
@@ -22,13 +21,6 @@ interface ScrollRevealProps {
   cascadeDelay?: number; // ms entre cada hijo
   once?: boolean;        // solo animar una vez (default: true)
 }
-
-const INITIAL: Record<Direction, string> = {
-  up:    "opacity-0 translate-y-5",
-  left:  "opacity-0 -translate-x-6",
-  right: "opacity-0 translate-x-6",
-  none:  "opacity-0",
-};
 
 export default function ScrollReveal({
   children,

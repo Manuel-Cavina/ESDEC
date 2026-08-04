@@ -5,11 +5,27 @@
 
 import { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/constants";
+import { GUIDES } from "@/content/guias";
+import { getGuideUrl } from "@/lib/guides";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
+  const guideEntries: MetadataRoute.Sitemap = GUIDES.map((guide) => ({
+    url: getGuideUrl(guide.slug),
+    lastModified: new Date(guide.updatedAt),
+    changeFrequency: "monthly",
+    priority: 0.65,
+  }));
+
   return [
+    {
+      url: `${SITE_URL}/guias`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.7,
+    },
+    ...guideEntries,
     {
       url: SITE_URL,
       lastModified: now,
@@ -69,6 +85,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: "weekly",
       priority: 0.82,
+    },
+    {
+      url: `${SITE_URL}/privacidad`,
+      lastModified: now,
+      changeFrequency: "yearly",
+      priority: 0.3,
     },
   ];
 }

@@ -7,6 +7,7 @@ import Navbar from "@/components/Navbar";
 import MarketComingSoonSection from "@/sections/market/MarketComingSoonSection";
 import { AREA_PAGES } from "@/content/areas";
 import { buildAreaJsonLd, buildAreaMetadata } from "@/lib/areas";
+import { buildFaqJsonLd } from "@/lib/faq";
 
 const area = AREA_PAGES["market-deportivo-cordoba"];
 
@@ -15,7 +16,10 @@ export function generateMetadata(): Metadata {
 }
 
 export default function MarketDeportivoCordobaPage() {
-  const jsonLd = buildAreaJsonLd(area);
+  const jsonLd = [
+    ...buildAreaJsonLd(area),
+    ...(area.faq && area.faq.length > 0 ? [buildFaqJsonLd(area.faq)] : []),
+  ];
 
   return (
     <>

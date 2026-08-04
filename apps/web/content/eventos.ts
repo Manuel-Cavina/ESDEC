@@ -1,6 +1,8 @@
 // content/eventos.ts
 // Source of truth for the ESDEC events page copy and structured event data.
 
+import type { FAQItem } from "@/lib/faq";
+
 export interface EventsCta {
   label: string;
   href: string;
@@ -80,6 +82,7 @@ export const EVENTS_PAGE = {
     eyebrow: "Eventos ESDEC · Cordoba",
     headlineLine1: "VENÍ.",
     headlineLine2: "ACTIVÁTE.",
+    keyword: "Eventos deportivos en Córdoba, Argentina",
     body:
       "Running, trekking, torneos y encuentros pensados para moverte, sumar comunidad y llevarte beneficios reales — no solo mirar desde afuera.",
     image: "/images/athletes/maraton_1.jpg",
@@ -145,33 +148,32 @@ export const EVENTS_PAGE = {
   },
   nextEvent: {
     eyebrow: "Proximo evento",
-    name: "Run + Coffee + Recovery",
-    startsAt: "2026-05-09T08:00:00-03:00",
-    dateDay: "9",
-    dateMonth: "Mayo",
-    dateLabel: "Viernes 9 de mayo",
-    receptionTime: "8:00 AM",
-    startTime: "9:00 AM",
-    venue: "Diario Cafe",
-    city: "Cordoba Capital",
+    name: "Trekking ESDEC #03",
+    startsAt: "2026-08-23T09:00:00-03:00",
+    dateDay: "23",
+    dateMonth: "Agosto",
+    dateLabel: "Domingo 23 de agosto",
+    receptionTime: "9:00 hs",
+    startTime: "9:00 hs",
+    venue: "Escaleras del Parque Sarmiento",
+    city: "Los Cocos, Cordoba",
     summary:
-      "Movimiento, recuperacion y comunidad en una manana creada para activar el cuerpo y entrar al ecosistema desde una experiencia real.",
+      "Te invitamos a vivir una nueva experiencia ESDEC en contacto con la naturaleza. Un trekking pensado para salir de la rutina, moverte, respirar aire puro y compartir un momento distinto en un entorno serrano unico.",
     about:
-      "No es solo una carrera: es una manana pensada para vivir el deporte desde otro lugar. Movimiento con estructura, recuperacion real y comunidad que acompana antes, durante y despues del esfuerzo.",
+      "Este proximo evento de ESDEC propone una salida de trekking en Los Cocos, Cordoba, orientada a personas que buscan una experiencia diferente, activa y conectada con la naturaleza. El recorrido estimado sera de 6 a 7 km, con una duracion aproximada de 2 horas. La salida esta prevista para las 9:00 hs desde las escaleras del Parque Sarmiento. Toda la informacion adicional, condiciones y valor de participacion estaran disponibles en el formulario de inscripcion.",
     highlights: [
-      "Estiramientos guiados para entrada en calor y enfriamiento.",
-      "Recuperacion activa post-esfuerzo.",
-      "Combo especial del espacio anfitrion para todos los participantes.",
-      "Sorteos entre asistentes: indumentaria, accesorios, suplementos deportivos y mas.",
-      "Descuentos exclusivos con codigo especial para quienes se registren.",
+      "Naturaleza",
+      "Movimiento",
+      "Desconexion",
+      "Comunidad",
+      "Una experiencia diferente",
     ],
-    benefit:
-      "Todos los participantes reciben descuentos especiales en marcas del ecosistema. El codigo se entrega al completar la inscripcion.",
+    benefit: undefined,
     spotsWarning:
-      "Cupos limitados. Registrarte garantiza tu lugar y participacion en todos los sorteos del evento.",
-    image: "/images/Evento/imagen banner.png",
-    modalImage: "/images/Evento/image.png",
-    imageAlt: "Imagen principal del evento Run Coffee Recovery de ESDEC",
+      "La informacion completa del evento, incluyendo valor y detalles adicionales, estara disponible en el formulario de inscripcion.",
+    image: "/images/Evento/trekking03/mastildelejos.png",
+    modalImage: "/images/Evento/trekking03/image.png",
+    imageAlt: "Sendero hacia el mastil en las sierras de Los Cocos, Cordoba, recorrido del Trekking ESDEC",
     waitlist: {
       eyebrow: "Proxima activacion",
       title: "S\u00c9 DE LOS PRIMEROS EN ENTERARTE.",
@@ -193,17 +195,17 @@ export const EVENTS_PAGE = {
       },
     },
     cta: {
-      label: "Reservar mi lugar",
-      href: "https://tally.so/r/VL1BlM",
-      trackingLabel: "events_next_reserve",
+      label: "Quiero sumarme",
+      href: "https://tally.so/r/zx4MZM",
+      trackingLabel: "events_trekking03_cta",
       variant: "primary",
       external: true,
     },
     ctas: [
       {
-        label: "Reservar mi lugar",
-        href: "https://tally.so/r/VL1BlM",
-        trackingLabel: "events_next_reserve",
+        label: "Quiero sumarme",
+        href: "https://tally.so/r/zx4MZM",
+        trackingLabel: "events_trekking03_cta",
         variant: "primary",
         external: true,
       },
@@ -414,8 +416,8 @@ export const EVENTS_PAGE = {
     panelTrust: "Pr\u00f3ximo evento en C\u00f3rdoba \u00b7 Cupos limitados",
     ctas: [
       {
-        label: "QUIERO MI LUGAR \u2192",
-        href: "https://tally.so/r/VL1BlM",
+        label: "QUIERO SUMARME \u2192",
+        href: "https://tally.so/r/zx4MZM",
         trackingLabel: "events_final_place",
         variant: "primary",
         external: true,
@@ -428,4 +430,26 @@ export const EVENTS_PAGE = {
       },
     ] satisfies EventsCta[],
   },
+  faq: [
+    {
+      question: "¿Qué tipo de eventos organiza ESDEC en Córdoba?",
+      answer:
+        "Running, trekking, torneos y encuentros pensados para sumar comunidad, movimiento y beneficios reales para quienes participan — no solo para mirar desde afuera.",
+    },
+    {
+      question: "¿Cómo me entero de los próximos eventos de ESDEC?",
+      answer:
+        "Se publican en Instagram y por WhatsApp, con cupo limitado. También podés sumarte desde esta página para enterarte apenas se abre la inscripción.",
+    },
+    {
+      question: "¿Cómo me inscribo a un evento de ESDEC?",
+      answer:
+        "Reservás tu lugar con un formulario simple y la confirmación llega al instante, sin vueltas.",
+    },
+    {
+      question: "¿Qué recibo por participar de un evento de ESDEC?",
+      answer:
+        "Guía profesional en el momento, recuperación activa post-esfuerzo, y beneficios como descuentos o sorteos entre quienes participan.",
+    },
+  ] satisfies FAQItem[],
 } as const;

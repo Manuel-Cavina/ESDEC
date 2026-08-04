@@ -7,6 +7,8 @@ import Navbar from "@/components/Navbar";
 import TecnologiaLanding from "@/sections/tecnologia/TecnologiaLanding";
 import { AREA_PAGES } from "@/content/areas";
 import { buildAreaJsonLd, buildAreaMetadata } from "@/lib/areas";
+import { TECNOLOGIA_FAQ } from "@/content/tecnologia";
+import { buildFaqJsonLd } from "@/lib/faq";
 
 const area = AREA_PAGES["tecnologia-deportiva-cordoba"];
 
@@ -15,7 +17,7 @@ export function generateMetadata(): Metadata {
 }
 
 export default function TecnologiaDeportivaCordobaPage() {
-  const jsonLd = buildAreaJsonLd(area);
+  const jsonLd = [...buildAreaJsonLd(area), buildFaqJsonLd(TECNOLOGIA_FAQ)];
 
   return (
     <>

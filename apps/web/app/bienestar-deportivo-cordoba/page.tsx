@@ -7,6 +7,8 @@ import Navbar from "@/components/Navbar";
 import BienestarLanding from "@/sections/bienestar-salud/BienestarLanding";
 import { AREA_PAGES } from "@/content/areas";
 import { buildAreaJsonLd, buildAreaMetadata } from "@/lib/areas";
+import { BIENESTAR_FAQ } from "@/content/bienestar-salud";
+import { buildFaqJsonLd } from "@/lib/faq";
 
 const area = AREA_PAGES["bienestar-deportivo-cordoba"];
 
@@ -15,7 +17,7 @@ export function generateMetadata(): Metadata {
 }
 
 export default function BienestarDeportivoCordobaPage() {
-  const jsonLd = buildAreaJsonLd(area);
+  const jsonLd = [...buildAreaJsonLd(area), buildFaqJsonLd(BIENESTAR_FAQ)];
 
   return (
     <>
