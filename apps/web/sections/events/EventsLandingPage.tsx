@@ -486,7 +486,7 @@ function NextEventSection() {
               <h2 className="mt-5 max-w-[14ch] font-condensed text-[clamp(3rem,6.5vw,6rem)] font-black uppercase leading-[0.8] tracking-tight text-white">
                 {nextEvent.name}
               </h2>
-              <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 font-condensed text-[0.88rem] font-black uppercase tracking-[0.16em] text-white/70">
+              <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 font-condensed text-[0.88rem] font-medium uppercase tracking-[0.16em] text-white/70">
                 <span>{nextEvent.dateDay} de {nextEvent.dateMonth}</span>
                 <span className="hidden h-5 w-px bg-white/30 sm:block" aria-hidden="true" />
                 <span>{nextEvent.receptionTime}</span>
