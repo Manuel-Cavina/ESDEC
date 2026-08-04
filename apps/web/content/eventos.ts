@@ -155,12 +155,12 @@ export const EVENTS_PAGE = {
     dateLabel: "Domingo 23 de agosto",
     receptionTime: "9:00 hs",
     startTime: "9:00 hs",
-    venue: "Escaleras del Parque Sarmiento",
-    city: "Los Cocos, Cordoba",
+    venue: "Los Cocos, Cordoba",
+    city: "Punto de encuentro: Escaleras del Parque Sarmiento",
     summary:
-      "Te invitamos a vivir una nueva experiencia ESDEC en contacto con la naturaleza. Un trekking pensado para salir de la rutina, moverte, respirar aire puro y compartir un momento distinto en un entorno serrano unico.",
+      "Te invitamos a vivir una nueva experiencia ESDEC en contacto con la naturaleza. Un trekking en Los Cocos, Cordoba, pensado para salir de la rutina, moverte, respirar aire puro y compartir un momento distinto en un entorno serrano unico.",
     about:
-      "Este proximo evento de ESDEC propone una salida de trekking en Los Cocos, Cordoba, orientada a personas que buscan una experiencia diferente, activa y conectada con la naturaleza. El recorrido estimado sera de 6 a 7 km, con una duracion aproximada de 2 horas. La salida esta prevista para las 9:00 hs desde las escaleras del Parque Sarmiento. Toda la informacion adicional, condiciones y valor de participacion estaran disponibles en el formulario de inscripcion.",
+      "Este proximo evento de ESDEC propone una salida de trekking en Los Cocos, Cordoba, orientada a personas que buscan una experiencia diferente, activa y conectada con la naturaleza. El recorrido estimado sera de 6 a 7 km, con una duracion aproximada de 2 horas. El punto de encuentro es a las 9:00 hs en las escaleras del Parque Sarmiento, desde donde se coordina el traslado hacia Los Cocos. Toda la informacion adicional, condiciones y valor de participacion estaran disponibles en el formulario de inscripcion.",
     highlights: [
       "Naturaleza",
       "Movimiento",

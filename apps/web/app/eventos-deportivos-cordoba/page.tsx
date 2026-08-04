@@ -61,7 +61,7 @@ export default function EventosDeportivosCordobaPage() {
               name: EVENTS_PAGE.nextEvent.venue,
               address: {
                 "@type": "PostalAddress",
-                addressLocality: EVENTS_PAGE.nextEvent.city,
+                addressLocality: EVENTS_PAGE.nextEvent.venue,
                 addressCountry: "AR",
               },
             },
