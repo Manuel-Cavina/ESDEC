@@ -508,6 +508,36 @@ export const SALUD_CTA = {
   ctaProfessional: { label: "Sumarme como profesional", href: "/profesionales" },
 };
 
+// ─── SALUD: FAQ ───────────────────────────────────────────────────────────────
+
+export const SALUD_FAQ = [
+  {
+    question: "¿Qué profesionales de salud deportiva hay en ESDEC?",
+    answer:
+      "Kinesiólogos, deportólogos, nutricionistas deportivos, traumatólogos y preparadores físicos, organizados en tres áreas: diagnóstico y clínica, rehabilitación y movimiento, y rendimiento y energía.",
+  },
+  {
+    question: "¿Cuándo conviene consultar a un kinesiólogo deportivo?",
+    answer:
+      "Después de una lesión muscular, articular o tendinosa; para armar un plan preventivo antes de una temporada intensa; o durante la readaptación post-cirugía o post-lesión grave.",
+  },
+  {
+    question: "¿Cómo trabaja ESDEC la prevención de lesiones deportivas?",
+    answer:
+      "Con un proceso en etapas: primero se evalúa tu punto de partida (limitaciones, riesgos, potencial), después se arma un plan de prevención con nutrición y carga de entrenamiento, y se hace monitoreo activo para detectar señales de sobrecarga antes de que se conviertan en lesión. Si algo pasa, hay un protocolo de respuesta con diagnóstico y retorno supervisado al deporte.",
+  },
+  {
+    question: "¿Qué diferencia hay entre un kinesiólogo y un deportólogo en ESDEC?",
+    answer:
+      "El deportólogo hace la evaluación médica deportiva completa y las habilitaciones físicas — es el punto de partida clínico. El kinesiólogo trabaja la rehabilitación de lesiones, la prevención y la readaptación al deporte a través del movimiento. Dentro de ESDEC coordinan dentro del mismo proceso.",
+  },
+  {
+    question: "¿ESDEC reemplaza a un médico o profesional de la salud?",
+    answer:
+      "No. ESDEC conecta a deportistas con profesionales de salud matriculados, pero no reemplaza la atención médica ni el criterio profesional. Cada evaluación, diagnóstico y tratamiento lo hace el profesional correspondiente.",
+  },
+] as const;
+
 // ─── SALUD: bloque de conexion hacia Bienestar ───────────────────────────────
 
 export const SALUD_BRIDGE = {
@@ -529,6 +559,7 @@ export const BIENESTAR_HERO = {
   eyebrow: "Ecosistema ESDEC — Bienestar integral",
   headlinePre: "EL RENDIMIENTO",
   headlineAccent: "QUE NO SE VE.",
+  keyword: "Bienestar deportivo en Córdoba, Argentina",
   body: "Los deportistas que solo entrenan el fisico dejan el 40% de su potencial sin explorar. El bienestar integral no es un extra — es el sistema que convierte el esfuerzo en resultados reales.",
   ctaLabel: "Iniciar mi programa →",
   ctaHref: "#servicios",
@@ -722,6 +753,29 @@ export const BIENESTAR_CTA = {
   secondaryCtaHref: "/profesionales",
   trustText: "Sin costo inicial · Primer contacto en 48hs · Especialistas en Cordoba",
 };
+
+export const BIENESTAR_FAQ = [
+  {
+    question: "¿Qué es el bienestar deportivo en ESDEC?",
+    answer:
+      "Es el área que trabaja el rendimiento del deportista más allá del entrenamiento físico: rendimiento físico (yoga, pilates, respiración, recuperación activa), rendimiento mental (meditación, coaching, foco) y rendimiento emocional (mentoring, resiliencia, motivación).",
+  },
+  {
+    question: "¿Cómo se maneja la ansiedad antes de competir?",
+    answer:
+      "Es uno de los focos del área de rendimiento mental de ESDEC, que trabaja gestión del estrés y toma de decisiones bajo presión, para que la cabeza acompañe en el momento que más importa.",
+  },
+  {
+    question: "¿Qué disciplinas incluye el bienestar integral en ESDEC?",
+    answer:
+      "Yoga, Pilates, técnicas de respiración y recuperación activa para lo físico; meditación y coaching para lo mental; y mentoring para lo emocional. Las tres dimensiones se trabajan de forma integrada, no por separado.",
+  },
+  {
+    question: "¿El bienestar deportivo es solo para alto rendimiento?",
+    answer:
+      "No. Está pensado para cualquier deportista amateur o semiprofesional que entrena el físico pero deja sin trabajar la parte mental y emocional del proceso — que suele ser donde está el margen de mejora más grande.",
+  },
+] as const;
 
 export const BIENESTAR_SYSTEM = {
   eyebrow: "El sistema ESDEC",

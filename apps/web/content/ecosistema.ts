@@ -6,6 +6,7 @@ export const ECOSISTEMA_HERO = {
   eyebrow: "Ecosistema Deportivo · Cordoba · Argentina",
   headlinePre: "EL TALENTO SIN SISTEMA,",
   headlineAccent: "SE DISPERSA.",
+  keyword: "Ecosistema deportivo de Córdoba, Argentina",
   body:
     "ESDEC es la estructura que organiza el deporte amateur en Cordoba — para quien entrena y para quien acompaña ese proceso. Bienestar, clinica, marca, eventos, tecnologia y educacion dentro de una misma red que funciona junta, siempre a mano.",
   ctaLabel: "Ver el ecosistema",

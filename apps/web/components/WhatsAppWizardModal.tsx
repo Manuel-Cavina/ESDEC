@@ -10,6 +10,7 @@ import BrandLines from "@/components/BrandLines";
 import Kicker from "@/components/ui/Kicker";
 import StickerIcon from "@/components/StickerIcon";
 import { cn } from "@/lib/utils";
+import { trackFormSubmit } from "@/lib/analytics";
 
 export type WizardAudience = "deportista" | "profesional";
 type StepType = "text" | "options" | "contact";
@@ -209,6 +210,7 @@ export default function WhatsAppWizardModal({ audience, onClose }: WhatsAppWizar
       `https://wa.me/${FOOTPRINT_MODAL.whatsappNumber}?text=${message}`,
       "_blank"
     );
+    trackFormSubmit(`whatsapp_wizard_${audience}`);
     setSuccess(true);
   }
 

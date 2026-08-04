@@ -1,6 +1,8 @@
 // content/eventos.ts
 // Source of truth for the ESDEC events page copy and structured event data.
 
+import type { FAQItem } from "@/lib/faq";
+
 export interface EventsCta {
   label: string;
   href: string;
@@ -80,6 +82,7 @@ export const EVENTS_PAGE = {
     eyebrow: "Eventos ESDEC · Cordoba",
     headlineLine1: "VENÍ.",
     headlineLine2: "ACTIVÁTE.",
+    keyword: "Eventos deportivos en Córdoba, Argentina",
     body:
       "Running, trekking, torneos y encuentros pensados para moverte, sumar comunidad y llevarte beneficios reales — no solo mirar desde afuera.",
     image: "/images/athletes/maraton_1.jpg",
@@ -428,4 +431,26 @@ export const EVENTS_PAGE = {
       },
     ] satisfies EventsCta[],
   },
+  faq: [
+    {
+      question: "¿Qué tipo de eventos organiza ESDEC en Córdoba?",
+      answer:
+        "Running, trekking, torneos y encuentros pensados para sumar comunidad, movimiento y beneficios reales para quienes participan — no solo para mirar desde afuera.",
+    },
+    {
+      question: "¿Cómo me entero de los próximos eventos de ESDEC?",
+      answer:
+        "Se publican en Instagram y por WhatsApp, con cupo limitado. También podés sumarte desde esta página para enterarte apenas se abre la inscripción.",
+    },
+    {
+      question: "¿Cómo me inscribo a un evento de ESDEC?",
+      answer:
+        "Reservás tu lugar con un formulario simple y la confirmación llega al instante, sin vueltas.",
+    },
+    {
+      question: "¿Qué recibo por participar de un evento de ESDEC?",
+      answer:
+        "Guía profesional en el momento, recuperación activa post-esfuerzo, y beneficios como descuentos o sorteos entre quienes participan.",
+    },
+  ] satisfies FAQItem[],
 } as const;

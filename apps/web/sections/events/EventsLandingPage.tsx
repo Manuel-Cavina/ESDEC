@@ -7,16 +7,25 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import BrandLines from "@/components/BrandLines";
 import Kicker from "@/components/ui/Kicker";
-import StickerIcon from "@/components/StickerIcon";
 import FingerprintSVG from "@/components/FingerprintSVG";
 import ScrollReveal from "@/components/ScrollReveal";
 import SharedCTASection from "@/components/SharedCTASection";
 import IconFeatureCard from "@/components/ui/IconFeatureCard";
 import StepCard from "@/components/ui/StepCard";
 import SweepButton from "@/components/ui/SweepButton";
+import FAQSection from "@/components/FAQSection";
+import RelatedGuides from "@/components/RelatedGuides";
 import { EVENTS_PAGE, type PastEvent } from "@/content/eventos";
+import { GUIDES } from "@/content/guias";
 import { trackCTAClick, trackScrollDepth, trackSectionView } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
+
+const eventosGuides = GUIDES.filter((guide) => guide.pillar === "eventos-deportivos-cordoba");
+
+// EVENTS_PAGE.nextEvent.startsAt es contenido estatico — se calcula una sola vez
+// al cargar el modulo, en vez de en cada render (evita leer Date.now() en render).
+const hasUpcomingEvent =
+  new Date(EVENTS_PAGE.nextEvent.startsAt).getTime() > Date.now();
 
 interface SectionHeadingProps {
   eyebrow: string;
@@ -175,6 +184,12 @@ function HeroSection() {
                 {hero.headlineLine2}
               </span>
             </h1>
+
+            <ScrollReveal direction="up" delay={110}>
+              <h2 className="mt-4 font-condensed text-[0.78rem] font-bold uppercase tracking-[0.28em] text-white/60 md:text-[0.85rem]">
+                {hero.keyword}
+              </h2>
+            </ScrollReveal>
 
             <ScrollReveal direction="up" delay={160}>
               <p className="mt-7 max-w-[55ch] font-sans text-[1rem] font-medium leading-[1.9] text-white/82 md:text-[1.08rem]">
@@ -431,7 +446,6 @@ function EventModal({
 function NextEventSection() {
   const { nextEvent } = EVENTS_PAGE;
   const [modalOpen, setModalOpen] = useState(false);
-  const hasUpcomingEvent = new Date(nextEvent.startsAt).getTime() > Date.now();
 
   if (!hasUpcomingEvent) {
     return null;
@@ -714,7 +728,6 @@ function PastEventsSection() {
 
 function EventsClosingCtaSection() {
   const { finalCta, nextEvent } = EVENTS_PAGE;
-  const hasUpcomingEvent = new Date(nextEvent.startsAt).getTime() > Date.now();
 
   if (!hasUpcomingEvent) {
     const { waitlist } = nextEvent;
@@ -764,6 +777,14 @@ export default function EventsLandingPage() {
       <NextEventSection />
       <ExperienceSection />
       <EventsEcosystemSection />
+      <FAQSection
+        id="preguntas-frecuentes"
+        eyebrow="Preguntas frecuentes"
+        headline="EVENTOS DEPORTIVOS,"
+        headlineAccent="SIN VUELTAS."
+        items={EVENTS_PAGE.faq}
+      />
+      <RelatedGuides guides={eventosGuides} />
       <EventsClosingCtaSection />
     </main>
   );

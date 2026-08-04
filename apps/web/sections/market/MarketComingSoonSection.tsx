@@ -8,6 +8,7 @@ import Kicker from "@/components/ui/Kicker";
 import ScrollReveal from "@/components/ScrollReveal";
 import FingerprintSVG from "@/components/FingerprintSVG";
 import IconFeatureCard from "@/components/ui/IconFeatureCard";
+import FAQSection from "@/components/FAQSection";
 import { type AreaPageConfig } from "@/content/areas";
 import { getAreaPath, getAreaWhatsappHref } from "@/lib/areas";
 
@@ -37,6 +38,11 @@ export default function MarketComingSoonSection({ area }: MarketComingSoonSectio
             <h1 className="font-condensed text-[clamp(2.6rem,5.5vw,4.6rem)] font-black uppercase leading-[0.92] tracking-tight text-[var(--t1)]">
               {area.h1}
             </h1>
+            {area.keyword && (
+              <h2 className="mt-4 font-condensed text-[0.78rem] font-bold uppercase tracking-[0.28em] text-[var(--p1)] md:text-[0.85rem]">
+                {area.keyword}
+              </h2>
+            )}
             <p className="mt-6 max-w-[56ch] font-sans text-[1rem] leading-[1.9] text-[var(--t2)]">
               {area.intro}
             </p>
@@ -62,6 +68,16 @@ export default function MarketComingSoonSection({ area }: MarketComingSoonSectio
           </ScrollReveal>
         </div>
       </section>
+
+      {area.faq && area.faq.length > 0 && (
+        <FAQSection
+          id="preguntas-frecuentes"
+          eyebrow="Preguntas frecuentes"
+          headline="MARKET DEPORTIVO,"
+          headlineAccent="SIN VUELTAS."
+          items={area.faq}
+        />
+      )}
 
       <section className="relative overflow-hidden bg-[var(--bg)] px-6 py-20 md:py-24">
         <div className="relative z-10 mx-auto max-w-landing">

@@ -2,11 +2,12 @@
 // Orquestador de la landing de Bienestar Deportivo.
 
 import SharedHeroSection from "@/components/SharedHeroSection";
+import FAQSection from "@/components/FAQSection";
 import BienestarSystemSection from "./BienestarSystemSection";
 import BienestarServicesSection from "./BienestarServicesSection";
 import ForProfessionalsSection from "./ForProfessionalsSection";
 import SharedCTASection from "@/components/SharedCTASection";
-import { BIENESTAR_HERO, BIENESTAR_CTA } from "@/content/bienestar-salud";
+import { BIENESTAR_HERO, BIENESTAR_CTA, BIENESTAR_FAQ } from "@/content/bienestar-salud";
 
 export default function BienestarLanding() {
   return (
@@ -17,6 +18,7 @@ export default function BienestarLanding() {
         eyebrow={BIENESTAR_HERO.eyebrow}
         headlinePre={BIENESTAR_HERO.headlinePre}
         headlineAccent={BIENESTAR_HERO.headlineAccent}
+        keyword={BIENESTAR_HERO.keyword}
         body={BIENESTAR_HERO.body}
         ctaLabel={BIENESTAR_HERO.ctaLabel}
         ctaHref={BIENESTAR_HERO.ctaHref}
@@ -25,6 +27,13 @@ export default function BienestarLanding() {
       <BienestarSystemSection />
       <BienestarServicesSection />
       <ForProfessionalsSection />
+      <FAQSection
+        id="preguntas-frecuentes"
+        eyebrow="Preguntas frecuentes"
+        headline="BIENESTAR DEPORTIVO,"
+        headlineAccent="SIN VUELTAS."
+        items={BIENESTAR_FAQ}
+      />
       <SharedCTASection
         eyebrow={BIENESTAR_CTA.eyebrow}
         headline={BIENESTAR_CTA.headline}

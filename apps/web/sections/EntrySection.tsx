@@ -24,6 +24,7 @@ export default function EntrySection({
       eyebrow={content.eyebrow}
       headlinePre={content.headlinePre}
       headlineAccent={content.headlineAccent}
+      keyword={content.keyword}
       body={content.body}
       ctaLabel={content.cta}
       ctaHref={content.ctaHref}

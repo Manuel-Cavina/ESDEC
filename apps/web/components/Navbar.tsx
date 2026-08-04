@@ -36,8 +36,6 @@ export default function Navbar({ audience = null }: NavbarProps) {
 
   const isProfessionalPalette =
     audience === "profesional" || pathname === "/profesionales";
-  const isAthletePalette =
-    audience === "deportista" || pathname === "/deportistas";
 
   useEffect(() => {
     document.body.style.overflow = isMobileOpen ? "hidden" : "";
