@@ -447,6 +447,28 @@ function NextEventSection() {
   const { nextEvent } = EVENTS_PAGE;
   const [modalOpen, setModalOpen] = useState(false);
 
+  // Permite compartir un link directo que abre el modal del evento (?evento=proximo)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("evento") === "proximo") {
+      setModalOpen(true);
+    }
+  }, []);
+
+  function openModal() {
+    setModalOpen(true);
+    const url = new URL(window.location.href);
+    url.searchParams.set("evento", "proximo");
+    window.history.replaceState({}, "", url);
+  }
+
+  function closeModal() {
+    setModalOpen(false);
+    const url = new URL(window.location.href);
+    url.searchParams.delete("evento");
+    window.history.replaceState({}, "", url);
+  }
+
   if (!hasUpcomingEvent) {
     return null;
   }
@@ -460,7 +482,7 @@ function NextEventSection() {
       <ScrollReveal direction="up">
         <button
           type="button"
-          onClick={() => setModalOpen(true)}
+          onClick={openModal}
           className="group relative block min-h-[460px] w-full cursor-pointer text-left lg:min-h-[560px]"
           aria-label={`Ver detalle de ${nextEvent.name}`}
         >
@@ -529,7 +551,7 @@ function NextEventSection() {
             ] as (EventModalSection | null)[]
           ).filter((section): section is EventModalSection => section !== null)}
           cta={nextEvent.cta}
-          onClose={() => setModalOpen(false)}
+          onClose={closeModal}
         />
       )}
     </section>
