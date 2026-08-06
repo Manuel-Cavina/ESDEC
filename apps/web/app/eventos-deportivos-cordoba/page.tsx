@@ -16,7 +16,7 @@ const hasUpcomingEvent =
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: EVENTS_PAGE.seo.title,
+  title: EVENTS_PAGE.seo.title.replace(/ \| ESDEC$/, ""),
   description: EVENTS_PAGE.seo.description,
   alternates: {
     canonical: pageUrl,
