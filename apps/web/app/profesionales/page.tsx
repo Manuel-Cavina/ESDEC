@@ -14,12 +14,13 @@ import ClosingCTASection from "@/sections/ClosingCTASection";
 import { SITE_URL } from "@/lib/constants";
 
 const PAGE_URL = `${SITE_URL}/profesionales`;
-const TITLE = "Marketplace de profesionales del deporte en Córdoba, Argentina - ESDEC";
+const BASE_TITLE = "Marketplace de profesionales del deporte en Córdoba, Argentina";
+const TITLE = `${BASE_TITLE} - ESDEC`;
 const DESCRIPTION =
   "Sumá tu práctica al marketplace de profesionales del deporte de ESDEC en Córdoba, Argentina — visibilidad, coordinación con otros especialistas y escala real.";
 
 export const metadata: Metadata = {
-  title: TITLE,
+  title: BASE_TITLE,
   description: DESCRIPTION,
   alternates: { canonical: PAGE_URL },
   openGraph: {

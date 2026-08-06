@@ -38,7 +38,7 @@ export function buildGuideMetadata(guide: Guide): Metadata {
   const canonical = getGuideUrl(guide.slug);
 
   return {
-    title: `${guide.title} | ESDEC`,
+    title: guide.title,
     description: guide.metaDescription,
     alternates: { canonical },
     openGraph: {

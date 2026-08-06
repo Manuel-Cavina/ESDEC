@@ -11,7 +11,7 @@ import { SITE_URL } from "@/lib/constants";
 const PAGE_URL = `${SITE_URL}/nosotros`;
 
 export const metadata: Metadata = {
-  title: "Quienes somos - ESDEC",
+  title: "Quienes somos",
   description:
     "Conoce el objetivo, la vision y la mision de ESDEC, el ecosistema deportivo de Cordoba, y los principios que lo definen.",
   alternates: { canonical: PAGE_URL },

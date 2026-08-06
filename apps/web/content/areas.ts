@@ -63,10 +63,10 @@ export const AREA_PAGES: Record<AreaSlug, AreaPageConfig> = {
     h1: "Salud deportiva en Cordoba — kinesiologo, deportologo, nutricionista y mas",
     intro:
       "Conecta con kinesiologo, deportologo, nutricionista, traumatologo y preparador fisico en Cordoba. ESDEC coordina tu equipo de salud deportiva.",
-    seoTitle: "Salud deportiva en Cordoba — Kinesiologo, Deportologo, Nutricionista | ESDEC",
+    seoTitle: "Salud deportiva en Cordoba — Kinesiologo, Deportologo, Nutricionista",
     metaDescription:
       "Encontra tu kinesiologo deportivo, deportologo, nutricionista y traumatologo en Cordoba. ESDEC conecta deportistas con especialistas de salud deportiva para prevenir lesiones y mejorar el rendimiento.",
-    ogTitle: "Salud deportiva en Cordoba | ESDEC",
+    ogTitle: "Salud deportiva en Cordoba",
     ogDescription:
       "Conecta con kinesiologo, deportologo y nutricionista deportiva en Cordoba. ESDEC es el ecosistema que cuida tu cuerpo antes de que lo necesites.",
     athleteCtaLabel: "Entrar como deportista",
@@ -126,7 +126,7 @@ export const AREA_PAGES: Record<AreaSlug, AreaPageConfig> = {
     h1: "Tecnologia deportiva para ordenar mejor cada proceso",
     intro:
       "Esta area esta en desarrollo. ESDEC la piensa como una capa digital para ordenar informacion, seguimiento y decisiones.",
-    seoTitle: "Tecnologia deportiva en Cordoba | ESDEC",
+    seoTitle: "Tecnologia deportiva en Cordoba",
     metaDescription:
       "Descubri el enfoque de ESDEC para tecnologia deportiva en Cordoba: herramientas, seguimiento y orden del proceso sin perder criterio humano.",
     ogTitle: "Tecnologia deportiva en Cordoba",
@@ -189,7 +189,7 @@ export const AREA_PAGES: Record<AreaSlug, AreaPageConfig> = {
     h1: "Bienestar deportivo como base del progreso sostenido",
     intro:
       "Esta area esta en desarrollo. ESDEC la proyecta como una base para sostener bienestar, equilibrio y continuidad.",
-    seoTitle: "Bienestar deportivo en Cordoba | ESDEC",
+    seoTitle: "Bienestar deportivo en Cordoba",
     metaDescription:
       "ESDEC desarrolla un area de bienestar deportivo en Cordoba enfocada en habitos, equilibrio y continuidad para sostener el progreso del deportista.",
     ogTitle: "Bienestar deportivo en Cordoba",
@@ -270,7 +270,7 @@ export const AREA_PAGES: Record<AreaSlug, AreaPageConfig> = {
     ],
     intro:
       "Esta area esta en desarrollo. ESDEC la proyecta como una capa de visibilidad, posicionamiento y conexion para el ecosistema.",
-    seoTitle: "Market deportivo en Cordoba | ESDEC",
+    seoTitle: "Market deportivo en Cordoba",
     metaDescription:
       "Conoce el enfoque de ESDEC para market deportivo en Cordoba: visibilidad, conexion y oportunidades dentro de un ecosistema deportivo en crecimiento.",
     ogTitle: "Market deportivo en Cordoba",
@@ -333,7 +333,7 @@ export const AREA_PAGES: Record<AreaSlug, AreaPageConfig> = {
     h1: "Educacion deportiva para crecer con mas criterio",
     intro:
       "Esta area esta en desarrollo. ESDEC la piensa como una capa de claridad, guia y criterio para el ecosistema.",
-    seoTitle: "Educacion deportiva en Cordoba | ESDEC",
+    seoTitle: "Educacion deportiva en Cordoba",
     metaDescription:
       "Descubri la propuesta de educacion deportiva de ESDEC en Cordoba: contenidos, guia y formacion para crecer con mas criterio y autonomia.",
     ogTitle: "Educacion deportiva en Cordoba",
@@ -396,7 +396,7 @@ export const AREA_PAGES: Record<AreaSlug, AreaPageConfig> = {
     h1: "Eventos deportivos para activar comunidad y movimiento",
     intro:
       "Esta area esta en desarrollo. ESDEC la proyecta como una linea de eventos para activar comunidad, marca y movimiento.",
-    seoTitle: "Eventos deportivos en Cordoba | ESDEC",
+    seoTitle: "Eventos deportivos en Cordoba",
     metaDescription:
       "ESDEC proyecta una agenda de eventos deportivos en Cordoba para activar comunidad, experiencias y vinculos dentro del ecosistema.",
     ogTitle: "Eventos deportivos en Cordoba",

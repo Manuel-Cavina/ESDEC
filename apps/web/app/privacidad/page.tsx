@@ -10,7 +10,7 @@ import { SITE_URL } from "@/lib/constants";
 const PAGE_URL = `${SITE_URL}/privacidad`;
 
 export const metadata: Metadata = {
-  title: "Política de privacidad - ESDEC",
+  title: "Política de privacidad",
   description:
     "Qué datos recolecta ESDEC — ecosistema deportivo de Córdoba — a través de su sitio, con qué finalidad y cómo ejercer tus derechos sobre ellos.",
   alternates: { canonical: PAGE_URL },

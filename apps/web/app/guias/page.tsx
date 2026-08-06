@@ -13,7 +13,7 @@ import { SITE_URL } from "@/lib/constants";
 const PAGE_URL = `${SITE_URL}/guias`;
 
 export const metadata: Metadata = {
-  title: "Guías - ESDEC",
+  title: "Guías",
   description:
     "Guías de ESDEC sobre tecnología, educación y eventos deportivos en Córdoba, Argentina — respuestas directas a las dudas más comunes de cada pilar.",
   alternates: { canonical: PAGE_URL },

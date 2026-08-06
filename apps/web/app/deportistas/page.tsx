@@ -14,12 +14,13 @@ import ClosingCTASection from "@/sections/ClosingCTASection";
 import { SITE_URL } from "@/lib/constants";
 
 const PAGE_URL = `${SITE_URL}/deportistas`;
-const TITLE = "Para deportistas amateurs en Córdoba, Argentina - ESDEC";
+const BASE_TITLE = "Para deportistas amateurs en Córdoba, Argentina";
+const TITLE = `${BASE_TITLE} - ESDEC`;
 const DESCRIPTION =
   "Entrená con estructura: entrenamiento, nutrición y recuperación integrados en un mismo sistema. ESDEC conecta deportistas amateurs con profesionales del deporte en Córdoba, Argentina.";
 
 export const metadata: Metadata = {
-  title: TITLE,
+  title: BASE_TITLE,
   description: DESCRIPTION,
   alternates: { canonical: PAGE_URL },
   openGraph: {

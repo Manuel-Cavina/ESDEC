@@ -447,10 +447,14 @@ function NextEventSection() {
   const { nextEvent } = EVENTS_PAGE;
   const [modalOpen, setModalOpen] = useState(false);
 
-  // Permite compartir un link directo que abre el modal del evento (?evento=proximo)
+  // Permite compartir un link directo que abre el modal del evento (?evento=proximo).
+  // Se abre en un efecto (no en el estado inicial) a proposito: el servidor no tiene
+  // acceso a la URL del navegador, asi que hacerlo en el estado inicial causaria un
+  // mismatch de hidratacion entre el HTML del servidor y el del cliente.
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (params.get("evento") === "proximo") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setModalOpen(true);
     }
   }, []);
